@@ -13,9 +13,8 @@ struct HalmapApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            MainView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            TabBarView(currentTab: .constant(0))
+            MainView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
