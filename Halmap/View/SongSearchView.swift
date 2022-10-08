@@ -102,7 +102,10 @@ struct SongSearchView: View {
                                 Image(systemName: "magnifyingglass")
                                 Text(autoComplete[index])
                             }
+                            .padding(.horizontal, 20)
+                            .frame(height: 45)
                         }
+                        .listRowSeparator(.hidden)
                     }
                 }
                 .listStyle(.plain)
