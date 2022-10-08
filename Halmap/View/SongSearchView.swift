@@ -16,17 +16,19 @@ struct SongSearchView: View {
     
     var body: some View {
         
-        VStack {
-            
-            searchBar
-                .padding(.horizontal, 20)
-            
-            resultView
-            
-            Spacer()
-                .frame(maxWidth: .infinity)
+        NavigationView { // TODO: Main과 연결 후 삭제
+            VStack {
+                
+                searchBar
+                    .padding(.horizontal, 20)
+                
+                resultView
+                
+                Spacer()
+                    .frame(maxWidth: .infinity)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     
