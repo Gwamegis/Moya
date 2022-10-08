@@ -19,6 +19,10 @@
 		A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */; };
 		A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */; };
 		A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */; };
+		A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */; };
+		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
+		A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */; };
+		A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumMapView.swift; sourceTree = "<group>"; };
 		A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongInformationView.swift; sourceTree = "<group>"; };
 		A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionView.swift; sourceTree = "<group>"; };
+		A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHeaderView.swift; sourceTree = "<group>"; };
+		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
+		A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Font.swift"; sourceTree = "<group>"; };
+		A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Color.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,8 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
+				A81FFCA128F1B64700B0FC7C /* Resources */,
+				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
 				A81FFC8E28F1770500B0FC7C /* View */,
@@ -89,9 +99,9 @@
 		A81FFC8E28F1770500B0FC7C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				A81FFC8C28F1770100B0FC7C /* MainView.swift */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
-				A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */,
 				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
 				A81FFC9A28F1778200B0FC7C /* Map */,
 			);
@@ -105,6 +115,32 @@
 				A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */,
 			);
 			path = Map;
+			sourceTree = "<group>";
+		};
+		A81FFC9B28F1808700B0FC7C /* SongInformation */ = {
+			isa = PBXGroup;
+			children = (
+				A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */,
+				A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */,
+				A81FFC9E28F180B200B0FC7C /* SongContentView.swift */,
+			);
+			path = SongInformation;
+			sourceTree = "<group>";
+		};
+		A81FFCA028F1B2E300B0FC7C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */,
+				A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A81FFCA128F1B64700B0FC7C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,12 +215,16 @@
 			files = (
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
+				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
+				A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
+				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				A81FFC8D28F1770100B0FC7C /* MainView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
+				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
 				A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */,
 				A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */,
 			);
