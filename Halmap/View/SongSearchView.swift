@@ -11,6 +11,8 @@ struct SongSearchView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @GestureState private var dragOffset = CGSize.zero
+    
     @State var searchText = ""
     @State var autoComplete = [String]()
     @State var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
@@ -18,19 +20,30 @@ struct SongSearchView: View {
     
     var body: some View {
         
-        NavigationView { // TODO: Main과 연결 후 삭제
+        NavigationView {
             VStack {
                 
                 navigationView
                 
                 resultView
+                    .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
+                        if value.startLocation.x < 20 && value.translation.width > 100 {
+                            self.mode.wrappedValue.dismiss()
+                        }
+                    }))
                 
                 Spacer()
-                    .frame(maxWidth: .infinity)
+                
             }
             .ignoresSafeArea()
+            .frame(maxWidth: .infinity)
         }
         .navigationBarBackButtonHidden(true)
+        .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
+            if value.startLocation.x < 20 && value.translation.width > 100 {
+                self.mode.wrappedValue.dismiss()
+            }
+        }))
     }
     
     
