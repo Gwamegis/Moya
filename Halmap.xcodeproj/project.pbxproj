@@ -75,7 +75,6 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
-				A81FFCA128F1B64700B0FC7C /* Resources */,
 				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
@@ -134,13 +133,6 @@
 				A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A81FFCA128F1B64700B0FC7C /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
