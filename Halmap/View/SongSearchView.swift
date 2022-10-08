@@ -10,10 +10,9 @@ import SwiftUI
 struct SongSearchView: View {
     
     @State var searchText = ""
+    @State var autoComplete = [String]()
+    @State var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
     
-    var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
-    
-    var autoComplete = [String]()
     
     var body: some View {
         
@@ -39,6 +38,9 @@ struct SongSearchView: View {
             TextField("검색", text: $searchText)
                 .disableAutocorrection(true)
                 .foregroundColor(Color(.systemGray))
+                .onChange(of: searchText) { _ in
+                    didChangedSearchText()
+                }
             
             if searchText != "" {
                 Image(systemName: "xmark.circle.fill")
@@ -65,19 +67,35 @@ struct SongSearchView: View {
         
         VStack {
             if searchText.isEmpty {
-                
+
                 Text("선수 이름, 응원가를 검색해주세요")
                     .foregroundColor(Color(.systemGray))
-                    
+
             } else {
                 
                 List {
-                    ForEach(testData, id: \.self) { data in
-                        if data.contains(searchText.lowercased()) {
-                            Text(data)
+                    ForEach(autoComplete.indices, id: \.self) { index in
+                        NavigationLink(destination: SongInformationView()) {
+                            VStack {
+                                Text(autoComplete[index])
+                            }
                         }
                     }
                 }
+                .listStyle(.plain)
+                
+            }
+        }
+        
+    }
+    
+    private func didChangedSearchText() {
+        
+        autoComplete = []
+        
+        for data in testData {
+            if data.contains(searchText.lowercased()) {
+                autoComplete.append(data)
             }
         }
     }
