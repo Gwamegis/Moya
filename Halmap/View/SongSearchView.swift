@@ -11,12 +11,18 @@ struct SongSearchView: View {
     
     @State var searchText = ""
     
+    var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
+    
+    var autoComplete = [String]()
+    
     var body: some View {
         
         VStack {
             
             searchBar
                 .padding(.horizontal, 20)
+            
+            resultView
             
             Spacer()
                 .frame(maxWidth: .infinity)
@@ -31,6 +37,8 @@ struct SongSearchView: View {
             Image(systemName: "magnifyingglass")
             
             TextField("검색", text: $searchText)
+                .disableAutocorrection(true)
+                .foregroundColor(Color(.systemGray))
             
             if searchText != "" {
                 Image(systemName: "xmark.circle.fill")
@@ -50,6 +58,30 @@ struct SongSearchView: View {
         .cornerRadius(30)
         .padding(.vertical, 10)
     }
+    
+    
+    // MARK: Result View
+    var resultView: some View {
+        
+        VStack {
+            if searchText.isEmpty {
+                
+                Text("선수 이름, 응원가를 검색해주세요")
+                    .foregroundColor(Color(.systemGray))
+                    
+            } else {
+                
+                List {
+                    ForEach(testData, id: \.self) { data in
+                        if data.contains(searchText.lowercased()) {
+                            Text(data)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 
