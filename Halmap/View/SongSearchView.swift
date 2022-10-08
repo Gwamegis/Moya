@@ -9,6 +9,8 @@ import SwiftUI
 
 struct SongSearchView: View {
     
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    
     @State var searchText = ""
     @State var autoComplete = [String]()
     @State var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
@@ -19,32 +21,31 @@ struct SongSearchView: View {
         NavigationView { // TODO: Main과 연결 후 삭제
             VStack {
                 
-                searchBar
-                    .padding(.horizontal, 20)
+                navigationView
                 
                 resultView
                 
                 Spacer()
                     .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     
     // MARK: Search Bar
     var searchBar: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
             
-            TextField("검색", text: $searchText)
+            TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
                 .disableAutocorrection(true)
-                .foregroundColor(Color(.systemGray))
+                .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
                     didChangedSearchText()
                 }
             
-            if searchText != "" {
+            if !searchText.isEmpty {
                 Image(systemName: "xmark.circle.fill")
                     .imageScale(.medium)
                     .padding(3)
@@ -56,11 +57,10 @@ struct SongSearchView: View {
                     }
             }
         }
-        .frame(height: 30)
-        .padding(10)
+        .frame(height: 40)
+        .padding(.horizontal, 20)
         .background(Color(.systemGray6))
         .cornerRadius(30)
-        .padding(.vertical, 10)
     }
     
     
@@ -69,16 +69,18 @@ struct SongSearchView: View {
         
         VStack {
             if searchText.isEmpty {
-
                 Text("선수 이름, 응원가를 검색해주세요")
                     .foregroundColor(Color(.systemGray))
+                    .padding(30)
 
             } else {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
                         NavigationLink(destination: SongInformationView()) {
-                            VStack {
+                            HStack {
+                                
+                                Image(systemName: "magnifyingglass")
                                 Text(autoComplete[index])
                             }
                         }
@@ -89,6 +91,27 @@ struct SongSearchView: View {
             }
         }
         
+    }
+    
+    var navigationView: some View {
+        ZStack {
+            Rectangle()
+                .frame(height: 120)
+                .foregroundColor(.blue)
+            
+            HStack(spacing: 17) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(Color.black)
+                    .onTapGesture {
+                        self.mode.wrappedValue.dismiss()
+                    }
+                
+                searchBar
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 50)
+        }
+        .ignoresSafeArea()
     }
     
     private func didChangedSearchText() {
