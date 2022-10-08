@@ -27,11 +27,6 @@ struct SongSearchView: View {
                 navigationView
                 
                 resultView
-                    .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
-                        if value.startLocation.x < 20 && value.translation.width > 100 {
-                            self.mode.wrappedValue.dismiss()
-                        }
-                    }))
                 
                 Spacer()
                 
@@ -43,6 +38,10 @@ struct SongSearchView: View {
         .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
             if value.startLocation.x < 20 && value.translation.width > 100 {
                 self.mode.wrappedValue.dismiss()
+            }
+            
+            if value.translation.height > 100 || value.translation.height < 100 {
+                hideKeyboard()
             }
         }))
     }
