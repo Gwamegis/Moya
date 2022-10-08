@@ -12,10 +12,11 @@ struct SongSearchView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @GestureState private var dragOffset = CGSize.zero
+    @FocusState private var isFocused: Bool?
     
-    @State var searchText = ""
-    @State var autoComplete = [String]()
-    @State var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
+    @State private var searchText = ""
+    @State private var autoComplete = [String]()
+    @State private var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
     
     
     var body: some View {
@@ -56,6 +57,12 @@ struct SongSearchView: View {
                 .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
                     didChangedSearchText()
+                }
+                .focused($isFocused, equals: true)
+                .task {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isFocused = true
+                    }
                 }
             
             if !searchText.isEmpty {
