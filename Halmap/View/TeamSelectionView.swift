@@ -63,7 +63,7 @@ struct TeamSelectionView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(Color.black)
-                                .opacity(buttonPressed[idx] ? 0.7 : 0)
+                                .opacity(buttonPressed[idx] ? 0.8 : 0)
                             Image("MyTeam")
                                 .resizable()
                                 .frame(width: 83, height: 50)
