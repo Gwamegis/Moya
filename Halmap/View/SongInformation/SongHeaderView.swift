@@ -98,12 +98,4 @@ struct SongHeaderView: View {
           fatalError(error.localizedDescription)
        }
     }
-    
-    
-    struct SongHeaderView_Previews: PreviewProvider {
-        static var previews: some View {
-            
-            SongHeaderView(music: .constant(Music(songTitle: "유정인", lyric: "과메기즈가 간다")))
-        }
-    }
 }
