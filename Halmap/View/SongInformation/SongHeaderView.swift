@@ -68,7 +68,7 @@ struct SongHeaderView: View {
     struct SongHeaderView_Previews: PreviewProvider {
         static var previews: some View {
             
-            SongHeaderView(music: .constant(Music(teamName: "롯데", songName: "유정인", lyric: "과메기즈가 간다", songInfo: "안녕하세요")))
+            SongHeaderView(music: .constant(Music(teamName: "롯데", songName: "유정인", lyric: "과메기즈가 간다")))
         }
     }
 }

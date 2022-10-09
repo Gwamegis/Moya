@@ -49,5 +49,5 @@ struct TeamSong: Codable, Hashable {
 }
 
 struct Music {
-    let teamName, songName, lyric, songInfo: String
+    let teamName, songName, lyric: String
 }
