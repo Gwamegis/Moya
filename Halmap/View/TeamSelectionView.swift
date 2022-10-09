@@ -7,9 +7,25 @@
 
 import SwiftUI
 
+struct OnBoardingStartView: View {
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    
+    @State var startButton: Bool = false
+    
+    var body: some View {
+        if !isFirstLaunching {
+            MainView()
+        } else {
+            TeamSelectionView(isFirstLaunching: $isFirstLaunching)
+        }
+    }
+}
+
 struct TeamSelectionView: View {
+    @Binding var isFirstLaunching: Bool
+    
     @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 6)
-    @State var selectedTeam: String = "Doosan"
+    @State var selectedTeam: String? = nil
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
     var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "Ssg"]
@@ -53,10 +69,14 @@ struct TeamSelectionView: View {
             .padding(.bottom, 24)
             Button {
                 // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
+                withAnimation {
+                    isFirstLaunching.toggle()
+                }
                 print("선택완료")
             } label: {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.black)
+                    .opacity(selectedTeam == nil ? 0.1 : 1)
                     .frame(width: 350, height: 62)
                     .overlay(
                         Text("응원하러 가기")
@@ -64,13 +84,8 @@ struct TeamSelectionView: View {
                             .foregroundColor(.white)
                     )
             }
+            .disabled(selectedTeam == nil)
         }
         .padding(.horizontal, 20)
-    }
-}
-
-struct TeamSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        TeamSelectionView()
     }
 }
