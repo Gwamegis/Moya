@@ -12,6 +12,9 @@ struct MainView: View {
     @State private var showingStadiumSheet: Bool = false
     @State var index = 0
 
+    // SongInformationView
+    @State private var showingFullScreenCover = false
+
     
     var body: some View {
         NavigationView {
@@ -21,6 +24,20 @@ struct MainView: View {
                     .scaledToFit()
                     .ignoresSafeArea()
                 
+                // SongInformation 화면으로 가기위한 버튼입니다. 나중에 리스트에서 반복사용시 사용해주세요
+                // <<<<<<<<<<<<<
+                HStack{
+                    Spacer()
+                    Button("노래 정보"){
+                        self.showingFullScreenCover.toggle()
+                    }
+                    .fullScreenCover(isPresented: $showingFullScreenCover){
+                        SongInformationView()
+                    }
+                }
+                // >>>>>>>>>>>>>
+                
+
                 TabView(selection: $index) {
                     List{
                         ForEach(dataManager.playerList.indices, id: \.self) { player in

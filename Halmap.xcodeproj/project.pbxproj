@@ -116,8 +116,8 @@
 		A81FFC8E28F1770500B0FC7C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				A81FFC8C28F1770100B0FC7C /* MainView.swift */,
+				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
 				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
