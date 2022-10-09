@@ -74,6 +74,9 @@ struct MainView: View {
                     .padding(.leading, 160)
                     .sheet(isPresented: $showingTeamChaingView) {
                         TeamChangingView(changedTeam: $selectedTeam)
+                            .onDisappear{
+                                dataManager.setList(teamName: selectedTeam)
+                            }
                     }
 
                 }
