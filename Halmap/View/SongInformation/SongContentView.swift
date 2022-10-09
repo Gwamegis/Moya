@@ -29,6 +29,6 @@ struct SongContentView: View {
 
 struct SongContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SongContentView(music: .constant(Music(teamName: "롯데", songName: "유정인", lyric: "과메기즈가 간다")))
+        SongContentView(music: .constant(Music(songName: "유정인", lyric: "과메기즈가 간다")))
     }
 }
