@@ -9,7 +9,12 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var dataManager = DataManager()
+    @State private var showingStadiumSheet: Bool = false
     @State var index = 0
+
+    // SongInformationView
+    @State private var showingFullScreenCover = false
+
     
     var body: some View {
         NavigationView {
@@ -19,6 +24,18 @@ struct MainView: View {
                     .scaledToFit()
                     .ignoresSafeArea()
                 
+                // SongInformation 화면으로 가기위한 버튼입니다. 나중에 리스트에서 반복사용시 사용해주세요
+                HStack{
+                    Spacer()
+                    Button("노래 정보"){
+                        self.showingFullScreenCover.toggle()
+                    }
+                    .fullScreenCover(isPresented: $showingFullScreenCover){
+                        SongInformationView(music: Music(teamName: "", songName: "", lyric: "", songInfo: ""))
+                    }
+                }
+                
+
                 TabView(selection: $index) {
                     List{
                         ForEach(dataManager.playerList.indices, id: \.self) { player in
@@ -54,11 +71,12 @@ struct MainView: View {
                         Image(systemName: "square.grid.2x2.fill").foregroundColor(.white)
                     }
                     .padding(.leading, 160)
+
                 }
                 
                 ToolbarItemGroup (placement: .navigationBarTrailing) {
                     Button {
-                        print("button click")
+                        self.showingStadiumSheet.toggle()
                     } label: {
                         Image(systemName: "map.fill").foregroundColor(.white)
                     }
@@ -66,6 +84,9 @@ struct MainView: View {
                     NavigationLink(destination: SongSearchView()) {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.white)
+                    }
+                    .sheet(isPresented: $showingStadiumSheet) {
+                        StadiumListSheetView()
                     }
                 }
             }

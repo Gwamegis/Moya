@@ -22,7 +22,7 @@ struct TabBarItemView: View {
             VStack {
                 Spacer()
                 Text(tabBarItemName)
-                    .font(Font.HalmapFont.CustomTitleMedium)
+                    .font(Font.Halmap.CustomTitleMedium)
                     .foregroundColor(Color.white)
                 if currentTab == tab {
                     Color.red

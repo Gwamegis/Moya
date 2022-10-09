@@ -14,10 +14,11 @@ struct SongContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             Text("가사")
-                .foregroundColor(Color("songLabel"))
+                .foregroundColor(Color("LotteBackground"))
+                .font(.caption)
                 .bold()
             Text(music.lyric)
-                .foregroundColor(Color.white)
+                .foregroundColor(.black)
                 .font(.body)
             Spacer()
         }.padding([.horizontal, .top])
