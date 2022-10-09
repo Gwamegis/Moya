@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct TeamSelectionView: View {
-    @State var buttonPressed: Bool = false
-    @State var selectedTeam: String? = nil
+    @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 6)
+    @State var selectedTeam: String = "Doosan"
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
     var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "Ssg"]
@@ -26,29 +26,26 @@ struct TeamSelectionView: View {
             .padding(.bottom, 40)
             .font(.system(size: 20, weight: .medium))
             LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(teamLogo, id: \.self) { team in
+                ForEach(teamLogo.indices, id: \.self) { idx in
                     Button {
-                        // TODO: - 팀 선택시 효과 추가
-                        if self.buttonPressed {
-                            self.buttonPressed = false
-                        } else {
-                            self.buttonPressed = true
-                            self.selectedTeam = team
+                        withAnimation {
+                            buttonPressed = [Bool](repeating: false, count: 6)
+                            self.buttonPressed[idx].toggle()
+                            self.selectedTeam = teamLogo[idx]
                         }
-                        print(selectedTeam)
                     } label: {
                         ZStack {
-                            Image(team)
+                            Image(teamLogo[idx])
                                 .resizable()
                                 .frame(width: 165, height: 158)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(Color.black)
-                                .opacity(buttonPressed ? 0.7 : 0)
+                                .opacity(buttonPressed[idx] ? 0.7 : 0)
                             Image("MyTeam")
                                 .resizable()
                                 .frame(width: 83, height: 50)
-                                .opacity(buttonPressed ? 1 : 0)
+                                .opacity(buttonPressed[idx] ? 1 : 0)
                         }
                     }
                 }
@@ -56,11 +53,17 @@ struct TeamSelectionView: View {
             .padding(.bottom, 24)
             Button {
                 // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
+                print("선택완료")
             } label: {
                 RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(Color.black)
                     .frame(width: 350, height: 62)
+                    .overlay(
+                        Text("응원하러 가기")
+                            .font(.Halmap.CustomTitleBold)
+                            .foregroundColor(.white)
+                    )
             }
-
         }
         .padding(.horizontal, 20)
     }
