@@ -7,24 +7,9 @@
 
 import SwiftUI
 
-struct OnBoardingStartView: View {
-    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
-    
-    @State var startButton: Bool = false
-    
-    var body: some View {
-        if !isFirstLaunching {
-            MainView()
-        } else {
-            TeamSelectionView(isFirstLaunching: $isFirstLaunching)
-        }
-    }
-}
-
-struct TeamSelectionView: View {
-    @AppStorage("selectedTeam") var finalSelectedTeam: String = ""
-    @Binding var isFirstLaunching: Bool
-    
+struct TeamChangingView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Binding var changedTeam: String
     @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 6)
     @State var selectedTeam: String? = nil
     
@@ -76,8 +61,8 @@ struct TeamSelectionView: View {
             Button {
                 // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
                 withAnimation {
-                    isFirstLaunching.toggle()
-                    finalSelectedTeam = selectedTeam ?? "Lotte"
+                    self.presentationMode.wrappedValue.dismiss()
+                    changedTeam = selectedTeam ?? "Hanhwa"
                 }
                 print("선택완료")
             } label: {
