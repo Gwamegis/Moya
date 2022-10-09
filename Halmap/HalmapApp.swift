@@ -15,7 +15,6 @@ struct HalmapApp: App {
         WindowGroup {
             MainView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-//            SongInformationView()
         }
     }
 }
