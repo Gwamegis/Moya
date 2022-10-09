@@ -22,9 +22,10 @@ struct TabBarItemView: View {
             VStack {
                 Spacer()
                 Text(tabBarItemName)
-                    .foregroundColor(Color.black)
+                    .font(Font.HalmapFont.CustomTitleMedium)
+                    .foregroundColor(Color.white)
                 if currentTab == tab {
-                    Color.black
+                    Color.red
                         .frame(width: 68, height: 4)
                         .matchedGeometryEffect(id: "underline",
                                                in: namespace,
