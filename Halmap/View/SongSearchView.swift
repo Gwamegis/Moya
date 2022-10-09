@@ -11,29 +11,26 @@ struct SongSearchView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @ObservedObject var dataManager = DataManager()
+    
     @GestureState private var dragOffset = CGSize.zero
     @FocusState private var isFocused: Bool?
     
     @State private var searchText = ""
     @State private var autoComplete = [String]()
-    @State private var testData = ["안녕하세요", "두산", "이지원", "이쏘이", "정인이", "티나", "안나", "엘리", "예니", "dkssud"]
-    
     
     var body: some View {
         
-        NavigationView {
-            VStack {
-                
-                navigationView
-                
-                resultView
-                
-                Spacer()
-                
-            }
-            .ignoresSafeArea()
-            .frame(maxWidth: .infinity)
+        VStack {
+            
+            navigationView
+            
+            resultView
+            
+            Spacer()
         }
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity)
         .navigationBarBackButtonHidden(true)
         .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
             if value.startLocation.x < 20 && value.translation.width > 100 {
@@ -88,10 +85,14 @@ struct SongSearchView: View {
         
         VStack {
             if searchText.isEmpty {
-                Text("선수 이름, 응원가를 검색해주세요")
-                    .foregroundColor(Color(.systemGray))
-                    .padding(30)
-
+                VStack {
+                    Text("선수 이름, 응원가를 검색해주세요")
+                        .foregroundColor(Color(.systemGray))
+                        .padding(30)
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .background(Color.white)
             } else {
                 
                 List {
@@ -119,11 +120,11 @@ struct SongSearchView: View {
         ZStack {
             Rectangle()
                 .frame(height: 120)
-                .foregroundColor(.blue)
+                .foregroundColor(.HalmacBackground)
             
             HStack(spacing: 17) {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color.white)
                     .onTapGesture {
                         self.mode.wrappedValue.dismiss()
                     }
@@ -133,18 +134,24 @@ struct SongSearchView: View {
             .padding(.horizontal, 20)
             .padding(.top, 50)
         }
-        .ignoresSafeArea()
     }
     
     private func didChangedSearchText() {
         
         autoComplete = []
         
-        for data in testData {
-            if data.contains(searchText.lowercased()) {
-                autoComplete.append(data)
+        for data in dataManager.playerList {
+            if data.playerName.contains(searchText.lowercased()) {
+                autoComplete.append(data.playerName)
             }
         }
+        
+        for data in dataManager.teamSongList {
+            if data.songName.contains(searchText.lowercased()) {
+                autoComplete.append(data.songName)
+            }
+        }
+        
     }
     
 }

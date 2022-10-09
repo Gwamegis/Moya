@@ -62,10 +62,10 @@ struct MainView: View {
                     } label: {
                         Image(systemName: "map.fill").foregroundColor(.white)
                     }
-                    Button {
-                        print("button click")
-                    } label: {
-                        Image(systemName: "magnifyingglass").foregroundColor(.white)
+                    
+                    NavigationLink(destination: SongSearchView()) {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.white)
                     }
                 }
             }
