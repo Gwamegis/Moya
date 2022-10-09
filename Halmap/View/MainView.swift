@@ -68,20 +68,17 @@ struct MainView: View {
             .toolbar {
                 ToolbarItemGroup (placement: .navigationBarLeading) {
                     Button {
-                        // print("button click")
-                        self.showingStadiumSheet.toggle()
+                        print("button click")
                     } label: {
                         Image(systemName: "square.grid.2x2.fill").foregroundColor(.white)
                     }
                     .padding(.leading, 160)
-                    .sheet(isPresented: $showingStadiumSheet) {
-                        StadiumListSheetView()
-                    }
+
                 }
                 
                 ToolbarItemGroup (placement: .navigationBarTrailing) {
                     Button {
-                        print("button click")
+                        self.showingStadiumSheet.toggle()
                     } label: {
                         Image(systemName: "map.fill").foregroundColor(.white)
                     }
@@ -89,6 +86,9 @@ struct MainView: View {
                         print("button click")
                     } label: {
                         Image(systemName: "magnifyingglass").foregroundColor(.white)
+                    }
+                    .sheet(isPresented: $showingStadiumSheet) {
+                        StadiumListSheetView()
                     }
                 }
             }
