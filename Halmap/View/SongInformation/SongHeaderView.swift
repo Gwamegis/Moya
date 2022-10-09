@@ -67,6 +67,9 @@ struct SongHeaderView: View {
             configureSoundAsset(music.songTitle)
         }
         .onDisappear(){
+            guard let player = audioPlayer else {
+                return
+            }
             audioPlayer.stop()
         }
     }
@@ -92,6 +95,17 @@ struct SongHeaderView: View {
             print("불러오기 완료")
         }
     }
+    
+//    func stopSoundAsset(){
+//        do {
+//            if let sound = sound {
+//                audioPlayer = try AVAudioPlayer(data: sound)
+//                audioPlayer.stop()
+//            }
+//        } catch {
+//           fatalError(error.localizedDescription)
+//        }
+//    }
  
     func playSoundAsset() {
        do {
