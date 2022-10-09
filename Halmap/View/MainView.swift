@@ -8,8 +8,75 @@
 import SwiftUI
 
 struct MainView: View {
+    @ObservedObject var dataManager = DataManager()
+    @State var index = 0
+    
+    init() {
+        let appearance = UINavigationBarAppearance()
+            appearance.configureWithTransparentBackground()
+            appearance.backgroundColor = .clear
+            appearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = appearance
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            ZStack(alignment: .top) {
+                Image("LotteMainTop")
+                    .resizable()
+                    .scaledToFit()
+                    .ignoresSafeArea()
+                
+                TabView(selection: $index) {
+                    List{
+                        ForEach(dataManager.playerList.indices, id: \.self) { player in
+                            Text("\(dataManager.playerList[player].playerName)")
+                        }
+                    }
+                    .listStyle(.plain)
+                    .listRowSeparatorTint(Color.gray.opacity(0.2))
+                    .tag(0)
+                    
+                    List{
+                        ForEach(dataManager.teamSongList.indices, id: \.self) { teams in
+                            Text("\(dataManager.teamSongList[teams].songName)")
+                        }
+                    }
+                    .listStyle(.plain)
+                    .listRowSeparatorTint(Color.gray.opacity(0.2))
+                    .tag(1)
+                    
+                }
+                .padding(.top, 50)
+                
+                TabBarView(currentTab: $index).padding(.top, 12)
+            }
+            .navigationTitle(Text(""))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItemGroup (placement: .navigationBarLeading) {
+                    Button {
+                        print("button click")
+                    } label: {
+                        Image(systemName: "square.grid.2x2.fill").foregroundColor(.white)
+                    }
+                    .padding(.leading, 160)
+                }
+                
+                ToolbarItemGroup (placement: .navigationBarTrailing) {
+                    Button {
+                        print("button click")
+                    } label: {
+                        Image(systemName: "map.fill").foregroundColor(.white)
+                    }
+                    Button {
+                        print("button click")
+                    } label: {
+                        Image(systemName: "magnifyingglass").foregroundColor(.white)
+                    }
+                }
+            }
+        }
     }
 }
 
