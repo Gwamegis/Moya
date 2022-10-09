@@ -1,9 +1,10 @@
 {
   "data" : [
     {
-      "filename" : "강진성.m4a",
+      "compression-type" : "automatic",
+      "filename" : "sound.mp3",
       "idiom" : "universal",
-      "universal-type-identifier" : "public.m4a"
+      "universal-type-identifier" : "public.mp3"
     }
   ],
   "info" : {

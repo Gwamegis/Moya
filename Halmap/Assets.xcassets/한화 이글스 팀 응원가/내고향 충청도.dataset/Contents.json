@@ -1,8 +1,10 @@
 {
   "data" : [
     {
+      "compression-type" : "automatic",
       "filename" : "내고향 충청도.mp3",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.mp3"
     }
   ],
   "info" : {

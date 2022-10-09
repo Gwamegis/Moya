@@ -2,7 +2,8 @@
   "data" : [
     {
       "filename" : "Rock To The DOOSAN.m4a",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.m4a"
     }
   ],
   "info" : {
