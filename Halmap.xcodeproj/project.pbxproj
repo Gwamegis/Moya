@@ -91,6 +91,7 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
+				F9B95BBC28F2733200728048 /* Data */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
 				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
@@ -120,8 +121,6 @@
 				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
 				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
-				F9B95BB828F271A100728048 /* DataManager.swift */,
-				F9B95BBA28F271B800728048 /* Model.swift */,
 				A81FFC9A28F1778200B0FC7C /* Map */,
 			);
 			path = View;
@@ -172,6 +171,15 @@
 				EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */,
 			);
 			path = CustomTabBar;
+			sourceTree = "<group>";
+		};
+		F9B95BBC28F2733200728048 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F9B95BB828F271A100728048 /* DataManager.swift */,
+				F9B95BBA28F271B800728048 /* Model.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
