@@ -10,15 +10,15 @@ import Foundation
 class DataManager: ObservableObject {
     
     var teams: [Team] = []
-    var teamSongList: [TeamSong] = []
-    var playerList: [Player] = []
+    @Published var teamSongList: [TeamSong] = []
+    @Published var playerList: [Player] = []
     
     init() {
         loadData()
     }
     
     func loadData(){
-        let fileNm: String = "test"
+        let fileNm: String = "Music"
         let extensionType = "json"
         
         guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
@@ -26,7 +26,7 @@ class DataManager: ObservableObject {
         
         do {
             let teamArray = try JSONDecoder().decode(TeamList.self, from: jsonData)
-            self.teams = teamArray.teamLists
+            teams = teamArray.teamLists
             
             // TODO: 데이터 불러오는 위치 다시 생각해보기
             setList(id: 0)

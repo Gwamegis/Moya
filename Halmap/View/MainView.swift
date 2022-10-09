@@ -24,33 +24,30 @@ struct MainView: View {
                     .scaledToFit()
                     .ignoresSafeArea()
                 
-                // SongInformation 화면으로 가기위한 버튼입니다. 나중에 리스트에서 반복사용시 사용해주세요
-                // <<<<<<<<<<<<<
-                HStack{
-                    Spacer()
-                    Button("노래 정보"){
-                        self.showingFullScreenCover.toggle()
-                    }
-                    .fullScreenCover(isPresented: $showingFullScreenCover){
-                        SongInformationView()
-                    }
-                }
-                // >>>>>>>>>>>>>
-                
-
                 TabView(selection: $index) {
-                    List{
-                        ForEach(dataManager.playerList.indices, id: \.self) { player in
-                            Text("\(dataManager.playerList[player].playerName)")
+                    List {
+                        ForEach(dataManager.teamSongList, id: \.self) { team in
+                            let music = Music(songTitle: team.songTitle, lyric: team.lyric)
+                            
+                            NavigationLink(destination: SongInformationView(music: music)) {
+                                Text(team.songTitle)
+                            }
+
                         }
                     }
+                    
                     .listStyle(.plain)
                     .listRowSeparatorTint(Color.gray.opacity(0.2))
                     .tag(0)
                     
-                    List{
-                        ForEach(dataManager.teamSongList.indices, id: \.self) { teams in
-                            Text("\(dataManager.teamSongList[teams].songName)")
+                    List {
+                        ForEach(dataManager.playerList, id: \.self) { player in
+                            
+                            let music = Music(songTitle: player.playerName, lyric: player.lyric)
+                            
+                            NavigationLink(destination: SongInformationView(music: music)) {
+                                Text(player.playerName)
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -82,10 +79,10 @@ struct MainView: View {
                     } label: {
                         Image(systemName: "map.fill").foregroundColor(.white)
                     }
-                    Button {
-                        print("button click")
-                    } label: {
-                        Image(systemName: "magnifyingglass").foregroundColor(.white)
+                    
+                    NavigationLink(destination: SongSearchView()) {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.white)
                     }
                     .sheet(isPresented: $showingStadiumSheet) {
                         StadiumListSheetView()
@@ -93,6 +90,7 @@ struct MainView: View {
                 }
             }
         }
+        .accentColor(.white)
     }
 }
 
