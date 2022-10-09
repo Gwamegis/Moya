@@ -7,5 +7,12 @@
 		<string>Pretendard-Bold.otf</string>
 		<string>Pretendard-Medium.otf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>LaunchScreen</string>
+		<key>UILaunchScreen</key>
+		<dict/>
+	</dict>
 </dict>
 </plist>
