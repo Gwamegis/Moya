@@ -9,14 +9,12 @@ import SwiftUI
 
 struct SongHeaderView: View {
     
-    var songType: String = "견제곡"
-    var title: String = "유정인 응원가"
-    var description: String = "과메기즈 홈런타자 유정인이 나가신다"
+    @Binding var music: Music
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             HStack{
-                Text(songType)
+                Text(music.teamName)
                     .foregroundColor(Color("songLabel"))
                     .bold()
                 Spacer()
@@ -28,10 +26,10 @@ struct SongHeaderView: View {
             }
             HStack{
                 VStack(alignment: .leading, spacing: 10){
-                    Text(title)
+                    Text(music.songName)
                         .font(.title)
                         .bold()
-                    Text(description)
+                    Text(music.songInfo)
                 }
                 
                 Spacer()
@@ -48,6 +46,7 @@ struct SongHeaderView: View {
 
 struct SongHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        SongHeaderView()
+        
+        SongHeaderView(music: .constant(Music(teamName: "롯데", songName: "유정인", lyric: "과메기즈가 간다", songInfo: "안녕하세요")))
     }
 }

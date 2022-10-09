@@ -47,3 +47,7 @@ struct TeamSong: Codable, Hashable {
         case lyric, songInfo
     }
 }
+
+struct Music {
+    let teamName, songName, lyric, songInfo: String
+}
