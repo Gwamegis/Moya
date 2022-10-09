@@ -22,7 +22,7 @@ struct SongHeaderView: View {
             Image("\(selectedTeam)Background")
                 .resizable()
                 .scaledToFit()
-
+            
             HStack(spacing: 20){
                 VStack(alignment: .leading, spacing: 10){
                     // TODO: - System Style to Custom Style
