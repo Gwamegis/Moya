@@ -78,6 +78,7 @@ struct TeamSelectionView: View {
                 withAnimation {
                     isFirstLaunching.toggle()
                     finalSelectedTeam = selectedTeam ?? "Lotte"
+                    Color.setColor(selectedTeam ?? "Lotte")
                 }
                 print("선택완료")
             } label: {

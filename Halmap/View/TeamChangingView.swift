@@ -63,6 +63,7 @@ struct TeamChangingView: View {
                 withAnimation {
                     self.presentationMode.wrappedValue.dismiss()
                     changedTeam = selectedTeam ?? "Hanwha"
+                    Color.setColor(selectedTeam ?? "Hanwha")
                 }
                 print("선택완료")
             } label: {

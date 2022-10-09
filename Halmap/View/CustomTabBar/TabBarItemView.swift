@@ -25,7 +25,7 @@ struct TabBarItemView: View {
                     .font(Font.Halmap.CustomTitleMedium)
                     .foregroundColor(Color.white)
                 if currentTab == tab {
-                    Color.red
+                    Color.HalmacPoint
                         .frame(width: 92, height: 4)
                         .matchedGeometryEffect(id: "underline",
                                                in: namespace,
