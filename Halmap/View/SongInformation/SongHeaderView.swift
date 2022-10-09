@@ -10,6 +10,7 @@ import AVFoundation
 
 struct SongHeaderView: View {
     
+    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Binding var music: Music
     @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
@@ -18,13 +19,14 @@ struct SongHeaderView: View {
     
     var body: some View {
         ZStack{
-            Image("lotteBackground")
+            Image("\(selectedTeam)Background")
                 .resizable()
-            
+                .scaledToFit()
+
             HStack(spacing: 20){
                 VStack(alignment: .leading, spacing: 10){
-                    Spacer()
                     // TODO: - System Style to Custom Style
+                    Spacer()
                     Text(music.songTitle)
                         .font(.title2)
                         .foregroundColor(.white)
@@ -49,7 +51,7 @@ struct SongHeaderView: View {
                     }, label: {
                         ZStack{
                             Rectangle()
-                                .foregroundColor(Color("LotteBackground"))
+                                .foregroundColor(Color("\(selectedTeam)Background"))
                                 .cornerRadius(20)
                                 .frame(width: 83, height: 44)
                             
@@ -63,6 +65,9 @@ struct SongHeaderView: View {
         }
         .onAppear(){
             configureSoundAsset(music.songTitle)
+        }
+        .onDisappear(){
+            audioPlayer.stop()
         }
     }
     

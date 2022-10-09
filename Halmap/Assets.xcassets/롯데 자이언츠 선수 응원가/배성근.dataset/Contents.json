@@ -1,8 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "배성근.m4a",
-      "idiom" : "universal"
+      "filename" : "배성근.m4a",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.m4a"
     }
   ],
   "info" : {
