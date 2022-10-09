@@ -2,7 +2,7 @@
 //  StadiumListSheetView.swift
 //  Halmap
 //
-//  Created by Kyubo Shim on 2022/10/08.
+//  Created by Gary Shim on 2022/10/08.
 //
 
 import SwiftUI
@@ -15,7 +15,7 @@ struct StadiumListSheetView: View {
         NavigationView {
             VStack {
                 Text("야구장 지도")
-                    .fontWeight(.heavy)
+                    .font(Font.HalmapFont.CustomTitleBold)
                     .padding(EdgeInsets(top: 20, leading: 0, bottom: 40, trailing: 0))
                 //                    .padding(.trailing, UIScreen.main.bounds.width - 120)
                 
@@ -23,6 +23,7 @@ struct StadiumListSheetView: View {
                 List(messages, id: \.self) { message in
                     NavigationLink(destination: StadiumMapView(message: message)) {
                         Text(message)
+                            .font(Font.HalmapFont.CustomTitleMedium)
                             .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                     }
                 }
