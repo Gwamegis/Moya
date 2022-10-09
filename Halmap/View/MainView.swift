@@ -11,14 +11,6 @@ struct MainView: View {
     @ObservedObject var dataManager = DataManager()
     @State var index = 0
     
-    init() {
-        let appearance = UINavigationBarAppearance()
-            appearance.configureWithTransparentBackground()
-            appearance.backgroundColor = .clear
-            appearance.shadowColor = .clear
-            UINavigationBar.appearance().standardAppearance = appearance
-    }
-    
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
@@ -47,9 +39,10 @@ struct MainView: View {
                     .tag(1)
                     
                 }
-                .padding(.top, 50)
+                .padding(.top, 65)
                 
-                TabBarView(currentTab: $index).padding(.top, 12)
+                TabBarView(currentTab: $index)
+                    .padding(.top, 28)
             }
             .navigationTitle(Text(""))
             .navigationBarTitleDisplayMode(.inline)
