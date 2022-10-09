@@ -12,12 +12,14 @@ struct StadiumMapView: View {
     let message: String
     
     var body: some View {
-        VStack {
-            Text ("좌석 배치도")
+        VStack(alignment: .leading) {
+            Text("좌석 배치도")
                 .font(Font.HalmapFont.CustomCaptionBold)
+                .padding(EdgeInsets(top: 40, leading: 20, bottom: 0, trailing: 0))
             Image(message)
                 .resizable()
                 .scaledToFit()
+            Spacer()
             
         }
         .navigationBarBackButtonHidden(true)
