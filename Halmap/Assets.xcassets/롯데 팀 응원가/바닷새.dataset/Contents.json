@@ -2,7 +2,8 @@
   "data" : [
     {
       "filename" : "바닷새.m4a",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.m4a"
     }
   ],
   "info" : {

@@ -1,8 +1,10 @@
 {
   "data" : [
     {
+      "compression-type" : "automatic",
       "filename" : "고승민 응원가.mov",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.mov"
     }
   ],
   "info" : {
