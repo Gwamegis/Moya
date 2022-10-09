@@ -10,12 +10,11 @@ import SwiftUI
 // static var 변수명 = Color("에셋색상파일명")
 
 extension Color {
-    enum HalmapColor {
-        static var LotteBackground = Color("LotteBackground")
-        static var LottePoint = Color("LottePoint")
-        static var HanwhaBackground = Color("HanwhaBackground")
-        static var HanwhaPoint = Color("HanwhaPoint")
-        static var DoosanBackground = Color("DoosanBackground")
-        static var DoosanPoint = Color("DoosanPoint")
+    static var HalmacPoint = Color("LottePoint")
+    static var HalmacBackground = Color("LotteBackground")
+    
+    static func setColor(_ teamName: String) {
+        Color.HalmacPoint = Color("\(teamName)Point")
+        Color.HalmacBackground = Color("\(teamName)Background")
     }
 }
