@@ -101,7 +101,7 @@ struct SongSearchView: View {
                             HStack {
                                 
                                 Image(systemName: "magnifyingglass")
-                                Text(autoComplete[index].songName)
+                                Text(autoComplete[index].songTitle)
                             }
                             .padding(.horizontal, 20)
                             .frame(height: 45)
@@ -142,14 +142,14 @@ struct SongSearchView: View {
         
         for data in dataManager.playerList {
             if data.playerName.contains(searchText.lowercased()) {
-                let music = Music(songName: data.playerName, lyric: data.lyric)
+                let music = Music(songTitle: data.playerName, lyric: data.lyric)
                 autoComplete.append(music)
             }
         }
         
         for data in dataManager.teamSongList {
-            if data.songName.contains(searchText.lowercased()) {
-                let music = Music( songName: data.songInfo, lyric: data.lyric)
+            if data.songTitle.contains(searchText.lowercased()) {
+                let music = Music( songTitle: data.songInfo, lyric: data.lyric)
                 autoComplete.append(music)
             }
         }

@@ -5,12 +5,12 @@
       "teamName": "한화이글스",
       "teamSongs": [
         {
-          "songName": "최강두산 승리하라",
+          "songTitle": "최강두산 승리하라",
           "lyric": "어쩌고",
           "songInfo": "안타를 칠때까지 부른다"
         },
         {
-          "songName": "최강두산 승리하라",
+          "songTitle": "최강두산 승리하라",
           "lyric": "어쩌고",
           "songInfo": "안타를 칠때까지 부른다"
         }
@@ -33,12 +33,12 @@
       "teamName": "롯데자이언츠",
       "teamSongs": [
         {
-          "songName": "최강롯데 승리하라1",
+          "songTitle": "최강롯데 승리하라1",
           "lyric": "어쩌고",
           "songInfo": "안타를 칠때까지 부른다"
         },
         {
-          "songName": "최강롯데 승리하라2",
+          "songTitle": "최강롯데 승리하라2",
           "lyric": "어쩌고",
           "songInfo": "안타를 칠때까지 부른다"
         }
