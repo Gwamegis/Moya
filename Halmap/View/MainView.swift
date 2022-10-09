@@ -33,8 +33,14 @@ struct MainView: View {
                             let music = Music(songTitle: team.songTitle, lyric: team.lyric)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
-                                Text(team.songTitle)
-                            }
+                                                            VStack {
+                                                                Text(team.songTitle)
+                                                                    .font(Font.Halmap.CustomTitleMedium)
+                                                            }
+                                                            .padding(.horizontal, 20)
+                                                            .frame(height: 45)
+                                                        }
+                                                        .listRowSeparator(.hidden)
 
                         }
                     }
@@ -49,8 +55,14 @@ struct MainView: View {
                             let music = Music(songTitle: player.playerName, lyric: player.lyric)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
-                                Text(player.playerName)
-                            }
+                                                            VStack {
+                                                                Text(music.songTitle)
+                                                                    .font(Font.Halmap.CustomTitleMedium)
+                                                            }
+                                                            .padding(.horizontal, 20)
+                                                            .frame(height: 45)
+                                                        }
+                                                        .listRowSeparator(.hidden)
                         }
                     }
                     .listStyle(.plain)
