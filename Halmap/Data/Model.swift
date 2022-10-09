@@ -40,14 +40,14 @@ struct Player: Codable, Hashable {
 }
 
 struct TeamSong: Codable, Hashable {
-    let songName, lyric, songInfo: String
+    let songTitle, lyric, songInfo: String
 
     enum CodingKeys: String, CodingKey {
-        case songName = "songName"
+        case songTitle = "songTitle"
         case lyric, songInfo
     }
 }
 
 struct Music {
-    let songName, lyric: String
+    let songTitle, lyric: String
 }

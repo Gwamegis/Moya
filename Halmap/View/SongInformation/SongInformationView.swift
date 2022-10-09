@@ -35,12 +35,12 @@ struct SongInformationView: View {
                 VStack(alignment: .leading, spacing: 10){
                     Spacer()
                     // TODO: - System Style to Custom Style
-                    Text(music.songName)
+                    Text(music.songTitle)
                         .font(.caption)
                         .foregroundColor(Color("songLabel"))
                         .bold()
                     // TODO: - System Style to Custom Style
-                    Text(music.songName)
+                    Text(music.songTitle)
                         .font(.title2)
                         .foregroundColor(.white)
                         .bold()
@@ -82,6 +82,6 @@ struct SongInformationView: View {
 
 struct SongInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        SongInformationView(music: Music(songName: "노래이름", lyric: "가사가사"))
+        SongInformationView(music: Music(songTitle: "노래이름", lyric: "가사가사"))
     }
 }

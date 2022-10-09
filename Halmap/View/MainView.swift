@@ -28,7 +28,7 @@ struct MainView: View {
                     List {
                         ForEach(dataManager.playerList, id: \.self) { player in
                             
-                            let music = Music(songName: player.playerName, lyric: player.lyric)
+                            let music = Music(songTitle: player.playerName, lyric: player.lyric)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
                                 Text(player.playerName)
@@ -42,10 +42,10 @@ struct MainView: View {
                     
                     List {
                         ForEach(dataManager.teamSongList, id: \.self) { team in
-                            let music = Music(songName: team.songName, lyric: team.lyric)
+                            let music = Music(songTitle: team.songTitle, lyric: team.lyric)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
-                                Text(team.songName)
+                                Text(team.songTitle)
                             }
 
                         }
