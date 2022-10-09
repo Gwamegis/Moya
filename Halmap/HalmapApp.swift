@@ -10,6 +10,11 @@ import SwiftUI
 @main
 struct HalmapApp: App {
     let persistenceController = PersistenceController.shared
+    
+    init() {
+        let teamName = UserDefaults.standard.string(forKey: "team") ?? "Hanwha"
+        Color.setColor(teamName)
+    }
 
     var body: some Scene {
         WindowGroup {

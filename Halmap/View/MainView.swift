@@ -10,7 +10,8 @@ import SwiftUI
 struct MainView: View {
     @ObservedObject var dataManager = DataManager()
     @State private var showingStadiumSheet: Bool = false
-    @State var index = 0
+    @State var tabIndex = 0
+    @State var teamName = ""
 
     // SongInformationView
     @State private var showingFullScreenCover = false
@@ -19,7 +20,7 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
-                Image("LotteMainTop")
+                Image("\(teamName)MainTop")
                     .resizable()
                     .scaledToFit()
                     .ignoresSafeArea()
@@ -38,7 +39,7 @@ struct MainView: View {
                 // >>>>>>>>>>>>>
                 
 
-                TabView(selection: $index) {
+                TabView(selection: $tabIndex) {
                     List{
                         ForEach(dataManager.playerList.indices, id: \.self) { player in
                             Text("\(dataManager.playerList[player].playerName)")
@@ -60,7 +61,7 @@ struct MainView: View {
                 }
                 .padding(.top, 65)
                 
-                TabBarView(currentTab: $index)
+                TabBarView(currentTab: $tabIndex)
                     .padding(.top, 28)
             }
             .navigationTitle(Text(""))
@@ -92,6 +93,9 @@ struct MainView: View {
                     }
                 }
             }
+        }
+        .onAppear() {
+            teamName = UserDefaults.standard.string(forKey: "team") ?? "Hanwha"
         }
     }
 }
