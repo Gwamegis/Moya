@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TabBarView: View {
+    
     @Binding var currentTab: Int
     @Namespace var namespace
     
@@ -21,7 +22,7 @@ struct TabBarView: View {
                                   self.tabBarOptions)),
                         id: \.0,
                         content: { index, name in
-                    TabBarItemView(tabBarItemName: name,
+                            TabBarItemView(tabBarItemName: name,
                                    currentTab: self.$currentTab,
                                    namespace: namespace.self,
                                    tab: index)
@@ -31,7 +32,6 @@ struct TabBarView: View {
         }
         .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 24))
         // FIXME: - background 생략시 탭바가 아래로 밀리는 현상 발생
-//        .background(.clear)
         .frame(height: 32)
     }
 }
