@@ -24,6 +24,8 @@
 		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
 		A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */; };
 		A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */; };
+		EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */; };
+		EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */; };
 		B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B2699E0C28F1CB7E00267A4F /* Pretendard-Bold.otf */; };
 		B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B2699E0F28F1CB9700267A4F /* Pretendard-Medium.otf */; };
 /* End PBXBuildFile section */
@@ -47,6 +49,8 @@
 		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
 		A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Font.swift"; sourceTree = "<group>"; };
 		A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Color.swift"; sourceTree = "<group>"; };
+		EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
+		EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		B2699E0B28F1CB5100267A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B2699E0C28F1CB7E00267A4F /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		B2699E0F28F1CB9700267A4F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 			children = (
 				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				A81FFC8C28F1770100B0FC7C /* MainView.swift */,
+				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
 				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
 				A81FFC9A28F1778200B0FC7C /* Map */,
@@ -146,11 +151,13 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		A81FFCA128F1B64700B0FC7C /* Resources */ = {
+		EEBC26A528F1CE0400BD5B3D /* CustomTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */,
+				EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */,
 			);
-			path = Resources;
+			path = CustomTabBar;
 			sourceTree = "<group>";
 		};
 		B2699E0E28F1CB8800267A4F /* Font */ = {
@@ -236,6 +243,7 @@
 			files = (
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
+				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */,
@@ -243,6 +251,7 @@
 				87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
+				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				A81FFC8D28F1770100B0FC7C /* MainView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
