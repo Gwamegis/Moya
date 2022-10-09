@@ -1,8 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "김민수.m4a",
-      "idiom" : "universal"
+      "filename" : "김민수.m4a",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.m4a"
     }
   ],
   "info" : {

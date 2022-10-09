@@ -1,8 +1,9 @@
 {
   "data" : [
     {
-      "filename" : "안중열.m4a",
-      "idiom" : "universal"
+      "filename" : "안중열.m4a",
+      "idiom" : "universal",
+      "universal-type-identifier" : "public.m4a"
     }
   ],
   "info" : {

@@ -9,12 +9,13 @@ import SwiftUI
 
 struct SongContentView: View {
     
+    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Binding var music: Music
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             Text("가사")
-                .foregroundColor(Color("LotteBackground"))
+                .foregroundColor(Color("\(selectedTeam)Background"))
                 .font(.caption)
                 .bold()
             Text(music.lyric)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var dataManager = DataManager()
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanhwa")
+    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @State private var showingStadiumSheet: Bool = false
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
