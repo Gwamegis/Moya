@@ -15,14 +15,14 @@ struct StadiumListSheetView: View {
         NavigationView {
             VStack {
                 Text("야구장 지도")
-                    .font(Font.HalmapFont.CustomTitleBold)
+                    .font(Font.Halmap.CustomTitleBold)
                     .padding(EdgeInsets(top: 20, leading: 0, bottom: 40, trailing: 0))
                 
                 
                 List(messages, id: \.self) { message in
                     NavigationLink(destination: StadiumMapView(message: message)) {
                         Text(message)
-                            .font(Font.HalmapFont.CustomTitleMedium)
+                            .font(Font.Halmap.CustomTitleMedium)
                             .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                     }
                 }

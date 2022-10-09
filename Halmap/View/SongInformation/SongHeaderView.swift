@@ -19,7 +19,6 @@ struct SongHeaderView: View {
             Image("lotteBackground")
                 .resizable()
             
-            
             HStack(spacing: 20){
                 VStack(alignment: .leading, spacing: 10){
                     Spacer()
