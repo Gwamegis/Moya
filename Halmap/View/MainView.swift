@@ -61,7 +61,7 @@ struct MainView: View {
                 .padding(.top, 65)
                 
                 TabBarView(currentTab: $index)
-                    .padding(.top, 28)
+                    .padding(.top, 24)
             }
             .navigationTitle(Text(""))
             .navigationBarTitleDisplayMode(.inline)
