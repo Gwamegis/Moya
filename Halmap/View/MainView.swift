@@ -26,21 +26,6 @@ struct MainView: View {
                 
                 TabView(selection: $index) {
                     List {
-                        ForEach(dataManager.playerList, id: \.self) { player in
-                            
-                            let music = Music(songTitle: player.playerName, lyric: player.lyric)
-                            
-                            NavigationLink(destination: SongInformationView(music: music)) {
-                                Text(player.playerName)
-                            }
-                        }
-                    }
-                    .listStyle(.plain)
-                    .listRowSeparatorTint(Color.gray.opacity(0.2))
-                    .tag(0)
-                    
-                    
-                    List {
                         ForEach(dataManager.teamSongList, id: \.self) { team in
                             let music = Music(songTitle: team.songTitle, lyric: team.lyric)
                             
@@ -48,6 +33,21 @@ struct MainView: View {
                                 Text(team.songTitle)
                             }
 
+                        }
+                    }
+                    
+                    .listStyle(.plain)
+                    .listRowSeparatorTint(Color.gray.opacity(0.2))
+                    .tag(0)
+                    
+                    List {
+                        ForEach(dataManager.playerList, id: \.self) { player in
+                            
+                            let music = Music(songTitle: player.playerName, lyric: player.lyric)
+                            
+                            NavigationLink(destination: SongInformationView(music: music)) {
+                                Text(player.playerName)
+                            }
                         }
                     }
                     .listStyle(.plain)
