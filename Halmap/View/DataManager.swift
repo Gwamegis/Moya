@@ -4,6 +4,7 @@
 //
 //  Created by 전지민 on 2022/10/09.
 //
+
 import Foundation
 
 class DataManager: ObservableObject {

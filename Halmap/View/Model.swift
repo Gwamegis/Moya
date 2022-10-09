@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Team
 struct TeamList: Codable {
     let teamLists: [Team]
 
@@ -16,7 +15,6 @@ struct TeamList: Codable {
     }
 }
 
-// MARK: - TeamElement
 struct Team: Codable, Hashable {
     let id: Int
     let teamName: String
@@ -31,7 +29,6 @@ struct Team: Codable, Hashable {
     }
 }
 
-// MARK: - Player
 struct Player: Codable, Hashable {
     let playerName, lyric, songInfo: String
 
@@ -42,7 +39,6 @@ struct Player: Codable, Hashable {
     }
 }
 
-// MARK: - TeamSong
 struct TeamSong: Codable, Hashable {
     let songName, lyric, songInfo: String
 
