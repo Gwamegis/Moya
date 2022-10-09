@@ -24,6 +24,7 @@ struct MainView: View {
                 Image("\(selectedTeam)MainTop")
                     .resizable()
                     .scaledToFit()
+                    .frame(width: UIScreen.main.bounds.width + 3)
                     .ignoresSafeArea()
                 
                 TabView(selection: $index) {
