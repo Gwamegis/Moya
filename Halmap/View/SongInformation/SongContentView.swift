@@ -9,15 +9,22 @@ import SwiftUI
 
 struct SongContentView: View {
     
-    var lylic: String = "별빛이 흐르는 다리를 건너 (전 구단 공통)으쌰라 으쌰 으쌰라 으쌰 바람부는 갈대숲을 지나 (전 구단 공통)으쌰라 으쌰 으쌰라 으쌰 언제나 나를 (LG, 키움, 한화, KIA, NC)OO(구단명)! / (두산)오~두산! / (kt) 언제나 kt! / (삼성)오! 오! 언제나 나를 (LG, 키움, 한화, KIA, NC)OO(구단명)! / (두산)오~두산! / (kt) 언제나 kt! / (삼성)오! 오! 기다리던 너의 아파트 / (kt) 나의 사랑 kt wiz / (나머지)으쌰라 으쌰 으쌰라 으쌰"
+    var lylic: String = """
+        별빛이 흐르는 다리를 건너 (전 구단 공통)으쌰라 으쌰 으쌰라 으쌰\n
+        바람부는 갈대숲을 지나 (전 구단 공통)으쌰라 으쌰 으쌰라 으쌰\n
+        언제나 나를 (LG, 키움, 한화, KIA, NC)OO(구단명)! / (두산)오~두산! / (kt) 언제나 kt! / (삼성)오! 오!\n
+        언제나 나를 (LG, 키움, 한화, KIA, NC)OO(구단명)! / (두산)오~두산! / (kt) 언제나 kt! / (삼성)오! 오!\n
+        기다리던 너의 아파트 / (kt) 나의 사랑 kt wiz / (나머지)으쌰라 으쌰 으쌰라 으쌰\n
+        """
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
             Text("가사")
-                .foregroundColor(Color("songLabel"))
+                .foregroundColor(Color("LotteBackground"))
+                .font(.caption)
                 .bold()
             Text(lylic)
-                .foregroundColor(Color.white)
+                .foregroundColor(.black)
                 .font(.body)
             Spacer()
         }.padding([.horizontal, .top])
