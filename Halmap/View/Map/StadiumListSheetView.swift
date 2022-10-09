@@ -17,7 +17,6 @@ struct StadiumListSheetView: View {
                 Text("야구장 지도")
                     .font(Font.HalmapFont.CustomTitleBold)
                     .padding(EdgeInsets(top: 20, leading: 0, bottom: 40, trailing: 0))
-                //                    .padding(.trailing, UIScreen.main.bounds.width - 120)
                 
                 
                 List(messages, id: \.self) { message in
