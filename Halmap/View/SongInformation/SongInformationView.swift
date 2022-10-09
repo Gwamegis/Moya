@@ -12,13 +12,14 @@ struct SongInformationView: View {
         VStack{
             SongHeaderView()
                 .frame(width: UIScreen.main.bounds.width,
-                       height: 170)
+                       height: 156)
                 .background(Color("songGrey"))
+            
             SongContentView()
                 .frame(width: UIScreen.main.bounds.width)
-                .background(Color("songContentBackground"))
+                .background(.white)
             Spacer()
-        }
+        }.ignoresSafeArea()
     }
 }
 
