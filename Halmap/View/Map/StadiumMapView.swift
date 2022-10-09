@@ -12,22 +12,34 @@ struct StadiumMapView: View {
     let message: String
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("좌석 배치도")
-                .font(Font.HalmapFont.CustomCaptionBold)
-                .padding(EdgeInsets(top: 40, leading: 20, bottom: 0, trailing: 0))
-            Image(message)
-                .resizable()
-                .scaledToFit()
-            Spacer()
-            
+        GeometryReader { geometry in
+            VStack{
+                Capsule()
+                    .fill(Color.secondary)
+                    .opacity(0.5)
+                    .frame(width: 60, height: 5)
+                    .padding(EdgeInsets(top: 12, leading: geometry.size.width / 2 - 30, bottom: 0, trailing: geometry.size.width / 2 - 30))
+                NavigationView{
+                    VStack(alignment: .leading) {
+                        Text("좌석 배치도")
+                            .font(Font.Halmap.CustomCaptionBold)
+                            .padding(EdgeInsets(top: 23, leading: 20, bottom: 0, trailing: 0))
+                        Image(message)
+                            .resizable()
+                            .scaledToFit()
+                        Spacer()
+                        
+                    }
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarTitle(message, displayMode: .inline)
+                    .navigationBarItems(leading: backButton)
+                }
+            }
+            .ignoresSafeArea()
+            .navigationBarHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitle(message, displayMode: .inline)
-        .navigationBarItems(leading: btnBack)
     }
-    
-    var btnBack : some View {
+    var backButton : some View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }) {
@@ -37,7 +49,14 @@ struct StadiumMapView: View {
             }
         }
     }
+    
 }
+
+//Capsule()
+//    .fill(Color.secondary)
+//    .opacity(0.5)
+//    .frame(width: 60, height: 5)
+//    .padding(.horizontal, geometry.size.width / 2 - 30)
 
 struct StadiumMapView_Previews: PreviewProvider {
     
