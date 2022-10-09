@@ -12,7 +12,7 @@ struct SongInformationView: View {
         VStack{
             SongHeaderView()
                 .frame(width: UIScreen.main.bounds.width,
-                       height: 170)
+                       height: 156)
                 .background(Color("songGrey"))
             
             SongContentView()
