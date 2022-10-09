@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6E3E128F1F79B002D579A /* Halmap+View.swift */; };
+		87B6E3F428F2A5A6002D579A /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 87B6E3F328F2A5A6002D579A /* test.json */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
 		A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		87B6E3E128F1F79B002D579A /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
+		87B6E3F328F2A5A6002D579A /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		A81FFC7628F15D9900B0FC7C /* Halmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Halmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalmapApp.swift; sourceTree = "<group>"; };
 		A81FFC7B28F15D9900B0FC7C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			children = (
 				F9B95BB828F271A100728048 /* DataManager.swift */,
 				F9B95BBA28F271B800728048 /* Model.swift */,
+				87B6E3F328F2A5A6002D579A /* test.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			files = (
 				A81FFC8128F15D9C00B0FC7C /* Preview Assets.xcassets in Resources */,
 				B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */,
+				87B6E3F428F2A5A6002D579A /* test.json in Resources */,
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
 			);
