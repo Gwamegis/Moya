@@ -9,6 +9,7 @@ import Foundation
 
 class DataManager: ObservableObject {
     
+    var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     var teams: [Team] = []
     @Published var teamSongList: [TeamSong] = []
     @Published var playerList: [Player] = []
@@ -29,14 +30,26 @@ class DataManager: ObservableObject {
             teams = teamArray.teamLists
             
             // TODO: 데이터 불러오는 위치 다시 생각해보기
-            setList(id: 0)
+            setList(teamName: selectedTeam)
         }
         catch let error {
             print(error)
         }
     }
-    func setList(id: Int) {
-        self.teamSongList = teams[id].teamSongs
-        self.playerList = teams[id].player
+    func setList(teamName: String) {
+        var index = 0
+        
+        switch teamName {
+        case "Doosan" :
+            index = 0
+        case "Lotte":
+            index = 1
+        case "Hanwha":
+            index = 2
+        default:
+            index = 0
+        }
+        self.teamSongList = teams[index].teamSongs
+        self.playerList = teams[index].player
     }
 }
