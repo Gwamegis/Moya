@@ -10,12 +10,11 @@ import AVFoundation
 
 struct SongHeaderView: View {
     
+    @Binding var music: Music
     @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
     @Environment(\.presentationMode) var presentationMode
     
-    var team: String = "롯데 자이언츠"
-    var songTitle: String = "야야야 두산"
     
     var body: some View {
         ZStack{
@@ -26,12 +25,7 @@ struct SongHeaderView: View {
                 VStack(alignment: .leading, spacing: 10){
                     Spacer()
                     // TODO: - System Style to Custom Style
-                    Text(team)
-                        .font(.caption)
-                        .foregroundColor(Color("songLabel"))
-                        .bold()
-                    // TODO: - System Style to Custom Style
-                    Text(songTitle)
+                    Text(music.songTitle)
                         .font(.title2)
                         .foregroundColor(.white)
                         .bold()
@@ -62,13 +56,13 @@ struct SongHeaderView: View {
                             Text("재생").foregroundColor(.white)
                                 .bold()
                         }
-
+                        
                     })
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17))
             }
         }
         .onAppear(){
-            configureSoundAsset(songTitle)
+            configureSoundAsset(music.songTitle)
         }
     }
     
@@ -103,5 +97,13 @@ struct SongHeaderView: View {
        } catch {
           fatalError(error.localizedDescription)
        }
+    }
+    
+    
+    struct SongHeaderView_Previews: PreviewProvider {
+        static var previews: some View {
+            
+            SongHeaderView(music: .constant(Music(songTitle: "유정인", lyric: "과메기즈가 간다")))
+        }
     }
 }
