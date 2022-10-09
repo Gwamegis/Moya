@@ -17,7 +17,7 @@ struct SongSearchView: View {
     @FocusState private var isFocused: Bool?
     
     @State private var searchText = ""
-    @State private var autoComplete = [String]()
+    @State private var autoComplete = [Music]()
     
     var body: some View {
         
@@ -97,11 +97,11 @@ struct SongSearchView: View {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongInformationView()) {
+                        NavigationLink(destination: SongInformationView(music: autoComplete[index])) {
                             HStack {
                                 
                                 Image(systemName: "magnifyingglass")
-                                Text(autoComplete[index])
+                                Text(autoComplete[index].songName)
                             }
                             .padding(.horizontal, 20)
                             .frame(height: 45)
@@ -142,13 +142,15 @@ struct SongSearchView: View {
         
         for data in dataManager.playerList {
             if data.playerName.contains(searchText.lowercased()) {
-                autoComplete.append(data.playerName)
+                let music = Music(teamName: "", songName: data.playerName, lyric: data.lyric, songInfo: data.songInfo)
+                autoComplete.append(music)
             }
         }
         
         for data in dataManager.teamSongList {
             if data.songName.contains(searchText.lowercased()) {
-                autoComplete.append(data.songName)
+                let music = Music(teamName: "", songName: data.songInfo, lyric: data.lyric, songInfo: data.songInfo)
+                autoComplete.append(music)
             }
         }
         

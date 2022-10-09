@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct SongInformationView: View {
+    
+    @State var music: Music
+    
     var body: some View {
         VStack{
-            SongHeaderView()
+            SongHeaderView(music: $music)
                 .frame(width: UIScreen.main.bounds.width,
                        height: 170)
                 .background(Color("songGrey"))
-            SongContentView()
+            SongContentView(music: $music)
                 .frame(width: UIScreen.main.bounds.width)
                 .background(Color("songContentBackground"))
             Spacer()
@@ -24,6 +27,6 @@ struct SongInformationView: View {
 
 struct SongInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        SongInformationView()
+        SongInformationView(music: Music(teamName: "teamName", songName: "노래이름", lyric: "가사가사", songInfo: "노래정보"))
     }
 }
