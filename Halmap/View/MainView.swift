@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var dataManager = DataManager()
+    @State private var showingStadiumSheet: Bool = false
     @State var index = 0
+
     
     var body: some View {
         NavigationView {
@@ -49,11 +51,15 @@ struct MainView: View {
             .toolbar {
                 ToolbarItemGroup (placement: .navigationBarLeading) {
                     Button {
-                        print("button click")
+                        // print("button click")
+                        self.showingStadiumSheet.toggle()
                     } label: {
                         Image(systemName: "square.grid.2x2.fill").foregroundColor(.white)
                     }
                     .padding(.leading, 160)
+                    .sheet(isPresented: $showingStadiumSheet) {
+                        StadiumListSheetView()
+                    }
                 }
                 
                 ToolbarItemGroup (placement: .navigationBarTrailing) {
