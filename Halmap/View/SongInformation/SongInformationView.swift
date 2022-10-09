@@ -14,11 +14,12 @@ struct SongInformationView: View {
                 .frame(width: UIScreen.main.bounds.width,
                        height: 170)
                 .background(Color("songGrey"))
+            
             SongContentView()
                 .frame(width: UIScreen.main.bounds.width)
-                .background(Color("songContentBackground"))
+                .background(.white)
             Spacer()
-        }
+        }.ignoresSafeArea()
     }
 }
 
