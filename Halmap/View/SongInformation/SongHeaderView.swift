@@ -22,11 +22,6 @@ struct SongHeaderView: View {
                 VStack(alignment: .leading, spacing: 10){
                     Spacer()
                     // TODO: - System Style to Custom Style
-                    Text(music.teamName)
-                        .font(.caption)
-                        .foregroundColor(Color("songLabel"))
-                        .bold()
-                    // TODO: - System Style to Custom Style
                     Text(music.songName)
                         .font(.title2)
                         .foregroundColor(.white)
@@ -68,7 +63,7 @@ struct SongHeaderView: View {
     struct SongHeaderView_Previews: PreviewProvider {
         static var previews: some View {
             
-            SongHeaderView(music: .constant(Music(teamName: "롯데", songName: "유정인", lyric: "과메기즈가 간다")))
+            SongHeaderView(music: .constant(Music(songName: "유정인", lyric: "과메기즈가 간다")))
         }
     }
 }

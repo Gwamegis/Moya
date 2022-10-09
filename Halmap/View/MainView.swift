@@ -24,64 +24,31 @@ struct MainView: View {
                     .scaledToFit()
                     .ignoresSafeArea()
                 
-                // SongInformation 화면으로 가기위한 버튼입니다. 나중에 리스트에서 반복사용시 사용해주세요
-                HStack{
-                    Spacer()
-                    Button("노래 정보"){
-                        self.showingFullScreenCover.toggle()
-                    }
-                    .fullScreenCover(isPresented: $showingFullScreenCover){
-                        SongInformationView(music: Music(teamName: "", songName: "", lyric: ""))
-                    }
-                }
-                
-
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.playerList, id: \.self) { player in
-                            Button(player.playerName){
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    self.showingFullScreenCover.toggle()
-                                }
+                            
+                            let music = Music(songName: player.playerName, lyric: player.lyric)
+                            
+                            NavigationLink(destination: SongInformationView(music: music)) {
+                                Text(player.playerName)
                             }
-                                .fullScreenCover(isPresented: $showingFullScreenCover){
-                                    SongInformationView(music: Music(teamName: "롯데자이언츠", songName: player.playerName, lyric: player.lyric ))
-                                    
-                                }
                         }
                     }
                     .listStyle(.plain)
                     .listRowSeparatorTint(Color.gray.opacity(0.2))
                     .tag(0)
                     
-//                    List {
-//                        ForEach(dataManager.teamSongList.indices) { index in
-//                            Button(dataManager.teamSongList[index].songName) {
-//                                self.showingFullScreenCover.toggle()
-//                            }
-//                            .fullScreenCover(isPresented: $showingFullScreenCover) {
-//                                SongInformationView(music: Music(teamName: <#T##String#>, songName: <#T##String#>, lyric: <#T##String#>, songInfo: <#T##String#>))
-//                            }
-//
-//                        }
-//                    }
                     
                     List {
                         ForEach(dataManager.teamSongList, id: \.self) { team in
-                            Button(team.songName) {
-//                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                    self.showingFullScreenCover.toggle()
-//                                }
+                            let music = Music(songName: team.songName, lyric: team.lyric)
+                            
+                            NavigationLink(destination: SongInformationView(music: music)) {
+                                Text(team.songName)
                             }
-                                .fullScreenCover(isPresented: $showingFullScreenCover) {
-                                    SongInformationView(music: Music(teamName: "롯데자이언츠", songName: team.songName, lyric: team.lyric), teamSong: team)
-                                }
 
                         }
-
-//                        ForEach(dataManager.teamSongList.indices, id: \.self) { teams in
-//                            Text("\(dataManager.teamSongList[teams].songName)")
-//                        }
                     }
                     .listStyle(.plain)
                     .listRowSeparatorTint(Color.gray.opacity(0.2))
@@ -123,9 +90,7 @@ struct MainView: View {
                 }
             }
         }
-//        .onAppear {
-////            DataManager()
-//        }
+        .accentColor(.white)
     }
 }
 

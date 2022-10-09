@@ -142,14 +142,14 @@ struct SongSearchView: View {
         
         for data in dataManager.playerList {
             if data.playerName.contains(searchText.lowercased()) {
-                let music = Music(teamName: "", songName: data.playerName, lyric: data.lyric)
+                let music = Music(songName: data.playerName, lyric: data.lyric)
                 autoComplete.append(music)
             }
         }
         
         for data in dataManager.teamSongList {
             if data.songName.contains(searchText.lowercased()) {
-                let music = Music(teamName: "", songName: data.songInfo, lyric: data.lyric)
+                let music = Music( songName: data.songInfo, lyric: data.lyric)
                 autoComplete.append(music)
             }
         }
