@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SongHeaderView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     var team: String = "롯데 자이언츠"
     var title: String = "유정인"
     
@@ -38,10 +39,14 @@ struct SongHeaderView: View {
                 VStack(alignment: .trailing, spacing: 10){
                     Spacer()
                     Button(action: {
-                        // TODO
+                        presentationMode.wrappedValue.dismiss()
                     }, label: {
-                        Image("Close")
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .foregroundColor(Color("sheetCloseButtonBlack"))
                     })
+                    
                     Button(action: {
                         // TODO
                     }, label: {
@@ -59,11 +64,5 @@ struct SongHeaderView: View {
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17))
             }
         }
-    }
-}
-
-struct SongHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        SongHeaderView()
     }
 }

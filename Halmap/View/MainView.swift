@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var showingFullScreenCover = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("노래 정보"){
+            self.showingFullScreenCover.toggle()
+        }
+        .fullScreenCover(isPresented: $showingFullScreenCover){
+            SongInformationView()
+        }
     }
 }
 
