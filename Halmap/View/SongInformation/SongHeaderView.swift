@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
-import AVKit
+import AVFoundation
 
 struct SongHeaderView: View {
     
+    @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
     @Environment(\.presentationMode) var presentationMode
     
     var team: String = "롯데 자이언츠"
-    var title: String = "유정인"
+    var songTitle: String = "야야야 두산"
     
     var body: some View {
         ZStack{
@@ -30,7 +31,7 @@ struct SongHeaderView: View {
                         .foregroundColor(Color("songLabel"))
                         .bold()
                     // TODO: - System Style to Custom Style
-                    Text(title)
+                    Text(songTitle)
                         .font(.title2)
                         .foregroundColor(.white)
                         .bold()
@@ -50,14 +51,7 @@ struct SongHeaderView: View {
                     
                     // 재생 버튼
                     Button(action: {
-                        initializePlayer()
-                        audioPlayer.play()
-//                        if self.audioPlayer.isPlaying {
-//                            self.audioPlayer.pause()
-//                        } else {
-//                            self.audioPlayer.play()
-//                        }
-                        
+                        playSoundAsset()
                     }, label: {
                         ZStack{
                             Rectangle()
@@ -73,30 +67,41 @@ struct SongHeaderView: View {
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17))
             }
         }
-        .onAppear {
-//            initializePlayer()
+        .onAppear(){
+            configureSoundAsset(songTitle)
         }
     }
     
-    
-    func initializePlayer(){
-        let url = Bundle.main.url(forResource: "승리는 누구", withExtension: "m4a")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url!)
-            audioPlayer?.play()
-        } catch {
-            print("error")
+    func playSoundURL(_ soundFileName : String) {
+            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
+                fatalError("Unable to find \(soundFileName) in bundle")
+            }
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            } catch {
+                print(error.localizedDescription)
+            }
+            audioPlayer.play()
         }
-//        guard let soundAsset: NSDataAsset = NSDataAsset(name: "고승민 응원가.mov") else {
-//            print("음원 파일 에셋을 가져올 수 없습니다")
-//            return
-//        }
-//
-//        do {
-//            try self.audioPlayer = AVAudioPlayer(data: soundAsset.data)
-//        } catch let error as NSError {
-//            print("플레이어 초기화 실패")
-//            print("코드 : \(error.code), 메세지 : \(error.localizedDescription)")
-//        }
+    
+    func configureSoundAsset(_ assetName: String){
+        DispatchQueue.global().sync {
+            guard let audioData = NSDataAsset(name: assetName)?.data else {
+               fatalError("Unable to find asset \(assetName)")
+            }
+            sound = audioData
+            print("불러오기 완료")
+        }
+    }
+ 
+    func playSoundAsset() {
+       do {
+           if let sound = sound {
+               audioPlayer = try AVAudioPlayer(data: sound)
+               audioPlayer.play()
+           }
+       } catch {
+          fatalError(error.localizedDescription)
+       }
     }
 }
