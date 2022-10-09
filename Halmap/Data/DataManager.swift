@@ -18,7 +18,7 @@ class DataManager: ObservableObject {
     }
     
     func loadData(){
-        let fileNm: String = "test"
+        let fileNm: String = "Music"
         let extensionType = "json"
         
         guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
