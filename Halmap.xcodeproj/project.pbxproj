@@ -56,7 +56,7 @@
 		A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Font.swift"; sourceTree = "<group>"; };
 		A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Color.swift"; sourceTree = "<group>"; };
 		A8D1E92129169DAD00BF242C /* test-song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-song.m4a"; sourceTree = "<group>"; };
-		B2699E0B28F1CB5100267A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B2699E0B28F1CB5100267A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2699E0C28F1CB7E00267A4F /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		B2699E0F28F1CB9700267A4F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
@@ -98,8 +98,8 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
-				F9B95BBC28F2733200728048 /* Data */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
+				F9B95BBC28F2733200728048 /* Data */,
 				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
