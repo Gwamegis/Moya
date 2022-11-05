@@ -74,10 +74,10 @@ struct TeamSelectionView: View {
             }
             .padding(.bottom, 24)
             Button {
-                // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
+                UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
                     isFirstLaunching.toggle()
-                    finalSelectedTeam = selectedTeam /*?? "Lotte"*/ ?? ""
+                    finalSelectedTeam = selectedTeam ?? "error"
                 }
                 print("선택완료")
             } label: {

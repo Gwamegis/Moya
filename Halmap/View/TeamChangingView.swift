@@ -12,6 +12,7 @@ struct TeamChangingView: View {
     @Binding var changedTeam: String
     @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 6)
     @State var selectedTeam: String? = nil
+    @State var originSelectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "error")
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
     var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "Ssg"]
@@ -59,7 +60,7 @@ struct TeamChangingView: View {
             }
             .padding(.bottom, 24)
             Button {
-                // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
+                UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
                     self.presentationMode.wrappedValue.dismiss()
                     changedTeam = selectedTeam ?? "Hanwha"
