@@ -14,15 +14,24 @@ struct SongInformationView: View {
     
     var body: some View {
         VStack{
+            Button(action: {
+                print(selectedTeam)
+            }, label: {
+                Rectangle()
+                Text("tap")
+            })
+
             SongHeaderView(music: $music)
-                .frame(width: UIScreen.main.bounds.width + 3,
+                .frame(width: UIScreen.main.bounds.width,
                        height: 156)
                 .background(Color("songGrey"))
             
             SongContentView(music: $music)
-                .frame(width: UIScreen.main.bounds.width + 3)
+                .frame(width: UIScreen.main.bounds.width)
                 .background(.white)
             Spacer()
+            Spacer()
+
         }.ignoresSafeArea()
     }
 }

@@ -77,7 +77,7 @@ struct TeamSelectionView: View {
                 // TODO: - Userdefault에 선택된 팀 저장하는 코드 추가
                 withAnimation {
                     isFirstLaunching.toggle()
-                    finalSelectedTeam = selectedTeam ?? "Lotte"
+                    finalSelectedTeam = selectedTeam /*?? "Lotte"*/ ?? ""
                 }
                 print("선택완료")
             } label: {

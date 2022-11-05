@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
 		87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6E3E128F1F79B002D579A /* Halmap+View.swift */; };
-		87B6E3EE28F27725002D579A /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = 87B6E3ED28F27725002D579A /* Music.json */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
 		A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */; };
@@ -183,7 +182,6 @@
 		F949284D28F2AF9600901F27 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				87B6E3ED28F27725002D579A /* Music.json */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -194,7 +192,6 @@
 				F949284E28F2AFB800901F27 /* Music.json */,
 				F9B95BB828F271A100728048 /* DataManager.swift */,
 				F9B95BBA28F271B800728048 /* Model.swift */,
-				87B6E3F328F2A5A6002D579A /* test.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -420,7 +417,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = 7JPPWR5997;
+				DEVELOPMENT_TEAM = 22A6RK2943;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -449,7 +446,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = 7JPPWR5997;
+				DEVELOPMENT_TEAM = 22A6RK2943;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
