@@ -14,7 +14,10 @@ struct SongHeaderView: View {
     @Binding var music: Music
     @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
+    @State var isPlaying: Bool = false
     @Environment(\.presentationMode) var presentationMode
+    
+
 
     var body: some View {
         ZStack{
@@ -46,7 +49,14 @@ struct SongHeaderView: View {
 
                         // 재생 버튼
                         Button(action: {
-                            playSoundAsset()
+                            // TODO: 실제 URL로 바꾸기
+                            isPlaying.toggle()
+                            if isPlaying {
+                                playSoundURL("test-song")
+                            } else {
+                                stopSound()
+                            }
+                            
                             print(selectedTeam)
                         }, label: {
                             ZStack{
@@ -65,18 +75,15 @@ struct SongHeaderView: View {
             Spacer()
         }
         .onAppear(){
-            configureSoundAsset(music.songTitle)
+            // TODO: Configure 로직 추가하기
         }
         .onDisappear(){
-            guard let player = audioPlayer else {
-                return
-            }
-            audioPlayer.stop()
+            stopSound()
         }
     }
     
     func playSoundURL(_ soundFileName : String) {
-            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
+            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "m4a") else {
                 fatalError("Unable to find \(soundFileName) in bundle")
             }
             do {
@@ -87,35 +94,21 @@ struct SongHeaderView: View {
             audioPlayer.play()
         }
     
-    func configureSoundAsset(_ assetName: String){
-        DispatchQueue.global().sync {
+    // TODO: Configure 함수 url로 수정
+//    func configureSoundAsset(_ assetName: String){
+//        DispatchQueue.global().sync {
 //            guard let audioData = NSDataAsset(name: assetName)?.data else {
 //               fatalError("Unable to find asset \(assetName)")
 //            }
 //            sound = audioData
-            print("불러오기 완료")
-        }
-    }
-    
-//    func stopSoundAsset(){
-//        do {
-//            if let sound = sound {
-//                audioPlayer = try AVAudioPlayer(data: sound)
-//                audioPlayer.stop()
-//            }
-//        } catch {
-//           fatalError(error.localizedDescription)
+//            print("불러오기 완료")
 //        }
 //    }
- 
-    func playSoundAsset() {
-       do {
-           if let sound = sound {
-               audioPlayer = try AVAudioPlayer(data: sound)
-               audioPlayer.play()
-           }
-       } catch {
-          fatalError(error.localizedDescription)
-       }
+
+    func stopSound(){
+        guard let player = audioPlayer else {
+            return
+        }
+        player.stop()
     }
 }
