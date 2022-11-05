@@ -12,7 +12,8 @@ struct SongInformationView: View {
     @State var music: Music
     
     var body: some View {
-        VStack{
+        VStack(alignment: .leading) {
+            
             SongHeaderView(music: $music)
                 .frame(width: UIScreen.main.bounds.width,
                        height: 156)
@@ -21,9 +22,8 @@ struct SongInformationView: View {
             SongContentView(music: $music)
                 .frame(width: UIScreen.main.bounds.width)
                 .background(.white)
+            
             Spacer()
-            Spacer()
-
         }.ignoresSafeArea()
     }
 }

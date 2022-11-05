@@ -13,21 +13,22 @@ struct SongContentView: View {
     @Binding var music: Music
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 20){
-            Text("가사")
-                .foregroundColor(Color("\(selectedTeam)Background"))
-                .font(.caption)
-                .bold()
-            HStack{
-                VStack{
-                    Text(music.lyric)
-                        .foregroundColor(.black)
-                        .font(.body)
-                    Spacer()
-                }
+        
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 20) {
+                
+                Text("가사")
+                    .foregroundColor(Color("\(selectedTeam)Background"))
+                    .font(.Halmap.CustomCaptionBold)
+                
+                Text(music.lyric)
+                    .foregroundColor(.black)
+                    .font(.Halmap.CustomBodyMedium)
+                    .lineSpacing(10)
+                
                 Spacer()
             }
-        }.padding([.horizontal, .top])
-
+            .padding(20)
+        }
     }
 }
