@@ -32,13 +32,10 @@ struct SongSearchView: View {
         .ignoresSafeArea()
         .frame(maxWidth: .infinity)
         .navigationBarBackButtonHidden(true)
+        .onAppear { UIApplication.shared.hideKeyboard() }
         .gesture(DragGesture().updating($dragOffset, body: { value, state, transaction in
             if value.startLocation.x < 20 && value.translation.width > 100 {
                 self.mode.wrappedValue.dismiss()
-            }
-            
-            if value.translation.height > 100 || value.translation.height < 100 {
-                hideKeyboard()
             }
         }))
     }
