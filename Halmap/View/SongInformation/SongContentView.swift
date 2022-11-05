@@ -21,7 +21,7 @@ struct SongContentView: View {
                     .foregroundColor(Color("\(selectedTeam)Background"))
                     .font(.Halmap.CustomCaptionBold)
                 
-                Text(music.lyric)
+                Text(music.lyric.replacingOccurrences(of: "\\n", with: "\n"))
                     .foregroundColor(.black)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
