@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
-		87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6E3E128F1F79B002D579A /* Halmap+View.swift */; };
-		87B6E3EE28F27725002D579A /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = 87B6E3ED28F27725002D579A /* Music.json */; };
+		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
 		A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */; };
@@ -37,7 +36,7 @@
 
 /* Begin PBXFileReference section */
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
-		87B6E3E128F1F79B002D579A /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
+		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		A81FFC7628F15D9900B0FC7C /* Halmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Halmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalmapApp.swift; sourceTree = "<group>"; };
 		A81FFC7B28F15D9900B0FC7C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,7 +156,7 @@
 			children = (
 				A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */,
 				A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */,
-				87B6E3E128F1F79B002D579A /* Halmap+View.swift */,
+				87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -183,7 +182,6 @@
 		F949284D28F2AF9600901F27 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				87B6E3ED28F27725002D579A /* Music.json */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -194,7 +192,6 @@
 				F949284E28F2AFB800901F27 /* Music.json */,
 				F9B95BB828F271A100728048 /* DataManager.swift */,
 				F9B95BBA28F271B800728048 /* Model.swift */,
-				87B6E3F328F2A5A6002D579A /* test.json */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -275,12 +272,12 @@
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
 				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,
+				87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
 				F9B95BB928F271A100728048 /* DataManager.swift in Sources */,
-				87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
