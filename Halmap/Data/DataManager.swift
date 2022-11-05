@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 class DataManager: ObservableObject {
+    
+    private let db = Firestore.firestore()
     
     var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     var teams: [Team] = []
@@ -51,5 +54,34 @@ class DataManager: ObservableObject {
         }
         self.teamSongList = teams[index].teamSongs
         self.playerList = teams[index].player
+    }
+    
+    //MARK: 파이어스토어에서 해당하는 팀의 응원가 정보를 가져오는 함수
+    ///team: 팀이름을 영어로 넣어주세요
+    ///[Song] 값으로 반환합니다.
+    func fetchSong(team: String, completionHandler: @escaping ([Song])->()) {
+        var songs: [Song] = []
+        
+        db.collection(team)
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let song = try decoder.decode(Song.self, from: jsonData)
+                            songs.append(song)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(songs)
+                }
+            }
     }
 }
