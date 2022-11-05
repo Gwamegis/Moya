@@ -10,72 +10,81 @@ import AVFoundation
 
 struct SongHeaderView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var music: Music
     @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
+    @State var isPlaying: Bool = false
     @Environment(\.presentationMode) var presentationMode
     
-    
+
+
     var body: some View {
         ZStack{
             Image("\(selectedTeam)Background")
                 .resizable()
-                .scaledToFit()
-            
-            HStack(spacing: 20){
-                VStack(alignment: .leading, spacing: 10){
-                    // TODO: - System Style to Custom Style
+                .scaledToFill()
+
+                HStack(spacing: 20){
+                    VStack(alignment: .leading, spacing: 10){
+                        // TODO: - System Style to Custom Style
+                        Spacer()
+                        Text(music.songTitle)
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
+       
                     Spacer()
-                    Text(music.songTitle)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .bold()
-                }.padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
-                
-                Spacer()
-                VStack(alignment: .trailing, spacing: 10){
-                    Spacer()
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }, label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .resizable()
-                            .frame(width: 30, height: 30, alignment: .center)
-                            .foregroundColor(Color("sheetCloseButtonBlack"))
-                    })
-                    
-                    // 재생 버튼
-                    Button(action: {
-                        playSoundAsset()
-                    }, label: {
-                        ZStack{
-                            Rectangle()
-                                .foregroundColor(Color("\(selectedTeam)Background"))
-                                .cornerRadius(20)
-                                .frame(width: 83, height: 44)
+                    VStack(alignment: .trailing, spacing: 10){
+                        Spacer()
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }, label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .resizable()
+                                .frame(width: 30, height: 30, alignment: .center)
+                                .foregroundColor(Color("sheetCloseButtonBlack"))
+                        })
+
+                        // 재생 버튼
+                        Button(action: {
+                            // TODO: 실제 URL로 바꾸기
+                            isPlaying.toggle()
+                            if isPlaying {
+                                playSoundURL("test-song")
+                            } else {
+                                stopSound()
+                            }
                             
-                            Text("재생").foregroundColor(.white)
-                                .bold()
-                        }
-                        
-                    })
-                }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17))
-            }
+                            print(selectedTeam)
+                        }, label: {
+                            ZStack{
+                                Rectangle()
+                                    .foregroundColor(Color("\(selectedTeam)Background"))
+                                    .cornerRadius(20)
+                                    .frame(width: 83, height: 44)
+                                
+                                Text(isPlaying ? "정지" : "재생").foregroundColor(.white)
+                                    .bold()
+                            }
+                            
+                        })
+                    }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17)) // Button
+                }
+            Spacer()
         }
         .onAppear(){
-            configureSoundAsset(music.songTitle)
+            // TODO: Configure 로직 추가하기
         }
         .onDisappear(){
-            guard let player = audioPlayer else {
-                return
-            }
-            audioPlayer.stop()
+            stopSound()
         }
     }
     
     func playSoundURL(_ soundFileName : String) {
-            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
+            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "m4a") else {
                 fatalError("Unable to find \(soundFileName) in bundle")
             }
             do {
@@ -86,35 +95,21 @@ struct SongHeaderView: View {
             audioPlayer.play()
         }
     
-    func configureSoundAsset(_ assetName: String){
-        DispatchQueue.global().sync {
-            guard let audioData = NSDataAsset(name: assetName)?.data else {
-               fatalError("Unable to find asset \(assetName)")
-            }
-            sound = audioData
-            print("불러오기 완료")
-        }
-    }
-    
-//    func stopSoundAsset(){
-//        do {
-//            if let sound = sound {
-//                audioPlayer = try AVAudioPlayer(data: sound)
-//                audioPlayer.stop()
+    // TODO: Configure 함수 url로 수정
+//    func configureSoundAsset(_ assetName: String){
+//        DispatchQueue.global().sync {
+//            guard let audioData = NSDataAsset(name: assetName)?.data else {
+//               fatalError("Unable to find asset \(assetName)")
 //            }
-//        } catch {
-//           fatalError(error.localizedDescription)
+//            sound = audioData
+//            print("불러오기 완료")
 //        }
 //    }
- 
-    func playSoundAsset() {
-       do {
-           if let sound = sound {
-               audioPlayer = try AVAudioPlayer(data: sound)
-               audioPlayer.play()
-           }
-       } catch {
-          fatalError(error.localizedDescription)
-       }
+
+    func stopSound(){
+        guard let player = audioPlayer else {
+            return
+        }
+        player.stop()
     }
 }
