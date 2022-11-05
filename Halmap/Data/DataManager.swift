@@ -30,24 +30,24 @@ class DataManager: ObservableObject {
         }
     }
     
-//    func loadData(){
-//        let fileNm: String = "Music"
-//        let extensionType = "json"
-//
-//        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
-//        guard let jsonData = try? Data(contentsOf: fileLocation) else { return }
-//
-//        do {
-//            let teamArray = try JSONDecoder().decode(TeamList.self, from: jsonData)
-//            teams = teamArray.teamLists
-//
-//            // TODO: 데이터 불러오는 위치 다시 생각해보기
-//            setList(teamName: selectedTeam)
-//        }
-//        catch let error {
-//            print(error)
-//        }
-//    }
+    func loadData(){
+        let fileNm: String = "Music"
+        let extensionType = "json"
+
+        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
+        guard let jsonData = try? Data(contentsOf: fileLocation) else { return }
+
+        do {
+            let teamArray = try JSONDecoder().decode(TeamList.self, from: jsonData)
+            teams = teamArray.teamLists
+
+            // TODO: 데이터 불러오는 위치 다시 생각해보기
+            setList(teamName: selectedTeam)
+        }
+        catch let error {
+            print(error)
+        }
+    }
     
     func setList(teamName: String) {
         var index = 0
