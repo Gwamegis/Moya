@@ -65,7 +65,7 @@ struct SongHeaderView: View {
                                     .cornerRadius(20)
                                     .frame(width: 83, height: 44)
                                 
-                                Text("재생").foregroundColor(.white)
+                                Text(isPlaying ? "정지" : "재생").foregroundColor(.white)
                                     .bold()
                             }
                             
