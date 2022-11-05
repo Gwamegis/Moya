@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
-		87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6E3E128F1F79B002D579A /* Halmap+View.swift */; };
+		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
 		A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */; };
@@ -40,6 +40,7 @@
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF22916B13A004533C4 /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
+		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
 		A81FFC7628F15D9900B0FC7C /* Halmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Halmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalmapApp.swift; sourceTree = "<group>"; };
 		A81FFC7B28F15D9900B0FC7C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -162,6 +163,7 @@
 				A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */,
 				87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */,
 				87F6ECF22916B13A004533C4 /* Halmap+View.swift */,
+				87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +282,7 @@
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
 				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,
 				87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */,
+				87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */,
@@ -291,7 +294,6 @@
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				A81FFC8D28F1770100B0FC7C /* MainView.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
-				87F6ECF32916B13A004533C4 /* Halmap+View.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
