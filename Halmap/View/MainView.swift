@@ -29,12 +29,12 @@ struct MainView: View {
                 
                 TabView(selection: $index) {
                     List {
-                        ForEach(dataManager.teamSongList, id: \.self) { team in
-                            let music = Music(songTitle: team.songTitle, lyric: team.lyric)
+                        ForEach(dataManager.teamSongs) { song in
+                            let music = Music(songTitle: song.title, lyric: song.lyrics)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
                                                             VStack {
-                                                                Text(team.songTitle)
+                                                                Text(song.title)
                                                                     .font(Font.Halmap.CustomTitleMedium)
                                                             }
                                                             .padding(.horizontal, 20)
@@ -50,13 +50,13 @@ struct MainView: View {
                     .tag(0)
                     
                     List {
-                        ForEach(dataManager.playerList, id: \.self) { player in
+                        ForEach(dataManager.playerSongs) { song in
                             
-                            let music = Music(songTitle: player.playerName, lyric: player.lyric)
+                            let music = Music(songTitle: song.title, lyric: song.lyrics)
                             
                             NavigationLink(destination: SongInformationView(music: music)) {
                                                             VStack {
-                                                                Text(music.songTitle)
+                                                                Text(song.title)
                                                                     .font(Font.Halmap.CustomTitleMedium)
                                                             }
                                                             .padding(.horizontal, 20)
@@ -88,7 +88,8 @@ struct MainView: View {
                     .sheet(isPresented: $showingTeamChaingView) {
                         TeamChangingView(changedTeam: $selectedTeam)
                             .onDisappear{
-                                dataManager.setList(teamName: selectedTeam)
+//                                dataManager.setList(teamName: selectedTeam)
+                                dataManager.setSongList(team: selectedTeam)
                             }
                     }
 

@@ -17,8 +17,17 @@ class DataManager: ObservableObject {
     @Published var teamSongList: [TeamSong] = []
     @Published var playerList: [Player] = []
     
+    @Published var playerSongs: [Song] = []
+    @Published var teamSongs: [Song] = []
+    
     init() {
         loadData()
+        fetchSong(team: selectedTeam, type: true) { songs in
+            self.playerSongs = songs
+        }
+        fetchSong(team: selectedTeam, type: false) { songs in
+            self.teamSongs = songs
+        }
     }
     
     func loadData(){
@@ -56,13 +65,23 @@ class DataManager: ObservableObject {
         self.playerList = teams[index].player
     }
     
+    func setSongList(team: String) {
+        fetchSong(team: team, type: true) { songs in
+            self.playerSongs = songs
+        }
+        fetchSong(team: team, type: false) { songs in
+            self.teamSongs = songs
+        }
+    }
+    
     //MARK: 파이어스토어에서 해당하는 팀의 응원가 정보를 가져오는 함수
     ///team: 팀이름을 영어로 넣어주세요
     ///[Song] 값으로 반환합니다.
-    func fetchSong(team: String, completionHandler: @escaping ([Song])->()) {
+    func fetchSong(team: String, type: Bool, completionHandler: @escaping ([Song])->()) {
         var songs: [Song] = []
         
         db.collection(team)
+            .whereField("type", isEqualTo: type)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                     print("Error getting documents: \(error)")
