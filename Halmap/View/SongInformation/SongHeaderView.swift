@@ -33,7 +33,8 @@ struct SongHeaderView: View {
                             .font(.title2)
                             .foregroundColor(.white)
                             .bold()
-                    }.padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
+                    }
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
        
                     Spacer()
                     VStack(alignment: .trailing, spacing: 10){
