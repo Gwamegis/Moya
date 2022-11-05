@@ -78,13 +78,13 @@ struct MainView: View {
             .navigationTitle(Text(""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItemGroup (placement: .navigationBarLeading) {
+
+                ToolbarItemGroup (placement: .navigationBarTrailing) {
                     Button {
                         self.showingTeamChaingView.toggle()
                     } label: {
                         Image(systemName: "square.grid.2x2.fill").foregroundColor(.white)
                     }
-                    .padding(.leading, 160)
                     .sheet(isPresented: $showingTeamChaingView) {
                         TeamChangingView(changedTeam: $selectedTeam)
                             .onDisappear{
@@ -92,9 +92,6 @@ struct MainView: View {
                             }
                     }
 
-                }
-                
-                ToolbarItemGroup (placement: .navigationBarTrailing) {
                     Button {
                         self.showingStadiumSheet.toggle()
                     } label: {
