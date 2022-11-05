@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/swift,xcode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=swift,xcode,macos
 
+### Firebase ###
+GoogleService-Info.plist
+
 ### macOS ###
 # General
 .DS_Store
