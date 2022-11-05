@@ -8,19 +8,11 @@
 import SwiftUI
 
 struct SongInformationView: View {
-    
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+
     @State var music: Music
     
     var body: some View {
         VStack{
-            Button(action: {
-                print(selectedTeam)
-            }, label: {
-                Rectangle()
-                Text("tap")
-            })
-
             SongHeaderView(music: $music)
                 .frame(width: UIScreen.main.bounds.width,
                        height: 156)
@@ -36,8 +28,3 @@ struct SongInformationView: View {
     }
 }
 
-struct SongInformationView_Previews: PreviewProvider {
-    static var previews: some View {
-        SongInformationView(music: Music(songTitle: "노래이름", lyric: "가사가사"))
-    }
-}

@@ -31,7 +31,7 @@ struct SongHeaderView: View {
                             .foregroundColor(.white)
                             .bold()
                     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
-                    
+       
                     Spacer()
                     VStack(alignment: .trailing, spacing: 10){
                         Spacer()
@@ -43,11 +43,10 @@ struct SongHeaderView: View {
                                 .frame(width: 30, height: 30, alignment: .center)
                                 .foregroundColor(Color("sheetCloseButtonBlack"))
                         })
-                        
+
                         // 재생 버튼
                         Button(action: {
                             playSoundAsset()
-                            
                             print(selectedTeam)
                         }, label: {
                             ZStack{
