@@ -24,6 +24,7 @@ struct SongContentView: View {
                     .foregroundColor(.black)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
             }
