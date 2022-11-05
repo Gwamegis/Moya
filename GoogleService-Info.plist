@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>57232653616-cl357ump6uvr4f53r2jmf6o2epcaev27.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.57232653616-cl357ump6uvr4f53r2jmf6o2epcaev27</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAYTZU-x4cyBzXz5gTmtYN73jPPr_dLsII</string>
+	<key>GCM_SENDER_ID</key>
+	<string>57232653616</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ChilledCafe</string>
+	<key>PROJECT_ID</key>
+	<string>halmap</string>
+	<key>STORAGE_BUCKET</key>
+	<string>halmap.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:57232653616:ios:394f0f540440ca2f045cf5</string>
+</dict>
+</plist>

@@ -11,6 +11,7 @@
 		203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF012916762B00E838A1 /* FirebaseFirestore */; };
 		203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */; };
 		203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF052916762B00E838A1 /* FirebaseStorage */; };
+		203CAF1029169F5500E838A1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 203CAF0F29169F5500E838A1 /* GoogleService-Info.plist */; };
 		87B6E3E228F1F79B002D579A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B6E3E128F1F79B002D579A /* Halmap+View.swift */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
@@ -35,12 +36,12 @@
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
-		F9EB19C0291685E1002DFE46 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9EB19BF291685E1002DFE46 /* GoogleService-Info.plist */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
+		203CAF0F29169F5500E838A1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87B6E3E128F1F79B002D579A /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
 		A81FFC7628F15D9900B0FC7C /* Halmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Halmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalmapApp.swift; sourceTree = "<group>"; };
@@ -68,7 +69,6 @@
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F9B95BBA28F271B800728048 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
-		F9EB19BF291685E1002DFE46 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +88,7 @@
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
+				203CAF0F29169F5500E838A1 /* GoogleService-Info.plist */,
 				B2699E0E28F1CB8800267A4F /* Font */,
 				A81FFC7828F15D9900B0FC7C /* Halmap */,
 				A81FFC7728F15D9900B0FC7C /* Products */,
@@ -113,7 +114,6 @@
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
 				A81FFC8E28F1770500B0FC7C /* View */,
 				A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */,
-				F9EB19BF291685E1002DFE46 /* GoogleService-Info.plist */,
 				A81FFC8228F15D9C00B0FC7C /* Persistence.swift */,
 				A81FFC8428F15D9C00B0FC7C /* Halmap.xcdatamodeld */,
 				A81FFC7F28F15D9C00B0FC7C /* Preview Content */,
@@ -279,7 +279,7 @@
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
 				F949284F28F2AFB800901F27 /* Music.json in Resources */,
-				F9EB19C0291685E1002DFE46 /* GoogleService-Info.plist in Resources */,
+				203CAF1029169F5500E838A1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,7 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -468,7 +468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
