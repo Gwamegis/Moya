@@ -132,16 +132,16 @@ struct SongSearchView: View {
         
         autoComplete = []
         
-        for data in dataManager.playerList {
-            if data.playerName.contains(searchText.lowercased()) {
-                let music = Music(songTitle: data.playerName, lyric: data.lyric)
+        for data in dataManager.playerSongs {
+            if data.title.contains(searchText.lowercased()) {
+                let music = Music(songTitle: data.title, lyric: data.lyrics)
                 autoComplete.append(music)
             }
         }
         
-        for data in dataManager.teamSongList {
-            if data.songTitle.contains(searchText.lowercased()) {
-                let music = Music( songTitle: data.songInfo, lyric: data.lyric)
+        for data in dataManager.teamSongs {
+            if data.title.contains(searchText.lowercased()) {
+                let music = Music( songTitle: data.title, lyric: data.lyrics)
                 autoComplete.append(music)
             }
         }
