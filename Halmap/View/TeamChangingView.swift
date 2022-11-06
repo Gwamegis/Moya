@@ -34,13 +34,8 @@ struct TeamChangingView: View {
                     Button {
                         withAnimation {
                             buttonPressed = [Bool](repeating: false, count: 6)
-                            if idx > 2 {
-                                self.selectedTeam = nil
-                            }
-                            else {
-                                self.buttonPressed[idx].toggle()
-                                self.selectedTeam = teamLogo[idx]
-                            }
+                            self.buttonPressed[idx].toggle()
+                            self.selectedTeam = teamLogo[idx]
                         }
                     } label: {
                         ZStack {
