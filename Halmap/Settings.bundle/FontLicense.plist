@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>New item</key>
+	<string></string>
+	<key>StringsTable</key>
+	<string>FontLicense</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>FooterText</key>
+			<string>
+https://github.com/orioncactus/pretendard/blob/main/LICENSE
+
+
+Copyright (c) 2021, Kil Hyung-jin (https://github.com/orioncactus/pretendard),with Reserved Font Name Pretendard.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at: https://scripts.sil.org/OFL
+
+---------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+---------------------------------------------------
+            </string>
+		</dict>
+	</array>
+</dict>
+</plist>

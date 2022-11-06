@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>New item</key>
+    <string></string>
+    <key>StringsTable</key>
+    <string>FirebaseLicense</string>
+    <key>PreferenceSpecifiers</key>
+    <array>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>FooterText</key>
+            <string>
+URL: https://github.com/firebase/firebase-ios-sdk
+
+The contents of this repository are licensed under the Apache License, version 2.0.
+https://www.apache.org/licenses/LICENSE-2.0
+
+Your use of Firebase is governed by the Terms of Service for Firebase Services.
+https://firebase.google.com/terms/
+            </string>
+        </dict>
+    </array>
+</dict>
+</plist>
