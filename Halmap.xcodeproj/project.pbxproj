@@ -11,7 +11,6 @@
 		203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF012916762B00E838A1 /* FirebaseFirestore */; };
 		203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */; };
 		203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF052916762B00E838A1 /* FirebaseStorage */; };
-		20BF156B29177EC1005B2EEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 20BF156A29177EC0005B2EEF /* GoogleService-Info.plist */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
-		20BF156A29177EC0005B2EEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF22916B13A004533C4 /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
 		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
-				20BF156A29177EC0005B2EEF /* GoogleService-Info.plist */,
 				B2699E0E28F1CB8800267A4F /* Font */,
 				A81FFC7828F15D9900B0FC7C /* Halmap */,
 				A81FFC7728F15D9900B0FC7C /* Products */,
@@ -291,11 +288,7 @@
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
 				F949284F28F2AFB800901F27 /* Music.json in Resources */,
 				A8D1E92229169DAD00BF242C /* test-song.m4a in Resources */,
-<<<<<<< HEAD
-				20BF156B29177EC1005B2EEF /* GoogleService-Info.plist in Resources */,
-=======
 				A8D7FD0629177FD900B5DB06 /* GoogleService-Info.plist in Resources */,
->>>>>>> e6aeb18 ([Style] 코드 정리)
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
