@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SongSearchView: View {
     
+    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @ObservedObject var dataManager = DataManager()
@@ -114,7 +115,7 @@ struct SongSearchView: View {
         ZStack {
             Rectangle()
                 .frame(height: 120)
-                .foregroundColor(.HalmacBackground)
+                .foregroundColor(Color("\(selectedTeam)Background"))
             
             HStack(spacing: 17) {
                 Image(systemName: "chevron.left")
