@@ -13,7 +13,7 @@ struct SongHeaderView: View {
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var song: Song
     @State var sound: Data?
-    @State var audioPlayer: AVAudioPlayer!
+    @State var audioPlayer: AVPlayer!
     @State var isPlaying: Bool = false
     @Environment(\.presentationMode) var presentationMode
 
@@ -45,7 +45,7 @@ struct SongHeaderView: View {
                             // TODO: 실제 URL로 바꾸기
                             isPlaying.toggle()
                             if isPlaying {
-                                playSoundURL("test-song")
+                                playSoundURL(song.url)
                             } else {
                                 stopSound()
                             }
@@ -71,12 +71,13 @@ struct SongHeaderView: View {
         }
     }
     
-    func playSoundURL(_ soundFileName : String) {
-            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: "m4a") else {
-                fatalError("Unable to find \(soundFileName) in bundle")
+    func playSoundURL(_ url : String?) {
+            guard let soundURL = url else {
+                fatalError("url을 받아올 수 없습니다.")
             }
             do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                let item = AVPlayerItem(url: URL(string: soundURL)!)
+                audioPlayer = try AVPlayer(playerItem: item)
             } catch {
                 print(error.localizedDescription)
             }
@@ -87,6 +88,6 @@ struct SongHeaderView: View {
         guard let player = audioPlayer else {
             return
         }
-        player.stop()
+        player.pause()
     }
 }
