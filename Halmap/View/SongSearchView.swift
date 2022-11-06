@@ -17,7 +17,8 @@ struct SongSearchView: View {
     @FocusState private var isFocused: Bool?
     
     @State private var searchText = ""
-    @State private var autoComplete = [Music]()
+//    @State private var autoComplete = [Music]()
+    @State private var autoComplete = [Song]()
     
     var body: some View {
         
@@ -44,7 +45,8 @@ struct SongSearchView: View {
                 .disableAutocorrection(true)
                 .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
-                    didChangedSearchText()
+                    // TODO: 수정 필요
+//                    didChangedSearchText()
                 }
                 .focused($isFocused, equals: true)
                 .task {
@@ -89,11 +91,11 @@ struct SongSearchView: View {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongInformationView(music: autoComplete[index])) {
+                        NavigationLink(destination: SongInformationView(song: autoComplete[index])) {
                             HStack {
                                 
                                 Image(systemName: "magnifyingglass")
-                                Text(autoComplete[index].songTitle)
+                                Text(autoComplete[index].title)
                             }
                             .padding(.horizontal, 20)
                             .frame(height: 45)
@@ -128,25 +130,25 @@ struct SongSearchView: View {
         }
     }
     
-    private func didChangedSearchText() {
-        
-        autoComplete = []
-        
-        for data in dataManager.playerSongs {
-            if data.title.contains(searchText.lowercased()) {
-                let music = Music(songTitle: data.title, lyric: data.lyrics)
-                autoComplete.append(music)
-            }
-        }
-        
-        for data in dataManager.teamSongs {
-            if data.title.contains(searchText.lowercased()) {
-                let music = Music( songTitle: data.title, lyric: data.lyrics)
-                autoComplete.append(music)
-            }
-        }
-        
-    }
+//    private func didChangedSearchText() {
+//        
+//        autoComplete = []
+//        
+//        for data in dataManager.playerSongs {
+//            if data.title.contains(searchText.lowercased()) {
+//                let music = Music(songTitle: data.title, lyric: data.lyrics)
+//                autoComplete.append(music)
+//            }
+//        }
+//        
+//        for data in dataManager.teamSongs {
+//            if data.title.contains(searchText.lowercased()) {
+//                let music = Music( songTitle: data.title, lyric: data.lyrics)
+//                autoComplete.append(music)
+//            }
+//        }
+//        
+//    }
     
 }
 

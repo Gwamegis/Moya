@@ -11,13 +11,11 @@ import AVFoundation
 struct SongHeaderView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
-    @Binding var music: Music
+    @Binding var song: Song
     @State var sound: Data?
     @State var audioPlayer: AVAudioPlayer!
     @State var isPlaying: Bool = false
     @Environment(\.presentationMode) var presentationMode
-    
-
 
     var body: some View {
         ZStack{
@@ -29,10 +27,12 @@ struct SongHeaderView: View {
                     VStack(alignment: .leading, spacing: 10){
                         // TODO: - System Style to Custom Style
                         Spacer()
-                        Text(music.songTitle)
+                        // 음악 제목
+                        Text(song.title)
                             .font(.title2)
                             .foregroundColor(.white)
                             .bold()
+
                     }
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 25, trailing: 20))
        
@@ -66,9 +66,6 @@ struct SongHeaderView: View {
                     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17)) // Button
                 }
         }.scaledToFill()
-        .onAppear(){
-            // TODO: Configure 로직 추가하기
-        }
         .onDisappear(){
             stopSound()
         }
@@ -85,17 +82,6 @@ struct SongHeaderView: View {
             }
             audioPlayer.play()
         }
-    
-    // TODO: Configure 함수 url로 수정
-//    func configureSoundAsset(_ assetName: String){
-//        DispatchQueue.global().sync {
-//            guard let audioData = NSDataAsset(name: assetName)?.data else {
-//               fatalError("Unable to find asset \(assetName)")
-//            }
-//            sound = audioData
-//            print("불러오기 완료")
-//        }
-//    }
 
     func stopSound(){
         guard let player = audioPlayer else {
