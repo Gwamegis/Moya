@@ -33,7 +33,6 @@ struct MainView: View {
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
-//                            let music = Music(songTitle: song.title, lyric: song.lyrics)
                             let music = Song(id: song.id,
                                              type: song.type,
                                              title: song.title,
@@ -53,7 +52,7 @@ struct MainView: View {
 
                         }
                     }
-                    
+
                     .listStyle(.plain)
                     .listRowSeparatorTint(Color.gray.opacity(0.2))
                     .tag(0)
