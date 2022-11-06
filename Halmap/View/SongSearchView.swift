@@ -133,7 +133,7 @@ struct SongSearchView: View {
     private func didChangedSearchText() {
         
         autoComplete = []
-        
+
         for data in dataManager.playerSongs {
             if data.title.contains(searchText.lowercased()) {
                 let music = Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)

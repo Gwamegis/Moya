@@ -16,7 +16,6 @@ class DataManager: ObservableObject {
     var teams: [Team] = []
     @Published var teamSongList: [TeamSong] = []
     @Published var playerList: [Player] = []
-    
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
     
@@ -33,7 +32,7 @@ class DataManager: ObservableObject {
     func loadData(){
         let fileNm: String = "Music"
         let extensionType = "json"
-
+        
         guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
         guard let jsonData = try? Data(contentsOf: fileLocation) else { return }
 

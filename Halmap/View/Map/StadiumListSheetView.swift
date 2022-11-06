@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StadiumListSheetView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    private let messages = [ "서울 종합 야구장", "고척 스카이돔", "SSG 랜더스 필드", "사직 야구장", "대전 이글스 파크", "수원 KT 위즈 파크"]
+    private let messages = [ "서울 종합 야구장", "고척 스카이돔", "SSG 랜더스 필드", "사직 야구장", "대전 이글스 파크", "기아 챔피언스필드"]
     
     var body: some View {
         GeometryReader { geometry in

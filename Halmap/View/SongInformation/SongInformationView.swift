@@ -13,7 +13,7 @@ struct SongInformationView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            
+
             SongHeaderView(song: $song)
                 .frame(width: UIScreen.main.bounds.width + 3,
                        height: 156)
