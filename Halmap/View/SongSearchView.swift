@@ -46,7 +46,7 @@ struct SongSearchView: View {
                 .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
                     // TODO: 수정 필요
-//                    didChangedSearchText()
+                    didChangedSearchText()
                 }
                 .focused($isFocused, equals: true)
                 .task {
