@@ -11,6 +11,7 @@ struct SongContentView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Binding var music: Music
+
     var body: some View {
         
         ScrollView(showsIndicators: false) {
