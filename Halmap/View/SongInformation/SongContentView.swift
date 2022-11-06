@@ -11,7 +11,7 @@ struct SongContentView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Binding var music: Music
-    
+
     var body: some View {
         
         ScrollView(showsIndicators: false) {
@@ -21,10 +21,11 @@ struct SongContentView: View {
                     .foregroundColor(Color("\(selectedTeam)Background"))
                     .font(.Halmap.CustomCaptionBold)
                 
-                Text(music.lyric)
+                Text(music.lyric.replacingOccurrences(of: "\\n", with: "\n"))
                     .foregroundColor(.black)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Spacer()
             }
