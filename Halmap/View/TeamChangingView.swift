@@ -23,7 +23,8 @@ struct TeamChangingView: View {
                 Text("응원하는")
                 Image("Team")
                     .resizable()
-                    .frame(width: 26, height: 36)
+                    .scaledToFill()
+                    .frame(width: UIScreen.getWidth(26), height: UIScreen.getHeight(36), alignment: .top)
                 Text("을 \(Text("골라주세요!").font(.Halmap.CustomHeadline))")
             }
             .padding(.bottom, 40)
@@ -45,14 +46,14 @@ struct TeamChangingView: View {
                         ZStack {
                             Image(teamLogo[idx])
                                 .resizable()
-                                .frame(width: 165, height: 158)
+                                .frame(width: UIScreen.getWidth(165), height: UIScreen.getHeight(158))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(Color.black)
                                 .opacity(buttonPressed[idx] ? 0.8 : 0)
                             Image("MyTeam")
                                 .resizable()
-                                .frame(width: 83, height: 50)
+                                .frame(width: UIScreen.getWidth(83), height: UIScreen.getHeight(50))
                                 .opacity(buttonPressed[idx] ? 1 : 0)
                         }
                     }
@@ -70,7 +71,7 @@ struct TeamChangingView: View {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.black)
                     .opacity(selectedTeam == nil ? 0.1 : 1)
-                    .frame(width: 350, height: 62)
+                    .frame(width: UIScreen.getWidth(350), height: UIScreen.getHeight(62))
                     .overlay(
                         Text("응원하러 가기")
                             .font(.Halmap.CustomTitleBold)

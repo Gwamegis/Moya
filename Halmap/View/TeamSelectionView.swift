@@ -59,9 +59,8 @@ struct TeamSelectionView: View {
                         ZStack {
                             Image(teamLogo[idx])
                                 .resizable()
-                                .aspectRatio(contentMode: .fit)
-//                                .scaledToFill()
-                                .frame(width: UIScreen.getWidth(165), height: UIScreen.getHeight(158))
+                                .scaledToFill()
+                                .frame(width: UIScreen.getWidth(165), height: UIScreen.getHeight(160), alignment: .top)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(Color.black)
