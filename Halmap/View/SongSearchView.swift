@@ -43,6 +43,7 @@ struct SongSearchView: View {
         HStack {
             
             TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
+                .accentColor(.black)
                 .disableAutocorrection(true)
                 .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
