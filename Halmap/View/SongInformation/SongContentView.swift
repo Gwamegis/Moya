@@ -6,11 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SongContentView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
-    @Binding var music: Music
+    @Binding var song: Song
 
     var body: some View {
         
@@ -20,13 +21,13 @@ struct SongContentView: View {
                 Text("가사")
                     .foregroundColor(Color("\(selectedTeam)Background"))
                     .font(.Halmap.CustomCaptionBold)
-                
-                Text(music.lyric.replacingOccurrences(of: "\\n", with: "\n"))
+
+                Text(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))
                     .foregroundColor(.black)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Spacer()
             }
             .padding(20)

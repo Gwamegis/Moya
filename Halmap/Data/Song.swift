@@ -9,6 +9,7 @@ import Foundation
 
 struct Song: Identifiable, Codable {
     var id: String
+    // true: 선수, false: 팀
     var type: Bool
     var title: String
     var lyrics: String

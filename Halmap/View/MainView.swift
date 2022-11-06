@@ -30,9 +30,15 @@ struct MainView: View {
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
-                            let music = Music(songTitle: song.title, lyric: song.lyrics)
+//                            let music = Music(songTitle: song.title, lyric: song.lyrics)
+                            let music = Song(id: song.id,
+                                             type: song.type,
+                                             title: song.title,
+                                             lyrics: song.lyrics,
+                                             info: song.info,
+                                             url: song.url)
                             
-                            NavigationLink(destination: SongInformationView(music: music)) {
+                            NavigationLink(destination: SongInformationView(song: music)) {
                                                             VStack {
                                                                 Text(song.title)
                                                                     .font(Font.Halmap.CustomTitleMedium)
@@ -52,9 +58,14 @@ struct MainView: View {
                     List {
                         ForEach(dataManager.playerSongs) { song in
                             
-                            let music = Music(songTitle: song.title, lyric: song.lyrics)
+                            let music = Song(id: song.id,
+                                             type: song.type,
+                                             title: song.title,
+                                             lyrics: song.lyrics,
+                                             info: song.info,
+                                             url: song.url)
                             
-                            NavigationLink(destination: SongInformationView(music: music)) {
+                            NavigationLink(destination: SongInformationView(song: music)) {
                                                             VStack {
                                                                 Text(song.title)
                                                                     .font(Font.Halmap.CustomTitleMedium)

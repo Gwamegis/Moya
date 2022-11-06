@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct SongInformationView: View {
-    
-    @State var music: Music
+
+    @State var song: Song
     
     var body: some View {
         VStack(alignment: .leading) {
-            
-            SongHeaderView(music: $music)
+
+            SongHeaderView(song: $song)
                 .frame(width: UIScreen.main.bounds.width + 3,
                        height: 156)
                 .background(Color("songGrey"))
             
-            SongContentView(music: $music)
+            SongContentView(song: $song)
+                .frame(width: UIScreen.main.bounds.width + 3)
                 .background(.white)
+
             Spacer()
         }
         .ignoresSafeArea()
