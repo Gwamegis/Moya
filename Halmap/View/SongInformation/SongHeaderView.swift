@@ -39,14 +39,6 @@ struct SongHeaderView: View {
                     Spacer()
                     VStack(alignment: .trailing, spacing: 10){
                         Spacer()
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30, alignment: .center)
-                                .foregroundColor(Color("sheetCloseButtonBlack"))
-                        })
 
                         // 재생 버튼
                         Button(action: {
@@ -73,8 +65,7 @@ struct SongHeaderView: View {
                         })
                     }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17)) // Button
                 }
-            Spacer()
-        }
+        }.scaledToFill()
         .onAppear(){
             // TODO: Configure 로직 추가하기
         }
