@@ -130,25 +130,25 @@ struct SongSearchView: View {
         }
     }
     
-//    private func didChangedSearchText() {
-//        
-//        autoComplete = []
-//        
-//        for data in dataManager.playerSongs {
-//            if data.title.contains(searchText.lowercased()) {
-//                let music = Music(songTitle: data.title, lyric: data.lyrics)
-//                autoComplete.append(music)
-//            }
-//        }
-//        
-//        for data in dataManager.teamSongs {
-//            if data.title.contains(searchText.lowercased()) {
-//                let music = Music( songTitle: data.title, lyric: data.lyrics)
-//                autoComplete.append(music)
-//            }
-//        }
-//        
-//    }
+    private func didChangedSearchText() {
+        
+        autoComplete = []
+        
+        for data in dataManager.playerSongs {
+            if data.title.contains(searchText.lowercased()) {
+                let music = Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
+                autoComplete.append(music)
+            }
+        }
+        
+        for data in dataManager.teamSongs {
+            if data.title.contains(searchText.lowercased()) {
+                let music = Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
+                autoComplete.append(music)
+            }
+        }
+        
+    }
     
 }
 
