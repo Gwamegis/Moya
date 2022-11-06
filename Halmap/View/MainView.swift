@@ -16,7 +16,10 @@ struct MainView: View {
 
     // SongInformationView
     @State private var showingFullScreenCover = false
-
+    
+    init() {
+        Color.setColor(selectedTeam)
+    }
     
     var body: some View {
         NavigationView {
@@ -101,6 +104,7 @@ struct MainView: View {
                             .onDisappear{
 //                                dataManager.setList(teamName: selectedTeam)
                                 dataManager.setSongList(team: selectedTeam)
+                                Color.setColor(selectedTeam)
                             }
                     }
 
