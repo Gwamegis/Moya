@@ -21,14 +21,13 @@ struct SongContentView: View {
                 Text("가사")
                     .foregroundColor(Color("\(selectedTeam)Background"))
                     .font(.Halmap.CustomCaptionBold)
-                
-                // 가사
+
                 Text(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))
                     .foregroundColor(.black)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Spacer()
             }
             .padding(20)

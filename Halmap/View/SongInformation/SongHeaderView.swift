@@ -49,8 +49,7 @@ struct SongHeaderView: View {
                             } else {
                                 stopSound()
                             }
-                            
-                            print(selectedTeam)
+ 
                         }, label: {
                             ZStack{
                                 Rectangle()
@@ -71,16 +70,13 @@ struct SongHeaderView: View {
         }
     }
     
-    func playSoundURL(_ url : String?) {
-            guard let soundURL = url else {
-                fatalError("url을 받아올 수 없습니다.")
-            }
-            do {
-                let item = AVPlayerItem(url: URL(string: soundURL)!)
-                audioPlayer = try AVPlayer(playerItem: item)
-            } catch {
-                print(error.localizedDescription)
-            }
+    func playSoundURL(_ urlString : String?) {
+
+            guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
+
+            guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
+            let item = AVPlayerItem(url: url)
+            audioPlayer = AVPlayer(playerItem: item)
             audioPlayer.play()
         }
 
