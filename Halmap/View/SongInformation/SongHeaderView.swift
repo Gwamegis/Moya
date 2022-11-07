@@ -51,7 +51,8 @@ struct SongHeaderView: View {
                 }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17)) // Button
             }
             
-        }.scaledToFill()
+        }
+        .scaledToFill()
             .onDisappear(){
                 stopSound()
             }
