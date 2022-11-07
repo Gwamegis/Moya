@@ -53,9 +53,9 @@ struct SongHeaderView: View {
             
         }
         .scaledToFill()
-            .onDisappear(){
-                stopSound()
-            }
+        .onDisappear(){
+            stopSound()
+        }
     }
     
     func playSoundURL(_ urlString : String?) {
