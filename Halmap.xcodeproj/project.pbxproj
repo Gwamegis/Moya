@@ -11,7 +11,6 @@
 		203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF012916762B00E838A1 /* FirebaseFirestore */; };
 		203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */; };
 		203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF052916762B00E838A1 /* FirebaseStorage */; };
-		205679202917BC1B00564D72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2056791F2917BC1B00564D72 /* GoogleService-Info.plist */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */; };
@@ -471,12 +470,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -499,12 +501,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
