@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "고척 스카이돔 2.png",
+      "filename" : "LotteMainBanner.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "고척 스카이돔 3.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "고척 스카이돔.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
