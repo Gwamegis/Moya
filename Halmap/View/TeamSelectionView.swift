@@ -14,7 +14,7 @@ struct OnBoardingStartView: View {
     
     var body: some View {
         if !isFirstLaunching {
-            MainView()
+            MainTabView()
         } else {
             TeamSelectionView(isFirstLaunching: $isFirstLaunching)
         }
