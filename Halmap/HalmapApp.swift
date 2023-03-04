@@ -29,7 +29,7 @@ struct HalmapApp: App {
         //탭바 색, 그림자 설정
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = UIColor(Color.lightGray)
-        appearance.shadowColor = UIColor(Color.lightGray2)
+        appearance.shadowColor = UIColor(Color.lightGray3)
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
         //네비게이션바 색, 백버튼 색 설정

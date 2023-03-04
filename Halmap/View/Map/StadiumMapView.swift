@@ -20,11 +20,6 @@ struct StadiumMapView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack{
-//                Capsule()
-//                    .fill(Color.secondary)
-//                    .opacity(0.5)
-//                    .frame(width: 60, height: 5)
-//                    .padding(EdgeInsets(top: 12, leading: geometry.size.width / 2 - 30, bottom: 23, trailing: geometry.size.width / 2 - 30))
                 NavigationView{
                     VStack(alignment: .leading) {
                         Text("좌석 배치도")

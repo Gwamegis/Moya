@@ -24,5 +24,6 @@ extension Color {
     static var customGray2 = Color("customGray2")
     static var lightGray = Color("lightGray")
     static var lightGray2 = Color("lightGray2")
+    static var lightGray3 = Color("lightGray3")
     static var systemBackground = Color("systemBackground")
 }

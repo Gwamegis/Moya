@@ -102,11 +102,11 @@ struct SongSearchView: View {
 //                        .listRowSeparator(.hidden)
                         .listRowBackground(Color(UIColor.clear))
                         .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+                        .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
                     }
                 }
                 .padding(.horizontal, 20)
                 .listStyle(.plain)
-                .listRowSeparatorTint(Color.gray.opacity(0.2))
                 .padding(.top, 10)
                 
             }
