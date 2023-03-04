@@ -11,7 +11,6 @@ struct MainSongListTabView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @ObservedObject var dataManager = DataManager()
-    @State private var showingStadiumSheet: Bool = false
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
 
@@ -49,10 +48,10 @@ struct MainSongListTabView: View {
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color(UIColor.clear))
+                        .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
-                    .listRowSeparatorTint(Color.gray.opacity(0.2))
                     .tag(0)
                     
                     List {
@@ -74,10 +73,10 @@ struct MainSongListTabView: View {
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color(UIColor.clear))
+                        .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
-                    .listRowSeparatorTint(Color.gray.opacity(0.2))
                     .tag(1)
                 }
                 .tabViewStyle(.page)
@@ -89,7 +88,7 @@ struct MainSongListTabView: View {
             
             //팀 배너 이미지
             Button {
-                print("click")
+                showingTeamChaingView.toggle()
             } label: {
                 ZStack(alignment: .bottomLeading) {
                     Image("\(selectedTeam)MainBanner")
@@ -108,6 +107,13 @@ struct MainSongListTabView: View {
             .padding(.top, 70)
         }
         .background(Color.systemBackground)
+        .sheet(isPresented: $showingTeamChaingView) {
+            TeamChangingView(changedTeam: $selectedTeam)
+                .onDisappear{
+                    dataManager.setSongList(team: selectedTeam)
+                    Color.setColor(selectedTeam)
+                }
+        }
     }
 }
 
