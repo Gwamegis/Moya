@@ -25,28 +25,23 @@ struct TeamSelectionView: View {
     @AppStorage("selectedTeam") var finalSelectedTeam: String = ""
     @Binding var isFirstLaunching: Bool
     
-    @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 6)
+    @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 10)
     @State var selectedTeam: String? = nil
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
-    var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "SSG"]
+    var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "SSG", "Samsung", "LG", "KT", "NC"]
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text("응원하는")
-                Image("Team")
-                    .resizable()
-                    .frame(width: UIScreen.getWidth(26), height: UIScreen.getHeight(36))
-                Text("을 \(Text("골라주세요!").font(.Halmap.CustomHeadline))")
-            }
-            .padding(.bottom, 40)
-            .font(.system(size: 20, weight: .medium))
-            LazyVGrid(columns: columns, spacing: 20) {
+            Text("어느 팀을 응원하시나요?")
+                .font(.Halmap.CustomTitleBold)
+                .padding(.top, 20)
+            
+            LazyVGrid(columns: columns, spacing: 10) {
                 ForEach(teamLogo.indices, id: \.self) { idx in
                     Button {
                         withAnimation {
-                            buttonPressed = [Bool](repeating: false, count: 6)
+                            buttonPressed = [Bool](repeating: false, count: 10)
 
                             self.buttonPressed[idx].toggle()
                             self.selectedTeam = teamLogo[idx]
@@ -57,14 +52,16 @@ struct TeamSelectionView: View {
                             Image(teamLogo[idx])
                                 .resizable()
                                 .scaledToFill()
-                                .frame(width: UIScreen.getWidth(165), height: UIScreen.getHeight(160), alignment: .top)
+                                .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108), alignment: .top)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundColor(Color.black)
                                 .opacity(buttonPressed[idx] ? 0.8 : 0)
-                            Image("MyTeam")
+                            Image(systemName: "checkmark")
                                 .resizable()
-                                .frame(width: UIScreen.getWidth(83), height: UIScreen.getHeight(50))
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(width: UIScreen.getWidth(29), height: UIScreen.getHeight(31))
                                 .opacity(buttonPressed[idx] ? 1 : 0)
                         }
                     }
