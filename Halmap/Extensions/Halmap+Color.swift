@@ -12,9 +12,17 @@ import SwiftUI
 extension Color {
     static var HalmacPoint = Color("LottePoint")
     static var HalmacBackground = Color("LotteBackground")
+    static var HalmacSub = Color("LotteBackground")
     
     static func setColor(_ teamName: String) {
         Color.HalmacPoint = Color("\(teamName)Point")
         Color.HalmacBackground = Color("\(teamName)Background")
+        Color.HalmacSub = Color("\(teamName)Sub")
     }
+    
+    static var customGray = Color("customGray")
+    static var customGray2 = Color("customGray2")
+    static var lightGray = Color("lightGray")
+    static var lightGray2 = Color("lightGray2")
+    static var systemBackground = Color("systemBackground")
 }
