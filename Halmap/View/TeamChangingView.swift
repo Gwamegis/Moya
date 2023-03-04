@@ -51,6 +51,8 @@ struct TeamChangingView: View {
                 }
             }
             .padding(.bottom, 24)
+            .padding(.horizontal, 5)
+            
             Button {
                 UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
