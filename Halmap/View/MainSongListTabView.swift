@@ -88,11 +88,24 @@ struct MainSongListTabView: View {
                 .padding(.top, 15)
             
             //팀 배너 이미지
-            Image("\(selectedTeam)MainBanner")
-                .resizable()
-                .frame(width: 350, height: 126.9)
-                .cornerRadius(10)
-                .padding(.top, 70)
+            Button {
+                print("click")
+            } label: {
+                ZStack(alignment: .bottomLeading) {
+                    Image("\(selectedTeam)MainBanner")
+                        .resizable()
+                        .frame(width: 350, height: 126.9)
+                        .cornerRadius(10)
+                    Text("팀 바꾸기")
+                        .font(Font.Halmap.CustomCaption2Medium)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .overlay(RoundedRectangle(cornerRadius: 12.5).stroke(Color.white.opacity(0.4), lineWidth: 1))
+                        .foregroundColor(Color.white.opacity(0.6))
+                        .padding([.leading, .bottom], 20)
+                }
+            }
+            .padding(.top, 70)
         }
     }
 }

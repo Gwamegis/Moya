@@ -27,6 +27,7 @@ struct MainTabView: View {
                         Text("야구장 지도")
                       }
             }
+            .accentColor(Color.HalmacPoint)
         }
     }
 }

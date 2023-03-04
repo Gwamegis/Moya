@@ -23,6 +23,7 @@ extension Font {
         static var CustomBodyMedium: Font { Font.HalmapFont(weight: .medium, size: 16) }
         static var CustomCaptionBold: Font { Font.HalmapFont(weight: .bold, size: 12) }
         static var CustomCaptionMedium: Font { Font.HalmapFont(weight: .medium, size: 12) }
+        static var CustomCaption2Medium: Font { Font.HalmapFont(weight: .medium, size: 10) }
     }
 }
 
