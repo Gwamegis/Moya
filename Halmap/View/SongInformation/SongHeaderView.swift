@@ -18,41 +18,37 @@ struct SongHeaderView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        ZStack{
-            Image("\(selectedTeam)Background")
-                .resizable()
-                .scaledToFill()
+        ZStack(alignment: .bottomTrailing){
+            Rectangle()
+                .frame(height: 156)
+                .foregroundColor(Color.HalmacSub)
+                .edgesIgnoringSafeArea(.all)
             
             HStack(spacing: 20){
                 
                 Spacer()
                 
-                VStack(alignment: .trailing, spacing: 10){
-                    
-                    Spacer()
-                    Button(action: {
-                        isPlaying.toggle()
-                        if isPlaying {
-                            playSoundURL(song.url)
-                        } else {
-                            stopSound()
-                        }
-                    }, label: {
-                        ZStack{
-                            Rectangle()
-                                .foregroundColor(Color("\(selectedTeam)Background"))
-                                .cornerRadius(20)
-                                .frame(width: 83, height: 44)
-                            
-                            Text(isPlaying ? "정지" : "재생").foregroundColor(.white)
-                                .bold()
-                        }
-                    })
-                }.padding(EdgeInsets(top: 0, leading: 20, bottom: 17, trailing: 17)) // Button
+                Button(action: {
+                    isPlaying.toggle()
+                    if isPlaying {
+                        playSoundURL(song.url)
+                    } else {
+                        stopSound()
+                    }
+                }, label: {
+                    ZStack{
+                        Rectangle()
+                            .foregroundColor(Color("\(selectedTeam)Background"))
+                            .cornerRadius(20)
+                            .frame(width: 83, height: 44)
+                        
+                        Text(isPlaying ? "정지" : "재생").foregroundColor(.white)
+                            .bold()
+                    }
+                })
             }
-            
+            .padding(EdgeInsets(top: 0, leading: 0, bottom: 17, trailing: 17)) // Button
         }
-        .scaledToFill()
         .onDisappear(){
             stopSound()
         }

@@ -13,11 +13,9 @@ struct SongInformationView: View {
     
     var body: some View {
 
-        VStack(alignment: .leading) {
-            ZStack{
+        VStack(alignment: .leading, spacing: 0) {
+            ZStack {
                 SongHeaderView(song: $song)
-                    .frame(width: UIScreen.main.bounds.width + 3,
-                           height: 156)
                 
                 HStack{
                     Text(song.title)
@@ -33,7 +31,6 @@ struct SongInformationView: View {
             }
             
             SongContentView(song: $song)
-                .frame(width: UIScreen.main.bounds.width + 3)
                 .background(.white)
 
             Spacer()
