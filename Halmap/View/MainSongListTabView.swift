@@ -27,8 +27,7 @@ struct MainSongListTabView: View {
             VStack {
                 Rectangle()
                     .frame(height:210)
-                    .foregroundColor(Color.HalmacBackground)
-                    .opacity(0.8)
+                    .foregroundColor(Color.HalmacSub)
                     .edgesIgnoringSafeArea(.all)
                 TabView(selection: $index) {
                     List {
@@ -47,8 +46,9 @@ struct MainSongListTabView: View {
                                 }
                                 .frame(height: 45)
                             }
-                            .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         }
+                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowBackground(Color(UIColor.clear))
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -71,9 +71,9 @@ struct MainSongListTabView: View {
                                 }
                                 .frame(height: 45)
                             }
-                            .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                            
                         }
+                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowBackground(Color(UIColor.clear))
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -107,6 +107,7 @@ struct MainSongListTabView: View {
             }
             .padding(.top, 70)
         }
+        .background(Color.systemBackground)
     }
 }
 

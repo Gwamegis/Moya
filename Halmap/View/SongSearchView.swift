@@ -18,12 +18,11 @@ struct SongSearchView: View {
     @FocusState private var isFocused: Bool?
     
     @State private var searchText = ""
-//    @State private var autoComplete = [Music]()
     @State private var autoComplete = [Song]()
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             
             navigationView
             
@@ -31,7 +30,7 @@ struct SongSearchView: View {
             
             Spacer()
         }
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.top)
         .frame(maxWidth: .infinity)
         .navigationBarBackButtonHidden(true)
         .onAppear { UIApplication.shared.hideKeyboard() }
@@ -45,7 +44,6 @@ struct SongSearchView: View {
             TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
                 .accentColor(.black)
                 .disableAutocorrection(true)
-                .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
                     // TODO: 수정 필요
                     didChangedSearchText()
@@ -88,24 +86,28 @@ struct SongSearchView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.white)
             } else {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
                         NavigationLink(destination: SongInformationView(song: autoComplete[index])) {
                             HStack {
-                                
                                 Image(systemName: "magnifyingglass")
                                 Text(autoComplete[index].title)
                             }
-                            .padding(.horizontal, 20)
+                            .font(Font.Halmap.CustomBodyMedium)
+                            .foregroundColor(Color.black)
                             .frame(height: 45)
                         }
-                        .listRowSeparator(.hidden)
+//                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color(UIColor.clear))
+                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
                     }
                 }
+                .padding(.horizontal, 20)
                 .listStyle(.plain)
+                .listRowSeparatorTint(Color.gray.opacity(0.2))
+                .padding(.top, 10)
                 
             }
         }
@@ -116,7 +118,7 @@ struct SongSearchView: View {
         ZStack {
             Rectangle()
                 .frame(height: 120)
-                .foregroundColor(Color("\(selectedTeam)Background"))
+                .foregroundColor(Color.HalmacSub)
             
             HStack(spacing: 17) {
                 Image(systemName: "chevron.left")
