@@ -15,7 +15,7 @@ struct SongSearchView: View {
     @ObservedObject var dataManager = DataManager()
     
     @GestureState private var dragOffset = CGSize.zero
-    @FocusState private var isFocused: Bool?
+    @FocusState private var isFocused: Bool
     
     @State private var searchText = ""
     @State private var autoComplete = [Song]()
@@ -32,6 +32,7 @@ struct SongSearchView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .frame(maxWidth: .infinity)
+        .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
         .onAppear { UIApplication.shared.hideKeyboard() }
     }
@@ -48,12 +49,13 @@ struct SongSearchView: View {
                     // TODO: 수정 필요
                     didChangedSearchText()
                 }
-                .focused($isFocused, equals: true)
+                .focused($isFocused)
                 .task {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         isFocused = true
                     }
                 }
+                .background(Color.customGray)
             
             if !searchText.isEmpty {
                 Image(systemName: "xmark.circle.fill")
@@ -81,7 +83,7 @@ struct SongSearchView: View {
             if searchText.isEmpty {
                 VStack {
                     Text("선수 이름, 응원가를 검색해주세요")
-                        .foregroundColor(Color(.systemGray))
+                        .foregroundColor(Color.customDarkGray)
                         .padding(30)
                     Spacer()
                 }
@@ -110,6 +112,7 @@ struct SongSearchView: View {
                 
             }
         }
+        .background(Color.systemBackground)
         
     }
     
@@ -120,13 +123,22 @@ struct SongSearchView: View {
                 .foregroundColor(Color.HalmacSub)
             
             HStack(spacing: 17) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color.white)
-                    .onTapGesture {
-                        self.mode.wrappedValue.dismiss()
-                    }
+//                Image(systemName: "chevron.left")
+//                    .foregroundColor(Color.white)
+//                    .onTapGesture {
+//                        self.mode.wrappedValue.dismiss()
+//                    }
                 
                 searchBar
+                
+                if !searchText.isEmpty {
+                    Button {
+                        isFocused = false
+                    } label: {
+                        Text("취소")
+                    }
+                    .foregroundColor(Color.white)
+                }
             }
             .padding(.horizontal, 20)
             .padding(.top, 50)
