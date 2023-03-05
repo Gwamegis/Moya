@@ -21,7 +21,7 @@ extension Color {
     }
     
     static var customGray = Color("customGray")
-    static var customDaryGray = Color("customDaryGray")
+    static var customDarkGray = Color("customDarkGray")
     static var systemBackground = Color("systemBackground")
     static var tabBarGray = Color("tabBarGray")
 }

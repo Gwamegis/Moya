@@ -26,10 +26,12 @@ struct HalmapApp: App {
     let persistenceController = PersistenceController.shared
     
     init() {
-        //탭바 색, 그림자 설정
+        //탭바 색, 그림자 설정, 탭바 아이콘 색 설정
         let appearance = UITabBarAppearance()
         appearance.backgroundColor = UIColor(Color.tabBarGray)
         appearance.shadowColor = UIColor(Color.customGray)
+        appearance.stackedLayoutAppearance.normal.iconColor = UIColor(Color.customDarkGray)
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(Color.customDarkGray)]
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
         //네비게이션바 색, 백버튼 색 설정
