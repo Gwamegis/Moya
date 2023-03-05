@@ -19,7 +19,7 @@ struct StadiumListSheetView: View {
                 .padding(.bottom, 32)
             
             Divider()
-                .background(Color.lightGray2)
+                .background(Color.customGray)
             
             List(messages, id: \.self) { message in
                 NavigationLink(destination: StadiumMapView(message: message)) {
@@ -29,7 +29,7 @@ struct StadiumListSheetView: View {
                 }
                 .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                 .listRowBackground(Color.systemBackground)
-                .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
+                .listRowSeparatorTint(Color.customGray)
             }
             .listStyle(.plain)
             .padding(.horizontal, 20)

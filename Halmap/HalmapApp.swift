@@ -28,8 +28,8 @@ struct HalmapApp: App {
     init() {
         //탭바 색, 그림자 설정
         let appearance = UITabBarAppearance()
-        appearance.backgroundColor = UIColor(Color.lightGray)
-        appearance.shadowColor = UIColor(Color.lightGray3)
+        appearance.backgroundColor = UIColor(Color.tabBarGray)
+        appearance.shadowColor = UIColor(Color.customGray)
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
         //네비게이션바 색, 백버튼 색 설정
@@ -48,8 +48,6 @@ struct HalmapApp: App {
 
     var body: some Scene {
         WindowGroup {
-//            MainView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             OnBoardingStartView()
         }
     }

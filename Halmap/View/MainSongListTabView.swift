@@ -48,7 +48,7 @@ struct MainSongListTabView: View {
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color(UIColor.clear))
-                        .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
+                        .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -73,7 +73,7 @@ struct MainSongListTabView: View {
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color(UIColor.clear))
-                        .listRowSeparatorTint(Color.lightGray3.opacity(0.6))
+                        .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
