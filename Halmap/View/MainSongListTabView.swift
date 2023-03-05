@@ -96,7 +96,7 @@ struct MainSongListTabView: View {
                         .frame(width: 350, height: 126.9)
                         .cornerRadius(10)
                     Text("팀 바꾸기")
-                        .font(Font.Halmap.CustomCaption2Medium)
+                        .font(Font.Halmap.CustomCaptionMedium)
                         .padding(.vertical, 4)
                         .padding(.horizontal, 8)
                         .overlay(RoundedRectangle(cornerRadius: 12.5).stroke(Color.white.opacity(0.4), lineWidth: 1))
