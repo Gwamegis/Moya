@@ -41,6 +41,9 @@
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
 		F98F622629B1E6340025F50E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F98F622529B1E6340025F50E /* GoogleService-Info.plist */; };
+		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
+		F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622A29B4CB450025F50E /* ThemeManager.swift */; };
+		F98F623129B59CE60025F50E /* TeamName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F623029B59CE60025F50E /* TeamName.swift */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
@@ -80,6 +83,9 @@
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F98F622529B1E6340025F50E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		F98F622A29B4CB450025F50E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
+		F98F623029B59CE60025F50E /* TeamName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamName.swift; sourceTree = "<group>"; };
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F9B95BBA28F271B800728048 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -123,6 +129,7 @@
 			children = (
 				20421FBB29B3349900310030 /* GoogleService-Info.plist */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
+				F98F622729B4C9A80025F50E /* Theme */,
 				F9B95BBC28F2733200728048 /* Data */,
 				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
@@ -218,6 +225,15 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		F98F622729B4C9A80025F50E /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				F98F622829B4C9BD0025F50E /* Themes.swift */,
+				F98F622A29B4CB450025F50E /* ThemeManager.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
 		F9B95BBC28F2733200728048 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +242,7 @@
 				F9B95BB828F271A100728048 /* DataManager.swift */,
 				F9B95BBA28F271B800728048 /* Model.swift */,
 				F9EB19BD29168336002DFE46 /* Song.swift */,
+				F98F623029B59CE60025F50E /* TeamName.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -328,15 +345,18 @@
 				F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */,
 				F9B95BB928F271A100728048 /* DataManager.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
+				F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
+				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				A81FFC8D28F1770100B0FC7C /* MainView.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
+				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
 				A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */,
 				A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */,
 			);

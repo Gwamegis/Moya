@@ -9,12 +9,17 @@ import SwiftUI
 
 struct OnBoardingStartView: View {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
     @State var startButton: Bool = false
     
     var body: some View {
         if !isFirstLaunching {
-            MainTabView()
+            ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
+                if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
+                    MainTabView()
+                }
+            }
         } else {
             TeamSelectionView(isFirstLaunching: $isFirstLaunching)
         }
