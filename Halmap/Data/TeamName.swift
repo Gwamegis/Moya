@@ -12,9 +12,10 @@ enum TeamName: String, CaseIterable {
     case hanwha = "Hanwha"
     case samsung = "Samsung"
     case lotte = "Lotte"
-    case lg = "Lg"
-    case ssg = "Ssg"
+    case lg = "LG"
+    case ssg = "SSG"
     case kt = "Kt"
+    case nc = "NC"
     case kiwoom = "Kiwoom"
     case kia = "Kia"
 }
