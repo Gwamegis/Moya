@@ -48,11 +48,19 @@ struct HalmapApp: App {
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactScrollEdgeAppearance = navigationBarAppearance
+        
+        UITableView.appearance().showsVerticalScrollIndicator = false
     }
 
     var body: some Scene {
         WindowGroup {
-            OnBoardingStartView()
+            if #available(iOS 16.0, *) {
+                OnBoardingStartView()
+                    .scrollContentBackground(.hidden)
+                    .scrollIndicators(.hidden)
+            } else {
+                OnBoardingStartView()
+            }
         }
     }
 }

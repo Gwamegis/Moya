@@ -47,7 +47,7 @@ struct MainSongListTabView: View {
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                        .listRowBackground(Color(UIColor.clear))
+                        .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
@@ -72,7 +72,7 @@ struct MainSongListTabView: View {
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                        .listRowBackground(Color(UIColor.clear))
+                        .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
@@ -114,6 +114,7 @@ struct MainSongListTabView: View {
                     Color.setColor(selectedTeam)
                 }
         }
+        .navigationBarHidden(true)
     }
 }
 
