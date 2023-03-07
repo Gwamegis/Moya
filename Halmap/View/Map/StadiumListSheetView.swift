@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StadiumListSheetView: View {
-    private let messages = [ "서울 종합 야구장", "고척 스카이돔", "SSG 랜더스 필드", "사직 야구장", "대전 이글스 파크", "수원 KT 위즈 파크"]
+    private let messages = MapName.allCases
     
     var body: some View {
         VStack(spacing: 0) {
@@ -23,7 +23,7 @@ struct StadiumListSheetView: View {
             
             List(messages, id: \.self) { message in
                 NavigationLink(destination: StadiumMapView(message: message)) {
-                    Text(message)
+                    Text(message.fetchNameKr())
                         .font(Font.Halmap.CustomBodyMedium)
                         .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                 }

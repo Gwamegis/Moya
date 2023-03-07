@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "사직 야구장 3.png",
+      "filename" : "DaejeonHanwhaLifeEaglesPark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "사직 야구장 4.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "사직 야구장.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

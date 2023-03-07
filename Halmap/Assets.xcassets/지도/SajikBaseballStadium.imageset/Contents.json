@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SSG.png",
+      "filename" : "SajikBaseballStadium.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SSG 1.png",
+      "filename" : "SajikBaseballStadium 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SSG 2.png",
+      "filename" : "SajikBaseballStadium 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

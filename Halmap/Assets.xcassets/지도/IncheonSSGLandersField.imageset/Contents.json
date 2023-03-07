@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "잠실구장 3.png",
+      "filename" : "IncheonSSGLandersField.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "잠실구장 4.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "잠실구장.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
