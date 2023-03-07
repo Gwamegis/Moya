@@ -26,7 +26,7 @@ struct MainTabView: View {
                 SongSearchView()
                     .tabItem {
                         Image(systemName: "magnifyingglass")
-                        Text("검색")
+                        Text("응원가 검색")
                       }
                 StadiumListSheetView()
                     .tabItem {

@@ -50,11 +50,6 @@ struct SongSearchView: View {
                     didChangedSearchText()
                 }
                 .focused($isFocused)
-                .task {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        isFocused = true
-                    }
-                }
                 .background(Color.customGray)
             
             if !searchText.isEmpty {
