@@ -20,7 +20,7 @@ struct SongHeaderView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             Rectangle()
-                .frame(height: 156)
+                .frame(height: UIScreen.getHeight(156))
                 .foregroundColor(Color.HalmacSub)
                 .edgesIgnoringSafeArea(.all)
             

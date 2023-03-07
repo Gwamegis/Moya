@@ -43,6 +43,8 @@ struct HalmapApp: App {
         let image = UIImage(systemName: "chevron.backward")?
             .withTintColor(UIColor.white, renderingMode: .alwaysOriginal)
         navigationBarAppearance.setBackIndicatorImage(image, transitionMaskImage: image)
+        navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont(name: "Pretendard-Bold", size: 20)! ]
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white, .font: UIFont(name: "Pretendard-Bold", size: 20)! ]
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactScrollEdgeAppearance = navigationBarAppearance

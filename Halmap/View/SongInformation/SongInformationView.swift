@@ -14,21 +14,7 @@ struct SongInformationView: View {
     var body: some View {
 
         VStack(alignment: .leading, spacing: 0) {
-            ZStack {
-                SongHeaderView(song: $song)
-                
-                HStack{
-                    Text(song.title)
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .bold()
-                        .multilineTextAlignment(.leading)
-                    Spacer()
-                }
-                .padding(.leading, 43)
-                .padding(.trailing, 20)
-                .padding(.top, -20)
-            }
+            SongHeaderView(song: $song)
             
             SongContentView(song: $song)
                 .background(.white)
@@ -36,6 +22,14 @@ struct SongInformationView: View {
             Spacer()
         }
         .ignoresSafeArea()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Text(song.title)
+                    .font(Font.Halmap.CustomTitleBold)
+                    .foregroundColor(.white)
+                    .padding(.leading, -10)
+            }
+        }
         
     }
 }

@@ -25,7 +25,7 @@ struct MainSongListTabView: View {
         ZStack(alignment: .top) {
             VStack {
                 Rectangle()
-                    .frame(height:210)
+                    .frame(height:UIScreen.getHeight(210))
                     .foregroundColor(Color.HalmacSub)
                     .edgesIgnoringSafeArea(.all)
                 TabView(selection: $index) {
@@ -93,7 +93,7 @@ struct MainSongListTabView: View {
                 ZStack(alignment: .bottomLeading) {
                     Image("\(selectedTeam)MainBanner")
                         .resizable()
-                        .frame(width: 350, height: 126.9)
+                        .frame(width: UIScreen.getWidth(350), height: UIScreen.getHeight(126.9))
                         .cornerRadius(10)
                     Text("팀 바꾸기")
                         .font(Font.Halmap.CustomCaptionMedium)
