@@ -25,7 +25,12 @@ struct SongSearchView: View {
         VStack(spacing: 0) {
             
             navigationView
+                .padding(.top, 10)
             
+            Divider()
+                .foregroundColor(.customGray)
+                .padding(.top, 20)
+
             resultView
             
             Spacer()
@@ -51,6 +56,11 @@ struct SongSearchView: View {
                 }
                 .focused($isFocused)
                 .background(Color.customGray)
+                .task {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        isFocused = true
+                    }
+                }
             
             if !searchText.isEmpty {
                 Image(systemName: "xmark.circle.fill")
@@ -112,32 +122,23 @@ struct SongSearchView: View {
     }
     
     var navigationView: some View {
-        ZStack {
-            Rectangle()
-                .frame(height: 120)
-                .foregroundColor(Color.HalmacSub)
+        HStack(spacing: 17) {
+            searchBar
             
-            HStack(spacing: 17) {
-//                Image(systemName: "chevron.left")
-//                    .foregroundColor(Color.white)
-//                    .onTapGesture {
-//                        self.mode.wrappedValue.dismiss()
-//                    }
-                
-                searchBar
-                
-                if !searchText.isEmpty {
-                    Button {
+            if isFocused == true {
+                Button {
+                    withAnimation {
                         isFocused = false
-                    } label: {
-                        Text("취소")
                     }
-                    .foregroundColor(Color.white)
+                } label: {
+                    Text("취소")
                 }
+                .foregroundColor(Color.customDarkGray)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 50)
         }
+        .padding(.horizontal, 20)
+        .padding(.top, 50)
+
     }
     
     private func didChangedSearchText() {
@@ -157,9 +158,7 @@ struct SongSearchView: View {
                 autoComplete.append(music)
             }
         }
-        
     }
-    
 }
 
 
