@@ -14,14 +14,18 @@ extension Color {
     static var HalmacBackground = Color("LotteBackground")
     static var HalmacSub = Color("LotteBackground")
     
+    static var customGray = Color("customGray")
+    static var customDarkGray = Color("customDarkGray")
+    static var systemBackground = Color("systemBackground")
+    static var tabBarGray = Color("tabBarGray")
+    
     static func setColor(_ teamName: String) {
         Color.HalmacPoint = Color("\(teamName)Point")
         Color.HalmacBackground = Color("\(teamName)Background")
         Color.HalmacSub = Color("\(teamName)Sub")
     }
     
-    static var customGray = Color("customGray")
-    static var customDarkGray = Color("customDarkGray")
-    static var systemBackground = Color("systemBackground")
-    static var tabBarGray = Color("tabBarGray")
+    static func fetchGradient() -> LinearGradient {
+        LinearGradient(colors: [HalmacSub.opacity(0.9), HalmacSub.opacity(0)], startPoint: .bottom, endPoint: .top)
+    }
 }

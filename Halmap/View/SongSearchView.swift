@@ -97,7 +97,7 @@ struct SongSearchView: View {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongInformationView(song: autoComplete[index])) {
+                        NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
                             HStack {
                                 Image(systemName: "magnifyingglass")
                                 Text(autoComplete[index].title)

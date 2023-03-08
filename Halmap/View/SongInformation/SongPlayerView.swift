@@ -8,7 +8,7 @@
 import SwiftUI
 import AVFoundation
 
-struct SongHeaderView: View {
+struct SongPlayerView: View {
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var song: Song
@@ -18,37 +18,23 @@ struct SongHeaderView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        ZStack(alignment: .bottomTrailing){
-            Rectangle()
-                .frame(height: UIScreen.getHeight(156))
-                .foregroundColor(Color.HalmacSub)
-                .edgesIgnoringSafeArea(.all)
-            
-            HStack(spacing: 20){
-                
-                Spacer()
-                
-                Button(action: {
-                    isPlaying.toggle()
-                    if isPlaying {
-                        playSoundURL(song.url)
-                    } else {
-                        stopSound()
-                    }
-                }, label: {
-                    ZStack{
-                        Rectangle()
-                            .foregroundColor(Color("\(selectedTeam)Background"))
-                            .cornerRadius(20)
-                            .frame(width: 83, height: 44)
-                        
-                        Text(isPlaying ? "정지" : "재생").foregroundColor(.white)
-                            .bold()
-                    }
-                })
+        HStack {
+            Button {
+                isPlaying.toggle()
+                if isPlaying {
+                    playSoundURL(song.url)
+                } else {
+                    stopSound()
+                }
+            } label: {
+                Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                    .font(.system(size: 50, weight: .medium))
+                    .foregroundColor(.customGray)
+                    .padding(.bottom, 20)
             }
-            .padding(EdgeInsets(top: 0, leading: 0, bottom: 17, trailing: 17)) // Button
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.HalmacSub)
         .onDisappear(){
             stopSound()
         }

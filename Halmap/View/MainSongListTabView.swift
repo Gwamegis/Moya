@@ -38,7 +38,7 @@ struct MainSongListTabView: View {
                                              info: song.info,
                                              url: song.url)
                             
-                            NavigationLink(destination: SongInformationView(song: music)) {
+                            NavigationLink(destination: SongDetailView(song: music)) {
                                 VStack {
                                     Text(song.title)
                                         .font(Font.Halmap.CustomBodyMedium)
@@ -63,7 +63,7 @@ struct MainSongListTabView: View {
                                              info: song.info,
                                              url: song.url)
                             
-                            NavigationLink(destination: SongInformationView(song: music)) {
+                            NavigationLink(destination: SongDetailView(song: music)) {
                                 VStack {
                                     Text(song.title)
                                         .font(Font.Halmap.CustomBodyMedium)
@@ -79,7 +79,7 @@ struct MainSongListTabView: View {
                     .listStyle(.plain)
                     .tag(1)
                 }
-                .tabViewStyle(.page)
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
             
             //상단 탭바

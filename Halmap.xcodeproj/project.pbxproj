@@ -26,7 +26,7 @@
 		A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */; };
 		A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */; };
 		A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */; };
-		A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */; };
+		A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */; };
 		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
 		A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */; };
 		A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */; };
@@ -44,6 +44,7 @@
 		F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622A29B4CB450025F50E /* ThemeManager.swift */; };
 		F98F623129B59CE60025F50E /* TeamName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F623029B59CE60025F50E /* TeamName.swift */; };
 		F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B429B7397600232BB8 /* MapName.swift */; };
+		F9B3B7B729B842DD00232BB8 /* SongDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
@@ -68,7 +69,7 @@
 		A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumMapView.swift; sourceTree = "<group>"; };
 		A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongInformationView.swift; sourceTree = "<group>"; };
 		A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionView.swift; sourceTree = "<group>"; };
-		A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHeaderView.swift; sourceTree = "<group>"; };
+		A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayerView.swift; sourceTree = "<group>"; };
 		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
 		A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Font.swift"; sourceTree = "<group>"; };
 		A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Color.swift"; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		F98F622A29B4CB450025F50E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F98F623029B59CE60025F50E /* TeamName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamName.swift; sourceTree = "<group>"; };
 		F9B3B7B429B7397600232BB8 /* MapName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapName.swift; sourceTree = "<group>"; };
+		F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailView.swift; sourceTree = "<group>"; };
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F9B95BBA28F271B800728048 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -181,8 +183,9 @@
 			isa = PBXGroup;
 			children = (
 				A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */,
-				A81FFC9C28F180A000B0FC7C /* SongHeaderView.swift */,
+				A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */,
 				A81FFC9E28F180B200B0FC7C /* SongContentView.swift */,
+				F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */,
 			);
 			path = SongInformation;
 			sourceTree = "<group>";
@@ -340,7 +343,7 @@
 				87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
-				A81FFC9D28F180A000B0FC7C /* SongHeaderView.swift in Sources */,
+				A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
 				87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */,
 				F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */,
@@ -348,6 +351,7 @@
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
 				F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
+				F9B3B7B729B842DD00232BB8 /* SongDetailView.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,

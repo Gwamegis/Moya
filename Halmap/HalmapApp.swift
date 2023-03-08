@@ -48,6 +48,7 @@ struct HalmapApp: App {
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactAppearance = navigationBarAppearance
         UINavigationBar.appearance().compactScrollEdgeAppearance = navigationBarAppearance
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         
         UITableView.appearance().showsVerticalScrollIndicator = false
     }
