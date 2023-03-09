@@ -35,6 +35,8 @@ struct StadiumListSheetView: View {
             .padding(.horizontal, 20)
         }
         .background(Color.systemBackground)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
     }
 }
 

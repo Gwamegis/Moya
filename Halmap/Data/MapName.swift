@@ -18,15 +18,15 @@ enum MapName: String, CaseIterable {
     func fetchNameKr() -> String {
         switch self {
         case .daejeonHanwhaLifeEaglesPark:
-            return "대전 이글스 파크"
+            return "한화생명 이글스 파크"
         case .gocheokSkyDome:
             return "고척 스카이돔"
         case .incheonSSGLandersField:
-            return "SSG 랜더스 필드"
+            return "인천 SSG 랜더스 필드"
         case .sajikBaseballStadium:
             return "사직 야구장"
         case .seoulSportsComplexBaseballStadium:
-            return "서울 종합 야구장"
+            return "잠실 야구장"
         case .suwonKTWizPark:
             return "수원 KT 위즈 파크"
         }

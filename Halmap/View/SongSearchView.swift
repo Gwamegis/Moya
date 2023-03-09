@@ -35,7 +35,6 @@ struct SongSearchView: View {
             
             Spacer()
         }
-        .edgesIgnoringSafeArea(.top)
         .frame(maxWidth: .infinity)
         .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
@@ -76,7 +75,7 @@ struct SongSearchView: View {
         }
         .frame(height: 40)
         .padding(.horizontal, 20)
-        .background(Color(.systemGray6))
+        .background(Color.customGray)
         .cornerRadius(30)
     }
     
@@ -137,8 +136,6 @@ struct SongSearchView: View {
             }
         }
         .padding(.horizontal, 20)
-        .padding(.top, 50)
-
     }
     
     private func didChangedSearchText() {
