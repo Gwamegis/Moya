@@ -21,7 +21,7 @@ struct SongDetailView: View {
             
             VStack(spacing: 0) {
                 Rectangle()
-                    .frame(height: 108)
+                    .frame(height: UIScreen.getHeight(108))
                     .foregroundColor(Color.HalmacSub)
                 Rectangle()
                     .frame(height: 20)
@@ -32,9 +32,9 @@ struct SongDetailView: View {
                     .frame(height: 40)
                     .background(Color.fetchBottomGradient())
                     .foregroundColor(Color(UIColor.clear))
-                ZStack {
+                ZStack(alignment: .center) {
                     Rectangle()
-                        .frame(height: 120)
+                        .frame(height: UIScreen.getHeight(120))
                         .foregroundColor(Color.HalmacSub)
                     SongPlayerView(song: $song)
                 }

@@ -24,7 +24,7 @@ struct StadiumMapView: View {
                     VStack(alignment: .center) {
                         Divider()
                             .foregroundColor(Color.customGray)
-                            .padding(.top, 119)
+                            .padding(.top, UIScreen.getHeight(119))
                         
                         Text("손가락으로 확대해 좌석을 찾아보세요!")
                             .font(Font.Halmap.CustomBodyMedium)

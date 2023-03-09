@@ -20,7 +20,7 @@ struct SongContentView: View {
                 .font(.Halmap.CustomHeadline)
                 .lineSpacing(20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(EdgeInsets(top: 30, leading: 40, bottom: 120, trailing: 40))
+                .padding(EdgeInsets(top: 40, leading: 40, bottom: 120, trailing: 40))
         }
     }
 }
