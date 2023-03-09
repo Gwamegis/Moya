@@ -25,7 +25,10 @@ extension Color {
         Color.HalmacSub = Color("\(teamName)Sub")
     }
     
-    static func fetchGradient() -> LinearGradient {
-        LinearGradient(colors: [HalmacSub.opacity(0.9), HalmacSub.opacity(0)], startPoint: .bottom, endPoint: .top)
+    static func fetchBottomGradient() -> LinearGradient {
+        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)], startPoint: .bottom, endPoint: .top)
+    }
+    static func fetchTopGradient() -> LinearGradient {
+        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)].reversed(), startPoint: .bottom, endPoint: .top)
     }
 }

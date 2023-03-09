@@ -15,12 +15,12 @@ struct SongContentView: View {
     var body: some View {
         
         ScrollView(showsIndicators: true) {
-            Text("\(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))\n\n\n\n")
+            Text("\(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))")
                 .foregroundColor(.white.opacity(0.8))
                 .font(.Halmap.CustomHeadline)
                 .lineSpacing(20)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 40)
+                .padding(EdgeInsets(top: 30, leading: 40, bottom: 120, trailing: 40))
         }
     }
 }

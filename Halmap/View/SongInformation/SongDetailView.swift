@@ -17,21 +17,29 @@ struct SongDetailView: View {
             Color.HalmacSub
                 .ignoresSafeArea()
             
-            VStack{
-                SongContentView(song: $song)
-                
-                SongPlayerView(song: $song)
-            }
-            .padding(.top, 30)
+            SongContentView(song: $song)
             
-            VStack {
+            VStack(spacing: 0) {
+                Rectangle()
+                    .frame(height: 108)
+                    .foregroundColor(Color.HalmacSub)
+                Rectangle()
+                    .frame(height: 20)
+                    .background(Color.fetchTopGradient())
+                    .foregroundColor(Color(UIColor.clear))
                 Spacer()
                 Rectangle()
-                    .frame(height: 120)
-                    .background(Color.fetchGradient())
+                    .frame(height: 40)
+                    .background(Color.fetchBottomGradient())
                     .foregroundColor(Color(UIColor.clear))
-                    .padding(.bottom, 80)
+                ZStack {
+                    Rectangle()
+                        .frame(height: 120)
+                        .foregroundColor(Color.HalmacSub)
+                    SongPlayerView(song: $song)
+                }
             }
+            .ignoresSafeArea()
         }
         .navigationTitle(song.title)
         .navigationBarTitleDisplayMode(.inline)
