@@ -12,9 +12,23 @@ import SwiftUI
 extension Color {
     static var HalmacPoint = Color("LottePoint")
     static var HalmacBackground = Color("LotteBackground")
+    static var HalmacSub = Color("LotteBackground")
+    
+    static var customGray = Color("customGray")
+    static var customDarkGray = Color("customDarkGray")
+    static var systemBackground = Color("systemBackground")
+    static var tabBarGray = Color("tabBarGray")
     
     static func setColor(_ teamName: String) {
         Color.HalmacPoint = Color("\(teamName)Point")
         Color.HalmacBackground = Color("\(teamName)Background")
+        Color.HalmacSub = Color("\(teamName)Sub")
+    }
+    
+    static func fetchBottomGradient() -> LinearGradient {
+        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)], startPoint: .bottom, endPoint: .top)
+    }
+    static func fetchTopGradient() -> LinearGradient {
+        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)].reversed(), startPoint: .bottom, endPoint: .top)
     }
 }

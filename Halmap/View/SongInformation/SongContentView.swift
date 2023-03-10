@@ -10,27 +10,17 @@ import Firebase
 
 struct SongContentView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
     @Binding var song: Song
 
     var body: some View {
         
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 20) {
-                
-                Text("가사")
-                    .foregroundColor(Color("\(selectedTeam)Background"))
-                    .font(.Halmap.CustomCaptionBold)
-
-                Text(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))
-                    .foregroundColor(.black)
-                    .font(.Halmap.CustomBodyMedium)
-                    .lineSpacing(10)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                Spacer()
-            }
-            .padding(20)
+        ScrollView(showsIndicators: true) {
+            Text("\(song.lyrics.replacingOccurrences(of: "\\n", with: "\n"))")
+                .foregroundColor(.white.opacity(0.8))
+                .font(.Halmap.CustomHeadline)
+                .lineSpacing(20)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: 40, leading: 40, bottom: 120, trailing: 40))
         }
     }
 }

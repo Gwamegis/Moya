@@ -30,7 +30,7 @@ struct TabBarView: View {
             }
             Spacer()
         }
-        .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 24))
+        .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 24))
         // FIXME: - background 생략시 탭바가 아래로 밀리는 현상 발생
         .frame(height: 32)
     }

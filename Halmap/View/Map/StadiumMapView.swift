@@ -15,24 +15,24 @@ struct StadiumMapView: View {
     @State var currentOffset = CGSize.zero
     @State var lastOffset = CGSize.zero
     
-    let message: String
+    let message: MapName
     
     var body: some View {
         GeometryReader { geometry in
-            VStack{
-                Capsule()
-                    .fill(Color.secondary)
-                    .opacity(0.5)
-                    .frame(width: 60, height: 5)
-                    .padding(EdgeInsets(top: 12, leading: geometry.size.width / 2 - 30, bottom: 23, trailing: geometry.size.width / 2 - 30))
+            VStack(spacing: 0){
                 NavigationView{
-                    VStack(alignment: .leading) {
-                        Text("좌석 배치도")
-                            .font(Font.Halmap.CustomCaptionBold)
-                            .padding(EdgeInsets(top: 40, leading: 20, bottom: 0, trailing: 0))
+                    VStack(alignment: .center) {
+                        Divider()
+                            .foregroundColor(Color.customGray)
+                            .padding(.top, UIScreen.getHeight(119))
+                        
+                        Text("손가락으로 확대해 좌석을 찾아보세요!")
+                            .font(Font.Halmap.CustomBodyMedium)
+                            .foregroundColor(.customDarkGray)
+                            .padding(.top, 28)
                         
                         ZStack {
-                            Image(message)
+                            Image(message.rawValue)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .offset(x: self.currentOffset.width, y: self.currentOffset.height)
@@ -68,13 +68,23 @@ struct StadiumMapView: View {
                         Spacer()
                         
                     }
+                    .ignoresSafeArea()
                     .navigationBarBackButtonHidden(true)
-                    .navigationBarTitle(message, displayMode: .inline)
-                    .navigationBarItems(leading: backButton)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            backButton
+                        }
+                        ToolbarItem(placement: .principal) {
+                            Text(message.fetchNameKr())
+                                .font(Font.Halmap.CustomTitleBold)
+                                .foregroundColor(.black)
+                        }
+                    }
                 }
             }
             .navigationBarHidden(true)
         }
+        .background(Color.systemBackground)
     }
     
     var backButton : some View {
@@ -93,6 +103,6 @@ struct StadiumMapView: View {
 struct StadiumMapView_Previews: PreviewProvider {
     
     static var previews: some View {
-        StadiumMapView(message: "SSG 랜더스 필드")
+        StadiumMapView(message: MapName.daejeonHanwhaLifeEaglesPark)
     }
 }

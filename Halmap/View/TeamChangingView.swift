@@ -15,7 +15,7 @@ struct TeamChangingView: View {
     @State var originSelectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "error")
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
-    var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "SSG", "Samsung", "LG", "KT", "NC"]
+    var teamLogo = TeamName.allCases
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,11 +29,11 @@ struct TeamChangingView: View {
                         withAnimation {
                             buttonPressed = [Bool](repeating: false, count: 10)
                             self.buttonPressed[idx].toggle()
-                            self.selectedTeam = teamLogo[idx]
+                            self.selectedTeam = teamLogo[idx].rawValue
                         }
                     } label: {
                         ZStack {
-                            Image(teamLogo[idx])
+                            Image(teamLogo[idx].rawValue)
                                 .resizable()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))

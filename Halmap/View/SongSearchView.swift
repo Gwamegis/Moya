@@ -15,24 +15,28 @@ struct SongSearchView: View {
     @ObservedObject var dataManager = DataManager()
     
     @GestureState private var dragOffset = CGSize.zero
-    @FocusState private var isFocused: Bool?
+    @FocusState private var isFocused: Bool
     
     @State private var searchText = ""
-//    @State private var autoComplete = [Music]()
     @State private var autoComplete = [Song]()
     
     var body: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             
             navigationView
+                .padding(.top, 10)
             
+            Divider()
+                .foregroundColor(.customGray)
+                .padding(.top, 20)
+
             resultView
             
             Spacer()
         }
-        .ignoresSafeArea()
         .frame(maxWidth: .infinity)
+        .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
         .onAppear { UIApplication.shared.hideKeyboard() }
     }
@@ -45,12 +49,12 @@ struct SongSearchView: View {
             TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
                 .accentColor(.black)
                 .disableAutocorrection(true)
-                .foregroundColor(searchText.isEmpty ? Color(.systemGray) : .black)
                 .onChange(of: searchText) { _ in
                     // TODO: 수정 필요
                     didChangedSearchText()
                 }
-                .focused($isFocused, equals: true)
+                .focused($isFocused)
+                .background(Color.customGray)
                 .task {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         isFocused = true
@@ -71,7 +75,7 @@ struct SongSearchView: View {
         }
         .frame(height: 40)
         .padding(.horizontal, 20)
-        .background(Color(.systemGray6))
+        .background(Color.customGray)
         .cornerRadius(30)
     }
     
@@ -83,53 +87,55 @@ struct SongSearchView: View {
             if searchText.isEmpty {
                 VStack {
                     Text("선수 이름, 응원가를 검색해주세요")
-                        .foregroundColor(Color(.systemGray))
+                        .foregroundColor(Color.customDarkGray)
                         .padding(30)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .background(Color.white)
             } else {
                 
                 List {
                     ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongInformationView(song: autoComplete[index])) {
+                        NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
                             HStack {
-                                
                                 Image(systemName: "magnifyingglass")
                                 Text(autoComplete[index].title)
                             }
-                            .padding(.horizontal, 20)
+                            .font(Font.Halmap.CustomBodyMedium)
+                            .foregroundColor(Color.black)
                             .frame(height: 45)
                         }
-                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color(UIColor.clear))
+                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+                        .listRowSeparatorTint(Color.customGray)
                     }
                 }
+                .padding(.horizontal, 20)
                 .listStyle(.plain)
+                .padding(.top, 10)
                 
             }
         }
+        .background(Color.systemBackground)
         
     }
     
     var navigationView: some View {
-        ZStack {
-            Rectangle()
-                .frame(height: 120)
-                .foregroundColor(Color("\(selectedTeam)Background"))
+        HStack(spacing: 17) {
+            searchBar
             
-            HStack(spacing: 17) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color.white)
-                    .onTapGesture {
-                        self.mode.wrappedValue.dismiss()
+            if isFocused == true {
+                Button {
+                    withAnimation {
+                        isFocused = false
                     }
-                
-                searchBar
+                } label: {
+                    Text("취소")
+                }
+                .foregroundColor(Color.customDarkGray)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 50)
         }
+        .padding(.horizontal, 20)
     }
     
     private func didChangedSearchText() {
@@ -149,9 +155,7 @@ struct SongSearchView: View {
                 autoComplete.append(music)
             }
         }
-        
     }
-    
 }
 
 

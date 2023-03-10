@@ -9,12 +9,17 @@ import SwiftUI
 
 struct OnBoardingStartView: View {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
     @State var startButton: Bool = false
     
     var body: some View {
         if !isFirstLaunching {
-            MainView()
+            ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
+                if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
+                    MainTabView()
+                }
+            }
         } else {
             TeamSelectionView(isFirstLaunching: $isFirstLaunching)
         }
@@ -29,8 +34,8 @@ struct TeamSelectionView: View {
     @State var selectedTeam: String? = nil
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
-    var teamLogo: [String] = ["Doosan", "Lotte", "Hanwha", "Kiwoom", "Kia", "SSG", "Samsung", "LG", "KT", "NC"]
-
+    var teamLogo = TeamName.allCases
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("어느 팀을 응원하시나요?")
@@ -44,12 +49,12 @@ struct TeamSelectionView: View {
                             buttonPressed = [Bool](repeating: false, count: 10)
 
                             self.buttonPressed[idx].toggle()
-                            self.selectedTeam = teamLogo[idx]
+                            self.selectedTeam = teamLogo[idx].rawValue
 
                         }
                     } label: {
                         ZStack {
-                            Image(teamLogo[idx])
+                            Image(teamLogo[idx].rawValue)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108), alignment: .top)
