@@ -9,7 +9,10 @@ import SwiftUI
 import AVFoundation
 
 struct SongDetailView: View {
+    @EnvironmentObject var dataManager: DataManager
     
+    @State var isTeam: Bool
+    @State var index: Int
     @State var song: Song
     
     var body: some View {
@@ -36,12 +39,25 @@ struct SongDetailView: View {
                     Rectangle()
                         .frame(height: UIScreen.getHeight(120))
                         .foregroundColor(Color.HalmacSub)
-                    SongPlayerView(song: $song)
+                    SongPlayerView(isTeam: $isTeam)
                 }
             }
             .ignoresSafeArea()
         }
         .navigationTitle(song.title)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear() {
+            dataManager.currentIndex = index
+        }
+        .onDisappear() {
+            dataManager.stopSound()
+        }
+        .onChange(of: dataManager.currentIndex) { newValue in
+            if isTeam {
+                song = dataManager.teamSongs[newValue]
+            } else {
+                song = dataManager.playerSongs[newValue]
+            }
+        }
     }
 }

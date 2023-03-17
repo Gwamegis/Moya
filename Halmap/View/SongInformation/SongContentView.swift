@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 
 struct SongContentView: View {
+    @EnvironmentObject var dataManager: DataManager
     
     @Binding var song: Song
 

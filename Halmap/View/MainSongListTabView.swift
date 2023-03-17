@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct MainSongListTabView: View {
+    @EnvironmentObject var dataManager: DataManager
     
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
-    @ObservedObject var dataManager = DataManager()
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
 
@@ -30,15 +30,8 @@ struct MainSongListTabView: View {
                     .edgesIgnoringSafeArea(.all)
                 TabView(selection: $index) {
                     List {
-                        ForEach(dataManager.teamSongs) { song in
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
-                            
-                            NavigationLink(destination: SongDetailView(song: music)) {
+                        ForEach(Array(dataManager.teamSongs.enumerated()), id: \.offset) { index, song in
+                            NavigationLink(destination: SongDetailView(isTeam: true, index: index, song: song)) {
                                 VStack {
                                     Text(song.title)
                                         .font(Font.Halmap.CustomBodyMedium)
@@ -55,15 +48,8 @@ struct MainSongListTabView: View {
                     .tag(0)
                     
                     List {
-                        ForEach(dataManager.playerSongs) { song in
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
-                            
-                            NavigationLink(destination: SongDetailView(song: music)) {
+                        ForEach(Array(dataManager.playerSongs.enumerated()), id: \.offset) { index, song in
+                            NavigationLink(destination: SongDetailView(isTeam: false, index: index, song: song)) {
                                 VStack {
                                     Text(song.title)
                                         .font(Font.Halmap.CustomBodyMedium)

@@ -5,10 +5,11 @@
 //  Created by 전지민 on 2022/10/09.
 //
 
+import AVFoundation
 import Foundation
 import FirebaseFirestore
 
-class DataManager: ObservableObject {
+class DataManager: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     private let db = Firestore.firestore()
     
@@ -18,8 +19,12 @@ class DataManager: ObservableObject {
     @Published var playerList: [Player] = []
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
+    @Published var currentIndex: Int = 0
     
-    init() {
+    var audioPlayer: AVPlayer!
+    
+    override init() {
+        super.init()
         loadData()
         fetchSong(team: selectedTeam, type: true) { songs in
             self.playerSongs = songs
@@ -102,5 +107,74 @@ class DataManager: ObservableObject {
                     completionHandler(songs)
                 }
             }
+    }
+}
+
+//MARK: 음악 재생 관련 함수 모음
+extension DataManager {
+
+    func playSoundURL(isTeam: Bool) {
+        var urlString: String?
+        
+        stopSound()
+        if isTeam {
+            urlString = teamSongs[currentIndex].url
+        } else {
+            urlString = playerSongs[currentIndex].url
+        }
+        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
+        
+        guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
+        let item = AVPlayerItem(url: url)
+        audioPlayer = AVPlayer(playerItem: item)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch(let error) {
+            print(error.localizedDescription)
+        }
+        audioPlayer.play()
+    }
+    func stopSound(){
+        guard let player = audioPlayer else {
+            return
+        }
+        player.pause()
+    }
+    
+    func playNextSong(isTeam: Bool, isForward: Bool) {
+        stopSound()
+        if isForward {
+            if isTeam {
+                if 0 > currentIndex - 1 {
+                    currentIndex = teamSongs.count - 1
+                } else {
+                    currentIndex -= 1
+                }
+            } else {
+                if 0 > currentIndex - 1 {
+                    currentIndex = playerSongs.count - 1
+                } else {
+                    currentIndex -= 1
+                }
+            }
+        } else {
+            if isTeam {
+                if teamSongs.count - 1 < currentIndex + 1 {
+                    currentIndex = 0
+                } else {
+                    currentIndex += 1
+                }
+            } else {
+                if playerSongs.count - 1 < currentIndex + 1 {
+                    currentIndex = 0
+                } else {
+                    currentIndex += 1
+                }
+            }
+        }
+    }
+    
+    func setCurrentIndex(index: Int) {
+        self.currentIndex = index
     }
 }

@@ -45,7 +45,6 @@ struct SongSearchView: View {
     // MARK: Search Bar
     var searchBar: some View {
         HStack {
-            
             TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
                 .accentColor(.black)
                 .disableAutocorrection(true)
@@ -94,25 +93,25 @@ struct SongSearchView: View {
                 .frame(maxWidth: .infinity)
             } else {
                 
-                List {
-                    ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-                                Text(autoComplete[index].title)
-                            }
-                            .font(Font.Halmap.CustomBodyMedium)
-                            .foregroundColor(Color.black)
-                            .frame(height: 45)
-                        }
-                        .listRowBackground(Color(UIColor.clear))
-                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
-                        .listRowSeparatorTint(Color.customGray)
-                    }
-                }
-                .padding(.horizontal, 20)
-                .listStyle(.plain)
-                .padding(.top, 10)
+//                List {
+//                    ForEach(autoComplete.indices, id: \.self) { index in
+//                        NavigationLink(destination: SongDetailView(isTeam: <#Bool#>, index: index, song: autoComplete[index])) {
+//                            HStack {
+//                                Image(systemName: "magnifyingglass")
+//                                Text(autoComplete[index].title)
+//                            }
+//                            .font(Font.Halmap.CustomBodyMedium)
+//                            .foregroundColor(Color.black)
+//                            .frame(height: 45)
+//                        }
+//                        .listRowBackground(Color(UIColor.clear))
+//                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+//                        .listRowSeparatorTint(Color.customGray)
+//                    }
+//                }
+//                .padding(.horizontal, 20)
+//                .listStyle(.plain)
+//                .padding(.top, 10)
                 
             }
         }

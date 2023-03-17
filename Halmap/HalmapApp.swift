@@ -23,7 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    let persistenceController = PersistenceController.shared
+    @StateObject var dataManager = DataManager()
     
     init() {
         //탭바 색, 그림자 설정, 탭바 아이콘 색 설정
@@ -59,8 +59,10 @@ struct HalmapApp: App {
                 OnBoardingStartView()
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.hidden)
+                    .environmentObject(dataManager)
             } else {
                 OnBoardingStartView()
+                    .environmentObject(dataManager)
             }
         }
     }

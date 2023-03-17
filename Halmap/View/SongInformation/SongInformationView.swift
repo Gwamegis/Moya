@@ -14,10 +14,10 @@ struct SongInformationView: View {
     var body: some View {
 
         VStack(alignment: .leading, spacing: 0) {
-            SongPlayerView(song: $song)
-            
-            SongContentView(song: $song)
-                .background(.white)
+//            SongPlayerView(song: $song)
+//            
+//            SongContentView(song: $song)
+//                .background(.white)
 
             Spacer()
         }
