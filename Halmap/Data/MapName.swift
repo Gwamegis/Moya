@@ -8,12 +8,16 @@
 import Foundation
 
 enum MapName: String, CaseIterable {
-    case daejeonHanwhaLifeEaglesPark = "DaejeonHanwhaLifeEaglesPark"
     case gocheokSkyDome = "GocheokSkyDome"
-    case incheonSSGLandersField = "IncheonSSGLandersField"
+    case gwangjuKiaChampionsField = "GwangjuKiaChampionsField"
+    case daeguSamsungLionsPark = "DaeguSamsungLionsPark"
     case sajikBaseballStadium = "SajikBaseballStadium"
-    case seoulSportsComplexBaseballStadium = "SeoulSportsComplexBaseballStadium"
     case suwonKTWizPark = "SuwonKTWizPark"
+    case ulsanMunsuBaseballStadium = "UlsanMunsuBaseballStadium"
+    case incheonSSGLandersField = "IncheonSSGLandersField"
+    case seoulSportsComplexBaseballStadium = "SeoulSportsComplexBaseballStadium"
+    case changwonNCPark = "ChangwonNCPark"
+    case daejeonHanwhaLifeEaglesPark = "DaejeonHanwhaLifeEaglesPark"
     
     func fetchNameKr() -> String {
         switch self {
@@ -29,6 +33,14 @@ enum MapName: String, CaseIterable {
             return "잠실 야구장"
         case .suwonKTWizPark:
             return "수원 KT 위즈 파크"
+        case .changwonNCPark:
+            return "창원 NC 파크"
+        case .daeguSamsungLionsPark:
+            return "대구 삼성 라이온즈 파크"
+        case .gwangjuKiaChampionsField:
+            return "광주 기아 챔피언스 필드"
+        case .ulsanMunsuBaseballStadium:
+            return "울산 문수 야구장"
         }
     }
 }

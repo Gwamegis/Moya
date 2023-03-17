@@ -22,8 +22,8 @@ struct TabBarItemView: View {
             VStack {
                 Spacer()
                 Text(tabBarItemName)
-                    .font(Font.Halmap.CustomTitleMedium)
-                    .foregroundColor(Color.white)
+                    .font(Font.Halmap.CustomTitleBold)
+                    .foregroundColor(currentTab == tab ? Color.white : Color.white.opacity(0.4))
                 if currentTab == tab {
                     Color.HalmacPoint
                         .frame(width: 92, height: 4)
