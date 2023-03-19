@@ -12,7 +12,6 @@ struct TeamChangingView: View {
     @Binding var changedTeam: String
     @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 10)
     @State var selectedTeam: String? = nil
-    @State var originSelectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "error")
     
     var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
     var teamLogo = TeamName.allCases
@@ -37,14 +36,9 @@ struct TeamChangingView: View {
                                 .resizable()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundColor(Color.black)
-                                .opacity(buttonPressed[idx] ? 0.8 : 0)
-                            Image(systemName: "checkmark")
+                            Image("teamSelect")
                                 .resizable()
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(width: UIScreen.getWidth(29), height: UIScreen.getHeight(31))
+                                .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
                                 .opacity(buttonPressed[idx] ? 1 : 0)
                         }
                     }
@@ -74,5 +68,9 @@ struct TeamChangingView: View {
             .disabled(selectedTeam == nil)
         }
         .padding(.horizontal, 20)
+        .onAppear() {
+            let index = teamLogo.firstIndex(of: TeamName(rawValue: changedTeam) ?? TeamName.doosan)
+            buttonPressed[index!] = true
+        }
     }
 }

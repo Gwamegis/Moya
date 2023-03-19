@@ -20,18 +20,18 @@ struct MainTabView: View {
             TabView {
                 MainSongListTabView()
                     .tabItem {
-                        Image(systemName: "music.note.house.fill")
-                        Text("응원곡 듣기")
+                        Image("home")
+                        Text("응원곡")
                       }
                 SongSearchView()
                     .tabItem {
-                        Image(systemName: "magnifyingglass")
-                        Text("응원가 검색")
+                        Image("search")
+                        Text("곡 검색")
                       }
                 StadiumListSheetView()
                     .tabItem {
-                        Image(systemName: "map.fill")
-                        Text("야구장 지도")
+                        Image("map")
+                        Text("야구장")
                       }
             }
             .accentColor(Color.HalmacPoint)

@@ -29,6 +29,6 @@ extension Color {
         LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)], startPoint: .bottom, endPoint: .top)
     }
     static func fetchTopGradient() -> LinearGradient {
-        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)].reversed(), startPoint: .bottom, endPoint: .top)
+        LinearGradient(colors: [HalmacSub, HalmacSub.opacity(0)], startPoint: .top, endPoint: .bottom)
     }
 }
