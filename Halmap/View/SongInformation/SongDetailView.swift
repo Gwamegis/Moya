@@ -11,22 +11,25 @@ import AVFoundation
 struct SongDetailView: View {
     
     @State var song: Song
+    @State var isScrolled = false
     
     var body: some View {
         ZStack {
             Color.HalmacSub
                 .ignoresSafeArea()
             
-            SongContentView(song: $song)
+            SongContentView(song: $song, isScrolled: $isScrolled)
             
             VStack(spacing: 0) {
                 Rectangle()
                     .frame(height: UIScreen.getHeight(108))
                     .foregroundColor(Color.HalmacSub)
-                Rectangle()
-                    .frame(height: 20)
-                    .background(Color.fetchTopGradient())
-                    .foregroundColor(Color(UIColor.clear))
+                if isScrolled {
+                    Rectangle()
+                        .frame(height: 120)
+                        .background(Color.fetchTopGradient())
+                        .foregroundColor(Color(UIColor.clear))
+                }
                 Spacer()
                 Rectangle()
                     .frame(height: 40)
