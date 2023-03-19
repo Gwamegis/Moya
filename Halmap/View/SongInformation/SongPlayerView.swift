@@ -14,7 +14,7 @@ struct SongPlayerView: View {
     @Binding var song: Song
     @State var sound: Data?
     @State var audioPlayer: AVPlayer!
-    @State var isPlaying: Bool = false
+    @State var isPlaying: Bool = true
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -37,6 +37,9 @@ struct SongPlayerView: View {
         .background(Color.HalmacSub)
         .onDisappear(){
             stopSound()
+        }
+        .onAppear{
+            playSoundURL(song.url)
         }
     }
     
