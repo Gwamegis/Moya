@@ -38,6 +38,9 @@ struct SongPlayerView: View {
         .onDisappear(){
             stopSound()
         }
+        .onAppear{
+            playSoundURL(song.url)
+        }
     }
     
     func playSoundURL(_ urlString : String?) {
