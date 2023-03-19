@@ -36,14 +36,9 @@ struct TeamChangingView: View {
                                 .resizable()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundColor(Color.black)
-                                .opacity(buttonPressed[idx] ? 0.8 : 0)
-                            Image(systemName: "checkmark")
+                            Image("teamSelect")
                                 .resizable()
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(width: UIScreen.getWidth(29), height: UIScreen.getHeight(31))
+                                .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
                                 .opacity(buttonPressed[idx] ? 1 : 0)
                         }
                     }
