@@ -1,15 +1,16 @@
 
 <h1 align="center">
   <br>
-  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://user-images.githubusercontent.com/77262576/200161318-112f7049-e685-4e20-8fe6-324a743f2fab.png" alt="Markdownify" width="200"></a>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://user-images.githubusercontent.com/77262576/226194974-de830b8f-5d54-45a2-826c-ae3922eff9bf.svg" alt="Markdownify" width="200"></a>
   <br>
-  역전할맵(Halmap)
+  모두의 야구(Moya)
   <br>
 </h1>
 
-<h4 align="center">역전할맵! 응원하는 야구 팀 응원가, 야구장 지도 모아보기.</h4>
+
+<h4 align="center">모두의 야구! 모두가 야구를 즐기는 방법</h4>
 <p align="center">
-역전할맵, 야구장을 더 즐기는 방법
+야구 응원가 및 야구장 지도 정보 앱
 </p>
 
 <p align="center">
