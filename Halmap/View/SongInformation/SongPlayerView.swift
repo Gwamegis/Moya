@@ -7,61 +7,82 @@
 
 import SwiftUI
 import AVFoundation
+import Combine
 
 struct SongPlayerView: View {
     
+    // Song Properties
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var song: Song
-    @State var sound: Data?
-    @State var audioPlayer: AVPlayer!
+    
+    
+    // Audio Properties
+    let timer = Timer
+        .publish(every: 0.3, on: .main, in: .common)
+        .autoconnect()
     @State var isPlaying: Bool = true
+    @State var value: Double = 0.0
+    @State var isEditing: Bool = false
+    @EnvironmentObject var audioManager: AudioManager
+    @State var endTime: CMTime = CMTime(seconds: 6000, preferredTimescale: 1000000)
+    
+    
+    // View Property
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        HStack {
-            Button {
-                isPlaying.toggle()
-                if isPlaying {
-                    playSoundURL(song.url)
-                } else {
-                    stopSound()
-                }
-            } label: {
-                Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                    .font(.system(size: 50, weight: .medium))
-                    .foregroundColor(.customGray)
-                    .padding(.bottom, 20)
+        VStack {
+            
+            VStack(spacing: 5){
+                
+                // TODO: - Progress bar
+                // Slider(value: $value)
+//                Slider(value: $value, in: 0...CMTimeGetSeconds(endTime)) { editing in
+//                    print("editing", editing)
+//                    isEditing = editing
+//                    if !editing {
+//                        player.status = value
+//                    }
+//                }
+//                .accentColor(.white)
+                
+                // TODO: - Time
+                
             }
+            
+            // Buttons
+            HStack{
+                Button {
+                    isPlaying.toggle()
+                    if isPlaying {
+                        AudioManager.instance.AMplay(song.url)
+                    } else {
+                        AudioManager.instance.AMstop()
+                    }
+                } label: {
+                    Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                        .font(.system(size: 50, weight: .medium))
+                        .foregroundColor(.customGray)
+                        .padding(.bottom, 20)
+                }
+            }
+            
         }
         .frame(maxWidth: .infinity)
         .background(Color.HalmacSub)
         .onDisappear(){
-            stopSound()
+            AudioManager.instance.AMstop()
         }
-        .onAppear{
-            playSoundURL(song.url)
+        .onAppear(){
+            AudioManager.instance.AMplay(song.url)
         }
-    }
-    
-    func playSoundURL(_ urlString : String?) {
-        
-        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
-        
-        guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
-        let item = AVPlayerItem(url: url)
-        audioPlayer = AVPlayer(playerItem: item)
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-        } catch(let error) {
-            print(error.localizedDescription)
+        .onReceive(timer) { _ in
+            guard let player = AudioManager.instance.player else { return }
+            guard let item = AudioManager.instance.player?.currentItem else { return }
+            if CMTimeGetSeconds(player.currentTime()) == item.duration.seconds {
+                isPlaying = false
+            }
+            //              value = CMTimeGetSeconds(player.currentTime())
         }
-        audioPlayer.play()
-    }
-    
-    func stopSound(){
-        guard let player = audioPlayer else {
-            return
-        }
-        player.pause()
     }
 }
