@@ -13,7 +13,7 @@ struct SongPlayerView: View {
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var song: Song
     @State var sound: Data?
-    @State var player = AVPlayer()
+    //    @State var player = AVPlayer()
     @State var isPlaying: Bool = true
     @Environment(\.presentationMode) var presentationMode
     
@@ -24,61 +24,38 @@ struct SongPlayerView: View {
         .autoconnect()
     
     var body: some View {
-//        VStack{
-            HStack {
-                Button {
-                    isPlaying.toggle()
-                    if isPlaying {
-//                        playSoundURL(song.url)
-                        AudioManager.instance.playSound(song.url, player: &player)
-                    } else {
-//                        stopSound()
-                        AudioManager.instance.stopSound(player: &player)
-                    }
-                } label: {
-                    Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 50, weight: .medium))
-                        .foregroundColor(.customGray)
-                        .padding(.bottom, 20)
+        HStack {
+            Button {
+                isPlaying.toggle()
+                if isPlaying {
+                    AudioManager.instance.playSound(song.url)
+                } else {
+                    AudioManager.instance.stopSound()
                 }
+            } label: {
+                Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                    .font(.system(size: 50, weight: .medium))
+                    .foregroundColor(.customGray)
+                    .padding(.bottom, 20)
             }
-            .frame(maxWidth: .infinity)
-            .background(Color.HalmacSub)
-            .onDisappear(){
-//                stopSound()
-                AudioManager.instance.stopSound(player: &player)
-            }
-            .onAppear(){
-//                playSoundURL(song.url)
-                AudioManager.instance.playSound(song.url, player: &player)
-            }
-//        }.onReceive(timer) {
-//            value = player.currentTime
-//        }
-    }
-    
-/*
-    func playSoundURL(_ urlString : String?) {
-        
-        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
-        
-        guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
-        let item = AVPlayerItem(url: url)
-        
-        player = AVPlayer(playerItem: item)
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-        } catch(let error) {
-            print(error.localizedDescription)
         }
-        player.play()
+        .frame(maxWidth: .infinity)
+        .background(Color.HalmacSub)
+        .onDisappear(){
+            AudioManager.instance.stopSound()
+        }
+        .onAppear(){
+            AudioManager.instance.playSound(song.url)
+        }
+        .onReceive(timer) { _ in
+            guard let player = AudioManager.instance.player else { return }
+            guard let item = AudioManager.instance.player?.currentItem else { return }
+            if CMTimeGetSeconds(player.currentTime()) == CMTimeGetSeconds(item.duration) {
+                isPlaying = false
+            }
+            //              value = CMTimeGetSeconds(player.currentTime())
+        }
     }
-    
-    func stopSound(){
-        player.pause()
-    }
- */
 }
 
 final class AudioManager: ObservableObject {
@@ -91,17 +68,7 @@ final class AudioManager: ObservableObject {
         }
     }
     
-    
-    func playSound(_ urlString : String?, player: inout AVPlayer) {
-//        guard let url = Bundle.main.url(forResource: "Tada", withExtension: ".mp3") else {return}
-//
-//        do {
-//        player = try AVAudioPlayer(contentsOf: url)
-//            player?.play()
-//        } catch let error {
-//            print("Error playing sound. \(error.localizedDescription)")
-//
-//        }
+    func playSound(_ urlString : String?) {
         
         guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
         guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
@@ -114,10 +81,14 @@ final class AudioManager: ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        player.play()
+        player?.play()
     }
     
-    func stopSound(player: inout AVPlayer) {
+    func stopSound() {
+        guard let player = player else {
+            print("Instance of audio player not found")
+            return
+        }
         player.pause()
     }
 }
