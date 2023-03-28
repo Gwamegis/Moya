@@ -14,10 +14,17 @@
 </p>
 
 <p align="center">
+  <a href="https://apps.apple.com/app/%EB%A7%A8%ED%88%AC%EB%A7%A8/id1670119550">
+    <img src="https://user-images.githubusercontent.com/52993882/219651102-a12adc2c-7913-439b-9bcb-b46c44d66a4b.png" width="260" height="90" style="display:block; margin:0 auto;" />
+  </a>
+</p>
+
+<p align="center">
   <a href="#features">Features</a> •
   <a href="#techstack">Tech Stack</a> •
   <a href="#license">License</a>
 </p>
+<br>
 <h1 align="center">
   <img src = "https://user-images.githubusercontent.com/52993882/228162861-738f92d5-38cb-4acd-8114-611f4bcc6063.png" width="600" class= "center"></h1>
 
