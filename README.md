@@ -18,7 +18,8 @@
   <a href="#techstack">Tech Stack</a> •
   <a href="#license">License</a>
 </p>
-<img src = "https://user-images.githubusercontent.com/68676844/200166414-f4447f7d-5f1c-47c0-ba2c-3cab4f7dbfa6.png">
+<h1 align="center">
+  <img src = "https://user-images.githubusercontent.com/52993882/228162861-738f92d5-38cb-4acd-8114-611f4bcc6063.png" width="600" class= "center"></h1>
 
 
 
