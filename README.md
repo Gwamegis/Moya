@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://apps.apple.com/app/%EB%A7%A8%ED%88%AC%EB%A7%A8/id1670119550">
+  <a href="https://apps.apple.com/us/app/%EB%AA%A8%EB%91%90%EC%9D%98-%EC%95%BC%EA%B5%AC/id6444238142">
     <img src="https://user-images.githubusercontent.com/52993882/219651102-a12adc2c-7913-439b-9bcb-b46c44d66a4b.png" width="260" height="90" style="display:block; margin:0 auto;" />
   </a>
 </p>
