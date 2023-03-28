@@ -47,7 +47,7 @@
 ## Screenshots
 |팀 선택|음악 탐색|응원가 상세 뷰|응원가 검색|지도 탐색|
 |---|---|---|---|---|
-|<img src = "https://user-images.githubusercontent.com/68676844/200164731-4f502b5a-bb1d-448e-8ced-f7693728386f.png" width=250>|<img src = "https://user-images.githubusercontent.com/68676844/200164900-00020b74-4365-4969-9222-e62bff1771bb.png" width=250>|<img src = "https://user-images.githubusercontent.com/68676844/200164827-f9e7b9c8-b6cb-4746-af3c-dd805c9a4c71.png" width = 250>|<img src = "https://user-images.githubusercontent.com/68676844/200164957-7b8eadc6-9a28-47e0-ae6f-fede67004474.png" width = 250>|<img src = "https://user-images.githubusercontent.com/68676844/200165073-bd32609a-3265-4153-b0dc-1a2cf0b415d5.png" width = 250>
+|<img src = "https://user-images.githubusercontent.com/52993882/228161517-3773ca33-de7e-4c13-94a1-c7531a393c8b.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228161915-a3ce40f4-9691-4665-b736-9e4767f6960f.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228162098-18b5b625-6d63-4478-ae80-9d52b5ee9a64.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162253-9dc91903-1a14-449d-845a-99c1c5f0de96.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162247-fd77a935-4d10-4425-b770-288e364a546a.png" width = 250>
 
 
 ## License
