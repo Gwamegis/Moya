@@ -68,7 +68,7 @@ struct SongPlayerView: View {
                         AudioManager.instance.AMstop()
                     }
                 } label: {
-                    Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                    Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
                         .font(.system(size: 50, weight: .medium))
                         .foregroundColor(.customGray)
                 }
