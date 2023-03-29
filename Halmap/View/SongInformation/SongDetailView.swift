@@ -68,7 +68,7 @@ struct SongDetailView: View {
                 } label: {
                     if isFavorite {
                         Image(systemName: "heart.fill")
-                            .foregroundColor(.HalmacBackground)
+                            .foregroundColor(.HalmacPoint)
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.white)

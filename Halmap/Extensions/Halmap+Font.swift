@@ -16,6 +16,7 @@ enum PretendardWeight: String {
 
 extension Font {
     enum Halmap {
+        static var CustomLargeTitle: Font{ Font.HalmapFont(weight: .bold, size: 40) }
         static var CustomHeadline: Font { Font.HalmapFont(weight: .bold, size: 26) }
         static var CustomTitleBold: Font { Font.HalmapFont(weight: .bold, size: 20) }
         static var CustomTitleMedium: Font { Font.HalmapFont(weight: .medium, size: 20) }
