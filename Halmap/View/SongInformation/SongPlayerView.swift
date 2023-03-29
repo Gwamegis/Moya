@@ -51,7 +51,15 @@ struct SongPlayerView: View {
             }
             
             // Buttons
-            HStack{
+            HStack(spacing: 52) {
+                Button {
+                    //이전곡 재생 기능
+                } label: {
+                    Image(systemName: "backward.end.fill")
+                        .font(.system(size: 30, weight: .regular))
+                        .foregroundColor(.customGray)
+                }
+
                 Button {
                     isPlaying.toggle()
                     if isPlaying {
@@ -60,12 +68,20 @@ struct SongPlayerView: View {
                         AudioManager.instance.AMstop()
                     }
                 } label: {
-                    Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
+                    Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
                         .font(.system(size: 50, weight: .medium))
                         .foregroundColor(.customGray)
-                        .padding(.bottom, 20)
+                }
+                
+                Button {
+                    //다음곡 재생 기능
+                } label: {
+                    Image(systemName: "forward.end.fill")
+                        .font(.system(size: 30, weight: .regular))
+                        .foregroundColor(.customGray)
                 }
             }
+            .padding(.bottom, 54)
             
         }
         .frame(maxWidth: .infinity)
