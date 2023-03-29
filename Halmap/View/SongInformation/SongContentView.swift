@@ -31,9 +31,15 @@ struct SongContentView: View {
             })
             .onPreferenceChange(ViewOffsetKey.self) {
                 if $0 > 0 {
-                    isScrolled = true
+                    withAnimation {
+                        isScrolled = true
+                    }
+                    
                 } else {
-                    isScrolled = false
+                    withAnimation {
+                        isScrolled = false
+                    }
+                    
                 }
             }
         }

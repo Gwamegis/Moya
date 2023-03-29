@@ -6,27 +6,13 @@
 //
 
 import CoreData
+import SwiftUI
 
 struct PersistenceController {
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    
     static let shared = PersistenceController()
-
-    static var preview: PersistenceController = {
-        let result = PersistenceController(inMemory: true)
-        let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-        return result
-    }()
 
     let container: NSPersistentContainer
 
@@ -37,20 +23,70 @@ struct PersistenceController {
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    func saveSongs(song: Song) {
+        let context = container.viewContext
+        let favoriteSong = FavoriteSong(context: context)
+        favoriteSong.id = song.id
+        favoriteSong.title = song.title
+        favoriteSong.info = song.info
+        favoriteSong.lyrics = song.lyrics
+        favoriteSong.url = song.url
+        favoriteSong.type = song.type
+        favoriteSong.team = selectedTeam
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+    
+//    func deleteSongs(song: FavoriteSong) {
+//        container.viewContext.delete(song)
+//
+//        do {
+//            try container.viewContext.save()
+//        } catch {
+//            container.viewContext.rollback()
+//            print(error.localizedDescription)
+//        }
+//    }
+    func deleteSongs(song: FavoriteSong) {
+        
+        container.viewContext.delete(song)
+        
+        do {
+            try container.viewContext.save()
+        } catch {
+            container.viewContext.rollback()
+            print(error.localizedDescription)
+        }
+    }
+    
+    func fetchFavoriteSong() -> [FavoriteSong] {
+        let fetchRequest: NSFetchRequest<FavoriteSong> = FavoriteSong.fetchRequest()
+        
+        do{
+            return try container.viewContext.fetch(fetchRequest)
+        }catch {
+            return []
+        }
+    }
+    
+    func findFavoriteSong(song: Song) -> FavoriteSong {
+        if let index = favoriteSongs.firstIndex(where: {song.id == $0.id}) {
+            return favoriteSongs[index]
+        } else {
+            return FavoriteSong()
+        }
     }
 }

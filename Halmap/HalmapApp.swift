@@ -23,6 +23,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    @StateObject var dataManager = DataManager()
     let persistenceController = PersistenceController.shared
     
     init() {
@@ -59,8 +60,12 @@ struct HalmapApp: App {
                 OnBoardingStartView()
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.hidden)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(dataManager)
             } else {
                 OnBoardingStartView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                    .environmentObject(dataManager)
             }
         }
     }

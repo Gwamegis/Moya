@@ -18,6 +18,7 @@ class DataManager: ObservableObject {
     @Published var playerList: [Player] = []
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
+    @Published var favoriteSongs = PersistenceController.shared.fetchFavoriteSong()
     
     init() {
         loadData()
@@ -102,5 +103,14 @@ class DataManager: ObservableObject {
                     completionHandler(songs)
                 }
             }
+    }
+    
+    func deleteFavoriteSong() {
+        
+    }
+    
+    func saveFavoriteSong(song: FavoriteSong) {
+        
+        
     }
 }
