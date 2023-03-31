@@ -39,6 +39,9 @@
 		EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */; };
 		F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FA29B18AF800F7E488 /* MainTabView.swift */; };
 		F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */; };
+		F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBB929D58FB2005ED8CA /* StorageContentView.swift */; };
+		F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */; };
+		F939EBBE29D6612B005ED8CA /* HalfSheetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBD29D6612B005ED8CA /* HalfSheetHelper.swift */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
 		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
@@ -85,6 +88,9 @@
 		EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		F91BE5FA29B18AF800F7E488 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListTabView.swift; sourceTree = "<group>"; };
+		F939EBB929D58FB2005ED8CA /* StorageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContentView.swift; sourceTree = "<group>"; };
+		F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
+		F939EBBD29D6612B005ED8CA /* HalfSheetHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheetHelper.swift; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
@@ -171,6 +177,9 @@
 				F91BE5FA29B18AF800F7E488 /* MainTabView.swift */,
 				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
 				F9CFFF5529CB56D000212F76 /* StorageView.swift */,
+				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
+				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
+				F939EBBD29D6612B005ED8CA /* HalfSheetHelper.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -346,12 +355,14 @@
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
 				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,
 				87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */,
+				F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */,
 				87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
 				87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */,
+				F939EBBE29D6612B005ED8CA /* HalfSheetHelper.swift in Sources */,
 				F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */,
 				F9B95BB928F271A100728048 /* DataManager.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
@@ -365,6 +376,7 @@
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
+				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
 				A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
@@ -501,13 +513,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = 22A6RK2943;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "모두의 야구";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -532,13 +546,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = 22A6RK2943;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "모두의 야구";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

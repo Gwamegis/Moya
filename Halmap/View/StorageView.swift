@@ -11,144 +11,150 @@ struct StorageView: View {
     @EnvironmentObject var dataManager: DataManager
     @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
     
-    @State var isScrolled = false
-    @State var scrolledValue = 0.0
-    @State var yOffset = 0.0
+    let maxHeight: CGFloat = 216
+    var topEdge: CGFloat
+    @State var offset: CGFloat = 0
     
     var body: some View {
         
-        VStack(spacing: 0) {
-            if !isScrolled {
-                ZStack(alignment: .bottom) {
-                    Image("storageTop")
-                        .resizable()
-                        .scaledToFit()
-                    HStack {
-                        Text("보관함")
-                            .font(Font.Halmap.CustomLargeTitle)
+        ScrollView(){
+            VStack(spacing: 0) {
+                VStack(spacing: 12){
+                    topBar
+                        .frame(height: getHeaderHeight(), alignment: .bottom)
+                        .overlay(
+                            topTitle
+                                .opacity(topTitleOpacity())
+                        )
+                    HStack() {
+                        Text("총 \(favoriteSongs.count)곡")
+                            .font(Font.Halmap.CustomCaptionBold)
+                            .foregroundColor(.customDarkGray)
                         Spacer()
-                        Image(systemName: "play.circle.fill")
-                            .foregroundColor(.storagePlayerButtonColor)
-                            .font(.system(size: 50))
+                        Button {
+                            print("click")
+                        } label: {
+                            HStack(spacing: 5) {
+                                Image(systemName: "play.circle.fill")
+                                    .foregroundColor(.storagePlayerButtonColor)
+                                    .font(.system(size: 20))
+                                Text("전체 재생하기")
+                                    .font(Font.Halmap.CustomCaptionBold)
+                                    .foregroundColor(.storagePlayerButtonColor)
+                            }
+                            .opacity(topTitleOpacity())
+                        }
                     }
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+                    .padding(.horizontal, 20)
+                    Divider()
+                        .background(Color.customGray)
                 }
-            } else {
-                HStack {
-                    Spacer()
-                    Text("보관함")
-                        .font(Font.Halmap.CustomTitleBold)
-                    Spacer()
-                }
-                .padding(.top, 62)
-            }
-            
-            ScrollView {
-                LazyVStack(pinnedViews: .sectionHeaders) {
+                .background(Color.systemBackground)
+                .offset(y: -offset)
+                .zIndex(1)
+                
+                LazyVStack(spacing: 0) {
                     Section {
-                        VStack(spacing: 0) {
-                            if favoriteSongs.count > 0 {
-                                ForEach(favoriteSongs) { favoriteSong in
-                                    let song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type , title: favoriteSong.title ?? "" , lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
-                                    VStack(spacing: 0) {
-                                        NavigationLink {
-                                            SongDetailView(song: song)
-                                        } label: {
-                                            HStack(spacing: 16) {
-                                                Image("LotteSongListImage")
-                                                    .frame(width: 40)
-                                                VStack(alignment: .leading, spacing: 8) {
-                                                    Text(favoriteSong.title ?? "test ")
-                                                        .font(Font.Halmap.CustomBodyMedium)
-                                                        .foregroundColor(.black)
-                                                    Text("test ")
-                                                        .font(Font.Halmap.CustomCaptionMedium)
-                                                        .foregroundColor(.HalmacSub)
-                                                }
-                                                Spacer()
-                                                Button {
-                                                    print("")
-                                                } label: {
-                                                    Image(systemName: "heart.fill")
-                                                        .foregroundColor(.HalmacBackground)
-                                                }
+                        if favoriteSongs.count > 0 {
+                            ForEach(favoriteSongs) { favoriteSong in
+                                let song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type , title: favoriteSong.title ?? "" , lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
+                                VStack(spacing: 0) {
+                                    NavigationLink {
+                                        SongDetailView(song: song)
+                                    } label: {
+                                        HStack(spacing: 16) {
+                                            Image("LotteSongListImage")
+                                                .frame(width: 40)
+                                            VStack(alignment: .leading, spacing: 8) {
+                                                Text(favoriteSong.title ?? "test ")
+                                                    .font(Font.Halmap.CustomBodyMedium)
+                                                    .foregroundColor(.black)
+                                                Text("test ")
+                                                    .font(Font.Halmap.CustomCaptionMedium)
+                                                    .foregroundColor(.HalmacSub)
                                             }
-                                            .padding(.horizontal, 20)
-                                            .padding(.vertical, 15)
+                                            Spacer()
+                                            Button {
+                                                print("")
+                                            } label: {
+                                                Image(systemName: "ellipsis")
+                                                    .foregroundColor(.HalmacBackground)
+                                            }
                                         }
-                                        Divider()
-                                            .background(Color.customGray)
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 15)
                                     }
-                                    .background(Color.systemBackground)
+                                    Divider()
+                                        .background(Color.customGray)
                                 }
-                            } else {
-                                Text("좋아하는 응원가를 담아보세요!")
-                                    .font(Font.Halmap.CustomBodyMedium)
-                                    .foregroundColor(.customDarkGray)
-                                    .padding(.top, 214)
+                                .background(Color.systemBackground)
                             }
+                        } else {
+                            Text("좋아하는 응원가를 담아보세요!")
+                                .font(Font.Halmap.CustomBodyMedium)
+                                .foregroundColor(.customDarkGray)
+                                .padding(.top, 214)
                         }
-                        .background(GeometryReader{
-                            Color.clear.preference(key: StorageViewOffsetKey.self,
-                                                   value: -$0.frame(in: .named("scroll")).origin.y)
-                        })
-                        .onPreferenceChange(StorageViewOffsetKey.self) {
-                            print(Int($0))
-                            if isScrolled {
-                                if Int($0) < -143 {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        isScrolled = false
-                                    }
-                                }
-                            } else {
-                                if Int($0) > -274 {
-                                    withAnimation(.easeInOut(duration: 0.3)) {
-                                        isScrolled = true
-                                    }
-                                }
-                            }
-                        }
-                        
-                    } header: {
-                        sectionHeader
                     }
                 }
+                .background(Color.systemBackground)
             }
-            .coordinateSpace(name: "scrolled")
-            
+            .modifier(OffsetModifier(offset: $offset))
         }
-        .background(Color.systemBackground)
-        .navigationBarTitleDisplayMode(.automatic)
-        .navigationBarHidden(true)
+        .coordinateSpace(name: "StorageScroll")
         .edgesIgnoringSafeArea(.top)
+        .background(Color.systemBackground)
     }
-    var sectionHeader: some View {
-        VStack(spacing: 0) {
+    var topBar: some View {
+        ZStack(alignment: .bottom) {
+            Image("storageTop")
+                .resizable()
             HStack {
-                Text("총 \(favoriteSongs.count)곡")
-                    .font(Font.Halmap.CustomCaptionBold)
-                    .foregroundColor(.customDarkGray)
+                Text("보관함")
+                    .font(Font.Halmap.CustomLargeTitle)
+                Spacer()
+                Image(systemName: "play.circle.fill")
+                    .foregroundColor(.storagePlayerButtonColor)
+                    .font(.system(size: 50))
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+        }
+        .opacity(getOpacity())
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+    }
+    
+    var topTitle: some View {
+        VStack{
+            HStack {
+                Spacer()
+                Text("보관함")
+                    .font(Font.Halmap.CustomTitleBold)
                 Spacer()
             }
-            .padding(.vertical, 17)
-            .padding(.horizontal, 20)
+            .padding(.top, 40)
             
-            Divider()
-                .background(Color.customGray)
         }
         .background(Color.systemBackground)
     }
     
-    struct StorageViewOffsetKey: PreferenceKey {
-        static var defaultValue = CGFloat.zero
-        static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-            value += nextValue()
-        }
+    func getHeaderHeight() -> CGFloat {
+        let topHeight = maxHeight + offset
+        
+        return topHeight > (59 + topEdge) ? topHeight : (59 + topEdge)
+    }
+    func topTitleOpacity() -> CGFloat {
+        let progress = -offset / (maxHeight - (59 + topEdge))
+        return progress
+    }
+    func getOpacity() -> CGFloat {
+        let progress = -offset / 40
+        let opacity = 1 - progress
+        return offset < 0 ? opacity : 1
     }
 }
 
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {
-        StorageView()
+        StorageContentView()
     }
 }

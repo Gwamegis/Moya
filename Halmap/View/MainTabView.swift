@@ -33,7 +33,7 @@ struct MainTabView: View {
                         Image("map")
                         Text("야구장")
                       }
-                StorageView()
+                StorageContentView()
                     .tabItem {
                         Image("storage")
                         Text("보관함")

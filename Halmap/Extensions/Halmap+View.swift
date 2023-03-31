@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+extension View {
+    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping ()->SheetView) -> some View {
+        return self
+            .background(
+                HalfSheetHelper
+            )
+    }
+}

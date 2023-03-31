@@ -12,7 +12,7 @@ import Combine
 final class AudioManager: ObservableObject {
     static let instance = AudioManager()
     var player: AVPlayer?
-
+    
     @Published private(set) var isPlaying: Bool = false {
         didSet{
             print("isPlaying", isPlaying)
