@@ -24,12 +24,11 @@ struct RequestSongView: View {
                 }
                 .padding(EdgeInsets(top: 8, leading: 38, bottom: 8, trailing: 38))
                 .foregroundColor(buttonColor)
+                .background {
+                    RoundedRectangle(cornerRadius: 18)
+                        .strokeBorder(buttonColor, lineWidth: 1)
+                }
             }
-            .background {
-                RoundedRectangle(cornerRadius: 18)
-                    .strokeBorder(buttonColor, lineWidth: 1)
-            }
-
         }
         .padding(.vertical, 40)
 
