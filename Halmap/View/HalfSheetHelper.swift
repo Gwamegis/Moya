@@ -18,13 +18,25 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
     }
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         if showSheet {
-            let sheetController = UIHostingController(rootView: sheetView)
+            let sheetController = CustomModalViewController()
+//            sheetController.modalPresentationStyle = .custom
+//            let sheetController = CustomHostingController(rootView: sheetView)
             
             uiViewController.present(sheetController, animated: true) {
                 DispatchQueue.main.async {
                     self.showSheet.toggle()
                 }
             }
+        }
+    }
+}
+
+class CustomHostingController<Content: View>: UIHostingController<Content> {
+    override func viewDidLoad() {
+        if let presentationController = presentationController as? UISheetPresentationController {
+            presentationController.detents = [
+                .medium()
+            ]
         }
     }
 }

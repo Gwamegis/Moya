@@ -14,6 +14,7 @@ struct StorageView: View {
     let maxHeight: CGFloat = 216
     var topEdge: CGFloat
     @State var offset: CGFloat = 0
+    @State var showSheet = false
     
     var body: some View {
         
@@ -76,9 +77,13 @@ struct StorageView: View {
                                             Spacer()
                                             Button {
                                                 print("")
+                                                showSheet.toggle()
                                             } label: {
                                                 Image(systemName: "ellipsis")
                                                     .foregroundColor(.HalmacBackground)
+                                            }
+                                            .halfSheet(showSheet: $showSheet) {
+                                                Text("half modal")
                                             }
                                         }
                                         .padding(.horizontal, 20)
@@ -156,5 +161,15 @@ struct StorageView: View {
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {
         StorageContentView()
+    }
+}
+
+extension View {
+    
+    func halfSheet<SheetView: View>(showSheet: Binding<Bool>, @ViewBuilder sheetView: @escaping () -> SheetView) -> some View {
+        return self
+            .background(
+                HalfSheetHelper(sheetView: sheetView(), showSheet: showSheet)
+            )
     }
 }
