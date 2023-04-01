@@ -106,7 +106,6 @@ struct SongSearchView: View {
                             .padding(30)
                         Spacer()
                         RequestSongView(buttonColor: Color.mainGreen)
-                            .background(Color.red)
                     }
                     .frame(maxWidth: .infinity)
                 } else {
