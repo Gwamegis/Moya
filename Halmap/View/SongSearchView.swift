@@ -16,6 +16,7 @@ struct SongSearchView: View {
     
     @GestureState private var dragOffset = CGSize.zero
     @FocusState private var isFocused: Bool
+    @State private var isKeyboardFocused = false
     
     @State private var searchText = ""
     @State private var autoComplete = [Song]()
@@ -38,13 +39,18 @@ struct SongSearchView: View {
         .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
         .onAppear { UIApplication.shared.hideKeyboard() }
+        .onChange(of: isFocused) { newValue in
+            withAnimation {
+                isKeyboardFocused = newValue
+            }
+            
+        }
     }
     
     
     // MARK: Search Bar
     var searchBar: some View {
         HStack {
-            
             TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $searchText)
                 .accentColor(.black)
                 .disableAutocorrection(true)
@@ -133,11 +139,9 @@ struct SongSearchView: View {
         HStack(spacing: 17) {
             searchBar
             
-            if isFocused == true {
+            if isKeyboardFocused == true {
                 Button {
-                    withAnimation {
-                        isFocused = false
-                    }
+                    isFocused = false
                 } label: {
                     Text("취소")
                 }
