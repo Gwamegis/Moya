@@ -23,9 +23,9 @@ struct MainSongListTabView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            VStack {
+            VStack(spacing: 0) {
                 Rectangle()
-                    .frame(height:UIScreen.getHeight(210))
+                    .frame(height:UIScreen.getHeight(215))
                     .foregroundColor(Color.HalmacSub)
                     .edgesIgnoringSafeArea(.all)
                 TabView(selection: $index) {
@@ -80,6 +80,7 @@ struct MainSongListTabView: View {
                     .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
+                .padding(.top, -10)
             }
             
             //상단 탭바
@@ -104,6 +105,10 @@ struct MainSongListTabView: View {
                         .padding([.leading, .bottom], 20)
                 }
             }
+            .background(
+                RoundedRectangle(cornerRadius: 12.5)
+                    .fill(Color.HalmacSub)
+            )
             .padding(.top, 70)
         }
         .background(Color.systemBackground)
