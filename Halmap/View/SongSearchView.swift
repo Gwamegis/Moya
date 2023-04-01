@@ -29,11 +29,10 @@ struct SongSearchView: View {
             
             Divider()
                 .foregroundColor(.customGray)
-                .padding(.top, 20)
+                .padding(.top, 22)
 
             resultView
             
-            Spacer()
         }
         .frame(maxWidth: .infinity)
         .background(Color.systemBackground)
@@ -83,9 +82,9 @@ struct SongSearchView: View {
     // MARK: Result View
     var resultView: some View {
         
-        VStack {
+        VStack(spacing: 0) {
             if searchText.isEmpty {
-                VStack {
+                VStack(spacing: 0) {
                     Text("선수 이름, 응원가를 검색해주세요")
                         .foregroundColor(Color.customDarkGray)
                         .padding(30)
@@ -94,30 +93,40 @@ struct SongSearchView: View {
                 .frame(maxWidth: .infinity)
             } else {
                 
-                List {
-                    ForEach(autoComplete.indices, id: \.self) { index in
-                        NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
-                            HStack {
-                                Image(systemName: "magnifyingglass")
-                                Text(autoComplete[index].title)
-                            }
-                            .font(Font.Halmap.CustomBodyMedium)
-                            .foregroundColor(Color.black)
-                            .frame(height: 45)
-                        }
-                        .listRowBackground(Color(UIColor.clear))
-                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
-                        .listRowSeparatorTint(Color.customGray)
+                if autoComplete.isEmpty {
+                    VStack(spacing: 0) {
+                        Text("검색 결과가 없어요")
+                            .foregroundColor(Color.customDarkGray)
+                            .padding(30)
+                        Spacer()
+                        RequestSongView(buttonColor: Color.mainGreen)
+                            .background(Color.red)
                     }
+                    .frame(maxWidth: .infinity)
+                } else {
+                    List {
+                        ForEach(autoComplete.indices, id: \.self) { index in
+                            NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                    Text(autoComplete[index].title)
+                                }
+                                .font(Font.Halmap.CustomBodyMedium)
+                                .foregroundColor(Color.black)
+                                .frame(height: 45)
+                            }
+                            .listRowBackground(Color(UIColor.clear))
+                            .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+                            .listRowSeparatorTint(Color.customGray)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .listStyle(.plain)
+                    Spacer()
                 }
-                .padding(.horizontal, 20)
-                .listStyle(.plain)
-                .padding(.top, 10)
-                
             }
         }
         .background(Color.systemBackground)
-        
     }
     
     var navigationView: some View {

@@ -27,7 +27,7 @@ struct MainSongListTabView: View {
                 Rectangle()
                     .frame(height:UIScreen.getHeight(215))
                     .foregroundColor(Color.HalmacSub)
-                    .edgesIgnoringSafeArea(.all)
+                
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
@@ -80,8 +80,11 @@ struct MainSongListTabView: View {
                     .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .padding(.top, -10)
+                .padding(.top, UIScreen.getHeight(27))
+                
+                RequestSongView(buttonColor: Color.HalmacPoint)
             }
+            .edgesIgnoringSafeArea(.top)
             
             //상단 탭바
             TabBarView(currentTab: $index)
