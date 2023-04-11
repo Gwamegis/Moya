@@ -1,7 +1,7 @@
 ---
 name: Feature (For Team Moya)
 about: 작업해야할 이슈를 만들어주세요.
-title: ''
+title: "[Feat] / [Fix] / [Dcos]"
 labels: ''
 assignees: ''
 
