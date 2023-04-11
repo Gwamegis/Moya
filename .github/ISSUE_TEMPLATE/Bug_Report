@@ -1,6 +1,6 @@
 ---
  name: Bug_Report
- about: 작업해야할 이슈를 만들어주세요
+ about: 앱을 사용하면서 발견한 버그를 신고해주세요
  title: ''
  labels: ''
  assignees: ''
