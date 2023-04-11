@@ -56,7 +56,7 @@ struct SongPlayerView: View {
                     //이전곡 재생 기능
                 } label: {
                     Image(systemName: "backward.end.fill")
-                        .font(.system(size: 30, weight: .regular))
+                        .font(.system(size: 28, weight: .regular))
                         .foregroundColor(.customGray)
                 }
 
@@ -69,7 +69,7 @@ struct SongPlayerView: View {
                     }
                 } label: {
                     Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 50, weight: .medium))
+                        .font(.system(size: 60, weight: .medium))
                         .foregroundColor(.customGray)
                 }
                 
@@ -77,7 +77,7 @@ struct SongPlayerView: View {
                     //다음곡 재생 기능
                 } label: {
                     Image(systemName: "forward.end.fill")
-                        .font(.system(size: 30, weight: .regular))
+                        .font(.system(size: 28, weight: .regular))
                         .foregroundColor(.customGray)
                 }
             }

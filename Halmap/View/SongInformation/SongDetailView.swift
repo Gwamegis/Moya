@@ -32,7 +32,7 @@ struct SongDetailView: View {
                 }
                 Spacer()
                 Rectangle()
-                    .frame(height: 40)
+                    .frame(height: 120)
                     .background(Color.fetchBottomGradient())
                     .foregroundColor(Color(UIColor.clear))
                 ZStack(alignment: .center) {

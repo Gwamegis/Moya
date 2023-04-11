@@ -19,7 +19,7 @@ struct TabBarItemView: View {
             self.currentTab = tab
         } label: {
             // MARK: - 탭바 형태, 애니메이션
-            VStack {
+            VStack(spacing: 6) {
                 Spacer()
                 Text(tabBarItemName)
                     .font(Font.Halmap.CustomTitleBold)
