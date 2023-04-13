@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StorageView: View {
     @EnvironmentObject var dataManager: DataManager
-    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
     
     let maxHeight: CGFloat = 216
     var topEdge: CGFloat
@@ -143,16 +143,16 @@ struct StorageView: View {
     }
     
     func getHeaderHeight() -> CGFloat {
-        let topHeight = maxHeight + offset
+        let topHeight = maxHeight + offset*2
         
-        return topHeight > (59 + topEdge) ? topHeight : (59 + topEdge)
+        return topHeight >= (59 + topEdge) ? topHeight : (59 + topEdge)
     }
     func topTitleOpacity() -> CGFloat {
-        let progress = -offset / (maxHeight - (59 + topEdge))
+        let progress = -offset*2 / (maxHeight - (59 + topEdge))
         return progress
     }
     func getOpacity() -> CGFloat {
-        let progress = -offset / 40
+        let progress = -offset*2 / 40
         let opacity = 1 - progress
         return offset < 0 ? opacity : 1
     }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
     
     static let shared = PersistenceController()
 
@@ -39,6 +39,7 @@ struct PersistenceController {
         favoriteSong.url = song.url
         favoriteSong.type = song.type
         favoriteSong.team = selectedTeam
+        favoriteSong.date = Date()
         
         if context.hasChanges {
             do {
