@@ -6,8 +6,10 @@
 //
 
 import AVKit
-import Foundation
 import Combine
+import Foundation
+import MediaPlayer
+
 
 final class AudioManager: ObservableObject {
     static let instance = AudioManager()
@@ -23,6 +25,54 @@ final class AudioManager: ObservableObject {
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     
+    // MARK: - Media Player Setting
+    
+    private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        
+        if let albumArt = albumArt {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: albumArt.size) { _ in albumArt }
+        }
+        
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func updateNowPlayingPlaybackRate() {
+        if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        }
+    }
+    
+    private func setupRemoteTransportControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            if self.player?.rate == 0.0 {
+                self.player?.play()
+                self.updateNowPlayingPlaybackRate()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            if self.player?.rate == 1.0 {
+                self.player?.pause()
+                self.updateNowPlayingPlaybackRate()
+                return .success
+            }
+            return .commandFailed
+        }
+    }
+
+
     
     // MARK: - AM Properties
     
@@ -30,9 +80,12 @@ final class AudioManager: ObservableObject {
         return player?.currentItem?.duration.seconds ?? 0
     }
     
-    func AMplay(_ urlString : String?) {
+    func AMplay(song: Song?, selectedTeam: String) {
+        let title = song?.title ?? "Unknow Title"
+        let albumArt = UIImage(named: selectedTeam)
+        setupNowPlayingInfo(title: title, albumArt: albumArt)
         
-        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
+        guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
         guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
         let item = AVPlayerItem(url: url)
         
@@ -43,6 +96,9 @@ final class AudioManager: ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
+        
+        setupRemoteTransportControls()
+        
         player?.play()
     }
     
