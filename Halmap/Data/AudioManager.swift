@@ -82,7 +82,7 @@ final class AudioManager: ObservableObject {
     
     func AMplay(song: Song?, selectedTeam: String) {
         let title = song?.title ?? "Unknow Title"
-        let albumArt = UIImage(named: selectedTeam)
+        let albumArt = UIImage(named: "\(selectedTeam)Album")
         setupNowPlayingInfo(title: title, albumArt: albumArt)
         
         guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
