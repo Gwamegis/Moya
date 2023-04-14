@@ -53,6 +53,7 @@
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
 		F9CFFF5629CB56D000212F76 /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9CFFF5529CB56D000212F76 /* StorageView.swift */; };
+		F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,6 +104,7 @@
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F9B95BBA28F271B800728048 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F9CFFF5529CB56D000212F76 /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
+		F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingHeaderView.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
 				A81FFC8E28F1770500B0FC7C /* View */,
 				A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */,
+				A81FFC8028F15D9C00B0FC7C /* Preview Assets.xcassets */,
 				A81FFC8228F15D9C00B0FC7C /* Persistence.swift */,
 				A81FFC8428F15D9C00B0FC7C /* Halmap.xcdatamodeld */,
 				A81FFC7F28F15D9C00B0FC7C /* Preview Content */,
@@ -161,7 +164,6 @@
 		A81FFC7F28F15D9C00B0FC7C /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				A81FFC8028F15D9C00B0FC7C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -179,6 +181,7 @@
 				F91BE5FA29B18AF800F7E488 /* MainTabView.swift */,
 				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
 				F9CFFF5529CB56D000212F76 /* StorageView.swift */,
+				F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */,
 				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F939EBBD29D6612B005ED8CA /* HalfSheetHelper.swift */,
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9EB19C129168E45002DFE46 /* Song.swift in Sources */,
+				F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */,
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
 				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
 				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,

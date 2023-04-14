@@ -11,17 +11,19 @@ struct StorageView: View {
     @EnvironmentObject var dataManager: DataManager
     @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
     
-    let maxHeight: CGFloat = 216
+//    let maxHeight: CGFloat = 216
+    let maxHeight: CGFloat = UIScreen.main.bounds.height / 2.3
     var topEdge: CGFloat
+    
     @State var offset: CGFloat = 0
     @State var showSheet = false
     
     var body: some View {
         
-        ScrollView(){
+        ScrollView(.vertical, showsIndicators: true){
             VStack(spacing: 0) {
                 VStack(spacing: 12){
-                    topBar
+                    Topbar(topEdge: topEdge, offset: $offset)
                         .frame(height: getHeaderHeight(), alignment: .bottom)
                         .overlay(
                             topTitle
@@ -110,23 +112,6 @@ struct StorageView: View {
         .edgesIgnoringSafeArea(.top)
         .background(Color.systemBackground)
     }
-    var topBar: some View {
-        ZStack(alignment: .bottom) {
-            Image("storageTop")
-                .resizable()
-            HStack {
-                Text("보관함")
-                    .font(Font.Halmap.CustomLargeTitle)
-                Spacer()
-                Image(systemName: "play.circle.fill")
-                    .foregroundColor(.storagePlayerButtonColor)
-                    .font(.system(size: 50))
-            }
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
-        }
-        .opacity(getOpacity())
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-    }
     
     var topTitle: some View {
         VStack{
@@ -151,6 +136,36 @@ struct StorageView: View {
         let progress = -offset*2 / (maxHeight - (59 + topEdge))
         return progress
     }
+    func getOpacity() -> CGFloat {
+        let progress = -offset*2 / 40
+        let opacity = 1 - progress
+        return offset < 0 ? opacity : 1
+    }
+}
+
+struct Topbar: View {
+    
+    var topEdge: CGFloat
+    @Binding var offset: CGFloat
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Image("storageTop")
+                .resizable()
+            HStack {
+                Text("보관함")
+                    .font(Font.Halmap.CustomLargeTitle)
+                Spacer()
+                Image(systemName: "play.circle.fill")
+                    .foregroundColor(.storagePlayerButtonColor)
+                    .font(.system(size: 50))
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+        }
+        .opacity(getOpacity())
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+    }
+    
     func getOpacity() -> CGFloat {
         let progress = -offset*2 / 40
         let opacity = 1 - progress

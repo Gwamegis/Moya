@@ -15,7 +15,7 @@ struct OffsetModifier: ViewModifier {
         content
             .overlay(
                 GeometryReader{ proxy -> Color in
-                    let minY = proxy.frame(in: .global).minY
+                    let minY = proxy.frame(in: .named("StorageScroll")).minY
                     
                     DispatchQueue.main.async {
                         self.offset = minY
