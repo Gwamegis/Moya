@@ -52,19 +52,18 @@ struct SongPlayerView: View {
             
             // Buttons
             HStack(spacing: 52) {
-                //이전곡 재생 기능
-//                Button {
-//
-//                } label: {
-//                    Image(systemName: "backward.end.fill")
-//                        .font(.system(size: 28, weight: .regular))
-//                        .foregroundColor(.customGray)
-//                }
+                Button {
+                    //이전곡 재생 기능
+                } label: {
+                    Image(systemName: "backward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
+                }
 
                 Button {
                     isPlaying.toggle()
                     if isPlaying {
-                        AudioManager.instance.AMplay(song: song, selectedTeam: selectedTeam)
+                        AudioManager.instance.AMplay(song.url)
                     } else {
                         AudioManager.instance.AMstop()
                     }
@@ -74,13 +73,13 @@ struct SongPlayerView: View {
                         .foregroundColor(.customGray)
                 }
                 
-//                Button {
-//                    //다음곡 재생 기능
-//                } label: {
-//                    Image(systemName: "forward.end.fill")
-//                        .font(.system(size: 28, weight: .regular))
-//                        .foregroundColor(.customGray)
-//                }
+                Button {
+                    //다음곡 재생 기능
+                } label: {
+                    Image(systemName: "forward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
+                }
             }
             .padding(.bottom, 54)
             
@@ -91,7 +90,7 @@ struct SongPlayerView: View {
             AudioManager.instance.AMstop()
         }
         .onAppear(){
-            AudioManager.instance.AMplay(song: song, selectedTeam: selectedTeam)
+            AudioManager.instance.AMplay(song.url)
         }
         .onReceive(timer) { _ in
             guard let player = AudioManager.instance.player else { return }
