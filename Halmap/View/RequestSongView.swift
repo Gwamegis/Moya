@@ -30,6 +30,7 @@ struct RequestSongView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity)
         .padding(.vertical, 40)
 
     }
