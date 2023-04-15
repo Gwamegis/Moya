@@ -63,7 +63,7 @@ struct SongPlayerView: View {
                 Button {
                     isPlaying.toggle()
                     if isPlaying {
-                        AudioManager.instance.AMplay(song.url)
+                        AudioManager.instance.AMplay(song: song, selectedTeam: selectedTeam)
                     } else {
                         AudioManager.instance.AMstop()
                     }
@@ -90,7 +90,7 @@ struct SongPlayerView: View {
             AudioManager.instance.AMstop()
         }
         .onAppear(){
-            AudioManager.instance.AMplay(song.url)
+            AudioManager.instance.AMplay(song: song, selectedTeam: selectedTeam)
         }
         .onReceive(timer) { _ in
             guard let player = AudioManager.instance.player else { return }
