@@ -85,8 +85,7 @@ struct SongPlayerView: View {
         .frame(maxWidth: .infinity)
         .background(Color.HalmacSub)
         .onDisappear(){
-            audioManager.AMstop()
-            audioManager.player = nil
+            audioManager.removePlayer()
         }
         .onAppear(){
             audioManager.AMset(song: song, selectedTeam: selectedTeam)

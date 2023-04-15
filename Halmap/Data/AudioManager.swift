@@ -10,9 +10,10 @@ import Foundation
 import Combine
 import MediaPlayer
 
-final class AudioManager: ObservableObject {
+final class AudioManager: NSObject, ObservableObject {
     static let instance = AudioManager()
     var player: AVPlayer?
+    var item: AVPlayerItem?
 
     @Published private(set) var isPlaying: Bool = false {
         didSet{
@@ -24,6 +25,10 @@ final class AudioManager: ObservableObject {
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     
+    private var playerItemContext = 0
+    
+    var song: Song?
+    var selectedTeam = ""
 
     // MARK: - Media Player Setting..
     
@@ -77,12 +82,17 @@ final class AudioManager: ObservableObject {
     }
     
     func AMset(song: Song, selectedTeam: String) {
-        let title = song.title
-        let albumArt = UIImage(named: "\(selectedTeam)Album")
-        setupNowPlayingInfo(title: title, albumArt: albumArt)
-
+        
+        self.song = song
+        self.selectedTeam = selectedTeam
+        
         guard let url = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
-        let item = AVPlayerItem(url: url)
+        self.item = AVPlayerItem(url: url)
+        
+        self.item?.addObserver(self as NSObject,
+                                   forKeyPath: #keyPath(AVPlayerItem.status),
+                                   options: [.old, .new],
+                                   context: &playerItemContext)
         
         player = AVPlayer(playerItem: item)
         
@@ -143,5 +153,62 @@ final class AudioManager: ObservableObject {
     
     private func AMcalculateProgress(currentTime: Double) -> Float {
         return Float(currentTime / AMduration)
+    }
+    
+    //시작 상태 감지를 위한 observer -> 음원이 준비 된 경우 미디어 플레이어 셋팅
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+
+        // Only handle observations for the playerItemContext
+        guard context == &playerItemContext else {
+            super.observeValue(forKeyPath: keyPath,
+                               of: object,
+                               change: change,
+                               context: context)
+            return
+        }
+
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItem.Status
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
+
+            // Switch over status value
+            switch status {
+            case .readyToPlay:
+                // Player item is ready to play.
+                let title = song?.title ?? "unknown title"
+                let albumArt = UIImage(named: "\(selectedTeam)Album")
+                self.setupNowPlayingInfo(title: title, albumArt: albumArt)
+                
+                break
+            case .failed:
+                // Player item failed. See error.
+                print("failed")
+                break
+            case .unknown:
+                // Player item is not yet ready.
+                print("unknown")
+                break
+            @unknown default:
+                print("default")
+                break
+            }
+        }
+    }
+    
+    func removePlayer() {
+        AMstop()
+        player = nil
+        
+        self.item?.removeObserver(self as NSObject,
+                                  forKeyPath: #keyPath(AVPlayerItem.status),
+                                  context: &playerItemContext)
+        
     }
 }
