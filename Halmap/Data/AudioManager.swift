@@ -25,7 +25,7 @@ final class AudioManager: ObservableObject {
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     
-    // MARK: - Media Player Setting
+    // MARK: - Media Player Setting..
     
     private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
         var nowPlayingInfo = [String: Any]()
