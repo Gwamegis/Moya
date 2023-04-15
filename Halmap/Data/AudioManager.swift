@@ -6,10 +6,8 @@
 //
 
 import AVKit
-import Combine
 import Foundation
-import MediaPlayer
-
+import Combine
 
 final class AudioManager: ObservableObject {
     static let instance = AudioManager()
@@ -25,6 +23,7 @@ final class AudioManager: ObservableObject {
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     
+
     // MARK: - Media Player Setting..
     
     private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
@@ -71,8 +70,6 @@ final class AudioManager: ObservableObject {
             return .commandFailed
         }
     }
-
-
     
     // MARK: - AM Properties
     
@@ -80,12 +77,14 @@ final class AudioManager: ObservableObject {
         return player?.currentItem?.duration.seconds ?? 0
     }
     
+    
     func AMplay(song: Song?, selectedTeam: String) {
         let title = song?.title ?? "Unknow Title"
         let albumArt = UIImage(named: "\(selectedTeam)Album")
         setupNowPlayingInfo(title: title, albumArt: albumArt)
+
         
-        guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
+        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
         guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
         let item = AVPlayerItem(url: url)
         
@@ -96,9 +95,6 @@ final class AudioManager: ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        
-        setupRemoteTransportControls()
-        
         player?.play()
     }
     
