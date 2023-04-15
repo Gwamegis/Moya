@@ -6,15 +6,13 @@
 //
 
 import AVKit
-import Combine
 import Foundation
-import MediaPlayer
-
+import Combine
 
 final class AudioManager: ObservableObject {
     static let instance = AudioManager()
     var player: AVPlayer?
-
+https://github.com/Gwamegis/Moya/pull/112/conflict?name=Halmap%252FData%252FAudioManager.swift&ancestor_oid=27882f22f0779ce2b9d6c67691dd4b54ca2eacb2&base_oid=8c3ee2228315d5e03b07f8c5dcf05a4d7dc66b7b&head_oid=8a31c36ad4fe19389bf001f72a9d258e37a2d982
     @Published private(set) var isPlaying: Bool = false {
         didSet{
             print("isPlaying", isPlaying)
@@ -25,54 +23,6 @@ final class AudioManager: ObservableObject {
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     
-    // MARK: - Media Player Setting
-    
-    private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
-        var nowPlayingInfo = [String: Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = title
-        
-        if let albumArt = albumArt {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: albumArt.size) { _ in albumArt }
-        }
-        
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
-        
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
-    
-    private func updateNowPlayingPlaybackRate() {
-        if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-        }
-    }
-    
-    private func setupRemoteTransportControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        
-        commandCenter.playCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 0.0 {
-                self.player?.play()
-                self.updateNowPlayingPlaybackRate()
-                return .success
-            }
-            return .commandFailed
-        }
-        
-        commandCenter.pauseCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 1.0 {
-                self.player?.pause()
-                self.updateNowPlayingPlaybackRate()
-                return .success
-            }
-            return .commandFailed
-        }
-    }
-
-
     
     // MARK: - AM Properties
     
@@ -84,8 +34,7 @@ final class AudioManager: ObservableObject {
         let title = song?.title ?? "Unknow Title"
         let albumArt = UIImage(named: "\(selectedTeam)Album")
         setupNowPlayingInfo(title: title, albumArt: albumArt)
-        
-        guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
+        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
         guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
         let item = AVPlayerItem(url: url)
         
@@ -96,9 +45,6 @@ final class AudioManager: ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        
-        setupRemoteTransportControls()
-        
         player?.play()
     }
     
