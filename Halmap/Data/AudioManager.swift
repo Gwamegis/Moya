@@ -55,8 +55,7 @@ final class AudioManager: ObservableObject {
         
         commandCenter.playCommand.addTarget { [unowned self] event in
             if self.player?.rate == 0.0 {
-                self.player?.play()
-                self.updateNowPlayingPlaybackRate()
+                AMplay()
                 return .success
             }
             return .commandFailed
@@ -64,8 +63,7 @@ final class AudioManager: ObservableObject {
         
         commandCenter.pauseCommand.addTarget { [unowned self] event in
             if self.player?.rate == 1.0 {
-                self.player?.pause()
-                self.updateNowPlayingPlaybackRate()
+                AMstop()
                 return .success
             }
             return .commandFailed
@@ -78,15 +76,12 @@ final class AudioManager: ObservableObject {
         return player?.currentItem?.duration.seconds ?? 0
     }
     
-    
-    func AMplay(song: Song?, selectedTeam: String) {
-        let title = song?.title ?? "Unknow Title"
+    func AMset(song: Song, selectedTeam: String) {
+        let title = song.title
         let albumArt = UIImage(named: "\(selectedTeam)Album")
         setupNowPlayingInfo(title: title, albumArt: albumArt)
 
-        
-        guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
-        guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
+        guard let url = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
         let item = AVPlayerItem(url: url)
         
         player = AVPlayer(playerItem: item)
@@ -96,7 +91,20 @@ final class AudioManager: ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
+        
+        AMplay()
+    }
+    
+    func AMplay() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.AMplayEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        setupRemoteTransportControls()
+        
         player?.play()
+        isPlaying = true
+                
+        updateNowPlayingPlaybackRate()
     }
     
     // MARK: - AM Functions
@@ -107,6 +115,15 @@ final class AudioManager: ObservableObject {
             return
         }
         player.pause()
+        isPlaying = false
+        
+        updateNowPlayingPlaybackRate()
+    }
+    
+    @objc func AMplayEnd() {
+        AMstop()
+        player?.seek(to: .zero)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func AMseek(to time: CMTime){
@@ -125,6 +142,6 @@ final class AudioManager: ObservableObject {
     }
     
     private func AMcalculateProgress(currentTime: Double) -> Float {
-            return Float(currentTime / AMduration)
-        }
+        return Float(currentTime / AMduration)
+    }
 }
