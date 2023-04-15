@@ -8,6 +8,7 @@
 import AVKit
 import Foundation
 import Combine
+import MediaPlayer
 
 final class AudioManager: ObservableObject {
     static let instance = AudioManager()
@@ -84,7 +85,7 @@ final class AudioManager: ObservableObject {
         setupNowPlayingInfo(title: title, albumArt: albumArt)
 
         
-        guard let urlString = urlString else { fatalError("url을 받아올 수 없습니다.") }
+        guard let urlString = song?.url else { fatalError("url을 받아올 수 없습니다.") }
         guard let url = URL(string: urlString) else { fatalError("url을 변환할 수 없습니다.") }
         let item = AVPlayerItem(url: url)
         
