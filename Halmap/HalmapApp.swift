@@ -23,6 +23,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    @StateObject var audioManager = AudioManager()
+    
     let persistenceController = PersistenceController.shared
     
     init() {
@@ -59,8 +61,10 @@ struct HalmapApp: App {
                 OnBoardingStartView()
                     .scrollContentBackground(.hidden)
                     .scrollIndicators(.hidden)
+                    .environmentObject(audioManager)
             } else {
                 OnBoardingStartView()
+                    .environmentObject(audioManager)
             }
         }
     }
