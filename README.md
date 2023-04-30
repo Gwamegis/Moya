@@ -57,6 +57,10 @@
 |---|---|---|---|---|
 |<img src = "https://user-images.githubusercontent.com/52993882/228161517-3773ca33-de7e-4c13-94a1-c7531a393c8b.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228161915-a3ce40f4-9691-4665-b736-9e4767f6960f.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228162098-18b5b625-6d63-4478-ae80-9d52b5ee9a64.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162253-9dc91903-1a14-449d-845a-99c1c5f0de96.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162247-fd77a935-4d10-4425-b770-288e364a546a.png" width = 250>
 
+## Members
+|<img src="https://github.com/JIWON1923.png">|<img src="https://github.com/JMM00.png">|<img src="https://github.com/yeniful.png">|<img src="https://github.com/Anti9uA.png">|<img src="https://github.com/Eunbi-Cho.png">|<img src="https://github.com/junginyu.png">|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|[Developer<br/>Jiwon](https://github.com/JIWON1923)|[Developer<br/>Jimin](https://github.com/JMM00)|[Developer<br/>Yeeun](https://github.com/yeniful)|[Developer<br/>Kyubo](https://github.com/Anti9uA)|[Product<br/>Designer<br/>Eunbi](https://github.com/Eunbi-Cho)|[Product<br/>Manager<br/>Jungin](https://github.com/junginyu)|
 
 ## License
 
