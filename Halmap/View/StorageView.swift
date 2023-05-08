@@ -11,8 +11,8 @@ struct StorageView: View {
     @EnvironmentObject var dataManager: DataManager
     @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
     
-//    let maxHeight: CGFloat = 216
-    let maxHeight: CGFloat = UIScreen.main.bounds.height / 2.3
+    let maxHeight: CGFloat = 216
+//    let maxHeight: CGFloat = UIScreen.main.bounds.height / 2.3
     var topEdge: CGFloat
     
     @State var offset: CGFloat = 0
