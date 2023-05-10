@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SSGOnboarding.png",
+      "filename" : "LaunchScreen.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "LaunchScreen@2x.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "LaunchScreen@3x.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
