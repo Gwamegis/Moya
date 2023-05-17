@@ -12,8 +12,7 @@ struct StorageContentView: View {
         GeometryReader { proxy in
             let topEdge = proxy.safeAreaInsets.top
             
-            StorageView(topEdge: topEdge)
-//            ScalingHeaderView(topEdge: topEdge)
+            ScalingHeaderView(topEdge: topEdge)
                 .ignoresSafeArea(.all, edges: .top)
         }
     }
