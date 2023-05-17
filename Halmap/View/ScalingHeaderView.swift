@@ -76,15 +76,15 @@ struct ScalingHeaderView: View {
                                     SongDetailView(song: song)
                                 } label: {
                                     HStack(spacing: 16) {
-                                        Image("LotteSongListImage")
+                                        Image("\(favoriteSong.team ?? "NC")SongListImage")
                                             .frame(width: 40)
                                         VStack(alignment: .leading, spacing: 8) {
                                             Text(favoriteSong.title ?? "test ")
                                                 .font(Font.Halmap.CustomBodyMedium)
                                                 .foregroundColor(.black)
-                                            Text("test ")
+                                            Text(TeamName(rawValue: favoriteSong.team ?? "NC")?.fetchTeamNameKr() ?? ".")
                                                 .font(Font.Halmap.CustomCaptionMedium)
-                                                .foregroundColor(.HalmacSub)
+                                                .foregroundColor(.customDarkGray)
                                         }
                                         Spacer()
                                         Button {
@@ -92,7 +92,7 @@ struct ScalingHeaderView: View {
                                             showSheet.toggle()
                                         } label: {
                                             Image(systemName: "ellipsis")
-                                                .foregroundColor(.HalmacBackground)
+                                                .foregroundColor(.black.opacity(0.2))
                                         }
                                         .halfSheet(showSheet: $showSheet) {
                                             Text("half modal")

@@ -19,7 +19,7 @@ struct HalfSheetHelper<SheetView: View>: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
         if showSheet {
             let sheetController = CustomModalViewController()
-//            sheetController.modalPresentationStyle = .custom
+//            sheetController.modalPresentationStyle = .formSheet
 //            let sheetController = CustomHostingController(rootView: sheetView)
             
             uiViewController.present(sheetController, animated: true) {
