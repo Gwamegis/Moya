@@ -18,7 +18,8 @@ extension Color {
     static var customDarkGray = Color("customDarkGray")
     static var systemBackground = Color("systemBackground")
     static var tabBarGray = Color("tabBarGray")
-    static var storagePlayerButtonColor = Color("storagePlayerButtonColor")
+
+    static var mainGreen = Color("mainGreen")
     
     static func setColor(_ teamName: String) {
         Color.HalmacPoint = Color("\(teamName)Point")

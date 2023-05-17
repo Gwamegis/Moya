@@ -20,7 +20,6 @@ struct SongPlayerView: View {
     let timer = Timer
         .publish(every: 0.3, on: .main, in: .common)
         .autoconnect()
-    @State var isPlaying: Bool = true
     @State var value: Double = 0.0
     @State var isEditing: Bool = false
     @EnvironmentObject var audioManager: AudioManager
@@ -56,20 +55,19 @@ struct SongPlayerView: View {
                     //이전곡 재생 기능
                 } label: {
                     Image(systemName: "backward.end.fill")
-                        .font(.system(size: 30, weight: .regular))
+                        .font(.system(size: 28, weight: .regular))
                         .foregroundColor(.customGray)
                 }
 
                 Button {
-                    isPlaying.toggle()
-                    if isPlaying {
-                        AudioManager.instance.AMplay(song.url)
+                    if !audioManager.isPlaying {
+                        audioManager.AMplay()
                     } else {
-                        AudioManager.instance.AMstop()
+                        audioManager.AMstop()
                     }
                 } label: {
-                    Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 50, weight: .medium))
+                    Image(systemName: audioManager.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                        .font(.system(size: 60, weight: .medium))
                         .foregroundColor(.customGray)
                 }
                 
@@ -77,7 +75,7 @@ struct SongPlayerView: View {
                     //다음곡 재생 기능
                 } label: {
                     Image(systemName: "forward.end.fill")
-                        .font(.system(size: 30, weight: .regular))
+                        .font(.system(size: 28, weight: .regular))
                         .foregroundColor(.customGray)
                 }
             }
@@ -87,16 +85,16 @@ struct SongPlayerView: View {
         .frame(maxWidth: .infinity)
         .background(Color.HalmacSub)
         .onDisappear(){
-            AudioManager.instance.AMstop()
+            audioManager.removePlayer()
         }
         .onAppear(){
-            AudioManager.instance.AMplay(song.url)
+            audioManager.AMset(song: song, selectedTeam: selectedTeam)
         }
         .onReceive(timer) { _ in
             guard let player = AudioManager.instance.player else { return }
             guard let item = AudioManager.instance.player?.currentItem else { return }
             if CMTimeGetSeconds(player.currentTime()) == item.duration.seconds {
-                isPlaying = false
+//                isPlaying = false
             }
             //              value = CMTimeGetSeconds(player.currentTime())
         }

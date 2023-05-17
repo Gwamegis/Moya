@@ -41,6 +41,7 @@ struct MainTabView: View {
             }
             .accentColor(Color.HalmacPoint)
         }
+        .navigationViewStyle(.stack)
     }
 }
 

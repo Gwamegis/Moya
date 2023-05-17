@@ -40,11 +40,11 @@ struct ScalingHeaderView: View {
                             } label: {
                                 HStack(spacing: 5) {
                                     Image(systemName: "play.circle.fill")
-                                        .foregroundColor(.storagePlayerButtonColor)
+                                        .foregroundColor(.mainGreen)
                                         .font(.system(size: 20))
                                     Text("전체 재생하기")
                                         .font(Font.Halmap.CustomCaptionBold)
-                                        .foregroundColor(.storagePlayerButtonColor)
+                                        .foregroundColor(.mainGreen)
                                 }
                                 .opacity(topTitleOpacity())
                             }
@@ -158,7 +158,7 @@ struct TopBar: View {
                     print("전체재생")
                 } label: {
                     Image(systemName: "play.circle.fill")
-                        .foregroundColor(.storagePlayerButtonColor)
+                        .foregroundColor(.mainGreen)
                         .font(.system(size: 57))
                 }
             }

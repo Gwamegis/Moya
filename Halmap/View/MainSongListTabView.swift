@@ -23,11 +23,11 @@ struct MainSongListTabView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            VStack {
+            VStack(spacing: 0) {
                 Rectangle()
-                    .frame(height:UIScreen.getHeight(210))
+                    .frame(height:UIScreen.getHeight(215))
                     .foregroundColor(Color.HalmacSub)
-                    .edgesIgnoringSafeArea(.all)
+                
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
@@ -49,6 +49,10 @@ struct MainSongListTabView: View {
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
+                        RequestSongView(buttonColor: Color.HalmacPoint)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowBackground(Color.systemBackground)
+                            .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -74,13 +78,21 @@ struct MainSongListTabView: View {
                         .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
+                        
+                        RequestSongView(buttonColor: Color.HalmacPoint)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowBackground(Color.systemBackground)
+                            .listRowSeparatorTint(Color.customGray)
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
                     .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
+                .padding(.top, UIScreen.getHeight(27))
+                
             }
+            .edgesIgnoringSafeArea(.top)
             
             //상단 탭바
             TabBarView(currentTab: $index)
@@ -104,6 +116,10 @@ struct MainSongListTabView: View {
                         .padding([.leading, .bottom], 20)
                 }
             }
+            .background(
+                RoundedRectangle(cornerRadius: 12.5)
+                    .fill(Color.HalmacSub)
+            )
             .padding(.top, 70)
         }
         .background(Color.systemBackground)
