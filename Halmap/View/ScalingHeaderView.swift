@@ -73,7 +73,7 @@ struct ScalingHeaderView: View {
                             let song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type , title: favoriteSong.title ?? "" , lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song)
+                                    SongDetailView(teamName: favoriteSong.team, song: song)
                                 } label: {
                                     HStack(spacing: 16) {
                                         Image("\(favoriteSong.team ?? "NC")SongListImage")

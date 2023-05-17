@@ -13,6 +13,7 @@ struct SongPlayerView: View {
     
     // Song Properties
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
+    @Binding var teamName: String?
     @Binding var song: Song
     
     
@@ -83,7 +84,7 @@ struct SongPlayerView: View {
             
         }
         .frame(maxWidth: .infinity)
-        .background(Color.HalmacSub)
+        .background(Color("\(teamName ?? selectedTeam)Sub"))
         .onDisappear(){
             audioManager.removePlayer()
         }
