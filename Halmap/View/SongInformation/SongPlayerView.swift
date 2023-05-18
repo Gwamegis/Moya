@@ -51,13 +51,13 @@ struct SongPlayerView: View {
             
             // Buttons
             HStack(spacing: 52) {
-                Button {
-                    //이전곡 재생 기능
-                } label: {
-                    Image(systemName: "backward.end.fill")
-                        .font(.system(size: 28, weight: .regular))
-                        .foregroundColor(.customGray)
-                }
+//                Button {
+//                    //이전곡 재생 기능
+//                } label: {
+//                    Image(systemName: "backward.end.fill")
+//                        .font(.system(size: 28, weight: .regular))
+//                        .foregroundColor(.customGray)
+//                }
 
                 Button {
                     if !audioManager.isPlaying {
@@ -71,13 +71,13 @@ struct SongPlayerView: View {
                         .foregroundColor(.customGray)
                 }
                 
-                Button {
-                    //다음곡 재생 기능
-                } label: {
-                    Image(systemName: "forward.end.fill")
-                        .font(.system(size: 28, weight: .regular))
-                        .foregroundColor(.customGray)
-                }
+//                Button {
+//                    //다음곡 재생 기능
+//                } label: {
+//                    Image(systemName: "forward.end.fill")
+//                        .font(.system(size: 28, weight: .regular))
+//                        .foregroundColor(.customGray)
+//                }
             }
             .padding(.bottom, 54)
             
