@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     static let shared = PersistenceController()
 
@@ -31,15 +31,15 @@ struct PersistenceController {
     
     func saveSongs(song: Song) {
         let context = container.viewContext
-        let favoriteSong = FavoriteSong(context: context)
-        favoriteSong.id = song.id
-        favoriteSong.title = song.title
-        favoriteSong.info = song.info
-        favoriteSong.lyrics = song.lyrics
-        favoriteSong.url = song.url
-        favoriteSong.type = song.type
-        favoriteSong.team = selectedTeam
-        favoriteSong.date = Date()
+        let collectedSong = CollectedSong(context: context)
+        collectedSong.id = song.id
+        collectedSong.title = song.title
+        collectedSong.info = song.info
+        collectedSong.lyrics = song.lyrics
+        collectedSong.url = song.url
+        collectedSong.type = song.type
+        collectedSong.team = selectedTeam
+        collectedSong.date = Date()
         
         if context.hasChanges {
             do {
@@ -61,7 +61,7 @@ struct PersistenceController {
 //            print(error.localizedDescription)
 //        }
 //    }
-    func deleteSongs(song: FavoriteSong) {
+    func deleteSongs(song: CollectedSong) {
         
         container.viewContext.delete(song)
         
@@ -73,8 +73,8 @@ struct PersistenceController {
         }
     }
     
-    func fetchFavoriteSong() -> [FavoriteSong] {
-        let fetchRequest: NSFetchRequest<FavoriteSong> = FavoriteSong.fetchRequest()
+    func fetchFavoriteSong() -> [CollectedSong] {
+        let fetchRequest: NSFetchRequest<CollectedSong> = CollectedSong.fetchRequest()
         
         do{
             return try container.viewContext.fetch(fetchRequest)
@@ -83,11 +83,11 @@ struct PersistenceController {
         }
     }
     
-    func findFavoriteSong(song: Song) -> FavoriteSong {
-        if let index = favoriteSongs.firstIndex(where: {song.id == $0.id}) {
-            return favoriteSongs[index]
+    func findFavoriteSong(song: Song) -> CollectedSong {
+        if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
+            return collectedSongs[index]
         } else {
-            return FavoriteSong()
+            return CollectedSong()
         }
     }
 }

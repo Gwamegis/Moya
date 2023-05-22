@@ -16,7 +16,7 @@ struct ScalingHeaderView: View {
     @State var offset: CGFloat = 0
     @State var showSheet = false
     
-    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {

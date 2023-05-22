@@ -22,7 +22,7 @@ struct SongDetailView: View {
     
     let persistence = PersistenceController.shared
     
-    @FetchRequest(entity: FavoriteSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \FavoriteSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<FavoriteSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     var body: some View {
         ZStack {
@@ -87,11 +87,11 @@ struct SongDetailView: View {
         }
     }
     
-    func findFavoriteSong() -> FavoriteSong {
+    func findFavoriteSong() -> CollectedSong {
         if let index = favoriteSongs.firstIndex(where: {song.id == $0.id}) {
             return favoriteSongs[index]
         } else {
-            return FavoriteSong()
+            return CollectedSong()
         }
     }
 }

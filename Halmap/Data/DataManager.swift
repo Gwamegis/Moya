@@ -109,7 +109,7 @@ class DataManager: ObservableObject {
         
     }
     
-    func saveFavoriteSong(song: FavoriteSong) {
+    func saveFavoriteSong(song: CollectedSong) {
         
         
     }
