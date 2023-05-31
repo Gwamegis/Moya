@@ -20,6 +20,7 @@ extension Color {
     static var tabBarGray = Color("tabBarGray")
 
     static var mainGreen = Color("mainGreen")
+    static var customBlack = Color("CustomBlack")
     
     static func setColor(_ teamName: String) {
         Color.HalmacPoint = Color("\(teamName)Point")

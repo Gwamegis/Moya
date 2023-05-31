@@ -29,7 +29,7 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
     
-    func saveSongs(song: Song) {
+    func saveSongs(song: Song, playListTitle: String?) {
         let context = container.viewContext
         let collectedSong = CollectedSong(context: context)
         collectedSong.id = song.id
@@ -38,6 +38,7 @@ struct PersistenceController {
         collectedSong.lyrics = song.lyrics
         collectedSong.url = song.url
         collectedSong.type = song.type
+        collectedSong.playListTitle = playListTitle
         collectedSong.team = selectedTeam
         collectedSong.date = Date()
         
@@ -51,16 +52,6 @@ struct PersistenceController {
         }
     }
     
-//    func deleteSongs(song: FavoriteSong) {
-//        container.viewContext.delete(song)
-//
-//        do {
-//            try container.viewContext.save()
-//        } catch {
-//            container.viewContext.rollback()
-//            print(error.localizedDescription)
-//        }
-//    }
     func deleteSongs(song: CollectedSong) {
         
         container.viewContext.delete(song)

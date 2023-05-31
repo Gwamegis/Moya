@@ -23,10 +23,14 @@ class DataManager: ObservableObject {
     init() {
         loadData()
         fetchSong(team: selectedTeam, type: true) { songs in
-            self.playerSongs = songs
+            self.playerSongs = songs.sorted { lhs, rhs in
+                lhs.title <= rhs.title
+            }
         }
         fetchSong(team: selectedTeam, type: false) { songs in
-            self.teamSongs = songs
+            self.teamSongs = songs.sorted { lhs, rhs in
+                lhs.title <= rhs.title
+            }
         }
     }
     

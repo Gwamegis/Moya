@@ -63,7 +63,7 @@ struct SongDetailView: View {
                     if isFavorite {
                         persistence.deleteSongs(song: findFavoriteSong())
                     } else {
-                        persistence.saveSongs(song: song)
+                        persistence.saveSongs(song: song, playListTitle: "favorite")
                     }
                     isFavorite.toggle()
                 } label: {

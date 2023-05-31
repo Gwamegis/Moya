@@ -9,14 +9,13 @@ import SwiftUI
 
 struct ScalingHeaderView: View {
     
-//    let maxHeight = UIScreen.main.bounds.height/3
     let maxHeight: CGFloat = 216
     var topEdge: CGFloat
     
     @State var offset: CGFloat = 0
-    @State var showSheet = false
     
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    let persistence = PersistenceController.shared
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -31,23 +30,10 @@ struct ScalingHeaderView: View {
                                     .opacity(topTitleOpacity())
                             )
                         HStack() {
-                            Text("총 \(favoriteSongs.count)곡")
+                            Text("총 \(collectedSongs.count)곡")
                                 .font(Font.Halmap.CustomCaptionBold)
                                 .foregroundColor(.customDarkGray)
                             Spacer()
-                            Button {
-                                print("click")
-                            } label: {
-                                HStack(spacing: 5) {
-                                    Image(systemName: "play.circle.fill")
-                                        .foregroundColor(.mainGreen)
-                                        .font(.system(size: 20))
-                                    Text("전체 재생하기")
-                                        .font(Font.Halmap.CustomCaptionBold)
-                                        .foregroundColor(.mainGreen)
-                                }
-                                .opacity(topTitleOpacity())
-                            }
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, 17)
@@ -62,22 +48,31 @@ struct ScalingHeaderView: View {
                 .zIndex(1)
                 
                 LazyVStack(spacing: 0) {
-                    if favoriteSongs.isEmpty {
+                    if collectedSongs.isEmpty {
                         Image("storageEmpty")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 200, height: 200)
                             .padding(.top, 60)
                     } else {
-                        ForEach(favoriteSongs) { favoriteSong in
-                            let song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type , title: favoriteSong.title ?? "" , lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
+                        ForEach(collectedSongs) { favoriteSong in
+                            let song = Song(
+                                id: favoriteSong.id ?? "",
+                                type: favoriteSong.type ,
+                                title: favoriteSong.title ?? "" ,
+                                lyrics: favoriteSong.lyrics ?? "",
+                                info: favoriteSong.info ?? "",
+                                url: favoriteSong.url ?? ""
+                            )
                             VStack(spacing: 0) {
                                 NavigationLink {
                                     SongDetailView(teamName: favoriteSong.team, song: song)
                                 } label: {
                                     HStack(spacing: 16) {
-                                        Image("\(favoriteSong.team ?? "NC")SongListImage")
-                                            .frame(width: 40)
+                                        Image("\(favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .cornerRadius(8)
                                         VStack(alignment: .leading, spacing: 8) {
                                             Text(favoriteSong.title ?? "test ")
                                                 .font(Font.Halmap.CustomBodyMedium)
@@ -88,14 +83,10 @@ struct ScalingHeaderView: View {
                                         }
                                         Spacer()
                                         Button {
-                                            print("")
-                                            showSheet.toggle()
+                                            persistence.deleteSongs(song: favoriteSong)
                                         } label: {
-                                            Image(systemName: "ellipsis")
-                                                .foregroundColor(.black.opacity(0.2))
-                                        }
-                                        .halfSheet(showSheet: $showSheet) {
-                                            Text("half modal")
+                                            Image(systemName: "heart.fill")
+                                                .foregroundColor(.HalmacPoint)
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -154,13 +145,6 @@ struct TopBar: View {
                 Text("보관함")
                     .font(Font.Halmap.CustomLargeTitle)
                 Spacer()
-                Button {
-                    print("전체재생")
-                } label: {
-                    Image(systemName: "play.circle.fill")
-                        .foregroundColor(.mainGreen)
-                        .font(.system(size: 57))
-                }
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
