@@ -39,14 +39,24 @@ struct MainSongListTabView: View {
                                              url: song.url)
                             
                             NavigationLink(destination: SongDetailView(song: music)) {
-                                VStack {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
+                                HStack(spacing: 16) {
+                                    Image("\(selectedTeam)Album")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .cornerRadius(8)
+                                    VStack(alignment: .leading, spacing: 6){
+                                        Text(song.title)
+                                            .font(Font.Halmap.CustomBodyMedium)
+                                        if !song.info.isEmpty {
+                                            Text(song.info)
+                                                .font(Font.Halmap.CustomCaptionMedium)
+                                                .foregroundColor(.customDarkGray)
+                                        }
+                                    }
                                 }
-                                .frame(height: 45)
                             }
                         }
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                         RequestSongView(buttonColor: Color.HalmacPoint)
@@ -68,14 +78,24 @@ struct MainSongListTabView: View {
                                              url: song.url)
                             
                             NavigationLink(destination: SongDetailView(song: music)) {
-                                VStack {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
+                                HStack(spacing: 16) {
+                                    Image("\(selectedTeam)Player")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .cornerRadius(8)
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text(song.title)
+                                            .font(Font.Halmap.CustomBodyMedium)
+                                        if !song.info.isEmpty {
+                                            Text(song.info)
+                                                .font(Font.Halmap.CustomCaptionMedium)
+                                                .foregroundColor(.customDarkGray)
+                                        }
+                                    }
                                 }
-                                .frame(height: 45)
                             }
                         }
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                         
