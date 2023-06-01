@@ -86,7 +86,7 @@ struct ScalingHeaderView: View {
                                             persistence.deleteSongs(song: favoriteSong)
                                         } label: {
                                             Image(systemName: "heart.fill")
-                                                .foregroundColor(.HalmacPoint)
+                                                .foregroundColor(.mainGreen)
                                         }
                                     }
                                     .padding(.horizontal, 20)

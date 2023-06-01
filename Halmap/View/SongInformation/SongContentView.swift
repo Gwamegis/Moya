@@ -30,7 +30,6 @@ struct SongContentView: View {
                                     value: -$0.frame(in: .named("scroll")).origin.y)
             })
             .onPreferenceChange(ViewOffsetKey.self) {
-                print($0)
                 if $0 > 0 {
                     withAnimation {
                         isScrolled = true

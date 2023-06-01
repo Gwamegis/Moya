@@ -108,13 +108,4 @@ class DataManager: ObservableObject {
                 }
             }
     }
-    
-    func deleteFavoriteSong() {
-        
-    }
-    
-    func saveFavoriteSong(song: CollectedSong) {
-        
-        
-    }
 }
