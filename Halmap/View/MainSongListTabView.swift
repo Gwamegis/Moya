@@ -13,7 +13,7 @@ struct MainSongListTabView: View {
     @ObservedObject var dataManager = DataManager()
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
-
+    
     // SongInformationView
     @State private var showingFullScreenCover = false
     

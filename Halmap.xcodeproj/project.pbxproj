@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200B06EF2A0897770011D18E /* MinimizableView in Frameworks */ = {isa = PBXBuildFile; productRef = 200B06EE2A0897770011D18E /* MinimizableView */; };
 		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
 		203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF012916762B00E838A1 /* FirebaseFirestore */; };
 		203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */; };
@@ -115,6 +116,7 @@
 				203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */,
 				203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */,
 				203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */,
+				200B06EF2A0897770011D18E /* MinimizableView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,13 +145,13 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
+				A81FFC8E28F1770500B0FC7C /* View */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
 				F98F622729B4C9A80025F50E /* Theme */,
 				F9B95BBC28F2733200728048 /* Data */,
 				A81FFCA028F1B2E300B0FC7C /* Extensions */,
 				A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */,
 				A81FFC7B28F15D9900B0FC7C /* ContentView.swift */,
-				A81FFC8E28F1770500B0FC7C /* View */,
 				A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */,
 				A81FFC8028F15D9C00B0FC7C /* Preview Assets.xcassets */,
 				A81FFC8228F15D9C00B0FC7C /* Persistence.swift */,
@@ -290,6 +292,7 @@
 				203CAF012916762B00E838A1 /* FirebaseFirestore */,
 				203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */,
 				203CAF052916762B00E838A1 /* FirebaseStorage */,
+				200B06EE2A0897770011D18E /* MinimizableView */,
 			);
 			productName = Halmap;
 			productReference = A81FFC7628F15D9900B0FC7C /* Halmap.app */;
@@ -321,6 +324,7 @@
 			mainGroup = A81FFC6D28F15D9900B0FC7C;
 			packageReferences = (
 				203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				200B06ED2A0897770011D18E /* XCRemoteSwiftPackageReference "MinimizableView" */,
 			);
 			productRefGroup = A81FFC7728F15D9900B0FC7C /* Products */;
 			projectDirPath = "";
@@ -516,12 +520,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 22A6RK2943;
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -534,11 +537,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Moya_AppStore_AppStore;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -553,12 +555,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 22A6RK2943;
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -571,11 +572,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = Moya_AppStore_AppStore;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -609,6 +609,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		200B06ED2A0897770011D18E /* XCRemoteSwiftPackageReference "MinimizableView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/DominikButz/MinimizableView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -620,6 +628,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		200B06EE2A0897770011D18E /* MinimizableView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 200B06ED2A0897770011D18E /* XCRemoteSwiftPackageReference "MinimizableView" */;
+			productName = MinimizableView;
+		};
 		203CAF012916762B00E838A1 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
