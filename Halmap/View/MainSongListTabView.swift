@@ -28,6 +28,19 @@ struct MainSongListTabView: View {
                     .frame(height:UIScreen.getHeight(215))
                     .foregroundColor(Color.HalmacSub)
                 
+                HStack() {
+                    Text("총 \(index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
+                        .font(Font.Halmap.CustomCaptionBold)
+                        .foregroundColor(.customDarkGray)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 15, trailing: 20))
+                .padding(.top, UIScreen.getHeight(27))
+                
+                Divider()
+                    .overlay(Color.customGray.opacity(0.6))
+                    .padding(.horizontal, 20)
+                
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
@@ -109,8 +122,6 @@ struct MainSongListTabView: View {
                     .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .padding(.top, UIScreen.getHeight(27))
-                
             }
             .edgesIgnoringSafeArea(.top)
             
