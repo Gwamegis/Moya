@@ -74,6 +74,8 @@ struct MainSongListTabView: View {
                                                 .foregroundColor(.customDarkGray)
                                         }
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                             }
                         }
@@ -122,6 +124,8 @@ struct MainSongListTabView: View {
                                                 .foregroundColor(.customDarkGray)
                                         }
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                             }
                         }

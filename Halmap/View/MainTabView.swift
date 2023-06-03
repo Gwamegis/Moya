@@ -28,11 +28,6 @@ struct MainTabView: View {
                         Image("search")
                         Text("곡 검색")
                       }
-                StadiumListSheetView()
-                    .tabItem {
-                        Image("map")
-                        Text("야구장")
-                      }
                 StorageContentView()
                     .tabItem {
                         Image("storage")

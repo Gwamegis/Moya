@@ -91,7 +91,10 @@ struct ScalingHeaderView: View {
                                                 .font(Font.Halmap.CustomCaptionMedium)
                                                 .foregroundColor(.customDarkGray)
                                         }
-                                        Spacer()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .lineLimit(1)
+                                        .background(Color.red)
+                                        
                                         Button {
                                             persistence.deleteSongs(song: favoriteSong)
                                         } label: {

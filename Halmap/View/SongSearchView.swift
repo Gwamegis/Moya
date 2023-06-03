@@ -135,6 +135,8 @@ struct SongSearchView: View {
                                             .font(Font.Halmap.CustomCaptionMedium)
                                             .foregroundColor(.customDarkGray)
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                                 .font(Font.Halmap.CustomBodyMedium)
                                 .foregroundColor(Color.black)
