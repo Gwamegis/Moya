@@ -28,6 +28,19 @@ struct MainSongListTabView: View {
                     .frame(height:UIScreen.getHeight(215))
                     .foregroundColor(Color.HalmacSub)
                 
+                HStack() {
+                    Text("총 \(index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
+                        .font(Font.Halmap.CustomCaptionBold)
+                        .foregroundColor(.customDarkGray)
+                    Spacer()
+                }
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 15, trailing: 20))
+                .padding(.top, UIScreen.getHeight(27))
+                
+                Divider()
+                    .overlay(Color.customGray.opacity(0.6))
+                    .padding(.horizontal, 20)
+                
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
@@ -39,14 +52,24 @@ struct MainSongListTabView: View {
                                              url: song.url)
                             
                             NavigationLink(destination: SongDetailView(song: music)) {
-                                VStack {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
+                                HStack(spacing: 16) {
+                                    Image("\(selectedTeam)Album")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .cornerRadius(8)
+                                    VStack(alignment: .leading, spacing: 6){
+                                        Text(song.title)
+                                            .font(Font.Halmap.CustomBodyMedium)
+                                        if !song.info.isEmpty {
+                                            Text(song.info)
+                                                .font(Font.Halmap.CustomCaptionMedium)
+                                                .foregroundColor(.customDarkGray)
+                                        }
+                                    }
                                 }
-                                .frame(height: 45)
                             }
                         }
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                         RequestSongView(buttonColor: Color.HalmacPoint)
@@ -68,14 +91,24 @@ struct MainSongListTabView: View {
                                              url: song.url)
                             
                             NavigationLink(destination: SongDetailView(song: music)) {
-                                VStack {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
+                                HStack(spacing: 16) {
+                                    Image("\(selectedTeam)Player")
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .cornerRadius(8)
+                                    VStack(alignment: .leading, spacing: 6) {
+                                        Text(song.title)
+                                            .font(Font.Halmap.CustomBodyMedium)
+                                        if !song.info.isEmpty {
+                                            Text(song.info)
+                                                .font(Font.Halmap.CustomCaptionMedium)
+                                                .foregroundColor(.customDarkGray)
+                                        }
+                                    }
                                 }
-                                .frame(height: 45)
                             }
                         }
-                        .listRowInsets(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
                         .listRowSeparatorTint(Color.customGray)
                         
@@ -89,8 +122,6 @@ struct MainSongListTabView: View {
                     .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                .padding(.top, UIScreen.getHeight(27))
-                
             }
             .edgesIgnoringSafeArea(.top)
             

@@ -23,7 +23,7 @@ struct SongContentView: View {
                     .font(.Halmap.CustomHeadline)
                     .lineSpacing(20)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(EdgeInsets(top: 40, leading: 40, bottom: 200, trailing: 40))
+                    .padding(EdgeInsets(top: 40, leading: 40, bottom: 200, trailing: 40))
             }
             .background(GeometryReader{
                 Color.clear.preference(key: ViewOffsetKey.self,
@@ -43,7 +43,6 @@ struct SongContentView: View {
         }
         .coordinateSpace(name: "scroll")
     }
-    
     struct ViewOffsetKey: PreferenceKey {
         static var defaultValue = CGFloat.zero
         static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {

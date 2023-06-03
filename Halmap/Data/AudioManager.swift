@@ -13,8 +13,9 @@ import MediaPlayer
 final class AudioManager: NSObject, ObservableObject {
     static let instance = AudioManager()
     var player: AVPlayer?
-    var item: AVPlayerItem?
 
+    var item: AVPlayerItem?
+    
     @Published private(set) var isPlaying: Bool = false {
         didSet{
             print("isPlaying", isPlaying)

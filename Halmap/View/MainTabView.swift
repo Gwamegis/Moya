@@ -33,6 +33,11 @@ struct MainTabView: View {
                         Image("map")
                         Text("야구장")
                       }
+                StorageContentView()
+                    .tabItem {
+                        Image("storage")
+                        Text("보관함")
+                    }
             }
             .accentColor(Color.HalmacPoint)
         }

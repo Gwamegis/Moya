@@ -18,14 +18,19 @@ class DataManager: ObservableObject {
     @Published var playerList: [Player] = []
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
+    @Published var favoriteSongs = PersistenceController.shared.fetchFavoriteSong()
     
     init() {
         loadData()
         fetchSong(team: selectedTeam, type: true) { songs in
-            self.playerSongs = songs
+            self.playerSongs = songs.sorted { lhs, rhs in
+                lhs.title <= rhs.title
+            }
         }
         fetchSong(team: selectedTeam, type: false) { songs in
-            self.teamSongs = songs
+            self.teamSongs = songs.sorted { lhs, rhs in
+                lhs.title <= rhs.title
+            }
         }
     }
     

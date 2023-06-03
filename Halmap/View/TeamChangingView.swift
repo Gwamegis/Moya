@@ -56,7 +56,7 @@ struct TeamChangingView: View {
                 print("선택완료")
             } label: {
                 RoundedRectangle(cornerRadius: 8)
-                    .foregroundColor(Color.black)
+                    .foregroundColor(Color.mainGreen)
                     .opacity(selectedTeam == nil ? 0.1 : 1)
                     .frame(width: UIScreen.getWidth(350), height: UIScreen.getHeight(62))
                     .overlay(
