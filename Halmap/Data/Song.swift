@@ -16,3 +16,12 @@ struct Song: Identifiable, Codable {
     var info: String
     var url: String
 }
+struct SongInfo: Identifiable, Codable {
+    var id: String
+    var team: String
+    var type: Bool
+    var title: String
+    var lyrics: String
+    var info: String
+    var url: String
+}

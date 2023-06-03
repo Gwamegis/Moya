@@ -12,9 +12,8 @@ import Combine
 struct SongPlayerView: View {
     
     // Song Properties
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
-    @Binding var teamName: String?
-    @Binding var song: Song
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @Binding var song: SongInfo
     
     
     // Audio Properties
@@ -84,7 +83,7 @@ struct SongPlayerView: View {
             
         }
         .frame(maxWidth: .infinity)
-        .background(Color("\(teamName ?? selectedTeam)Sub"))
+        .background(Color("\(song.team)Sub"))
         .onDisappear(){
             audioManager.removePlayer()
         }

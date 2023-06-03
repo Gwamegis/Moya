@@ -12,9 +12,9 @@ struct SongDetailView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @State var teamName: String?
     
-    @State var song: Song
+    @State var song: SongInfo
+    
     @State var isScrolled = false
     
     @State var isFavorite = false
@@ -26,7 +26,7 @@ struct SongDetailView: View {
     
     var body: some View {
         ZStack {
-            Color("\(teamName ?? selectedTeam)Sub")
+            Color("\(song.team)Sub")
                 .ignoresSafeArea()
             
             SongContentView(song: $song, isScrolled: $isScrolled)
@@ -34,23 +34,23 @@ struct SongDetailView: View {
             VStack(spacing: 0) {
                 Rectangle()
                     .frame(height: UIScreen.getHeight(108))
-                .foregroundColor(Color("\(teamName ?? selectedTeam)Sub"))
+                    .foregroundColor(Color("\(song.team)Sub"))
                 if isScrolled {
                     Rectangle()
                         .frame(height: 120)
-                        .background(Color.fetchTopGradient(color: Color("\(teamName ?? selectedTeam)Sub")))
+                        .background(Color.fetchTopGradient(color: Color("\(song.team)Sub")))
                         .foregroundColor(Color(UIColor.clear))
                 }
                 Spacer()
                 Rectangle()
                     .frame(height: 120)
-                    .background(Color.fetchBottomGradient(color: Color("\(teamName ?? selectedTeam)Sub")))
+                    .background(Color.fetchBottomGradient(color: Color("\(song.team)Sub")))
                     .foregroundColor(Color(UIColor.clear))
                 ZStack(alignment: .center) {
                     Rectangle()
                         .frame(height: UIScreen.getHeight(120))
-                    .foregroundColor(Color("\(teamName ?? selectedTeam)Sub"))
-                    SongPlayerView(teamName: $teamName, song: $song)
+                        .foregroundColor(Color("\(song.team)Sub"))
+                    SongPlayerView(song: $song)
                 }
             }
             .ignoresSafeArea()
@@ -69,7 +69,7 @@ struct SongDetailView: View {
                 } label: {
                     if isFavorite {
                         Image(systemName: "heart.fill")
-                        .foregroundColor(Color("\(teamName ?? selectedTeam)Point"))
+                            .foregroundColor(Color("\(song.team)Point"))
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.white)

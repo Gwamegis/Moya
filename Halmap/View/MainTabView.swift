@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
     init() {
         Color.setColor(selectedTeam)

@@ -5,14 +5,15 @@
 //  Created by 전지민 on 2022/10/09.
 //
 
-import Foundation
+import SwiftUI
 import FirebaseFirestore
 
 class DataManager: ObservableObject {
     
     private let db = Firestore.firestore()
     
-    var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    
     var teams: [Team] = []
     @Published var teamSongList: [TeamSong] = []
     @Published var playerList: [Player] = []
@@ -20,18 +21,30 @@ class DataManager: ObservableObject {
     @Published var teamSongs: [Song] = []
     @Published var favoriteSongs = PersistenceController.shared.fetchFavoriteSong()
     
+    @Published var playerSongsAll = [[Song]](repeating: [], count: 10)
+    @Published var teamSongsAll = [[Song]](repeating: [], count: 10)
+    
+    @Published var seasonSongs = [[String]](repeating: [], count: 10)
+    
+    var teamLists = TeamName.allCases
+    
     init() {
         loadData()
-        fetchSong(team: selectedTeam, type: true) { songs in
-            self.playerSongs = songs.sorted { lhs, rhs in
-                lhs.title <= rhs.title
+        teamLists.forEach { teamName in
+            fetchSong(team: teamName.rawValue, type: true) { songs in
+                self.playerSongsAll[teamName.fetchTeamIndex()] = songs
+            }
+            fetchSong(team: teamName.rawValue, type: false) { songs in
+                self.teamSongsAll[teamName.fetchTeamIndex()] = songs
+                self.setSongList(team: self.selectedTeam)
             }
         }
-        fetchSong(team: selectedTeam, type: false) { songs in
-            self.teamSongs = songs.sorted { lhs, rhs in
-                lhs.title <= rhs.title
-            }
+        
+        fetchSeasonData { data in
+            self.seasonSongs = data
+            print("data\(data)")
         }
+
     }
     
     func loadData(){
@@ -71,12 +84,8 @@ class DataManager: ObservableObject {
     }
     
     func setSongList(team: String) {
-        fetchSong(team: team, type: true) { songs in
-            self.playerSongs = songs
-        }
-        fetchSong(team: team, type: false) { songs in
-            self.teamSongs = songs
-        }
+        self.playerSongs = playerSongsAll[TeamName(rawValue: selectedTeam)?.fetchTeamIndex() ?? 0]
+        self.teamSongs = teamSongsAll[TeamName(rawValue: selectedTeam)?.fetchTeamIndex() ?? 0]
     }
     
     //MARK: 파이어스토어에서 해당하는 팀의 응원가 정보를 가져오는 함수
@@ -87,6 +96,7 @@ class DataManager: ObservableObject {
         
         db.collection(team)
             .whereField("type", isEqualTo: type)
+            .order(by: "title", descending: false)
             .getDocuments { (querySnapshot, error) in
                 if let error {
                     print("Error getting documents: \(error)")
@@ -107,5 +117,54 @@ class DataManager: ObservableObject {
                     completionHandler(songs)
                 }
             }
+    }
+    
+    func fetchSeasonData(completionHandler: @escaping ([[String]])->()) {
+        db.collection("SeasonSong")
+            .getDocuments { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let seasonSong = try decoder.decode(SeasonSong.self, from: jsonData)
+                            
+                            completionHandler(self.processingSeasonSongData(data: seasonSong))
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                }
+            }
+    }
+    
+    func processingSeasonSongData(data: SeasonSong) -> [[String]] {
+        var seasonData = [[String]](repeating: [], count: 10)
+        
+        seasonData[TeamName.doosan.fetchTeamIndex()] = splitData(data: data.doosan)
+        seasonData[TeamName.hanwha.fetchTeamIndex()] = splitData(data: data.hanwha)
+        seasonData[TeamName.samsung.fetchTeamIndex()] = splitData(data: data.samsung)
+        seasonData[TeamName.lotte.fetchTeamIndex()] = splitData(data: data.lotte)
+        seasonData[TeamName.lg.fetchTeamIndex()] = splitData(data: data.lg)
+        seasonData[TeamName.ssg.fetchTeamIndex()] = splitData(data: data.ssg)
+        seasonData[TeamName.kt.fetchTeamIndex()] = splitData(data: data.kt)
+        seasonData[TeamName.nc.fetchTeamIndex()] = splitData(data: data.nc)
+        seasonData[TeamName.kiwoom.fetchTeamIndex()] = splitData(data: data.kiwoom)
+        seasonData[TeamName.kia.fetchTeamIndex()] = splitData(data: data.kia)
+        
+        return seasonData
+    }
+    
+    func splitData(data: String) -> [String] {
+        return data.split(separator: ",").map{ String($0) }
+    }
+    
+    func checkSeasonSong(data: SongInfo) -> Bool {
+        self.seasonSongs[TeamName(rawValue: data.team)?.fetchTeamIndex() ?? 0].contains(data.title)
     }
 }
