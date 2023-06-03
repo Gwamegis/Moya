@@ -13,7 +13,8 @@ struct SongDetailView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
-    @State var song: SongInfo
+    @State var song: Song
+    @State var team: String
     
     @State var isScrolled = false
     
@@ -26,31 +27,31 @@ struct SongDetailView: View {
     
     var body: some View {
         ZStack {
-            Color("\(song.team)Sub")
+            Color("\(team)Sub")
                 .ignoresSafeArea()
             
-            SongContentView(song: $song, isScrolled: $isScrolled)
+            SongContentView(song: $song, team: $team, isScrolled: $isScrolled)
             
             VStack(spacing: 0) {
                 Rectangle()
                     .frame(height: UIScreen.getHeight(108))
-                    .foregroundColor(Color("\(song.team)Sub"))
+                    .foregroundColor(Color("\(team)Sub"))
                 if isScrolled {
                     Rectangle()
                         .frame(height: 120)
-                        .background(Color.fetchTopGradient(color: Color("\(song.team)Sub")))
+                        .background(Color.fetchTopGradient(color: Color("\(team)Sub")))
                         .foregroundColor(Color(UIColor.clear))
                 }
                 Spacer()
                 Rectangle()
                     .frame(height: 120)
-                    .background(Color.fetchBottomGradient(color: Color("\(song.team)Sub")))
+                    .background(Color.fetchBottomGradient(color: Color("\(team)Sub")))
                     .foregroundColor(Color(UIColor.clear))
                 ZStack(alignment: .center) {
                     Rectangle()
                         .frame(height: UIScreen.getHeight(120))
-                        .foregroundColor(Color("\(song.team)Sub"))
-                    SongPlayerView(song: $song)
+                        .foregroundColor(Color("\(team)Sub"))
+                    SongPlayerView(song: $song, team: $team)
                 }
             }
             .ignoresSafeArea()
@@ -63,13 +64,14 @@ struct SongDetailView: View {
                     if isFavorite {
                         persistence.deleteSongs(song: findFavoriteSong())
                     } else {
-                        persistence.saveSongs(song: song, playListTitle: "favorite")
+                        let songInfo = SongInfo(id: song.id, team: team, type: song.type, title: song.title, lyrics: song.lyrics, info: song.info, url: song.url)
+                        persistence.saveSongs(song: songInfo, playListTitle: "favorite")
                     }
                     isFavorite.toggle()
                 } label: {
                     if isFavorite {
                         Image(systemName: "heart.fill")
-                            .foregroundColor(Color("\(song.team)Point"))
+                            .foregroundColor(Color("\(team)Point"))
                     } else {
                         Image(systemName: "heart")
                             .foregroundColor(.white)

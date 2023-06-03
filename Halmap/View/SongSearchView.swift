@@ -121,7 +121,7 @@ struct SongSearchView: View {
                 } else {
                     List {
                         ForEach(autoComplete.indices, id: \.self) { index in
-                            NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
+                            NavigationLink(destination: SongDetailView(song: setSong(data: autoComplete[index]), team: autoComplete[index].team)) {
                                 HStack {
                                     Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))
                                         .resizable()

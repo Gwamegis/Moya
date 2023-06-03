@@ -56,9 +56,8 @@ struct ScalingHeaderView: View {
                             .padding(.top, 60)
                     } else {
                         ForEach(collectedSongs) { favoriteSong in
-                            let song = SongInfo(
+                            let song = Song(
                                 id: favoriteSong.id ?? "",
-                                team: favoriteSong.team ?? "",
                                 type: favoriteSong.type ,
                                 title: favoriteSong.title ?? "" ,
                                 lyrics: favoriteSong.lyrics ?? "",
@@ -67,7 +66,7 @@ struct ScalingHeaderView: View {
                             )
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song)
+                                    SongDetailView(song: song, team: favoriteSong.team ?? "Doosan")
                                 } label: {
                                     HStack(spacing: 16) {
                                         Image("\(favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")

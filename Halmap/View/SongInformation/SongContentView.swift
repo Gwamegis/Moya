@@ -10,7 +10,8 @@ import Firebase
 
 struct SongContentView: View {
     
-    @Binding var song: SongInfo
+    @Binding var song: Song
+    @Binding var team: String
     @Binding var isScrolled: Bool
     @State private var offset = CGFloat.zero
 

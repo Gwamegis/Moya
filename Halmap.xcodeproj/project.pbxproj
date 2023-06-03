@@ -25,7 +25,6 @@
 		A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9028F1775000B0FC7C /* SongSearchView.swift */; };
 		A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9228F1775C00B0FC7C /* StadiumListSheetView.swift */; };
 		A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */; };
-		A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */; };
 		A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */; };
 		A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */; };
 		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
@@ -75,7 +74,6 @@
 		A81FFC9028F1775000B0FC7C /* SongSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearchView.swift; sourceTree = "<group>"; };
 		A81FFC9228F1775C00B0FC7C /* StadiumListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumListSheetView.swift; sourceTree = "<group>"; };
 		A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumMapView.swift; sourceTree = "<group>"; };
-		A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongInformationView.swift; sourceTree = "<group>"; };
 		A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionView.swift; sourceTree = "<group>"; };
 		A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayerView.swift; sourceTree = "<group>"; };
 		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 		A81FFC9B28F1808700B0FC7C /* SongInformation */ = {
 			isa = PBXGroup;
 			children = (
-				A81FFC9628F1776F00B0FC7C /* SongInformationView.swift */,
 				A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */,
 				A81FFC9E28F180B200B0FC7C /* SongContentView.swift */,
 				F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */,
@@ -396,7 +393,6 @@
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
 				F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */,
-				A81FFC9728F1776F00B0FC7C /* SongInformationView.swift in Sources */,
 				A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */,
 				F9A178262A1C8B01003E8E4C /* PlayListFilter.swift in Sources */,
 			);
