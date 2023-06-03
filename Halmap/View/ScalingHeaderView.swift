@@ -93,7 +93,6 @@ struct ScalingHeaderView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
-                                        .background(Color.red)
                                         
                                         Button {
                                             persistence.deleteSongs(song: favoriteSong)
