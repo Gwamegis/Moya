@@ -42,7 +42,6 @@ class DataManager: ObservableObject {
         
         fetchSeasonData { data in
             self.seasonSongs = data
-            print("data\(data)")
         }
 
     }
