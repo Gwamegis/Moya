@@ -94,8 +94,8 @@ struct SongSearchView: View {
                     Image("searchInfo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200)
-                        .padding(.top, 60)
+                        .frame(width: UIScreen.getHeight(200))
+                        .padding(.top, UIScreen.getHeight(60))
 
                     Spacer()
                 }
@@ -108,8 +108,8 @@ struct SongSearchView: View {
                             Image("searchEmpty")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 200)
-                                .padding(.top, 60)
+                                .frame(width: UIScreen.getHeight(200))
+                                .padding(.top, UIScreen.getHeight(60))
                             Spacer()
                         }
                         VStack {
