@@ -33,10 +33,10 @@ class DataManager: ObservableObject {
         teamLists.forEach { teamName in
             fetchSong(team: teamName.rawValue, type: true) { songs in
                 self.playerSongsAll[teamName.fetchTeamIndex()] = songs
+                self.setSongList(team: self.selectedTeam)
             }
             fetchSong(team: teamName.rawValue, type: false) { songs in
                 self.teamSongsAll[teamName.fetchTeamIndex()] = songs
-                self.setSongList(team: self.selectedTeam)
             }
         }
         

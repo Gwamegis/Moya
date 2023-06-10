@@ -89,7 +89,7 @@ struct SongPlayerView: View {
             audioManager.removePlayer()
         }
         .onAppear(){
-            audioManager.AMset(song: song, selectedTeam: selectedTeam)
+            audioManager.AMset(song: song, selectedTeam: team)
         }
         .onReceive(timer) { _ in
             guard let player = AudioManager.instance.player else { return }
