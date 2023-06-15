@@ -8,31 +8,35 @@
 import SwiftUI
 
 struct MainTabView: View {
-    
+
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
-    
+    @State var expand = false
+    @State var isMusicPlaying = false
+    @State var selectedSong: Song = Song(id: "", type: false, title: "'", lyrics: "", info: "", url: "")
+    @Namespace var animation
+
     init() {
         Color.setColor(selectedTeam)
     }
     
     var body: some View {
-        NavigationView {
+        ZStack(alignment: .bottom){
             TabView {
-                MainSongListTabView()
+                MainSongListTabView(expand: $expand, isMusicPlaying: $isMusicPlaying, selectedSong: $selectedSong)
                     .tabItem {
                         Image("home")
                         Text("응원곡")
-                      }
+                    }
                 SongSearchView()
                     .tabItem {
                         Image("search")
                         Text("곡 검색")
-                      }
+                    }
                 StadiumListSheetView()
                     .tabItem {
                         Image("map")
                         Text("야구장")
-                      }
+                    }
                 StorageContentView()
                     .tabItem {
                         Image("storage")
@@ -40,8 +44,11 @@ struct MainTabView: View {
                     }
             }
             .accentColor(Color.HalmacPoint)
+            
+            if isMusicPlaying{
+                MiniPlayerView(animation: animation, expand: $expand, isPlayingMusic: $isMusicPlaying, selectedSong: $selectedSong)
+            }
         }
-        .navigationViewStyle(.stack)
     }
 }
 

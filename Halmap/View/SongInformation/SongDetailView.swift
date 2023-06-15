@@ -50,7 +50,7 @@ struct SongDetailView: View {
                     Rectangle()
                         .frame(height: UIScreen.getHeight(120))
                     .foregroundColor(Color("\(teamName ?? selectedTeam)Sub"))
-                    SongPlayerView(teamName: $teamName, song: $song)
+                    SongPlayerView(song: $song)
                 }
             }
             .ignoresSafeArea()
