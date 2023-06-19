@@ -43,4 +43,29 @@ enum TeamName: String, CaseIterable {
             return "기아 타이거즈"
         }
     }
+    
+    func fetchTeamIndex() -> Int {
+        switch self {
+        case .doosan:
+            return 0
+        case .hanwha:
+            return 1
+        case .samsung:
+            return 2
+        case .lotte:
+            return 3
+        case .lg:
+            return 4
+        case .ssg:
+            return 5
+        case .kt:
+            return 6
+        case .nc:
+            return 7
+        case .kiwoom:
+            return 8
+        case .kia:
+            return 9
+        }
+    }
 }

@@ -12,9 +12,9 @@ import Combine
 struct SongPlayerView: View {
     
     // Song Properties
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
-    @Binding var teamName: String?
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @Binding var song: Song
+    @Binding var team: String
     
     
     // Audio Properties
@@ -84,12 +84,12 @@ struct SongPlayerView: View {
             
         }
         .frame(maxWidth: .infinity)
-        .background(Color("\(teamName ?? selectedTeam)Sub"))
+        .background(Color("\(team)Sub"))
         .onDisappear(){
             audioManager.removePlayer()
         }
         .onAppear(){
-            audioManager.AMset(song: song, selectedTeam: selectedTeam)
+            audioManager.AMset(song: song, selectedTeam: team)
         }
         .onReceive(timer) { _ in
             guard let player = AudioManager.instance.player else { return }

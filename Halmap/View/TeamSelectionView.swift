@@ -27,6 +27,7 @@ struct OnBoardingStartView: View {
 }
 
 struct TeamSelectionView: View {
+    @EnvironmentObject var dataManager: DataManager
     @AppStorage("selectedTeam") var finalSelectedTeam: String = ""
     @Binding var isFirstLaunching: Bool
     
@@ -72,6 +73,7 @@ struct TeamSelectionView: View {
                 UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
                     isFirstLaunching.toggle()
+                    dataManager.setSongList(team: finalSelectedTeam)
                     finalSelectedTeam = selectedTeam ?? "error"
                 }
                 print("선택완료")

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ScalingHeaderView: View {
-    
+    @EnvironmentObject var dataManager: DataManager
     let maxHeight: CGFloat = 216
     var topEdge: CGFloat
     
@@ -64,12 +64,22 @@ struct ScalingHeaderView: View {
                                 info: favoriteSong.info ?? "",
                                 url: favoriteSong.url ?? ""
                             )
+                            let songInfo = SongInfo(
+                                id: favoriteSong.id ?? "",
+                                team: favoriteSong.team ?? "",
+                                type: favoriteSong.type ,
+                                title: favoriteSong.title ?? "" ,
+                                lyrics: favoriteSong.lyrics ?? "",
+                                info: favoriteSong.info ?? "",
+                                url: favoriteSong.url ?? ""
+                            )
+                            
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(teamName: favoriteSong.team, song: song)
+                                    SongDetailView(song: song, team: favoriteSong.team ?? "Doosan")
                                 } label: {
                                     HStack(spacing: 16) {
-                                        Image("\(favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")
+                                        Image(dataManager.checkSeasonSong(data: songInfo) ? "\(favoriteSong.team ?? "")23" : "\( favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")
                                             .resizable()
                                             .frame(width: 40, height: 40)
                                             .cornerRadius(8)
@@ -81,7 +91,9 @@ struct ScalingHeaderView: View {
                                                 .font(Font.Halmap.CustomCaptionMedium)
                                                 .foregroundColor(.customDarkGray)
                                         }
-                                        Spacer()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .lineLimit(1)
+                                        
                                         Button {
                                             persistence.deleteSongs(song: favoriteSong)
                                         } label: {

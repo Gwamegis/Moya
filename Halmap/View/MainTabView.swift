@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
     init() {
         Color.setColor(selectedTeam)
@@ -27,11 +27,6 @@ struct MainTabView: View {
                     .tabItem {
                         Image("search")
                         Text("곡 검색")
-                      }
-                StadiumListSheetView()
-                    .tabItem {
-                        Image("map")
-                        Text("야구장")
                       }
                 StorageContentView()
                     .tabItem {

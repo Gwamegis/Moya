@@ -9,8 +9,9 @@ import SwiftUI
 
 struct MainSongListTabView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
-    @ObservedObject var dataManager = DataManager()
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @EnvironmentObject var dataManager: DataManager
+    
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
     
@@ -50,10 +51,17 @@ struct MainSongListTabView: View {
                                              lyrics: song.lyrics,
                                              info: song.info,
                                              url: song.url)
+                            let songInfo = SongInfo(id: song.id,
+                                                    team: selectedTeam,
+                                                    type: song.type,
+                                                    title: song.title,
+                                                    lyrics: song.lyrics,
+                                                    info: song.info,
+                                                    url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: music)) {
+                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image("\(selectedTeam)Album")
+                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
@@ -66,6 +74,8 @@ struct MainSongListTabView: View {
                                                 .foregroundColor(.customDarkGray)
                                         }
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                             }
                         }
@@ -84,15 +94,24 @@ struct MainSongListTabView: View {
                     List {
                         ForEach(dataManager.playerSongs) { song in
                             let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
+                                            type: song.type,
+                                            title: song.title,
+                                            lyrics: song.lyrics,
+                                            info: song.info,
+                                            url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: music)) {
+                            let songInfo = SongInfo(id: song.id,
+                                                 team: selectedTeam,
+                                                 type: song.type,
+                                                 title: song.title,
+                                                 lyrics: song.lyrics,
+                                                 info: song.info,
+                                                 url: song.url)
+                            
+                            
+                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image("\(selectedTeam)Player")
+                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
@@ -105,6 +124,8 @@ struct MainSongListTabView: View {
                                                 .foregroundColor(.customDarkGray)
                                         }
                                     }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                             }
                         }
