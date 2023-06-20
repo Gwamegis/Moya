@@ -13,8 +13,11 @@ struct ScalingHeaderView: View {
     var topEdge: CGFloat
     
     @State var offset: CGFloat = 0
+    @State var isShowSheet = false
+    @State var collectedSongData: CollectedSong?
     
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    
     let persistence = PersistenceController.shared
     
     var body: some View {
@@ -55,8 +58,8 @@ struct ScalingHeaderView: View {
                             .frame(width: 200, height: 200)
                             .padding(.top, 60)
                     } else {
-                        ForEach(collectedSongs) { favoriteSong in
-                            let song = Song(
+                        ForEach(self.collectedSongs, id: \.self) { favoriteSong in
+                            var song = Song(
                                 id: favoriteSong.id ?? "",
                                 type: favoriteSong.type ,
                                 title: favoriteSong.title ?? "" ,
@@ -95,10 +98,21 @@ struct ScalingHeaderView: View {
                                         .lineLimit(1)
                                         
                                         Button {
-                                            persistence.deleteSongs(song: favoriteSong)
+                                            print("scaling favorite",favoriteSong)
+                                            self.collectedSongData = favoriteSong
+                                            
+                                            song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type, title: favoriteSong.title ?? "", lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
+                                            
+                                            isShowSheet.toggle()
+                                            
                                         } label: {
-                                            Image(systemName: "heart.fill")
-                                                .foregroundColor(.mainGreen)
+                                            Image(systemName: "ellipsis")
+                                                .foregroundColor(.black.opacity(0.2))
+                                        }
+                                        .sheet(isPresented: $isShowSheet) {
+                                            HalfSheet {
+                                                HalfSheetView(showSheet: $isShowSheet, collectedSongData: $collectedSongData)
+                                            }
                                         }
                                     }
                                     .padding(.horizontal, 20)
