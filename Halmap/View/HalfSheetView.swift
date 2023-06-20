@@ -10,40 +10,44 @@ import SwiftUI
 struct HalfSheetView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     let persistence = PersistenceController.shared
-    @ObservedObject var collectedSong: CollectedSong
-    @State var songData: Song
-    @State var song: CollectedSong = CollectedSong()
-    var team: String
+    
     @Binding var showSheet: Bool
+    
+    @Binding var collectedSongData: CollectedSong?
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 16) {
-                Image("\(team)SongListImage")
-                    .frame(width: 52, height: 52)
-                    .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(songData.title )
-                        .font(Font.Halmap.CustomBodyBold)
-                        .foregroundColor(.customBlack)
-                    Text(TeamName(rawValue: team )?.fetchTeamNameKr() ?? ".")
-                        .font(Font.Halmap.CustomCaptionMedium)
-                        .foregroundColor(.customDarkGray)
+            //            Capsule()
+            //                .fill(Color.gray)
+            //                .frame(width: 35, height: 5)
+            //                .padding(.vertical, 18)
+            if let collectedSongData {
+                HStack(spacing: 16) {
+                    Image(collectedSongData.type ? "\(collectedSongData.team ?? "")Album" : "\(collectedSongData.team ?? "")Player")
+                        .resizable()
+                        .frame(width: 52, height: 52)
+                        .cornerRadius(10)
+                        .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text(collectedSongData.title ?? "")
+                            .font(Font.Halmap.CustomBodyBold)
+                            .foregroundColor(.customBlack)
+                        Text(TeamName(rawValue: collectedSongData.team ?? "" )?.fetchTeamNameKr() ?? ".")
+                            .font(Font.Halmap.CustomCaptionMedium)
+                            .foregroundColor(.customDarkGray)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 20)
+                .padding(.top, 27)
+                Divider()
+                    .overlay(Color.customGray.opacity(0.6))
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
+                MenuItem(menuType: .cancelLiked, collectedSong: collectedSongData, showSheet: $showSheet)
+                MenuItem(menuType: .playNext, collectedSong: collectedSongData, showSheet: $showSheet)
+                MenuItem(menuType: .playLast, collectedSong: collectedSongData, showSheet: $showSheet)
+                Spacer()
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 27)
-            Divider()
-                .overlay(Color.customGray.opacity(0.6))
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
-            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
-            Spacer()
-        }
-        .onAppear() {
-            print("****\(songData)")
         }
     }
 }
