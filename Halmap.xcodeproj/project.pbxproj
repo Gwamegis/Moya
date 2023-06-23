@@ -57,7 +57,6 @@
 		F9B3B7B729B842DD00232BB8 /* SongDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
-		F9DAABB02A4190A4001168A9 /* CustomCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DAABAF2A4190A4001168A9 /* CustomCorner.swift */; };
 		F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
 /* End PBXBuildFile section */
@@ -111,7 +110,6 @@
 		F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailView.swift; sourceTree = "<group>"; };
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		F9B95BBA28F271B800728048 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		F9DAABAF2A4190A4001168A9 /* CustomCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCorner.swift; sourceTree = "<group>"; };
 		F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingHeaderView.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -229,7 +227,6 @@
 				87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */,
 				87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */,
 				87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */,
-				F9DAABAF2A4190A4001168A9 /* CustomCorner.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -408,7 +405,6 @@
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
-				F9DAABB02A4190A4001168A9 /* CustomCorner.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
