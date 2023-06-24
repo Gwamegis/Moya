@@ -14,8 +14,6 @@ struct MainSongListTabView: View {
     @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
-    //
-    
     
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
@@ -57,6 +55,7 @@ struct MainSongListTabView: View {
                     // MARK: 팀 응원가 탭
                     List {
                         ForEach(dataManager.teamSongs) { song in
+                            
                             let music = Song(id: song.id,
                                              type: song.type,
                                              title: song.title,
@@ -150,8 +149,7 @@ struct MainSongListTabView: View {
                                                  lyrics: song.lyrics,
                                                  info: song.info,
                                                  url: song.url)
-                            
-                            
+
                             
                             ZStack{
                                 // Stack 1: Contents
@@ -177,8 +175,7 @@ struct MainSongListTabView: View {
                                     isShowingSheet = false
                                     navigationLinkDismiss()
                                 }
-                                
-                                //
+
 
                                 
                                 
