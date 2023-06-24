@@ -105,10 +105,18 @@ enum MenuType {
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:
             //TODO: 바로 다음에 재생 기능 추가
-            return (print("play next"))
+//            return (print("play next"))
+            let song = collectedSong
+            let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
+            
+            return persistence.saveSongs(song: songInfo, playListTitle: "playList")
+            
         case .playLast:
             //TODO: 맨 마지막에 재생 기능 추가
-            return (print("play last"))
+//            return (print("play last"))
+            let song = collectedSong
+            let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
+            return  persistence.saveSongs(song: songInfo, playListTitle: "playList")
         }
     }
 }

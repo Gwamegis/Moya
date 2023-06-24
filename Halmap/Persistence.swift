@@ -81,4 +81,23 @@ struct PersistenceController {
             return CollectedSong()
         }
     }
+    
+    func fetchPlayListSong() -> [CollectedSong] {
+        let fetchRequest: NSFetchRequest<CollectedSong> = CollectedSong.fetchRequest()
+        
+        do{
+            return try container.viewContext.fetch(fetchRequest)
+        }catch {
+            return []
+        }
+    }
+    
+    
+    func findPlayListSong(song: Song) -> CollectedSong {
+        if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
+            return collectedSongs[index]
+        } else {
+            return CollectedSong()
+        }
+    }
 }
