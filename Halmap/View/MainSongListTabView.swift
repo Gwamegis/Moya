@@ -26,6 +26,9 @@ struct MainSongListTabView: View {
     @Environment(\.dismiss) private var sheetDismiss
     @Environment(\.dismiss) private var navigationLinkDismiss
     
+    let persistence = PersistenceController.shared
+    @State var temp: CollectedSong?
+    
     init() {
         Color.setColor(selectedTeam)
     }
@@ -105,13 +108,16 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
+                                            temp = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
+                                            
+                                            
                                         } label: {
                                             Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
                                         }
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
                                                 let collectedSong = CollectedSong(context: viewContext)
-                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet)
+                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)
@@ -188,6 +194,8 @@ struct MainSongListTabView: View {
                                             isShowingSheet = true
                                             isActivateNavigationLink = false
                                             sheetDismiss()
+                                            
+                                            temp = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
 
                                         } label: {
                                             Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
@@ -195,7 +203,7 @@ struct MainSongListTabView: View {
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
                                                 let collectedSong = CollectedSong(context: viewContext)
-                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet)
+                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)

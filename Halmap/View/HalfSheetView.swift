@@ -13,8 +13,13 @@ struct HalfSheetView: View {
     @ObservedObject var collectedSong: CollectedSong
     @State var songData: Song
     @State var song: CollectedSong = CollectedSong()
+
     var team: String
     @Binding var showSheet: Bool
+    
+//    @Binding var showSheet: Bool
+    @Binding var collectedSongData: CollectedSong?
+    
     
     var body: some View {
         VStack(spacing: 0) {
@@ -43,7 +48,7 @@ struct HalfSheetView: View {
             Spacer()
         }
         .onAppear() {
-            print("****\(songData)")
+            print("****\(collectedSongData?.title)")
         }
     }
 }

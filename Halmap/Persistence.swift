@@ -52,6 +52,23 @@ struct PersistenceController {
         }
     }
     
+    func createCollectedSong(song: SongInfo, playListTitle: String?) -> CollectedSong {
+        let context = container.viewContext
+        let collectedSong = CollectedSong(context: context)
+        collectedSong.id = song.id
+        collectedSong.title = song.title
+        collectedSong.info = song.info
+        collectedSong.lyrics = song.lyrics
+        collectedSong.url = song.url
+        collectedSong.type = song.type
+        collectedSong.playListTitle = playListTitle
+        collectedSong.team = song.team
+        collectedSong.date = Date()
+        
+        print("collectedSong", collectedSong, song.title)
+        return collectedSong
+    }
+    
     func deleteSongs(song: CollectedSong) {
         
         container.viewContext.delete(song)
