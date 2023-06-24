@@ -29,8 +29,8 @@
 		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
 		A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */; };
 		A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */; };
-		A852F01C2A462FA100078B47 /* HalfSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A852F01B2A462FA100078B47 /* HalfSheet.swift */; };
 		A852F0262A46612A00078B47 /* PlayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A852F0252A46612A00078B47 /* PlayListView.swift */; };
+		A852F0282A46EDDA00078B47 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A852F0272A46EDDA00078B47 /* GoogleService-Info.plist */; };
 		A8D1E92229169DAD00BF242C /* test-song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A8D1E92129169DAD00BF242C /* test-song.m4a */; };
 		A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F8BA9829C8CE5B00FCB229 /* AudioManager.swift */; };
 		B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B2699E0C28F1CB7E00267A4F /* Pretendard-Bold.otf */; };
@@ -52,7 +52,6 @@
 		F9A178222A1BF5CB003E8E4C /* HalfSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A178212A1BF5CB003E8E4C /* HalfSheetView.swift */; };
 		F9A178262A1C8B01003E8E4C /* PlayListFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A178252A1C8B01003E8E4C /* PlayListFilter.swift */; };
 		F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9A2DAA52A07DE9A008B84A9 /* Preview Assets.xcassets */; };
-		F9A96B782A4060E200DD42B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9A96B772A4060E200DD42B5 /* GoogleService-Info.plist */; };
 		F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B429B7397600232BB8 /* MapName.swift */; };
 		F9B3B7B729B842DD00232BB8 /* SongDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
@@ -81,8 +80,8 @@
 		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
 		A81FFCA428F1B84000B0FC7C /* Halmap+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Font.swift"; sourceTree = "<group>"; };
 		A81FFCA628F1B84A00B0FC7C /* Halmap+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+Color.swift"; sourceTree = "<group>"; };
-		A852F01B2A462FA100078B47 /* HalfSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheet.swift; sourceTree = "<group>"; };
 		A852F0252A46612A00078B47 /* PlayListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayListView.swift; path = Halmap/PlayListView.swift; sourceTree = SOURCE_ROOT; };
+		A852F0272A46EDDA00078B47 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A8D1E92129169DAD00BF242C /* test-song.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-song.m4a"; sourceTree = "<group>"; };
 		A8F8BA9829C8CE5B00FCB229 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		B2699E0B28F1CB5100267A4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,7 +104,6 @@
 		F9A178212A1BF5CB003E8E4C /* HalfSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheetView.swift; sourceTree = "<group>"; };
 		F9A178252A1C8B01003E8E4C /* PlayListFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListFilter.swift; sourceTree = "<group>"; };
 		F9A2DAA52A07DE9A008B84A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		F9A96B772A4060E200DD42B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9B3B7B429B7397600232BB8 /* MapName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapName.swift; sourceTree = "<group>"; };
 		F9B3B7B629B842DD00232BB8 /* SongDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongDetailView.swift; sourceTree = "<group>"; };
 		F9B95BB828F271A100728048 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -132,7 +130,7 @@
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
-				F9A96B772A4060E200DD42B5 /* GoogleService-Info.plist */,
+				A852F0272A46EDDA00078B47 /* GoogleService-Info.plist */,
 				B2699E0E28F1CB8800267A4F /* Font */,
 				A81FFC7828F15D9900B0FC7C /* Halmap */,
 				A81FFC7728F15D9900B0FC7C /* Products */,
@@ -195,7 +193,6 @@
 				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
-				F95EF67B2A40695C00C6C3E7 /* HalfModalPresentationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -234,7 +231,7 @@
 		A852F01A2A462F9300078B47 /* Utills */ = {
 			isa = PBXGroup;
 			children = (
-				A852F01B2A462FA100078B47 /* HalfSheet.swift */,
+				F95EF67B2A40695C00C6C3E7 /* HalfModalPresentationController.swift */,
 			);
 			path = Utills;
 			sourceTree = "<group>";
@@ -359,11 +356,11 @@
 			files = (
 				F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */,
 				F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */,
-				F9A96B782A4060E200DD42B5 /* GoogleService-Info.plist in Resources */,
 				A81FFC8128F15D9C00B0FC7C /* Preview Assets.xcassets in Resources */,
 				B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */,
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
+				A852F0282A46EDDA00078B47 /* GoogleService-Info.plist in Resources */,
 				F949284F28F2AFB800901F27 /* Music.json in Resources */,
 				A8D1E92229169DAD00BF242C /* test-song.m4a in Resources */,
 			);
@@ -386,7 +383,6 @@
 				F9A178222A1BF5CB003E8E4C /* HalfSheetView.swift in Sources */,
 				87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
-				A852F01C2A462FA100078B47 /* HalfSheet.swift in Sources */,
 				F98F8D5D29D85B0C00F9C956 /* RequestSongView.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */,

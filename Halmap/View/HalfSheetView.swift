@@ -11,6 +11,7 @@ struct HalfSheetView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     let persistence = PersistenceController.shared
 //<<<<<<< HEAD
+//<<<<<<< HEAD
 //    @ObservedObject var collectedSong: CollectedSong
 //    @State var songData: Song
 //    @State var song: CollectedSong = CollectedSong()
@@ -23,12 +24,30 @@ struct HalfSheetView: View {
 //
 //
 //=======
+//=======
+//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
     
     @Binding var showSheet: Bool
     
     @Binding var collectedSongData: CollectedSong?
     
+//<<<<<<< HEAD
 //>>>>>>> c5ca57b ([Feat] #122 - bottom sheet 구현 및 데이터 전달)
+//=======
+//=======
+//    @ObservedObject var collectedSong: CollectedSong
+//    @State var songData: Song
+//    @State var song: CollectedSong = CollectedSong()
+//
+//    var team: String
+//    @Binding var showSheet: Bool
+//
+////    @Binding var showSheet: Bool
+//    @Binding var collectedSongData: CollectedSong?
+//
+//
+//>>>>>>> 51b876d (wip)
+//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
     var body: some View {
         VStack(spacing: 0) {
             //            Capsule()
@@ -63,6 +82,7 @@ struct HalfSheetView: View {
                 Spacer()
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             .padding(.horizontal, 20)
             .padding(.top, 27)
             Divider()
@@ -75,8 +95,22 @@ struct HalfSheetView: View {
         }
         .onAppear() {
             print("****\(collectedSongData?.title)")
-=======
->>>>>>> c5ca57b ([Feat] #122 - bottom sheet 구현 및 데이터 전달)
+//<<<<<<< HEAD
+//=======
+//            .padding(.horizontal, 20)
+//            .padding(.top, 27)
+//            Divider()
+//                .overlay(Color.customGray.opacity(0.6))
+//                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
+//            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
+//            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
+//            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
+//            Spacer()
+//        }
+//        .onAppear() {
+//            print("****\(collectedSongData?.title)")
+//>>>>>>> 51b876d (wip)
+//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
         }
     }
 }

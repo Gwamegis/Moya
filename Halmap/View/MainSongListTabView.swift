@@ -117,7 +117,11 @@ struct MainSongListTabView: View {
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
                                                 let collectedSong = CollectedSong(context: viewContext)
-                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
+//<<<<<<< HEAD
+//                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
+//=======
+                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $temp)
+//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)
@@ -203,7 +207,11 @@ struct MainSongListTabView: View {
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
                                                 let collectedSong = CollectedSong(context: viewContext)
+//<<<<<<< HEAD
                                                 HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
+//=======
+//                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $temp)
+//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)
