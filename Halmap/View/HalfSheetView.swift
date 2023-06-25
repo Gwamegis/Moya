@@ -176,14 +176,14 @@ enum MenuType {
             let song = collectedSong
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
             
-            return persistence.saveSongs(song: songInfo, playListTitle: "playList")
+            return persistence.saveSongs(song: songInfo, playListTitle: "playListDefault")
             
         case .playLast:
             //TODO: 맨 마지막에 재생 기능 추가
 //            return (print("play last"))
             let song = collectedSong
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
-            return  persistence.saveSongs(song: songInfo, playListTitle: "playList")
+            return  persistence.saveSongs(song: songInfo, playListTitle: "playListDefault")
         }
     }
 }

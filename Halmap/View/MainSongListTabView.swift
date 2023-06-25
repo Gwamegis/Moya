@@ -13,7 +13,7 @@ struct MainSongListTabView: View {
     //
     @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+//    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
@@ -108,7 +108,7 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playListDefault")
                                             
                                             
                                         } label: {
@@ -199,7 +199,7 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playListDefault")
 
                                         } label: {
                                             Image(systemName: "ellipsis").foregroundColor(.customDarkGray)

@@ -18,7 +18,7 @@ struct PlayListRow: View {
     
     var body: some View {
         
-        Text("\(songData.title) Test")
+        Text("\(songData.title)")
 
     }
 }
@@ -31,7 +31,7 @@ struct PlayListView: View {
     
     
     let persistence = PersistenceController.shared
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playListDefault").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var playListSongs: FetchedResults<CollectedSong>
     
     var body: some View {
@@ -40,7 +40,7 @@ struct PlayListView: View {
                 
                 if collectedSongs.count != 0 {
                     List {
-                        ForEach(collectedSongs) { playListSong in
+                        ForEach(collectedSongs, id: \.self) { playListSong in
                             
                             let song = Song(
                                 id: playListSong.id ?? "",
