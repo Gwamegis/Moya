@@ -27,7 +27,7 @@ struct MainSongListTabView: View {
     @Environment(\.dismiss) private var navigationLinkDismiss
     
     let persistence = PersistenceController.shared
-    @State var temp: CollectedSong?
+    @State var collectedSong: CollectedSong?
     
     init() {
         Color.setColor(selectedTeam)
@@ -108,7 +108,7 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            temp = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
                                             
                                             
                                         } label: {
@@ -120,7 +120,7 @@ struct MainSongListTabView: View {
 //<<<<<<< HEAD
 //                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
 //=======
-                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $temp)
+                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
 //>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }
@@ -199,7 +199,7 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            temp = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playList")
 
                                         } label: {
                                             Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
@@ -208,9 +208,9 @@ struct MainSongListTabView: View {
                                             HalfSheet{
                                                 let collectedSong = CollectedSong(context: viewContext)
 //<<<<<<< HEAD
-                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
+//                                                HalfSheetView(/*collectedSong: collectedSong, */showSheet: $isShowingSheet, collectedSongData: $collectedSong)
 //=======
-//                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $temp)
+                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
 //>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }

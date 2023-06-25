@@ -81,20 +81,20 @@ struct HalfSheetView: View {
                 MenuItem(menuType: .playLast, collectedSong: collectedSongData, showSheet: $showSheet)
                 Spacer()
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-            .padding(.horizontal, 20)
-            .padding(.top, 27)
-            Divider()
-                .overlay(Color.customGray.opacity(0.6))
-                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
-            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
-            Spacer()
-        }
-        .onAppear() {
-            print("****\(collectedSongData?.title)")
+//<<<<<<< HEAD
+//<<<<<<< HEAD
+//            .padding(.horizontal, 20)
+//            .padding(.top, 27)
+//            Divider()
+//                .overlay(Color.customGray.opacity(0.6))
+//                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
+//            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
+//            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
+//            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
+//            Spacer()
+//        }
+//        .onAppear() {
+//            print("****\(collectedSongData?.title)")
 //<<<<<<< HEAD
 //=======
 //            .padding(.horizontal, 20)
