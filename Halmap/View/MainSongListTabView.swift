@@ -108,7 +108,7 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playListDefault")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
                                             
                                             
                                         } label: {
@@ -116,12 +116,7 @@ struct MainSongListTabView: View {
                                         }
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
-                                                let collectedSong = CollectedSong(context: viewContext)
-//<<<<<<< HEAD
-//                                                HalfSheetView(collectedSong: collectedSong, songData: music, team: selectedTeam, showSheet: $isShowingSheet, collectedSongData: $temp)
-//=======
                                                 HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
-//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)
@@ -199,19 +194,14 @@ struct MainSongListTabView: View {
                                             isActivateNavigationLink = false
                                             sheetDismiss()
                                             
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "playListDefault")
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
 
                                         } label: {
                                             Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
                                         }
                                         .sheet(isPresented: $isShowingSheet) {
                                             HalfSheet{
-                                                let collectedSong = CollectedSong(context: viewContext)
-//<<<<<<< HEAD
-//                                                HalfSheetView(/*collectedSong: collectedSong, */showSheet: $isShowingSheet, collectedSongData: $collectedSong)
-//=======
                                                 HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
-//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
                                             }
                                         }
                                     }.frame(width: 20, height: 20)

@@ -10,44 +10,8 @@ import SwiftUI
 struct HalfSheetView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
     let persistence = PersistenceController.shared
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//    @ObservedObject var collectedSong: CollectedSong
-//    @State var songData: Song
-//    @State var song: CollectedSong = CollectedSong()
-//
-//    var team: String
-//    @Binding var showSheet: Bool
-//
-////    @Binding var showSheet: Bool
-//    @Binding var collectedSongData: CollectedSong?
-//
-//
-//=======
-//=======
-//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
-    
     @Binding var showSheet: Bool
-    
     @Binding var collectedSongData: CollectedSong?
-    
-//<<<<<<< HEAD
-//>>>>>>> c5ca57b ([Feat] #122 - bottom sheet 구현 및 데이터 전달)
-//=======
-//=======
-//    @ObservedObject var collectedSong: CollectedSong
-//    @State var songData: Song
-//    @State var song: CollectedSong = CollectedSong()
-//
-//    var team: String
-//    @Binding var showSheet: Bool
-//
-////    @Binding var showSheet: Bool
-//    @Binding var collectedSongData: CollectedSong?
-//
-//
-//>>>>>>> 51b876d (wip)
-//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
     var body: some View {
         VStack(spacing: 0) {
             //            Capsule()
@@ -81,36 +45,6 @@ struct HalfSheetView: View {
                 MenuItem(menuType: .playLast, collectedSong: collectedSongData, showSheet: $showSheet)
                 Spacer()
             }
-//<<<<<<< HEAD
-//<<<<<<< HEAD
-//            .padding(.horizontal, 20)
-//            .padding(.top, 27)
-//            Divider()
-//                .overlay(Color.customGray.opacity(0.6))
-//                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
-//            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
-//            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
-//            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
-//            Spacer()
-//        }
-//        .onAppear() {
-//            print("****\(collectedSongData?.title)")
-//<<<<<<< HEAD
-//=======
-//            .padding(.horizontal, 20)
-//            .padding(.top, 27)
-//            Divider()
-//                .overlay(Color.customGray.opacity(0.6))
-//                .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
-//            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
-//            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
-//            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
-//            Spacer()
-//        }
-//        .onAppear() {
-//            print("****\(collectedSongData?.title)")
-//>>>>>>> 51b876d (wip)
-//>>>>>>> 4a54bf2 ([Fix] parameter 수정)
         }
     }
 }
@@ -172,18 +106,19 @@ enum MenuType {
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:
             //TODO: 바로 다음에 재생 기능 추가
-//            return (print("play next"))
             let song = collectedSong
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
+            persistence.resetBufferList(song: collectedSong)
             
-            return persistence.saveSongs(song: songInfo, playListTitle: "playListDefault")
+            return persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList")
             
         case .playLast:
             //TODO: 맨 마지막에 재생 기능 추가
-//            return (print("play last"))
             let song = collectedSong
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
-            return  persistence.saveSongs(song: songInfo, playListTitle: "playListDefault")
+            persistence.resetBufferList(song: collectedSong)
+            
+            return  persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList")
         }
     }
 }

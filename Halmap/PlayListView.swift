@@ -31,7 +31,7 @@ struct PlayListView: View {
     
     
     let persistence = PersistenceController.shared
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "playListDefault").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var playListSongs: FetchedResults<CollectedSong>
     
     var body: some View {
@@ -63,15 +63,9 @@ struct PlayListView: View {
                             
                             
                             PlayListRow(songData: song)
-                        }/*.onDelete { /*playListSong in*/
-//                            persistence.deleteSongs(song: playListSong)
-//                            persistence.deleteSongs(song: playListSongs)
-//                            collectedSongs.remove(atOffsets: indexSet)
-//                            persistence.deleteSongs(song: collectedSongs[indexSet])
-//                        }
-                        
-                        
-//                        .onDelete(perform: /*persistence.deleteSongs(song: */findPlayListSong(at: )))*/
+                        }.onDelete { indexSet in
+                            persistence.deleteSongs(indexSet: indexSet)
+                        }
                         .listRowBackground(Color.clear)
                     }
                     .listStyle(.plain)

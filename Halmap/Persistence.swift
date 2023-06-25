@@ -11,6 +11,7 @@ import SwiftUI
 struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "bufferPlayList").predicate, animation: .default) var bufferPlayListSongs: FetchedResults<CollectedSong>
     
     static let shared = PersistenceController()
 
@@ -69,6 +70,20 @@ struct PersistenceController {
         return collectedSong
     }
     
+    func resetBufferList(song: CollectedSong){
+        
+        if song.playListTitle == "bufferPlayList" {
+            container.viewContext.delete(song)
+        }
+        
+        do {
+            try container.viewContext.save()
+        } catch {
+            container.viewContext.rollback()
+            print(error.localizedDescription)
+        }
+    }
+    
     func deleteSongs(song: CollectedSong) {
         
         container.viewContext.delete(song)
@@ -79,6 +94,24 @@ struct PersistenceController {
             container.viewContext.rollback()
             print(error.localizedDescription)
         }
+    }
+    
+    func deleteSongs(indexSet: IndexSet){
+        
+        @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) var defaultPlayListSongs: FetchedResults<CollectedSong>
+        
+//        withAnimation {
+            indexSet.map { defaultPlayListSongs[$0] }.forEach(container.viewContext.delete)
+
+            do {
+                try container.viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+//        }
     }
     
     func fetchFavoriteSong() -> [CollectedSong] {
