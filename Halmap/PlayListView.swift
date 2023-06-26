@@ -64,7 +64,8 @@ struct PlayListView: View {
                             
                             PlayListRow(songData: song)
                         }.onDelete { indexSet in
-                            persistence.deleteSongs(indexSet: indexSet)
+//                            persistence.deleteSongs(indexSet: indexSet)
+                            persistence.deleteSongs(at: indexSet, from: collectedSongs)
                         }
                         .listRowBackground(Color.clear)
                     }

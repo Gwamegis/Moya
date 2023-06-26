@@ -96,22 +96,19 @@ struct PersistenceController {
         }
     }
     
-    func deleteSongs(indexSet: IndexSet){
+    func deleteSongs(at indexs: IndexSet, from results: FetchedResults<CollectedSong>) {
         
-        @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) var defaultPlayListSongs: FetchedResults<CollectedSong>
-        
-//        withAnimation {
-            indexSet.map { defaultPlayListSongs[$0] }.forEach(container.viewContext.delete)
-
+            for index in indexs {
+                let song = results[index]
+                container.viewContext.delete(song)
+            }
+            
             do {
                 try container.viewContext.save()
             } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nsError = error as NSError
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
-//        }
     }
     
     func fetchFavoriteSong() -> [CollectedSong] {
