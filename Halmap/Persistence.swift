@@ -70,6 +70,7 @@ struct PersistenceController {
         return collectedSong
     }
     
+    /// CollectedSong을 생성하기 위해 BufferList에 넣은 곡을 지우는 함수.
     func resetBufferList(song: CollectedSong){
         
         if song.playListTitle == "bufferPlayList" {
@@ -84,6 +85,7 @@ struct PersistenceController {
         }
     }
     
+    /// PlayList에서 곡을 지우는 함수.
     func deleteSongs(song: CollectedSong) {
         
         container.viewContext.delete(song)
@@ -96,7 +98,8 @@ struct PersistenceController {
         }
     }
     
-    func deleteSongs(at indexs: IndexSet, from results: FetchedResults<CollectedSong>) {
+    /// index를 이용하여 PlayListd에서 곡을 지우는 함수.
+    func deleteSong(at indexs: IndexSet, from results: FetchedResults<CollectedSong>) {
         
             for index in indexs {
                 let song = results[index]
@@ -110,6 +113,35 @@ struct PersistenceController {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
     }
+    
+    /// defaultPlayList 순서를 변경하는 함수
+    func moveDefaultPlayListSong(from source: IndexSet, to destination: Int, based results: FetchedResults<CollectedSong>){
+        
+//        // 1, 2, 3, 4, 5
+//        let reversedSource = source.sorted()
+////
+////        // index // 5 4 3 2 1
+//        for index in reversedSource.reversed() {
+//            result.insert(result.remove(at: index), at: destination)
+//        }
+//
+//        do {
+//            try container.viewContext.save()
+//        } catch {
+//            let nsError = error as NSError
+//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//        }
+    }
+    
+    /// defaultPlayList 앞에 추가하는 함수
+    func appendDefaultPlayListSong(song: SongInfo){
+        
+    }
+    /// defaultPlayList 뒤에 추가하는 함수
+    func pushBackDefaultPlayListSong(song: SongInfo){
+        
+    }
+    
     
     func fetchFavoriteSong() -> [CollectedSong] {
         let fetchRequest: NSFetchRequest<CollectedSong> = CollectedSong.fetchRequest()

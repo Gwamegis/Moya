@@ -9,17 +9,31 @@ import SwiftUI
 
 
 struct PlayListRow: View {
-//    @Environment(\.managedObjectContext) var managedObjectContext
-//    let persistence = PersistenceController.shared
-//    @ObservedObject var collectedSong: CollectedSong
-    @State var songData: Song
-//    @State var song: CollectedSong = CollectedSong()
-//    var team: String
+    @EnvironmentObject var dataManager: DataManager
+    @State var songInfo: SongInfo
     
     var body: some View {
-        
-        Text("\(songData.title)")
-
+        HStack{
+            Image(dataManager.checkSeasonSong(data: songInfo) ? "\(songInfo.team ?? "")23" : "\( songInfo.team ?? "NC")\(songInfo.type ? "Player" : "Album")")
+                .resizable()
+                .frame(width: 40, height: 40)
+                .cornerRadius(8)
+            VStack(alignment: .leading, spacing: 8) {
+                Text(songInfo.title ?? "test ")
+                    .font(Font.Halmap.CustomBodyMedium)
+                    .foregroundColor(.white)
+                Text(TeamName(rawValue: songInfo.team ?? "NC")?.fetchTeamNameKr() ?? ".")
+                    .font(Font.Halmap.CustomCaptionMedium)
+                    .foregroundColor(.customDarkGray)
+            }.padding(.horizontal, 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .lineLimit(1)
+            Image(systemName: "text.justify")
+                .frame(width: 18, height: 18)
+                .foregroundStyle(.gray)
+        }
+        .padding(.horizontal, 20) // 40 -> 20 값 조정
+        .frame(height: 50) // 70 -> 50값 조정
     }
 }
 
@@ -32,12 +46,16 @@ struct PlayListView: View {
     
     let persistence = PersistenceController.shared
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var playListSongs: FetchedResults<CollectedSong>
+    
+    @FetchRequest(entity: CollectedSong.entity(),
+                  sortDescriptors: [
+                    NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)
+                  ], animation: .default
+    ) private var playListSongs: FetchedResults<CollectedSong>
     
     var body: some View {
             
             ZStack{
-                
                 if collectedSongs.count != 0 {
                     List {
                         ForEach(collectedSongs, id: \.self) { playListSong in
@@ -62,10 +80,11 @@ struct PlayListView: View {
                             )
                             
                             
-                            PlayListRow(songData: song)
+                            PlayListRow(songInfo: songInfo)
                         }.onDelete { indexSet in
-//                            persistence.deleteSongs(indexSet: indexSet)
-                            persistence.deleteSongs(at: indexSet, from: collectedSongs)
+                            persistence.deleteSong(at: indexSet, from: collectedSongs)
+                        }.onMove { indexSet, destination  in
+                            persistence.moveDefaultPlayListSong(from: indexSet, to: destination, based: collectedSongs)
                         }
                         .listRowBackground(Color.clear)
                     }
@@ -74,20 +93,24 @@ struct PlayListView: View {
                 }
                 
             }.background(Color("\(selectedTeam)Sub"))
-            
-            
-            //        .scrollContentBackground(.hidden)
-            
-        
     }
 
-    func delete(at offsets: IndexSet) {
-//        persistence.deleteSongs(song: collectedSongs)
-        persistence.deleteSongs(song: findPlayListSong(at: offsets))
-//        print(song)
-        playListSongs.nsSortDescriptors.remove(atOffsets: offsets)
-//        $playListSongs.remove(atOffsets: offsets)
-    }
+//    func delete(at offsets: IndexSet) {
+//        withAnimation {
+//            persistence.deleteSongs(song: findPlayListSong(at: offsets))
+//            playListSongs.nsSortDescriptors.remove(atOffsets: offsets)
+//        }
+//    }
+    
+//    func move(from source: IndexSet, to destination: Int) {
+//
+//        let reversedSource = source.sorted()
+//
+//        for index in reversedSource.reversed() {
+//          users.insert(users.remove(at: index), at: destination)
+////        }
+//    }
+    
 //
     func findPlayListSong(at offsets: IndexSet) -> CollectedSong {
         if let index = playListSongs.firstIndex(where: {song.id == $0.id}) {

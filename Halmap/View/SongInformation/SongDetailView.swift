@@ -32,7 +32,10 @@ struct SongDetailView: View {
                 .ignoresSafeArea()
             
             if isPlayListView {
-                PlayListView(song: song)
+                VStack{
+                    Rectangle().foregroundColor(.clear).frame(height: 10)
+                    PlayListView(song: song)
+                }
             } else {
                 SongContentView(song: $song, team: $team, isScrolled: $isScrolled)
             }
