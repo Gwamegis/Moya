@@ -117,22 +117,41 @@ struct PersistenceController {
     /// defaultPlayList 순서를 변경하는 함수
     func moveDefaultPlayListSong(from source: IndexSet, to destination: Int, based results: FetchedResults<CollectedSong>){
         
-//        // 1, 2, 3, 4, 5
-//        let reversedSource = source.sorted()
-////
-////        // index // 5 4 3 2 1
-//        for index in reversedSource.reversed() {
-//            result.insert(result.remove(at: index), at: destination)
-//        }
-//
-//        do {
-//            try container.viewContext.save()
-//        } catch {
-//            let nsError = error as NSError
-//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-//        }
+        guard let itemToMove = source.first else { return }
+                
+        if itemToMove < destination{
+            var startIndex = itemToMove + 1
+            let endIndex = destination - 1
+            var startOrder = results[itemToMove].order
+            while startIndex <= endIndex{
+                results[startIndex].order = startOrder
+                startOrder = startOrder + 1
+                startIndex = startIndex + 1
+            }
+            results[itemToMove].order = startOrder
+        }
+        
+        else if destination < itemToMove{
+            var startIndex = destination
+            let endIndex = itemToMove - 1
+            var startOrder = results[destination].order + 1
+            let newOrder = results[destination].order
+            while startIndex <= endIndex{
+                results[startIndex].order = startOrder
+                startOrder = startOrder + 1
+                startIndex = startIndex + 1
+            }
+            results[itemToMove].order = newOrder
+        }
+        
+        do{
+            try container.viewContext.save()
+        }
+        catch{
+            print(error.localizedDescription)
+        }
     }
-    
+
     /// defaultPlayList 앞에 추가하는 함수
     func appendDefaultPlayListSong(song: SongInfo){
         
