@@ -54,9 +54,12 @@ struct MenuItem: View {
     @ObservedObject var collectedSong: CollectedSong
     @Binding var showSheet: Bool
     
+    let persistence = PersistenceController.shared
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) private var defaultPlayListSongs: FetchedResults<CollectedSong>
+    
     var body: some View {
         Button {
-            menuType.fetchFunction(collectedSong: collectedSong)
+            menuType.fetchFunction(collectedSong: collectedSong, collectedSongs: defaultPlayListSongs)
             showSheet.toggle()
         } label: {
             HStack(spacing: 24) {
@@ -99,7 +102,7 @@ enum MenuType {
         }
     }
     
-    func fetchFunction(collectedSong: CollectedSong) {
+    func fetchFunction(collectedSong: CollectedSong, collectedSongs: FetchedResults<CollectedSong>) {
         let persistence = PersistenceController.shared
         switch self {
         case .cancelLiked:
@@ -110,7 +113,7 @@ enum MenuType {
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
             persistence.resetBufferList(song: collectedSong)
             
-            return persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList")
+            return persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList", menuType: .playNext, collectedSongs: collectedSongs)
             
         case .playLast:
             //TODO: 맨 마지막에 재생 기능 추가
@@ -118,7 +121,7 @@ enum MenuType {
             let songInfo = SongInfo(id: song.id ?? "", team: song.team ?? "", type: song.type, title: song.title ?? "", lyrics: song.lyrics ?? "", info: song.info ?? "", url: song.url ?? "")
             persistence.resetBufferList(song: collectedSong)
             
-            return  persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList")
+            return  persistence.saveSongs(song: songInfo, playListTitle: "defaultPlayList", menuType: .playLast, collectedSongs: collectedSongs)
         }
     }
 }

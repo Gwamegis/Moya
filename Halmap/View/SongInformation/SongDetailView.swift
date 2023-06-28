@@ -91,7 +91,7 @@ struct SongDetailView: View {
                         persistence.deleteSongs(song: findFavoriteSong())
                     } else {
                         let songInfo = SongInfo(id: song.id, team: team, type: song.type, title: song.title, lyrics: song.lyrics, info: song.info, url: song.url)
-                        persistence.saveSongs(song: songInfo, playListTitle: "favorite")
+                        persistence.saveSongs(song: songInfo, playListTitle: "favorite", menuType: .cancelLiked, collectedSongs: favoriteSongs)
                     }
                     isFavorite.toggle()
                 } label: {

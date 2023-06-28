@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+//    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "bufferPlayList").predicate, animation: .default) var bufferPlayListSongs: FetchedResults<CollectedSong>
     
     static let shared = PersistenceController()
@@ -30,9 +30,20 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
     
-    func saveSongs(song: SongInfo, playListTitle: String?) {
+    func saveSongs(song: SongInfo, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
         let context = container.viewContext
         let collectedSong = CollectedSong(context: context)
+        
+        switch menuType {
+        case .cancelLiked:
+            break
+        case .playNext:
+            // TODO: 현재 곡 다음순서로 넣는 로직 필요
+            collectedSong.order = Int64(collectedSongs.count)
+        case .playLast:
+            collectedSong.order = Int64(collectedSongs.count)
+        }
+        
         collectedSong.id = song.id
         collectedSong.title = song.title
         collectedSong.info = song.info
@@ -42,6 +53,7 @@ struct PersistenceController {
         collectedSong.playListTitle = playListTitle
         collectedSong.team = song.team
         collectedSong.date = Date()
+
         
         if context.hasChanges {
             do {
@@ -172,7 +184,7 @@ struct PersistenceController {
         }
     }
     
-    func findFavoriteSong(song: Song) -> CollectedSong {
+    func findFavoriteSong(song: Song, collectedSongs: FetchedResults<CollectedSong>) -> CollectedSong {
         if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
             return collectedSongs[index]
         } else {
@@ -191,7 +203,7 @@ struct PersistenceController {
     }
     
     
-    func findPlayListSong(song: Song) -> CollectedSong {
+    func findPlayListSong(song: Song, collectedSongs: FetchedResults<CollectedSong>) -> CollectedSong {
         if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
             return collectedSongs[index]
         } else {
