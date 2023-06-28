@@ -34,29 +34,16 @@ struct SongPlayerView: View {
         VStack {
             
             VStack(spacing: 5){
-                
-                // TODO: - Progress bar
-                // Slider(value: $value)
 //                Slider(value: $value, in: 0...CMTimeGetSeconds(endTime)) { editing in
-//                    print("editing", editing)
-//                    isEditing = editing
-//                    if !editing {
-//                        player.status = value
-//                    }
-//                }
-//                .accentColor(.white)
+                //                    print("editing", editing)
+                //                    isEditing = editing
+                //                    if !editing {
+                //                        player.status = value
+                //                    }
+                //                }
+                //                .accentColor(.white)
                 
-                // TODO: - Time
-//                ProgressBar(maxValue: audioManager.progressDuration ,value: $audioManager.progressCurrent )
-                SwiftUISlider(value: $audioManager.progressCurrent, maxValue: $audioManager.progressDuration,
-                              dragBegan: {
-                    audioManager.AMstop()
-                    print("dragBegan") },
-                              dragMoved: {
-                    print("dragMoved") },
-                              dragEnded: {
-                    audioManager.update2()
-                    print("dragEnded") })
+                Progressbar(team: $team, isThumbActive: false)
                 
             }
             
@@ -98,17 +85,10 @@ struct SongPlayerView: View {
         .background(Color("\(team)Sub"))
         .onDisappear(){
             audioManager.removePlayer()
+            audioManager.progressValue = 0
         }
         .onAppear(){
             audioManager.AMset(song: song, selectedTeam: team)
-        }
-        .onReceive(timer) { _ in
-            guard let player = AudioManager.instance.player else { return }
-            guard let item = AudioManager.instance.player?.currentItem else { return }
-            if CMTimeGetSeconds(player.currentTime()) == item.duration.seconds {
-//                isPlaying = false
-            }
-            //              value = CMTimeGetSeconds(player.currentTime())
         }
     }
 }

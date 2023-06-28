@@ -29,6 +29,8 @@ final class AudioManager: NSObject, ObservableObject {
     var currentTimePublisher: PassthroughSubject<Double, Never> = .init()
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
+    var acceptProgressUpdates = true
+    var subscriptions: Set<AnyCancellable> = .init()
     
     private var playerItemContext = 0
     
@@ -80,102 +82,6 @@ final class AudioManager: NSObject, ObservableObject {
         }
     }
     
-    // MARK: - AM Properties
-    
-    private var AMduration: Double {
-        return player?.currentItem?.duration.seconds ?? 0
-    }
-    
-    func AMset(song: Song, selectedTeam: String) {
-        
-        self.song = song
-        self.selectedTeam = selectedTeam
-        
-        guard let url = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
-        self.item = AVPlayerItem(url: url)
-        
-        self.item?.addObserver(self as NSObject,
-                                   forKeyPath: #keyPath(AVPlayerItem.status),
-                                   options: [.old, .new],
-                                   context: &playerItemContext)
-        
-        player = AVPlayer(playerItem: item)
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-        } catch(let error) {
-            print(error.localizedDescription)
-        }
-        
-        AMplay()
-    }
-    
-    func AMplay() {
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.AMplayEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        
-        setupRemoteTransportControls()
-        
-        player?.play()
-        isPlaying = true
-                
-        updateNowPlayingPlaybackRate()
-        
-        let playerLayer = AVPlayerLayer(player: player)
-        
-        print("duration****",CMTimeGetSeconds(playerLayer.player?.currentItem?.duration ?? .zero))
-        let interval = CMTime(seconds: 0.001, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        
-        print("currentTime2", player?.currentItem?.duration.seconds)
-        
-        player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] currentTime in
-            print("currentTime", CMTimeGetSeconds(currentTime))
-//            print("currentTime2", CMTimeGetSeconds(self?.player?.currentItem?.currentTime().seconds))
-            print("duration", CMTimeGetSeconds(self?.player?.currentItem?.duration ?? .zero))
-            self?.progressCurrent = Float(CMTimeGetSeconds(currentTime))
-            self?.progressDuration = Float(CMTimeGetSeconds(self?.player?.currentItem?.duration ?? .zero))
-//            self?.updateSlider(currentTime)
-        })
-    }
-    
-    // MARK: - AM Functions
-    
-    func AMstop() {
-        guard let player = player else {
-            print("Instance of audio player not found")
-            return
-        }
-        player.pause()
-        isPlaying = false
-        
-        updateNowPlayingPlaybackRate()
-    }
-    
-    @objc func AMplayEnd() {
-        AMstop()
-        player?.seek(to: .zero)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    func AMseek(to time: CMTime){
-        guard let player = player else { return }
-        player.seek(to: time)
-    }
-    
-    func AMseek(to percentage: Float) {
-        guard let player = player else { return }
-        let time = AMconvertFloatToCMTime(percentage)
-        player.seek(to: time)
-    }
-    
-    private func AMconvertFloatToCMTime(_ percentage: Float) -> CMTime {
-        return CMTime(seconds: AMduration * Double(percentage), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-    }
-    
-    private func AMcalculateProgress(currentTime: Double) -> Float {
-        return Float(currentTime / AMduration)
-    }
-    
     //시작 상태 감지를 위한 observer -> 음원이 준비 된 경우 미디어 플레이어 셋팅
     override func observeValue(forKeyPath keyPath: String?,
                                of object: Any?,
@@ -223,6 +129,128 @@ final class AudioManager: NSObject, ObservableObject {
         }
     }
     
+    // MARK: - AM Properties
+    
+    private var AMduration: Double {
+        return player?.currentItem?.duration.seconds ?? 0
+    }
+    
+    func AMset(song: Song, selectedTeam: String) {
+        
+        self.song = song
+        self.selectedTeam = selectedTeam
+        
+        guard let url = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
+        self.item = AVPlayerItem(url: url)
+        
+        self.item?.addObserver(self as NSObject,
+                                   forKeyPath: #keyPath(AVPlayerItem.status),
+                                   options: [.old, .new],
+                                   context: &playerItemContext)
+        
+        player = AVPlayer(playerItem: item)
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch(let error) {
+            print(error.localizedDescription)
+        }
+        if let player {
+            setupPeriodicObservation(for: player)
+            AMplay()
+        }
+        
+    }
+    private func listenToProgress() {
+        self.currentProgressPublisher.sink { [weak self] progress in
+            guard let self = self,
+                  self.acceptProgressUpdates else { return }
+            self.progressValue = progress
+        }.store(in: &subscriptions)
+    }
+    
+    func didSliderChanged(_ didChange: Bool) {
+        acceptProgressUpdates = !didChange
+        if didChange {
+            self.AMstop()
+        } else {
+            self.AMseek(to: progressValue)
+            self.AMplay()
+        }
+    }
+    private func setupPeriodicObservation(for player: AVPlayer) {
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
+        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
+        
+        playerPeriodicObserver = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] (time) in
+            guard let `self` = self else { return }
+            let progress = self.calculateProgress(currentTime: time.seconds)
+            self.progressValue = progress
+            self.progressDuration = Float(CMTimeGetSeconds(self.player?.currentItem?.duration ?? .zero))
+            self.currentProgressPublisher.send(progress)
+            self.currentTimePublisher.send(time.seconds)
+        }
+    }
+    
+    func AMplay() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.AMplayEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        setupRemoteTransportControls()
+        
+        player?.play()
+        isPlaying = true
+                
+        updateNowPlayingPlaybackRate()
+        
+    }
+    private func calculateProgress(currentTime: Double) -> Float {
+        return Float(currentTime / duration)
+    }
+    private var duration: Double {
+        return player?.currentItem?.duration.seconds ?? 0
+    }
+    
+    // MARK: - AM Functions
+    
+    func AMstop() {
+        guard let player = player else {
+            print("Instance of audio player not found")
+            return
+        }
+        player.pause()
+        isPlaying = false
+        
+        updateNowPlayingPlaybackRate()
+    }
+    
+    @objc func AMplayEnd() {
+        AMstop()
+        player?.seek(to: .zero)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func AMseek(to time: CMTime){
+        guard let player = player else { return }
+        player.seek(to: time)
+    }
+    
+    func AMseek(to percentage: Float) {
+        guard let player = player else { return }
+        let time = AMconvertFloatToCMTime(percentage)
+        player.seek(to: time)
+    }
+    
+    
+    //MARK: - progressbar
+    private func AMconvertFloatToCMTime(_ percentage: Float) -> CMTime {
+        return CMTime(seconds: AMduration * Double(percentage), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+    }
+    
+    private func AMcalculateProgress(currentTime: Double) -> Float {
+        return Float(currentTime / AMduration)
+    }
+    
     func removePlayer() {
         AMstop()
         player = nil
@@ -232,31 +260,4 @@ final class AudioManager: NSObject, ObservableObject {
                                   context: &playerItemContext)
         
     }
-    
-    
-//    progress bar
-    func updateSlider(_ currentTime: CMTime) {
-        if let currentItem = player?.currentItem {
-            let duration = currentItem.duration
-            if CMTIME_IS_VALID(duration) {
-                return
-            }
-            
-            self.progressValue = Float(CMTimeGetSeconds(currentTime) / CMTimeGetSeconds(duration))
-//            self.progressMax = Float(CMTimeGetSeconds(duration))
-//            self.progressCurrent = Float(CMTimeGetSeconds(currentTime))
-            print("current", currentTime, "duration", duration)
-        }
-    }
-    
-    @objc func update2() {
-        
-        print("update2")
-        print("progressCurrent", progressCurrent)
-        
-        let seekTime = (1 / self.progressDuration) * self.progressCurrent
-        player?.seek(to: CMTime(value: CMTimeValue(seekTime), timescale: 1))
-    }
-    
-//    let progressbar = UISlider(frame: .zero)
 }
