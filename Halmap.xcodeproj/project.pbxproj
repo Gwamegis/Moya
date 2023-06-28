@@ -43,6 +43,8 @@
 		F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
+		F95F269B2A48787B00B534EB /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95F269A2A48787B00B534EB /* ProgressBar.swift */; };
+		F95F269D2A4ABB0F00B534EB /* SwiftUISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95F269C2A4ABB0F00B534EB /* SwiftUISlider.swift */; };
 		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
 		F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622A29B4CB450025F50E /* ThemeManager.swift */; };
 		F98F623129B59CE60025F50E /* TeamName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F623029B59CE60025F50E /* TeamName.swift */; };
@@ -93,6 +95,8 @@
 		F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		F95F269A2A48787B00B534EB /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		F95F269C2A4ABB0F00B534EB /* SwiftUISlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUISlider.swift; sourceTree = "<group>"; };
 		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		F98F622A29B4CB450025F50E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F98F623029B59CE60025F50E /* TeamName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamName.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 		A81FFC8E28F1770500B0FC7C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F95F26992A48786900B534EB /* Components */,
 				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
@@ -245,6 +250,15 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		F95F26992A48786900B534EB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				F95F269A2A48787B00B534EB /* ProgressBar.swift */,
+				F95F269C2A4ABB0F00B534EB /* SwiftUISlider.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		F98F622729B4C9A80025F50E /* Theme */ = {
@@ -367,6 +381,7 @@
 				87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */,
 				F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */,
 				F9A178222A1BF5CB003E8E4C /* HalfSheetView.swift in Sources */,
+				F95F269B2A48787B00B534EB /* ProgressBar.swift in Sources */,
 				87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */,
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				F98F8D5D29D85B0C00F9C956 /* RequestSongView.swift in Sources */,
@@ -392,6 +407,7 @@
 				A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
+				F95F269D2A4ABB0F00B534EB /* SwiftUISlider.swift in Sources */,
 				F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */,
 				A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */,
 				F9A178262A1C8B01003E8E4C /* PlayListFilter.swift in Sources */,

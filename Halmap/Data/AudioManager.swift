@@ -22,6 +22,10 @@ final class AudioManager: NSObject, ObservableObject {
         }
     }
     
+    @Published var progressValue: Float = 0
+    @Published var progressDuration: Float = 0
+    @Published var progressCurrent: Float = 0
+    
     var currentTimePublisher: PassthroughSubject<Double, Never> = .init()
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
@@ -116,6 +120,22 @@ final class AudioManager: NSObject, ObservableObject {
         isPlaying = true
                 
         updateNowPlayingPlaybackRate()
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        print("duration****",CMTimeGetSeconds(playerLayer.player?.currentItem?.duration ?? .zero))
+        let interval = CMTime(seconds: 0.001, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        
+        print("currentTime2", player?.currentItem?.duration.seconds)
+        
+        player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main, using: { [weak self] currentTime in
+            print("currentTime", CMTimeGetSeconds(currentTime))
+//            print("currentTime2", CMTimeGetSeconds(self?.player?.currentItem?.currentTime().seconds))
+            print("duration", CMTimeGetSeconds(self?.player?.currentItem?.duration ?? .zero))
+            self?.progressCurrent = Float(CMTimeGetSeconds(currentTime))
+            self?.progressDuration = Float(CMTimeGetSeconds(self?.player?.currentItem?.duration ?? .zero))
+//            self?.updateSlider(currentTime)
+        })
     }
     
     // MARK: - AM Functions
@@ -212,4 +232,31 @@ final class AudioManager: NSObject, ObservableObject {
                                   context: &playerItemContext)
         
     }
+    
+    
+//    progress bar
+    func updateSlider(_ currentTime: CMTime) {
+        if let currentItem = player?.currentItem {
+            let duration = currentItem.duration
+            if CMTIME_IS_VALID(duration) {
+                return
+            }
+            
+            self.progressValue = Float(CMTimeGetSeconds(currentTime) / CMTimeGetSeconds(duration))
+//            self.progressMax = Float(CMTimeGetSeconds(duration))
+//            self.progressCurrent = Float(CMTimeGetSeconds(currentTime))
+            print("current", currentTime, "duration", duration)
+        }
+    }
+    
+    @objc func update2() {
+        
+        print("update2")
+        print("progressCurrent", progressCurrent)
+        
+        let seekTime = (1 / self.progressDuration) * self.progressCurrent
+        player?.seek(to: CMTime(value: CMTimeValue(seekTime), timescale: 1))
+    }
+    
+//    let progressbar = UISlider(frame: .zero)
 }

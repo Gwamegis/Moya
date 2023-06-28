@@ -47,6 +47,16 @@ struct SongPlayerView: View {
 //                .accentColor(.white)
                 
                 // TODO: - Time
+//                ProgressBar(maxValue: audioManager.progressDuration ,value: $audioManager.progressCurrent )
+                SwiftUISlider(value: $audioManager.progressCurrent, maxValue: $audioManager.progressDuration,
+                              dragBegan: {
+                    audioManager.AMstop()
+                    print("dragBegan") },
+                              dragMoved: {
+                    print("dragMoved") },
+                              dragEnded: {
+                    audioManager.update2()
+                    print("dragEnded") })
                 
             }
             
@@ -83,6 +93,7 @@ struct SongPlayerView: View {
             .padding(.bottom, 54)
             
         }
+        .padding(.horizontal, 45)
         .frame(maxWidth: .infinity)
         .background(Color("\(team)Sub"))
         .onDisappear(){
