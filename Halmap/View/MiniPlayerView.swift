@@ -16,6 +16,10 @@ struct MiniPlayerView: View {
     @Binding var selectedSong: Song
     @ObservedObject var dataManager = DataManager()
     @EnvironmentObject var audioManager: AudioManager
+    @State var isFavorite = false
+    let persistence = PersistenceController.shared
+    @State var teamName: String?
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     var height = UIScreen.main.bounds.height / 3
     
@@ -36,11 +40,18 @@ struct MiniPlayerView: View {
             
             if !expand{
                 HStack(spacing: 15){
-                    
-                    Text(selectedSong.title)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .matchedGeometryEffect(id: "Label", in: animation)
+                    VStack(alignment: .leading){
+                        Text(selectedSong.title)
+                            .font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .matchedGeometryEffect(id: "Label", in: animation)
+                        
+                        Text("팀 이름")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            
+                    }
                     
                     
                     Spacer(minLength: 0)
@@ -68,6 +79,7 @@ struct MiniPlayerView: View {
                     
                 }
                 .padding(.horizontal)
+                .cornerRadius(10)
             }
             
             
@@ -81,7 +93,9 @@ struct MiniPlayerView: View {
                         .foregroundColor(Color.HalmacSub)
                     HStack{
                         Button(action: {
-                            print("go to main")
+                            withAnimation(.spring()) {
+                                self.expand = false
+                            }
                         }, label: {
                             Image(systemName: "chevron.down")
                                 .foregroundColor(.white)
@@ -91,22 +105,35 @@ struct MiniPlayerView: View {
                             .resizable()
                             .frame(width: 52, height: 52)
                         
-                        VStack{
+                        VStack {
                             Text(selectedSong.title)
+                                .foregroundColor(.white)
+                                .fontWeight(.bold)
                             
                             Text("팀 명")
                         }
                         
                         Spacer()
-                        
+
                         Button(action: {
-                            print("favorite selected")
+                            if isFavorite {
+                                persistence.deleteSongs(song: findFavoriteSong())
+                            } else {
+                                persistence.saveSongs(song: selectedSong, playListTitle: "favorite")
+                            }
+                            isFavorite.toggle()
                         }, label: {
-                            Image(systemName: "heart")
-                                .foregroundColor(.white)
+                            if isFavorite {
+                                Image(systemName: "heart.fill")
+                                .foregroundColor(Color("\(teamName ?? selectedTeam)Point"))
+                            } else {
+                                Image(systemName: "heart")
+                                    .foregroundColor(.white)
+                            }
+                            
                         })
                     }
-                    .background(.blue)
+                    .background(Color.HalmacSub)
                     .padding(.top, 60)
                     .padding(.horizontal)
                     .frame(height: 100)
@@ -298,7 +325,7 @@ struct MiniPlayerView: View {
             .opacity(expand ? 1 : 0)
         }
         // expanding to full screen when clicked...
-        .frame(maxHeight: expand ? .infinity : 80)
+        .frame(maxHeight: expand ? .infinity : 65)
         
         // moving the miniplayer above the tabbar...
         // approz tab bar height is 49
@@ -308,8 +335,8 @@ struct MiniPlayerView: View {
         
             VStack(spacing: 0){
                 
-                // Color.HalmacSub
-                Color.red
+                Color.HalmacSub
+                // Color.red
                 // Divider()
             }
             .onTapGesture(perform: {
@@ -317,7 +344,7 @@ struct MiniPlayerView: View {
                 withAnimation(.spring()){expand = true}
             })
         )
-        .cornerRadius(expand ? 20 : 0)
+        .cornerRadius(expand ? 20 : 10)
         .offset(y: expand ? 0 : -48)
         .offset(y: offset)
         .gesture(DragGesture().onEnded(onended(value:)).onChanged(onchanged(value:)))
@@ -353,4 +380,18 @@ struct MiniPlayerView: View {
         }
     }
     
+    func findFavoriteSong() -> CollectedSong {
+        if let index = favoriteSongs.firstIndex(where: {selectedSong.id == $0.id}) {
+            return favoriteSongs[index]
+        } else {
+            return CollectedSong()
+        }
+    }
+}
+
+struct MiniPlayerView_Previews: PreviewProvider {
+    @Namespace static var animation
+    static var previews: some View {
+        MiniPlayerView(animation: animation, expand: .constant(true), isPlayingMusic: .constant(true), selectedSong: .constant(Song(id: "", type: false, title: "'", lyrics: "", info: "'", url: "")))
+    }
 }

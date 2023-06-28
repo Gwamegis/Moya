@@ -58,9 +58,9 @@ struct MainSongListTabView: View {
                             
                             Button(action: {
                                 print("tapped")
-                                self.expand = true
                                 self.selectedSong = music
                                 self.isMusicPlaying = true
+                                withAnimation(.spring()){expand = true}
                             }, label: {
                                 HStack(spacing: 16) {
                                     Image("\(selectedTeam)Album")
