@@ -10,8 +10,6 @@ import SwiftUI
 
 struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-//    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "bufferPlayList").predicate, animation: .default) var bufferPlayListSongs: FetchedResults<CollectedSong>
     
     static let shared = PersistenceController()
 
