@@ -18,34 +18,15 @@ struct SongPlayerView: View {
     
     
     // Audio Properties
-    let timer = Timer
-        .publish(every: 0.3, on: .main, in: .common)
-        .autoconnect()
-    @State var value: Double = 0.0
-    @State var isEditing: Bool = false
     @EnvironmentObject var audioManager: AudioManager
-    @State var endTime: CMTime = CMTime(seconds: 6000, preferredTimescale: 1000000)
-    
-    
+
     // View Property
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             
-            VStack(spacing: 5){
-//                Slider(value: $value, in: 0...CMTimeGetSeconds(endTime)) { editing in
-                //                    print("editing", editing)
-                //                    isEditing = editing
-                //                    if !editing {
-                //                        player.status = value
-                //                    }
-                //                }
-                //                .accentColor(.white)
-                
-                Progressbar(team: $team, isThumbActive: false)
-                
-            }
+            Progressbar(team: $team, isThumbActive: true)
             
             // Buttons
             HStack(spacing: 52) {

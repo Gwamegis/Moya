@@ -10,9 +10,10 @@ import SwiftUI
 struct Progressbar: View {
     @EnvironmentObject var audioManager: AudioManager
     @Binding var team: String
-    var isThumbActive: Bool = true
+    let isThumbActive: Bool
     
     init(team: Binding<String>, isThumbActive: Bool) {
+        self.isThumbActive = isThumbActive
         self._team = team
         let thumbImage = makeThumbView(isThumbActive: isThumbActive)
         UISlider.appearance().setThumbImage(thumbImage, for: .normal)
@@ -20,10 +21,25 @@ struct Progressbar: View {
     }
     
     var body: some View {
-        Slider(value: $audioManager.progressValue) { editing in
-            audioManager.didSliderChanged(editing)
+        VStack(spacing: 0) {
+            Slider(value: $audioManager.progressValue) { editing in
+                audioManager.didSliderChanged(editing)
+            }
+            .tint(Color("\(team)Point"))
+            .padding(.horizontal, isThumbActive ? 5 : 0)
+//            .disabled(!isThumbActive)
+            if isThumbActive {
+                HStack {
+                    Text(formatTime(audioManager.currentTime))
+                    Spacer()
+                    Text(formatTime(audioManager.duration))
+                }
+                .font(Font.Halmap.CustomCaptionMedium)
+                .foregroundColor(.customGray)
+            }
         }
-        .tint(Color("\(team)Point"))
+        
+        
     }
     
     func makeThumbView(isThumbActive: Bool) -> UIImage {
@@ -41,5 +57,16 @@ struct Progressbar: View {
         }
         
         return image
+    }
+    
+    func formatTime(_ time: TimeInterval) -> String {
+        if time.isNaN {
+            return "00:00"
+        } else {
+            let minutes = Int(time) == 0 ? 0 : Int(time) / 60
+            let seconds = Int(time) == 0 ? 0 : Int(time) % 60
+            return String(format: "%02d:%02d", minutes, seconds)
+        }
+        
     }
 }

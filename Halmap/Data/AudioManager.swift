@@ -13,7 +13,6 @@ import MediaPlayer
 final class AudioManager: NSObject, ObservableObject {
     static let instance = AudioManager()
     var player: AVPlayer?
-
     var item: AVPlayerItem?
     
     @Published private(set) var isPlaying: Bool = false {
@@ -23,14 +22,16 @@ final class AudioManager: NSObject, ObservableObject {
     }
     
     @Published var progressValue: Float = 0
-    @Published var progressDuration: Float = 0
-    @Published var progressCurrent: Float = 0
+    @Published var currentTime: Double = 0
+    var duration: Double {
+        return player?.currentItem?.duration.seconds ?? 0
+    }
     
+    //progressbar
     var currentTimePublisher: PassthroughSubject<Double, Never> = .init()
     var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
     private var playerPeriodicObserver: Any?
     var acceptProgressUpdates = true
-    var subscriptions: Set<AnyCancellable> = .init()
     
     private var playerItemContext = 0
     
@@ -159,37 +160,6 @@ final class AudioManager: NSObject, ObservableObject {
             setupPeriodicObservation(for: player)
             AMplay()
         }
-        
-    }
-    private func listenToProgress() {
-        self.currentProgressPublisher.sink { [weak self] progress in
-            guard let self = self,
-                  self.acceptProgressUpdates else { return }
-            self.progressValue = progress
-        }.store(in: &subscriptions)
-    }
-    
-    func didSliderChanged(_ didChange: Bool) {
-        acceptProgressUpdates = !didChange
-        if didChange {
-            self.AMstop()
-        } else {
-            self.AMseek(to: progressValue)
-            self.AMplay()
-        }
-    }
-    private func setupPeriodicObservation(for player: AVPlayer) {
-        let timeScale = CMTimeScale(NSEC_PER_SEC)
-        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
-        
-        playerPeriodicObserver = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] (time) in
-            guard let `self` = self else { return }
-            let progress = self.calculateProgress(currentTime: time.seconds)
-            self.progressValue = progress
-            self.progressDuration = Float(CMTimeGetSeconds(self.player?.currentItem?.duration ?? .zero))
-            self.currentProgressPublisher.send(progress)
-            self.currentTimePublisher.send(time.seconds)
-        }
     }
     
     func AMplay() {
@@ -203,12 +173,6 @@ final class AudioManager: NSObject, ObservableObject {
                 
         updateNowPlayingPlaybackRate()
         
-    }
-    private func calculateProgress(currentTime: Double) -> Float {
-        return Float(currentTime / duration)
-    }
-    private var duration: Double {
-        return player?.currentItem?.duration.seconds ?? 0
     }
     
     // MARK: - AM Functions
@@ -240,7 +204,15 @@ final class AudioManager: NSObject, ObservableObject {
         let time = AMconvertFloatToCMTime(percentage)
         player.seek(to: time)
     }
-    
+    func removePlayer() {
+        AMstop()
+        player = nil
+        
+        self.item?.removeObserver(self as NSObject,
+                                  forKeyPath: #keyPath(AVPlayerItem.status),
+                                  context: &playerItemContext)
+        
+    }
     
     //MARK: - progressbar
     private func AMconvertFloatToCMTime(_ percentage: Float) -> CMTime {
@@ -251,13 +223,29 @@ final class AudioManager: NSObject, ObservableObject {
         return Float(currentTime / AMduration)
     }
     
-    func removePlayer() {
-        AMstop()
-        player = nil
+    private func calculateProgress(currentTime: Double) -> Float {
+        return Float(currentTime / duration)
+    }
+    func didSliderChanged(_ didChange: Bool) {
+        acceptProgressUpdates = !didChange
+        if didChange {
+            self.AMstop()
+        } else {
+            self.AMseek(to: progressValue)
+            self.AMplay()
+        }
+    }
+    private func setupPeriodicObservation(for player: AVPlayer) {
+        let timeScale = CMTimeScale(NSEC_PER_SEC)
+        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
         
-        self.item?.removeObserver(self as NSObject,
-                                  forKeyPath: #keyPath(AVPlayerItem.status),
-                                  context: &playerItemContext)
-        
+        playerPeriodicObserver = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] (time) in
+            guard let `self` = self else { return }
+            self.currentTime = time.seconds
+            let progress = self.calculateProgress(currentTime: time.seconds)
+            self.progressValue = progress
+            self.currentProgressPublisher.send(progress)
+            self.currentTimePublisher.send(time.seconds)
+        }
     }
 }
