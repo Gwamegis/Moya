@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-struct MainTabView: View {
-
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+struct MainTabView: View {    
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @State var expand = false
     @State var isMusicPlaying = false
     @State var selectedSong: Song = Song(id: "", type: false, title: "'", lyrics: "", info: "", url: "")
@@ -31,12 +30,7 @@ struct MainTabView: View {
                     .tabItem {
                         Image("search")
                         Text("곡 검색")
-                    }
-                StadiumListSheetView()
-                    .tabItem {
-                        Image("map")
-                        Text("야구장")
-                    }
+                      }
                 StorageContentView()
                     .tabItem {
                         Image("storage")

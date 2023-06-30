@@ -9,17 +9,17 @@ import SwiftUI
 
 struct SongSearchView: View {
     
-    @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "Hanwha")
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
-    @ObservedObject var dataManager = DataManager()
+    @EnvironmentObject var dataManager: DataManager
     
     @GestureState private var dragOffset = CGSize.zero
     @FocusState private var isFocused: Bool
     @State private var isKeyboardFocused = false
     
     @State private var searchText = ""
-    @State private var autoComplete = [Song]()
+    @State private var autoComplete = [SongInfo]()
     
     var body: some View {
         
@@ -91,30 +91,52 @@ struct SongSearchView: View {
         VStack(spacing: 0) {
             if searchText.isEmpty {
                 VStack(spacing: 0) {
-                    Text("선수 이름, 응원가를 검색해주세요")
-                        .foregroundColor(Color.customDarkGray)
-                        .padding(30)
+                    Image("searchInfo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: UIScreen.getHeight(200))
+                        .padding(.top, UIScreen.getHeight(60))
+
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
             } else {
                 
                 if autoComplete.isEmpty {
-                    VStack(spacing: 0) {
-                        Text("검색 결과가 없어요")
-                            .foregroundColor(Color.customDarkGray)
-                            .padding(30)
-                        Spacer()
-                        RequestSongView(buttonColor: Color.mainGreen)
+                    ZStack {
+                        VStack(spacing: 0) {
+                            Image("searchEmpty")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: UIScreen.getHeight(200))
+                                .padding(.top, UIScreen.getHeight(60))
+                            Spacer()
+                        }
+                        VStack {
+                            Spacer()
+                            RequestSongView(buttonColor: Color.mainGreen)
+                        }
                     }
                     .frame(maxWidth: .infinity)
                 } else {
                     List {
                         ForEach(autoComplete.indices, id: \.self) { index in
-                            NavigationLink(destination: SongDetailView(song: autoComplete[index])) {
+                            NavigationLink(destination: SongDetailView(song: setSong(data: autoComplete[index]), team: autoComplete[index].team)) {
                                 HStack {
-                                    Image(systemName: "magnifyingglass")
-                                    Text(autoComplete[index].title)
+                                    Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))
+                                        .resizable()
+                                        .frame(width: 40, height: 40)
+                                        .cornerRadius(8)
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(autoComplete[index].title )
+                                            .font(Font.Halmap.CustomBodyMedium)
+                                            .foregroundColor(.black)
+                                        Text("\(TeamName(rawValue: autoComplete[index].team)?.fetchTeamNameKr() ?? "두산 베어스")")
+                                            .font(Font.Halmap.CustomCaptionMedium)
+                                            .foregroundColor(.customDarkGray)
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .lineLimit(1)
                                 }
                                 .font(Font.Halmap.CustomBodyMedium)
                                 .foregroundColor(Color.black)
@@ -154,19 +176,23 @@ struct SongSearchView: View {
         
         autoComplete = []
 
-        for data in dataManager.playerSongs {
-            if data.title.contains(searchText.lowercased()) {
-                let music = Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
-                autoComplete.append(music)
+        dataManager.teamLists.forEach { teamName in
+            for data in dataManager.playerSongsAll[teamName.fetchTeamIndex()] {
+                if data.title.lowercased().contains(searchText.lowercased()) {
+                    let music = SongInfo(id: data.id,team: teamName.rawValue, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
+                    autoComplete.append(music)
+                }
+            }
+            for data in dataManager.teamSongsAll[teamName.fetchTeamIndex()] {
+                if data.title.lowercased().contains(searchText.lowercased()) {
+                    let music = SongInfo(id: data.id,team: teamName.rawValue, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
+                    autoComplete.append(music)
+                }
             }
         }
-        
-        for data in dataManager.teamSongs {
-            if data.title.contains(searchText.lowercased()) {
-                let music = Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
-                autoComplete.append(music)
-            }
-        }
+    }
+    private func setSong(data: SongInfo) -> Song {
+        Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
     }
 }
 
