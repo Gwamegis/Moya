@@ -13,7 +13,7 @@ struct SongPlayerView: View {
     
     // Song Properties
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @Binding var song: Song
+    @Binding var song: SongInfo
     @Binding var team: String
     
     

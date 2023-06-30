@@ -11,7 +11,7 @@ struct MainTabView: View {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @State var expand = false
     @State var isMusicPlaying = false
-    @State var selectedSong: Song = Song(id: "", type: false, title: "'", lyrics: "", info: "", url: "")
+    @State var selectedSong: SongInfo = SongInfo(id: "", team: "", type: false, title: "", lyrics: "", info: "", url: "")
     @Namespace var animation
 
     init() {

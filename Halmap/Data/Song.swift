@@ -16,7 +16,7 @@ struct Song: Identifiable, Codable, Equatable {
     var info: String
     var url: String
 }
-struct SongInfo: Identifiable, Codable {
+struct SongInfo: Identifiable, Codable, Equatable {
     var id: String
     var team: String
     var type: Bool

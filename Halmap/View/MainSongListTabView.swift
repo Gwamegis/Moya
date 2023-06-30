@@ -18,7 +18,7 @@ struct MainSongListTabView: View {
     @State var index = 0
     @Binding var expand: Bool
     @Binding var isMusicPlaying: Bool
-    @Binding var selectedSong: Song
+    @Binding var selectedSong: SongInfo
     
     // SongInformationView
     @State private var isShowingFullScreenCover = false
@@ -31,7 +31,7 @@ struct MainSongListTabView: View {
     let persistence = PersistenceController.shared
     @State var collectedSong: CollectedSong?
     
-    init(expand: Binding<Bool>, isMusicPlaying: Binding<Bool>, selectedSong: Binding<Song>) {
+    init(expand: Binding<Bool>, isMusicPlaying: Binding<Bool>, selectedSong: Binding<SongInfo>) {
         self._expand = expand
         self._isMusicPlaying = isMusicPlaying
         self._selectedSong = selectedSong
@@ -63,13 +63,6 @@ struct MainSongListTabView: View {
                     // MARK: 팀 응원가 탭
                     List {
                         ForEach(dataManager.teamSongs) { song in
-                            
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
                             let songInfo = SongInfo(id: song.id,
                                                     team: selectedTeam,
                                                     type: song.type,
@@ -80,8 +73,9 @@ struct MainSongListTabView: View {
                             
                             Button(action: {
                                 print("tapped")
-                                self.selectedSong = music
+                                self.selectedSong = songInfo
                                 self.isMusicPlaying = true
+                                isShowingSheet = false
                                 withAnimation(.spring()){expand = true}
                             }, label: {
                                 HStack(spacing: 16) {
@@ -100,15 +94,7 @@ struct MainSongListTabView: View {
                                     }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
-                                }.background( NavigationLink("", destination: SongDetailView(song: music, team: selectedTeam), isActive: $isActivateNavigationLink ).opacity(0) )
-                                .onTapGesture {
-                                    isActivateNavigationLink = true
-                                    isShowingSheet = false
-                                    navigationLinkDismiss()
-                                }
-                                 
-                                // Stack 2: Button
-                                HStack {
+                                    
                                     Spacer()
                                     VStack(alignment: .trailing){
                                         Button {
@@ -128,8 +114,34 @@ struct MainSongListTabView: View {
                                                 HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
                                             }
                                         }
-                                    }.frame(width: 20, height: 20)
+                                    }
+                                    .frame(width: 20, height: 20)
                                 }
+
+                                 
+                                // Stack 2: Button
+//                                HStack {
+//                                    Spacer()
+//                                    VStack(alignment: .trailing){
+//                                        Button {
+//                                            print("버튼")
+//                                            isShowingSheet = true
+//                                            isActivateNavigationLink = false
+//                                            sheetDismiss()
+//
+//                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
+//
+//
+//                                        } label: {
+//                                            Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
+//                                        }
+//                                        .sheet(isPresented: $isShowingSheet) {
+//                                            HalfSheet{
+//                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
+//                                            }
+//                                        }
+//                                    }.frame(width: 20, height: 20)
+//                                }
                             })
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
@@ -147,88 +159,84 @@ struct MainSongListTabView: View {
                     
                     
                     // MARK: 선수 응원가 탭
-                    List {
-                        ForEach(dataManager.playerSongs) { song in
-                            let music = Song(id: song.id,
-                                            type: song.type,
-                                            title: song.title,
-                                            lyrics: song.lyrics,
-                                            info: song.info,
-                                            url: song.url)
-                            
-                            let songInfo = SongInfo(id: song.id,
-                                                 team: selectedTeam,
-                                                 type: song.type,
-                                                 title: song.title,
-                                                 lyrics: song.lyrics,
-                                                 info: song.info,
-                                                 url: song.url)
-
-                            
-                            ZStack{
-                                // Stack 1: Contents
-                                HStack(spacing: 16) {
-                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .cornerRadius(8)
-                                    VStack(alignment: .leading, spacing: 6) {
-                                        Text(song.title)
-                                            .font(Font.Halmap.CustomBodyMedium)
-                                        if !song.info.isEmpty {
-                                            Text(song.info)
-                                                .font(Font.Halmap.CustomCaptionMedium)
-                                                .foregroundColor(.customDarkGray)
-                                        }
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                }.background( NavigationLink("", destination: SongDetailView(song: music, team: selectedTeam), isActive: $isActivateNavigationLink ).opacity(0) )
-                                .onTapGesture {
-                                    isActivateNavigationLink = true
-                                    isShowingSheet = false
-                                    navigationLinkDismiss()
-                                }
-
-
+                    Group{
+                        List {
+                            ForEach(dataManager.playerSongs) { song in
+                                
+                                let songInfo = SongInfo(id: song.id,
+                                                        team: selectedTeam,
+                                                        type: song.type,
+                                                        title: song.title,
+                                                        lyrics: song.lyrics,
+                                                        info: song.info,
+                                                        url: song.url)
                                 
                                 
-                                // Stack 2: Button
-                                HStack {
-                                    Spacer()
-                                    VStack(alignment: .trailing){
-                                        Button {
-                                            print("버튼")
-                                            isShowingSheet = true
-                                            isActivateNavigationLink = false
-                                            sheetDismiss()
-                                            
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
-
-                                        } label: {
-                                            Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
-                                        }
-                                        .sheet(isPresented: $isShowingSheet) {
-                                            HalfSheet{
-                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
+                                ZStack{
+                                    // Stack 1: Contents
+                                    HStack(spacing: 16) {
+                                        Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
+                                            .resizable()
+                                            .frame(width: 40, height: 40)
+                                            .cornerRadius(8)
+                                        VStack(alignment: .leading, spacing: 6) {
+                                            Text(song.title)
+                                                .font(Font.Halmap.CustomBodyMedium)
+                                            if !song.info.isEmpty {
+                                                Text(song.info)
+                                                    .font(Font.Halmap.CustomCaptionMedium)
+                                                    .foregroundColor(.customDarkGray)
                                             }
                                         }
-                                    }.frame(width: 20, height: 20)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .lineLimit(1)
+                                    }.background( NavigationLink("", destination: SongDetailView(song: songInfo, team: selectedTeam), isActive: $isActivateNavigationLink ).opacity(0) )
+                                        .onTapGesture {
+                                            isActivateNavigationLink = true
+                                            isShowingSheet = false
+                                            navigationLinkDismiss()
+                                        }
+                                    
+                                    
+                                    
+                                    
+                                    // Stack 2: Button
+                                    HStack {
+                                        Spacer()
+                                        VStack(alignment: .trailing){
+                                            Button {
+                                                print("버튼")
+                                                isShowingSheet = true
+                                                isActivateNavigationLink = false
+                                                sheetDismiss()
+                                                
+                                                collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
+                                                
+                                            } label: {
+                                                Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
+                                            }
+                                            .sheet(isPresented: $isShowingSheet) {
+                                                HalfSheet{
+                                                    HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
+                                                }
+                                            }
+                                        }.frame(width: 20, height: 20)
+                                    }
                                 }
                             }
-                        }
-                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                        .listRowBackground(Color.systemBackground)
-                        .listRowSeparatorTint(Color.customGray)
-                        
-                        RequestSongView(buttonColor: Color.HalmacPoint)
-                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
+                            
+                            RequestSongView(buttonColor: Color.HalmacPoint)
+                                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                .listRowBackground(Color.systemBackground)
+                                .listRowSeparatorTint(Color.customGray)
+                        }
+                        .padding(.horizontal, 20)
+                        .listStyle(.plain)
+                        .tag(1)
                     }
-                    .padding(.horizontal, 20)
-                    .listStyle(.plain)
-                    .tag(1)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }

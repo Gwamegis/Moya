@@ -13,7 +13,7 @@ struct SongDetailView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
-    @State var song: Song
+    @State var song: SongInfo
     @State var team: String
     
     @State var isPlayListView = false

@@ -13,7 +13,7 @@ struct MiniPlayerView: View {
     @State var selectedTeam: String = (UserDefaults.standard.string(forKey: "selectedTeam") ?? "test")
     @Binding var expand : Bool
     @Binding var isPlayingMusic: Bool
-    @Binding var selectedSong: Song
+    @Binding var selectedSong: SongInfo
     @ObservedObject var dataManager = DataManager()
     @EnvironmentObject var audioManager: AudioManager
     @State var isFavorite = false
@@ -23,13 +23,11 @@ struct MiniPlayerView: View {
     
     var height = UIScreen.main.bounds.height / 3
     
-    // safearea...
     
     var safeArea = UIApplication.shared.windows.first?.safeAreaInsets
     
     @State var volume : CGFloat = 0
     
-    // gesture Offset...
     
     @State var offset : CGFloat = 0
     
@@ -47,9 +45,9 @@ struct MiniPlayerView: View {
                             .foregroundColor(.white)
                             .matchedGeometryEffect(id: "Label", in: animation)
                         
-                        Text("팀 이름")
+                        Text(TeamName(rawValue: selectedSong.team )?.fetchTeamNameKr() ?? ".")
                             .font(.caption)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
                             
                     }
                     
@@ -110,7 +108,9 @@ struct MiniPlayerView: View {
                                 .foregroundColor(.white)
                                 .fontWeight(.bold)
                             
-                            Text("팀 명")
+                            Text(TeamName(rawValue: selectedSong.team )?.fetchTeamNameKr() ?? ".")
+                                .font(.caption)
+                                .foregroundColor(.white)
                         }
                         
                         Spacer()
@@ -119,7 +119,10 @@ struct MiniPlayerView: View {
                             if isFavorite {
                                 persistence.deleteSongs(song: findFavoriteSong())
                             } else {
-                                persistence.saveSongs(song: selectedSong, playListTitle: "favorite")
+                                // asdf
+                                let songInfo = SongInfo(id: selectedSong.id, team: selectedTeam, type: selectedSong.type, title: selectedSong.title, lyrics: selectedSong.lyrics, info: selectedSong.info, url: selectedSong.url)
+                                persistence.saveSongs(song: songInfo, playListTitle: "favorite", menuType: .cancelLiked, collectedSongs: favoriteSongs)
+                                
                             }
                             isFavorite.toggle()
                         }, label: {
@@ -168,7 +171,7 @@ struct MiniPlayerView: View {
 //                    }
 //                    .frame(height: 50)
                     
-                     SongContentView(song: $selectedSong, isScrolled: $isScrolled)
+                    SongContentView(song: $selectedSong, team: $selectedTeam, isScrolled: $isScrolled)
                         VStack(spacing: 0) {
                             ZStack{
 //                                Rectangle()
@@ -191,7 +194,7 @@ struct MiniPlayerView: View {
                                 Rectangle()
                                     .frame(height: UIScreen.getHeight(120))
                                     .foregroundColor(Color.HalmacSub)
-                                SongPlayerView(song: $selectedSong)
+                                SongPlayerView(song: $selectedSong, team: $selectedTeam)
                             }
                         }
                     
@@ -320,17 +323,13 @@ struct MiniPlayerView: View {
 //                .padding(.bottom,safeArea?.bottom == 0 ? 15 : safeArea?.bottom)
                 
             }
-            // this will give strech effect...
             .frame(height: expand ? nil : 0)
             .opacity(expand ? 1 : 0)
         }
-        // expanding to full screen when clicked...
+
         .frame(maxHeight: expand ? .infinity : 65)
         
-        // moving the miniplayer above the tabbar...
-        // approz tab bar height is 49
         
-        // Divider Line For Separting Miniplayer And Tab Bar....
         .background(
         
             VStack(spacing: 0){
@@ -359,7 +358,6 @@ struct MiniPlayerView: View {
     
     func onchanged(value: DragGesture.Value){
         
-        // only allowing when its expanded...
         print(offset)
         if value.translation.height > 0 && expand {
             offset = value.translation.height
@@ -369,8 +367,6 @@ struct MiniPlayerView: View {
     func onended(value: DragGesture.Value){
         
         withAnimation(.interactiveSpring(response: 0.5, dampingFraction: 0.95, blendDuration: 0.95)){
-            
-            // if value is > than height / 3 then closing view...
             
             if value.translation.height > height{
                 expand = false
@@ -392,6 +388,6 @@ struct MiniPlayerView: View {
 struct MiniPlayerView_Previews: PreviewProvider {
     @Namespace static var animation
     static var previews: some View {
-        MiniPlayerView(animation: animation, expand: .constant(true), isPlayingMusic: .constant(true), selectedSong: .constant(Song(id: "", type: false, title: "'", lyrics: "", info: "'", url: "")))
+        MiniPlayerView(animation: animation, expand: .constant(true), isPlayingMusic: .constant(true), selectedSong: .constant(SongInfo(id: "", team: "", type: false, title: "'", lyrics: "", info: "'", url: "")))
     }
 }

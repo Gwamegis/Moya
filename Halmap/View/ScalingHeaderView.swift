@@ -95,7 +95,7 @@ struct ScalingHeaderView: View {
                             
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song, team: favoriteSong.team ?? "Doosan")
+                                    SongDetailView(song: songInfo, team: favoriteSong.team ?? "Doosan")
                                 } label: {
                                     HStack(spacing: 16) {
                                         Image(dataManager.checkSeasonSong(data: songInfo) ? "\(favoriteSong.team ?? "")23" : "\( favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")

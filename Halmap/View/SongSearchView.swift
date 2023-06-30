@@ -119,36 +119,36 @@ struct SongSearchView: View {
                     }
                     .frame(maxWidth: .infinity)
                 } else {
-                    List {
-                        ForEach(autoComplete.indices, id: \.self) { index in
-                            NavigationLink(destination: SongDetailView(song: setSong(data: autoComplete[index]), team: autoComplete[index].team)) {
-                                HStack {
-                                    Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .cornerRadius(8)
-                                    VStack(alignment: .leading, spacing: 8) {
-                                        Text(autoComplete[index].title )
-                                            .font(Font.Halmap.CustomBodyMedium)
-                                            .foregroundColor(.black)
-                                        Text("\(TeamName(rawValue: autoComplete[index].team)?.fetchTeamNameKr() ?? "두산 베어스")")
-                                            .font(Font.Halmap.CustomCaptionMedium)
-                                            .foregroundColor(.customDarkGray)
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                }
-                                .font(Font.Halmap.CustomBodyMedium)
-                                .foregroundColor(Color.black)
-                                .frame(height: 45)
-                            }
-                            .listRowBackground(Color(UIColor.clear))
-                            .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
-                            .listRowSeparatorTint(Color.customGray)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .listStyle(.plain)
+//                    List {
+//                        ForEach(autoComplete.indices, id: \.self) { index in
+//                            NavigationLink(destination: SongDetailView(song: setSong(data: autoComplete[index]), team: autoComplete[index].team)) {
+//                                HStack {
+//                                    Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                        .cornerRadius(8)
+//                                    VStack(alignment: .leading, spacing: 8) {
+//                                        Text(autoComplete[index].title )
+//                                            .font(Font.Halmap.CustomBodyMedium)
+//                                            .foregroundColor(.black)
+//                                        Text("\(TeamName(rawValue: autoComplete[index].team)?.fetchTeamNameKr() ?? "두산 베어스")")
+//                                            .font(Font.Halmap.CustomCaptionMedium)
+//                                            .foregroundColor(.customDarkGray)
+//                                    }
+//                                    .frame(maxWidth: .infinity, alignment: .leading)
+//                                    .lineLimit(1)
+//                                }
+//                                .font(Font.Halmap.CustomBodyMedium)
+//                                .foregroundColor(Color.black)
+//                                .frame(height: 45)
+//                            }
+//                            .listRowBackground(Color(UIColor.clear))
+//                            .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+//                            .listRowSeparatorTint(Color.customGray)
+//                        }
+//                    }
+//                    .padding(.horizontal, 20)
+//                    .listStyle(.plain)
                     Spacer()
                 }
             }

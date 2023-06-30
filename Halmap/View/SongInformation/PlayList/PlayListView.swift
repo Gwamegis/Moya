@@ -13,7 +13,7 @@ struct PlayListView: View {
     @EnvironmentObject var audioManager: AudioManager
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
-    @Binding var song: Song
+    @Binding var song: SongInfo
     
     let persistence = PersistenceController.shared
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
@@ -52,9 +52,9 @@ struct PlayListView: View {
                             
                             PlayListRow(songInfo: songInfo)
                                 .onTapGesture {
-                                self.song = song
+                                self.song = songInfo
                                 audioManager.removePlayer()
-                                audioManager.AMset(song: song, selectedTeam: selectedTeam)
+                                audioManager.AMset(song: songInfo, selectedTeam: selectedTeam)
                             }
                             
                             
