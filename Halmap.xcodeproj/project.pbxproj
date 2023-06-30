@@ -12,6 +12,7 @@
 		203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF012916762B00E838A1 /* FirebaseFirestore */; };
 		203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */; };
 		203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 203CAF052916762B00E838A1 /* FirebaseStorage */; };
+		20A23DC62A3A8AD6003C036C /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A23DC52A3A8AD6003C036C /* MiniPlayerView.swift */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
+		20A23DC52A3A8AD6003C036C /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
 		87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIView.swift"; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
+				20A23DC52A3A8AD6003C036C /* MiniPlayerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
+				20A23DC62A3A8AD6003C036C /* MiniPlayerView.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,

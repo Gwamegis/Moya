@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Song: Identifiable, Codable {
+struct Song: Identifiable, Codable, Equatable {
     var id: String
     // true: 선수, false: 팀
     var type: Bool

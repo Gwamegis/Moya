@@ -13,6 +13,7 @@ struct OnBoardingStartView: View {
     
     @State var startButton: Bool = false
     
+    
     var body: some View {
         if !isFirstLaunching {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in

@@ -29,6 +29,7 @@ struct Team: Codable, Hashable {
     }
 }
 
+
 struct Player: Codable, Hashable {
     let playerName, lyric, songInfo: String
 

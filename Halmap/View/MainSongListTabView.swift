@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainSongListTabView: View {
-    
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     //
     @EnvironmentObject var dataManager: DataManager
@@ -17,6 +16,9 @@ struct MainSongListTabView: View {
     
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
+    @Binding var expand: Bool
+    @Binding var isMusicPlaying: Bool
+    @Binding var selectedSong: Song
     
     // SongInformationView
     @State private var isShowingFullScreenCover = false
@@ -29,7 +31,10 @@ struct MainSongListTabView: View {
     let persistence = PersistenceController.shared
     @State var collectedSong: CollectedSong?
     
-    init() {
+    init(expand: Binding<Bool>, isMusicPlaying: Binding<Bool>, selectedSong: Binding<Song>) {
+        self._expand = expand
+        self._isMusicPlaying = isMusicPlaying
+        self._selectedSong = selectedSong
         Color.setColor(selectedTeam)
     }
     
@@ -73,8 +78,12 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            ZStack() {
-                                // Stack 1: Contents
+                            Button(action: {
+                                print("tapped")
+                                self.selectedSong = music
+                                self.isMusicPlaying = true
+                                withAnimation(.spring()){expand = true}
+                            }, label: {
                                 HStack(spacing: 16) {
                                     Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
                                         .resizable()
@@ -121,7 +130,7 @@ struct MainSongListTabView: View {
                                         }
                                     }.frame(width: 20, height: 20)
                                 }
-                            }
+                            })
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
@@ -265,8 +274,8 @@ struct MainSongListTabView: View {
     }
 }
 
-struct MainSongListTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainSongListTabView()
-    }
-}
+//struct MainSongListTabView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainSongListTabView(expand: .constant(true), .constant(v))
+//    }
+//}
