@@ -31,15 +31,6 @@ struct PlayListView: View {
                     List {
                         ForEach(collectedSongs, id: \.self) { playListSong in
                             
-                            let song = Song(
-                                id: playListSong.id ?? "",
-                                type: playListSong.type ,
-                                title: playListSong.title ?? "" ,
-                                lyrics: playListSong.lyrics ?? "",
-                                info: playListSong.info ?? "",
-                                url: playListSong.url ?? ""
-                            )
-                            
                             let songInfo = SongInfo(
                                 id: playListSong.id ?? "",
                                 team: playListSong.team ?? "",

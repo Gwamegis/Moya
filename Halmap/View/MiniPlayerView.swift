@@ -19,6 +19,7 @@ struct MiniPlayerView: View {
     @State var isFavorite = false
     let persistence = PersistenceController.shared
     @State var teamName: String?
+    @State private var isShowPlaylistView: Bool = false
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     var height = UIScreen.main.bounds.height / 3
@@ -103,7 +104,7 @@ struct MiniPlayerView: View {
                             .resizable()
                             .frame(width: 52, height: 52)
                         
-                        VStack {
+                        VStack(alignment: .leading) {
                             Text(selectedSong.title)
                                 .foregroundColor(.white)
                                 .fontWeight(.bold)
@@ -170,8 +171,15 @@ struct MiniPlayerView: View {
 //                        })
 //                    }
 //                    .frame(height: 50)
-                    
-                    SongContentView(song: $selectedSong, team: $selectedTeam, isScrolled: $isScrolled)
+                    if isShowPlaylistView {
+                        VStack{
+                            Rectangle().foregroundColor(.clear).frame(height: 10)
+                            PlayListView(song: $selectedSong)
+                        }
+                    } else {
+                        SongContentView(song: $selectedSong, team: $selectedTeam, isScrolled: $isScrolled)
+                    }
+                    // SongContentView(song: $selectedSong, team: $selectedTeam, isScrolled: $isScrolled)
                         VStack(spacing: 0) {
                             ZStack{
 //                                Rectangle()
@@ -190,6 +198,20 @@ struct MiniPlayerView: View {
 //                                .frame(height: 100)
 //                                .background(Color.fetchBottomGradient())
 //                                .foregroundColor(Color(UIColor.clear))
+                            // PlayListButton
+                            HStack(){
+                                Spacer()
+                                Button(action: {
+                                    isShowPlaylistView.toggle()
+                                }, label: {
+                                    ZStack {
+                                        Circle().foregroundColor(Color("\(selectedTeam)Background")).frame(width: 43, height: 43)
+                                        Image(systemName: isShowPlaylistView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
+                                        
+                                    }
+                                })
+                            }.padding(20)
+                            
                             ZStack(alignment: .center) {
                                 Rectangle()
                                     .frame(height: UIScreen.getHeight(120))

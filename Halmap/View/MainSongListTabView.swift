@@ -117,31 +117,6 @@ struct MainSongListTabView: View {
                                     }
                                     .frame(width: 20, height: 20)
                                 }
-
-                                 
-                                // Stack 2: Button
-//                                HStack {
-//                                    Spacer()
-//                                    VStack(alignment: .trailing){
-//                                        Button {
-//                                            print("버튼")
-//                                            isShowingSheet = true
-//                                            isActivateNavigationLink = false
-//                                            sheetDismiss()
-//
-//                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
-//
-//
-//                                        } label: {
-//                                            Image(systemName: "ellipsis").foregroundColor(.customDarkGray)
-//                                        }
-//                                        .sheet(isPresented: $isShowingSheet) {
-//                                            HalfSheet{
-//                                                HalfSheetView(showSheet: $isShowingSheet, collectedSongData: $collectedSong)
-//                                            }
-//                                        }
-//                                    }.frame(width: 20, height: 20)
-//                                }
                             })
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
