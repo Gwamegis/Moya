@@ -24,11 +24,7 @@ struct MiniPlayerView: View {
     
     var height = UIScreen.main.bounds.height / 3
     
-    
-    var safeArea = UIApplication.shared.windows.first?.safeAreaInsets
-    
     @State var volume : CGFloat = 0
-    
     
     @State var offset : CGFloat = 0
     
