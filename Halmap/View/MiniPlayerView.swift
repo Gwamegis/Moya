@@ -21,6 +21,7 @@ struct MiniPlayerView: View {
     @State var teamName: String?
     @State private var isShowPlaylistView: Bool = false
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.id, ascending: true)], animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlayListFilter(filter: "defaultPlayList").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     var height = UIScreen.main.bounds.height / 3
     
@@ -194,6 +195,7 @@ struct MiniPlayerView: View {
 //                                .frame(height: 100)
 //                                .background(Color.fetchBottomGradient())
 //                                .foregroundColor(Color(UIColor.clear))
+                            
                             // PlayListButton
                             HStack(){
                                 Spacer()

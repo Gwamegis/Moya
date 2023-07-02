@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TeamChangingView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @Binding var changedTeam: String
+    // @Binding var changedTeam: String
     @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 10)
     @State var selectedTeam: String? = nil
     
@@ -48,10 +48,12 @@ struct TeamChangingView: View {
             .padding(.horizontal, 5)
             
             Button {
+                // 유저 디폴트 바꾸는 코드
                 UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
                     self.presentationMode.wrappedValue.dismiss()
-                    changedTeam = selectedTeam ?? "Hanwha"
+                    
+                    // changedTeam = selectedTeam ?? "Hanwha"
                 }
                 print("선택완료")
             } label: {
@@ -69,7 +71,7 @@ struct TeamChangingView: View {
         }
         .padding(.horizontal, 20)
         .onAppear() {
-            let index = teamLogo.firstIndex(of: TeamName(rawValue: changedTeam) ?? TeamName.doosan)
+            let index = teamLogo.firstIndex(of: TeamName(rawValue: "Lotte") ?? TeamName.doosan)
             buttonPressed[index!] = true
         }
     }

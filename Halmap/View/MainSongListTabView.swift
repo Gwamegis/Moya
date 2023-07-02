@@ -247,10 +247,11 @@ struct MainSongListTabView: View {
         }
         .background(Color.systemBackground)
         .sheet(isPresented: $showingTeamChaingView) {
-            TeamChangingView(changedTeam: $selectedTeam)
+            // TeamChangingView(changedTeam: $selectedTeam)
+            TeamChangingView()
                 .onDisappear{
                     dataManager.setSongList(team: selectedTeam)
-                    Color.setColor(selectedTeam)
+                    // Color.setColor(selectedTeam)
                 }
         }
         .navigationBarHidden(true)

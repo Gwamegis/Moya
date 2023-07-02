@@ -10,11 +10,15 @@ import SwiftUI
 struct MainTabView: View {    
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @State var expand = false
-    @State var isMusicPlaying = false
-    @State var selectedSong: SongInfo = SongInfo(id: "", team: "", type: false, title: "", lyrics: "", info: "", url: "")
+    // @State var isMusicPlaying = false
+    @Binding var isMusicPlaying: Bool
+    @Binding var selectedSong: SongInfo
+//    @State var selectedSong: SongInfo = SongInfo(id: "", team: "", type: false, title: "", lyrics: "", info: "", url: "")
     @Namespace var animation
 
-    init() {
+    init(selectedSong: Binding<SongInfo>, isMusicPlaying: Binding<Bool>) {
+        self._selectedSong = selectedSong
+        self._isMusicPlaying = isMusicPlaying
         Color.setColor(selectedTeam)
     }
     
@@ -39,15 +43,15 @@ struct MainTabView: View {
             }
             .accentColor(Color.HalmacPoint)
             
-            if isMusicPlaying{
-                MiniPlayerView(animation: animation, expand: $expand, isPlayingMusic: $isMusicPlaying, selectedSong: $selectedSong)
-            }
+//            if isMusicPlaying{
+//                MiniPlayerView(animation: animation, expand: $expand, isPlayingMusic: $isMusicPlaying, selectedSong: $selectedSong)
+//            }
         }
     }
 }
 
-struct MainTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainTabView()
-    }
-}
+//struct MainTabView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MainTabView()
+//    }
+//}

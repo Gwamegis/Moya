@@ -12,13 +12,24 @@ struct OnBoardingStartView: View {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     
     @State var startButton: Bool = false
+    @State var number: Int = 1
+    @State var expand = false
+    @State var isMusicPlaying = false
+    @State var selectedSong: SongInfo = SongInfo(id: "", team: "", type: false, title: "", lyrics: "", info: "", url: "")
+    @Namespace var animation
     
     
     var body: some View {
         if !isFirstLaunching {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
                 if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
-                    MainTabView()
+                    ZStack(alignment: .bottom){
+                        MainTabView(selectedSong: $selectedSong, isMusicPlaying: $isMusicPlaying)
+                        
+                        if isMusicPlaying{
+                            MiniPlayerView(animation: animation, expand: $expand, isPlayingMusic: $isMusicPlaying, selectedSong: $selectedSong)
+                        }
+                    }
                 }
             }
         } else {
