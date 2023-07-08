@@ -66,7 +66,6 @@ struct SongPlayerView: View {
         .background(Color("\(team)Sub"))
         .onDisappear(){
             audioManager.removePlayer()
-            audioManager.progressValue = 0
         }
         .onAppear(){
             audioManager.AMset(song: song, selectedTeam: team)

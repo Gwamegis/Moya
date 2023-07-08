@@ -21,8 +21,8 @@ final class AudioManager: NSObject, ObservableObject {
         }
     }
     
-    @Published var progressValue: Float = 0
-    @Published var currentTime: Double = 0
+    @Published var progressValue: Float = 0 //player.seek 에서 사용
+    @Published var currentTime: Double = 0 //재생바 현재 시간 표시에서 사용
     var duration: Double {
         return player?.currentItem?.duration.seconds ?? 0
     }
@@ -68,7 +68,11 @@ final class AudioManager: NSObject, ObservableObject {
         
         commandCenter.playCommand.addTarget { [unowned self] event in
             if self.player?.rate == 0.0 {
-                AMplay()
+                player?.play()
+                isPlaying = true
+                        
+                updateNowPlayingPlaybackRate()
+                
                 return .success
             }
             return .commandFailed
@@ -80,6 +84,17 @@ final class AudioManager: NSObject, ObservableObject {
                 return .success
             }
             return .commandFailed
+        }
+        
+        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+            if let positionTime = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime {
+                let seekTime = CMTime(value: Int64(positionTime), timescale: 1)
+                self.currentTime = seekTime.seconds
+                self.progressValue = self.calculateProgress(currentTime: seekTime.seconds)
+                self.player?.seek(to: seekTime)
+//                AMseek(to: progressValue)
+            }
+            return .success
         }
     }
     
@@ -170,7 +185,7 @@ final class AudioManager: NSObject, ObservableObject {
         
         player?.play()
         isPlaying = true
-                
+
         updateNowPlayingPlaybackRate()
         
     }
@@ -205,6 +220,9 @@ final class AudioManager: NSObject, ObservableObject {
         player.seek(to: time)
     }
     func removePlayer() {
+        self.progressValue = 0
+        self.currentTime = 0
+        
         AMstop()
         player = nil
         
@@ -244,8 +262,11 @@ final class AudioManager: NSObject, ObservableObject {
             self.currentTime = time.seconds
             let progress = self.calculateProgress(currentTime: time.seconds)
             self.progressValue = progress
+            
             self.currentProgressPublisher.send(progress)
             self.currentTimePublisher.send(time.seconds)
+            
+            updateNowPlayingPlaybackRate()
         }
     }
 }
