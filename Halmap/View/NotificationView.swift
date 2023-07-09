@@ -34,6 +34,9 @@ struct NotificationView: View {
     )
     
     @State var item: Notification = Notification(id: "", icon: "", isNews: false, title: "", detail: "", list: [])
+    @Environment(\.presentationMode) var presentationMode
+    @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 20) {
@@ -63,6 +66,8 @@ struct NotificationView: View {
                 HStack(spacing: 10) {
                     Button {
                         print("next")
+                        self.presentationMode.wrappedValue.dismiss()
+                        self.isShouldShowNotification = false
                     } label: {
                         Text("다음에 할래요")
                             .foregroundColor(.customDarkGray)
@@ -70,6 +75,10 @@ struct NotificationView: View {
                     }
                     Button {
                         print("now")
+                        guard let url = URL(string: "itms-apps://itunes.apple.com/app/6444238142") else { return }
+                        UIApplication.shared.open(url)
+                        self.isShouldShowNotification = false
+                        
                     } label: {
                         Text("업데이트하러 가기")
                             .foregroundColor(.white)
@@ -78,7 +87,9 @@ struct NotificationView: View {
                 }
             } else {
                 Button {
-                    print("next")
+                    print("ok")
+                    self.presentationMode.wrappedValue.dismiss()
+                    self.isShouldShowNotification = false
                 } label: {
                     Text("확인")
                         .foregroundColor(.mainGreen)
@@ -87,6 +98,7 @@ struct NotificationView: View {
             }
             
         }
+        .padding(.top, 30)
         .padding(.horizontal, 20)
         .onAppear(){
             item = noti_3
