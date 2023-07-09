@@ -6,12 +6,15 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct Notification: Identifiable, Codable {
-    var id: String
+    @DocumentID var id: String?
+//    var id: String
     var icon: String
     var isNews: Bool
     var title: String
     var detail: String
     var list: [String]
+    var version: String
 }

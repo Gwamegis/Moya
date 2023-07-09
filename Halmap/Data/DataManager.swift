@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseRemoteConfig
+import FirebaseFirestoreSwift
 
 class DataManager: ObservableObject {
     
@@ -177,6 +178,10 @@ class DataManager: ObservableObject {
     
     func checkSeasonSong(data: SongInfo) -> Bool {
         self.seasonSongs[TeamName(rawValue: data.team)?.fetchTeamIndex() ?? 0].contains(data.title)
+    }
+    
+    private func fetchNotificationData() {
+        
     }
     
     private func fetchRemoteLatestVersion() async throws {
