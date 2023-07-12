@@ -175,6 +175,9 @@ final class AudioManager: NSObject, ObservableObject {
             setupPeriodicObservation(for: player)
             AMplay()
         }
+        
+        self.progressValue = 0
+        self.currentTime = 0
     }
     
     func AMplay() {
@@ -193,14 +196,14 @@ final class AudioManager: NSObject, ObservableObject {
     // MARK: - AM Functions
     
     func AMstop() {
+        updateNowPlayingPlaybackRate()
+        
         guard let player = player else {
             print("Instance of audio player not found")
             return
         }
         player.pause()
         isPlaying = false
-        
-        updateNowPlayingPlaybackRate()
     }
     
     @objc func AMplayEnd() {
@@ -220,16 +223,12 @@ final class AudioManager: NSObject, ObservableObject {
         player.seek(to: time)
     }
     func removePlayer() {
-        self.progressValue = 0
-        self.currentTime = 0
-        
         AMstop()
         player = nil
         
         self.item?.removeObserver(self as NSObject,
                                   forKeyPath: #keyPath(AVPlayerItem.status),
                                   context: &playerItemContext)
-        
     }
     
     //MARK: - progressbar
