@@ -9,16 +9,12 @@ import SwiftUI
 
 struct ScalingHeaderView: View {
     @EnvironmentObject var dataManager: DataManager
-    let maxHeight: CGFloat = UIScreen.getHeight(216)
+    let maxHeight: CGFloat = 216
     var topEdge: CGFloat
     
     @State var offset: CGFloat = 0
-    @State var isShowSheet = false
-    @State var collectedSongData: CollectedSong?
-    @State var isDraged = false
     
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
-    
     let persistence = PersistenceController.shared
     
     var body: some View {
@@ -26,43 +22,28 @@ struct ScalingHeaderView: View {
             VStack(spacing: 15) {
                 GeometryReader { proxy in
                     VStack(spacing: 0) {
-                        topBar
+                        TopBar(topEdge: topEdge, offset: $offset)
                             .frame(maxWidth: .infinity)
                             .frame(height: getHeaderHeight(), alignment: .bottom)
                             .overlay(
                                 topTitle
-                                    .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 1 : 0)
+                                    .opacity(topTitleOpacity())
                             )
                         HStack() {
                             Text("총 \(collectedSongs.count)곡")
                                 .font(Font.Halmap.CustomCaptionBold)
                                 .foregroundColor(.customDarkGray)
                             Spacer()
-                            Button {
-                                withAnimation {
-                                    isDraged.toggle()
-                                }
-                            } label: {
-                                HStack(spacing: 5) {
-                                    Image(systemName: "play.circle.fill")
-                                        .foregroundColor(.mainGreen)
-                                        .font(.system(size: 20))
-                                    Text("전체 재생하기")
-                                        .font(Font.Halmap.CustomCaptionBold)
-                                        .foregroundColor(.mainGreen)
-                                }
-                                .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 1 : 0)
-                            }
                         }
                         .padding(.horizontal, 20)
-                        .padding(.vertical, UIScreen.getHeight(17))
+                        .padding(.vertical, 17)
                         Divider()
                             .overlay(Color.customGray.opacity(0.6))
                             .padding(.horizontal, 20)
                     }
                     .background(Color.systemBackground)
                 }
-                .frame(height: maxHeight + UIScreen.getHeight(48))
+                .frame(height: maxHeight + 48)
                 .offset(y: -offset)
                 .zIndex(1)
                 
@@ -74,8 +55,8 @@ struct ScalingHeaderView: View {
                             .frame(width: 200, height: 200)
                             .padding(.top, 60)
                     } else {
-                        ForEach(self.collectedSongs, id: \.self) { favoriteSong in
-                            var song = Song(
+                        ForEach(collectedSongs) { favoriteSong in
+                            let song = Song(
                                 id: favoriteSong.id ?? "",
                                 type: favoriteSong.type ,
                                 title: favoriteSong.title ?? "" ,
@@ -114,21 +95,10 @@ struct ScalingHeaderView: View {
                                         .lineLimit(1)
                                         
                                         Button {
-                                            print("scaling favorite",favoriteSong)
-                                            self.collectedSongData = favoriteSong
-                                            
-                                            song = Song(id: favoriteSong.id ?? "", type: favoriteSong.type, title: favoriteSong.title ?? "", lyrics: favoriteSong.lyrics ?? "", info: favoriteSong.info ?? "", url: favoriteSong.url ?? "")
-                                            
-                                            isShowSheet.toggle()
-                                            
+                                            persistence.deleteSongs(song: favoriteSong)
                                         } label: {
-                                            Image(systemName: "ellipsis")
-                                                .foregroundColor(.black.opacity(0.2))
-                                        }
-                                        .sheet(isPresented: $isShowSheet) {
-                                            HalfSheet {
-                                                HalfSheetView(showSheet: $isShowSheet, collectedSongData: $collectedSongData)
-                                            }
+                                            Image(systemName: "heart.fill")
+                                                .foregroundColor(.mainGreen)
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -141,48 +111,10 @@ struct ScalingHeaderView: View {
                 }
             }
             .modifier(OffsetModifier(offset: $offset))
-            .onChange(of: offset) { _ in
-                if offset > -UIScreen.getHeight(90) {
-                    withAnimation {
-                        isDraged = false
-                    }
-                } else if offset < 0 {
-                    withAnimation {
-                        isDraged = true
-                    }
-                }
-            }
         }
         .coordinateSpace(name: "StorageScroll")
         .background(Color.systemBackground)
-        
     }
-    
-    var topBar: some View {
-        ZStack(alignment: .bottom) {
-            Image("storageTop")
-                .resizable()
-            HStack {
-                Text("보관함")
-                    .font(Font.Halmap.CustomLargeTitle)
-                Spacer()
-                Button {
-                    withAnimation {
-                        isDraged.toggle()
-                    }
-                } label: {
-                    Image(systemName: "play.circle.fill")
-                        .foregroundColor(.mainGreen)
-                        .font(.system(size: 50))
-                }
-            }
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
-        }
-        .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 0 : 1)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .background(Color.systemBackground)
-    }
-    
     var topTitle: some View {
         VStack{
             HStack {
@@ -197,11 +129,45 @@ struct ScalingHeaderView: View {
     }
     
     func getHeaderHeight() -> CGFloat {
-        isDraged ? (59 + topEdge) : maxHeight + offset
+        let topHeight = maxHeight + offset
+        
+        return topHeight >= (59 + topEdge) ? topHeight : (59 + topEdge)
     }
+    func topTitleOpacity() -> CGFloat {
+        let progress = -offset*2 / (maxHeight - (59 + topEdge))
+        return progress
+    }
+    func getOpacity() -> CGFloat {
+        let progress = -offset*2 / 40
+        let opacity = 1 - progress
+        return offset < 0 ? opacity : 1
+    }
+}
+
+struct TopBar: View {
     
-    func checkScrollRequirement(listCount: Int) -> Bool{
-        UIScreen.screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 ? true : false
+    let topEdge: CGFloat
+    @Binding var offset: CGFloat
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Image("storageTop")
+                .resizable()
+            HStack {
+                Text("보관함")
+                    .font(Font.Halmap.CustomLargeTitle)
+                Spacer()
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+        }
+        .opacity(getOpacity())
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .background(Color.systemBackground)
+    }
+    func getOpacity() -> CGFloat {
+        let progress = -offset / 40
+        let opacity = 1 - progress
+        return offset < 0 ? opacity : 1
     }
 }
 

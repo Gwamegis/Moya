@@ -16,7 +16,6 @@ struct SongDetailView: View {
     @State var song: Song
     @State var team: String
     
-    @State var isPlayListView = false
     @State var isScrolled = false
     
     @State var isFavorite = false
@@ -31,14 +30,7 @@ struct SongDetailView: View {
             Color("\(team)Sub")
                 .ignoresSafeArea()
             
-            if isPlayListView {
-                VStack{
-                    Rectangle().foregroundColor(.clear).frame(height: 10)
-                    PlayListView(song: $song)
-                }
-            } else {
-                SongContentView(song: $song, team: $team, isScrolled: $isScrolled)
-            }
+            SongContentView(song: $song, team: $team, isScrolled: $isScrolled)
             
             VStack(spacing: 0) {
                 Rectangle()
@@ -51,28 +43,10 @@ struct SongDetailView: View {
                         .foregroundColor(Color(UIColor.clear))
                 }
                 Spacer()
-                
-                ZStack{
-                    Rectangle()
-                        .frame(height: 120)
-                        .background(Color.fetchBottomGradient(color: Color("\(team)Sub")))
-                        .foregroundColor(Color(UIColor.clear))
-                    
-                    // PlayListButton
-                    HStack(){
-                        Spacer()
-                        Button(action: {
-                            isPlayListView.toggle()
-                        }, label: {
-                            ZStack {
-                                Circle().foregroundColor(Color("\(team)Background")).frame(width: 43, height: 43)
-                                Image(systemName: isPlayListView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
-                                
-                            }
-                        })
-                    }.padding(20)
-                }
-                
+                Rectangle()
+                    .frame(height: 120)
+                    .background(Color.fetchBottomGradient(color: Color("\(team)Sub")))
+                    .foregroundColor(Color(UIColor.clear))
                 ZStack(alignment: .center) {
                     Rectangle()
                         .frame(height: UIScreen.getHeight(120))
@@ -91,7 +65,7 @@ struct SongDetailView: View {
                         persistence.deleteSongs(song: findFavoriteSong())
                     } else {
                         let songInfo = SongInfo(id: song.id, team: team, type: song.type, title: song.title, lyrics: song.lyrics, info: song.info, url: song.url)
-                        persistence.saveSongs(song: songInfo, playListTitle: "favorite", menuType: .cancelLiked, collectedSongs: favoriteSongs)
+                        persistence.saveSongs(song: songInfo, playListTitle: "favorite")
                     }
                     isFavorite.toggle()
                 } label: {
