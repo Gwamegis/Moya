@@ -10,6 +10,8 @@ import SwiftUI
 struct OnBoardingStartView: View {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
+    @AppStorage("fetchLatestVersion") var fetchLatestVersion = "1.0.0"
     
     @State var startButton: Bool = false
     
@@ -18,6 +20,11 @@ struct OnBoardingStartView: View {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
                 if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
                     MainTabView()
+                        .sheet(isPresented: $isShouldShowNotification) {
+                            HalfSheet {
+                                NotificationView()
+                            }
+                        }
                 }
             }
         } else {

@@ -15,7 +15,6 @@
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */; };
-		A813C77429C779C400CF73FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A813C77329C779C400CF73FE /* GoogleService-Info.plist */; };
 		A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */; };
 		A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC7B28F15D9900B0FC7C /* ContentView.swift */; };
 		A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A81FFC7D28F15D9C00B0FC7C /* Assets.xcassets */; };
@@ -36,6 +35,12 @@
 		B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = B2699E0F28F1CB9700267A4F /* Pretendard-Medium.otf */; };
 		EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */; };
 		EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */; };
+		F9168B292A5A81AD00DCF649 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9168B282A5A81AD00DCF649 /* NotificationView.swift */; };
+		F9168B2B2A5A81BC00DCF649 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9168B2A2A5A81BC00DCF649 /* Notification.swift */; };
+		F9168B2E2A5A979800DCF649 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = F9168B2D2A5A979800DCF649 /* FirebaseRemoteConfig */; };
+		F9168B302A5A979800DCF649 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F9168B2F2A5A979800DCF649 /* FirebaseRemoteConfigSwift */; };
+		F9168B322A5AA1FB00DCF649 /* HalfModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9168B312A5AA1FB00DCF649 /* HalfModalPresentationController.swift */; };
+		F9168B362A5AD76400DCF649 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9168B352A5AD76300DCF649 /* GoogleService-Info.plist */; };
 		F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9174B292A2B2F5F00B1CE87 /* SeasonSong.swift */; };
 		F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FA29B18AF800F7E488 /* MainTabView.swift */; };
 		F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */; };
@@ -43,6 +48,7 @@
 		F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
+		F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95F26C22A4C9BFD00B534EB /* Progressbar.swift */; };
 		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
 		F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622A29B4CB450025F50E /* ThemeManager.swift */; };
 		F98F623129B59CE60025F50E /* TeamName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F623029B59CE60025F50E /* TeamName.swift */; };
@@ -63,7 +69,6 @@
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
 		87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIView.swift"; sourceTree = "<group>"; };
-		A813C77329C779C400CF73FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A81FFC7628F15D9900B0FC7C /* Halmap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Halmap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81FFC7928F15D9900B0FC7C /* HalmapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalmapApp.swift; sourceTree = "<group>"; };
 		A81FFC7B28F15D9900B0FC7C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +91,10 @@
 		B2699E0F28F1CB9700267A4F /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		EEBC269E28F1CAE800BD5B3D /* TabBarItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarItemView.swift; sourceTree = "<group>"; };
 		EEBC269F28F1CAE800BD5B3D /* TabBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		F9168B282A5A81AD00DCF649 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		F9168B2A2A5A81BC00DCF649 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		F9168B312A5AA1FB00DCF649 /* HalfModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfModalPresentationController.swift; sourceTree = "<group>"; };
+		F9168B352A5AD76300DCF649 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F9174B292A2B2F5F00B1CE87 /* SeasonSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonSong.swift; sourceTree = "<group>"; };
 		F91BE5FA29B18AF800F7E488 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListTabView.swift; sourceTree = "<group>"; };
@@ -93,6 +102,7 @@
 		F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		F95F26C22A4C9BFD00B534EB /* Progressbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progressbar.swift; sourceTree = "<group>"; };
 		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		F98F622A29B4CB450025F50E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F98F623029B59CE60025F50E /* TeamName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamName.swift; sourceTree = "<group>"; };
@@ -116,7 +126,9 @@
 				203CAF022916762B00E838A1 /* FirebaseFirestore in Frameworks */,
 				203CAF042916762B00E838A1 /* FirebaseFirestoreSwift in Frameworks */,
 				203CAF062916762B00E838A1 /* FirebaseStorage in Frameworks */,
+				F9168B302A5A979800DCF649 /* FirebaseRemoteConfigSwift in Frameworks */,
 				200B06EF2A0897770011D18E /* MinimizableView in Frameworks */,
+				F9168B2E2A5A979800DCF649 /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,11 +138,12 @@
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
-				A813C77329C779C400CF73FE /* GoogleService-Info.plist */,
+				F9168B352A5AD76300DCF649 /* GoogleService-Info.plist */,
 				B2699E0E28F1CB8800267A4F /* Font */,
 				A81FFC7828F15D9900B0FC7C /* Halmap */,
 				A81FFC7728F15D9900B0FC7C /* Products */,
 				F949284D28F2AF9600901F27 /* Recovered References */,
+				F9168B2C2A5A979800DCF649 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -159,6 +172,7 @@
 				A81FFC8428F15D9C00B0FC7C /* Halmap.xcdatamodeld */,
 				A81FFC7F28F15D9C00B0FC7C /* Preview Content */,
 				F95CE98A2917A8EF00FFE213 /* Settings.bundle */,
+				F9168B312A5AA1FB00DCF649 /* HalfModalPresentationController.swift */,
 			);
 			path = Halmap;
 			sourceTree = "<group>";
@@ -174,6 +188,7 @@
 		A81FFC8E28F1770500B0FC7C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F95F26C12A4C9BF000B534EB /* Component */,
 				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
 				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
@@ -187,6 +202,7 @@
 				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
+				F9168B282A5A81AD00DCF649 /* NotificationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -240,11 +256,26 @@
 			path = CustomTabBar;
 			sourceTree = "<group>";
 		};
+		F9168B2C2A5A979800DCF649 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F949284D28F2AF9600901F27 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		F95F26C12A4C9BF000B534EB /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				F95F26C22A4C9BFD00B534EB /* Progressbar.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		F98F622729B4C9A80025F50E /* Theme */ = {
@@ -268,6 +299,7 @@
 				F9B3B7B429B7397600232BB8 /* MapName.swift */,
 				A8F8BA9829C8CE5B00FCB229 /* AudioManager.swift */,
 				F9174B292A2B2F5F00B1CE87 /* SeasonSong.swift */,
+				F9168B2A2A5A81BC00DCF649 /* Notification.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -293,6 +325,8 @@
 				203CAF032916762B00E838A1 /* FirebaseFirestoreSwift */,
 				203CAF052916762B00E838A1 /* FirebaseStorage */,
 				200B06EE2A0897770011D18E /* MinimizableView */,
+				F9168B2D2A5A979800DCF649 /* FirebaseRemoteConfig */,
+				F9168B2F2A5A979800DCF649 /* FirebaseRemoteConfigSwift */,
 			);
 			productName = Halmap;
 			productReference = A81FFC7628F15D9900B0FC7C /* Halmap.app */;
@@ -342,7 +376,7 @@
 			files = (
 				F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */,
 				F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */,
-				A813C77429C779C400CF73FE /* GoogleService-Info.plist in Resources */,
+				F9168B362A5AD76400DCF649 /* GoogleService-Info.plist in Resources */,
 				A81FFC8128F15D9C00B0FC7C /* Preview Assets.xcassets in Resources */,
 				B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */,
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
@@ -376,18 +410,22 @@
 				87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */,
 				F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */,
 				F9B95BB928F271A100728048 /* DataManager.swift in Sources */,
+				F9168B292A5A81AD00DCF649 /* NotificationView.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
 				F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */,
+				F9168B2B2A5A81BC00DCF649 /* Notification.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
 				F9B3B7B729B842DD00232BB8 /* SongDetailView.swift in Sources */,
 				F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
+				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
+				F9168B322A5AA1FB00DCF649 /* HalfModalPresentationController.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
 				A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
@@ -524,7 +562,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = L3A22T43UF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -538,7 +576,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap.Jimin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -559,7 +597,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = L3A22T43UF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -647,6 +685,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		F9168B2D2A5A979800DCF649 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		F9168B2F2A5A979800DCF649 /* FirebaseRemoteConfigSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 203CAF002916762B00E838A1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfigSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

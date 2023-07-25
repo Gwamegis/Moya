@@ -7,12 +7,21 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseRemoteConfig
+import FirebaseFirestoreSwift
 
 class DataManager: ObservableObject {
     
     private let db = Firestore.firestore()
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
+    @AppStorage("fetchLatestVersion") var fetchLatestVersion = "1.0.0" {
+        didSet {
+            print("fetchLatestVersion", fetchLatestVersion)
+            isShouldShowNotification = true
+        }
+    }
     
     var teams: [Team] = []
     @Published var teamSongList: [TeamSong] = []
@@ -42,6 +51,10 @@ class DataManager: ObservableObject {
         
         fetchSeasonData { data in
             self.seasonSongs = data
+        }
+        
+        Task {
+            try await fetchRemoteLatestVersion()
         }
 
     }
@@ -165,5 +178,67 @@ class DataManager: ObservableObject {
     
     func checkSeasonSong(data: SongInfo) -> Bool {
         self.seasonSongs[TeamName(rawValue: data.team)?.fetchTeamIndex() ?? 0].contains(data.title)
+    }
+    
+    private func fetchNotificationData() {
+        
+    }
+    
+    private func fetchRemoteLatestVersion() async throws {
+        let remoteConfig = RemoteConfig.remoteConfig()
+        let settings = RemoteConfigSettings()
+        settings.minimumFetchInterval = 0
+        remoteConfig.configSettings = settings
+        
+        do {
+            let config = try await remoteConfig.fetchAndActivate()
+            switch config {
+            case .successFetchedFromRemote:
+                
+                let remoteVersion = remoteConfig.configValue(forKey: "latest_version").stringValue ?? ""
+                
+                if remoteVersion > fetchLatestVersion {
+                    if compareVersion(fetchVersion: remoteVersion, appVersion: fetchAppVersion()) == ComparisonResult.orderedAscending {
+                        await MainActor.run {
+                            self.fetchLatestVersion = remoteVersion
+                        }
+                    }
+                }
+                return
+            case .successUsingPreFetchedData:
+                return
+            default:
+                print("error activating")
+                return
+            }
+        } catch let error {
+            print("Error fetching: \(error.localizedDescription)")
+        }
+    }
+    private func fetchAppVersion() -> String {
+        guard let info = Bundle.main.infoDictionary,
+              let appVersion = info["CFBundleShortVersionString"] as? String else { return ""}
+        
+        return appVersion
+    }
+    private func compareVersion(fetchVersion: String, appVersion: String) -> ComparisonResult {
+        let majorFetch = Int(Array(fetchVersion.split(separator: "."))[0])!
+        let majorApp = Int(Array(appVersion.split(separator: "."))[0])!
+        
+        if majorApp > majorFetch {
+            return ComparisonResult.orderedDescending
+        } else if majorApp < majorFetch {
+            return ComparisonResult.orderedAscending
+        }
+        
+        let minorFetch = Int(Array(fetchVersion.split(separator: "."))[1])!
+        let minorApp = Int(Array(appVersion.split(separator: "."))[1])!
+        
+        if minorApp > minorFetch {
+            return ComparisonResult.orderedDescending
+        } else if minorApp < minorFetch {
+            return ComparisonResult.orderedAscending
+        }
+        return ComparisonResult.orderedSame
     }
 }

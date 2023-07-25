@@ -13,6 +13,7 @@ struct ScalingHeaderView: View {
     var topEdge: CGFloat
     
     @State var offset: CGFloat = 0
+    @State var isDraged = false
     
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     let persistence = PersistenceController.shared
@@ -22,12 +23,12 @@ struct ScalingHeaderView: View {
             VStack(spacing: 15) {
                 GeometryReader { proxy in
                     VStack(spacing: 0) {
-                        TopBar(topEdge: topEdge, offset: $offset)
+                        topBar
                             .frame(maxWidth: .infinity)
                             .frame(height: getHeaderHeight(), alignment: .bottom)
                             .overlay(
                                 topTitle
-                                    .opacity(topTitleOpacity())
+                                    .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 1 : 0)
                             )
                         HStack() {
                             Text("총 \(collectedSongs.count)곡")
@@ -36,14 +37,14 @@ struct ScalingHeaderView: View {
                             Spacer()
                         }
                         .padding(.horizontal, 20)
-                        .padding(.vertical, 17)
+                        .padding(.vertical, UIScreen.getHeight(17))
                         Divider()
                             .overlay(Color.customGray.opacity(0.6))
                             .padding(.horizontal, 20)
                     }
                     .background(Color.systemBackground)
                 }
-                .frame(height: maxHeight + 48)
+                .frame(height: maxHeight + UIScreen.getHeight(48))
                 .offset(y: -offset)
                 .zIndex(1)
                 
@@ -111,10 +112,38 @@ struct ScalingHeaderView: View {
                 }
             }
             .modifier(OffsetModifier(offset: $offset))
+            .onChange(of: offset) { _ in
+                if offset > -UIScreen.getHeight(90) {
+                    withAnimation {
+                        isDraged = false
+                    }
+                } else if offset < 0 {
+                    withAnimation {
+                        isDraged = true
+                    }
+                }
+            }
         }
         .coordinateSpace(name: "StorageScroll")
         .background(Color.systemBackground)
     }
+    
+    var topBar: some View {
+        ZStack(alignment: .bottom) {
+            Image("storageTop")
+                .resizable()
+            HStack {
+                Text("보관함")
+                    .font(Font.Halmap.CustomLargeTitle)
+                Spacer()
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
+        }
+        .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 0 : 1)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .background(Color.systemBackground)
+    }
+        
     var topTitle: some View {
         VStack{
             HStack {
@@ -129,45 +158,10 @@ struct ScalingHeaderView: View {
     }
     
     func getHeaderHeight() -> CGFloat {
-        let topHeight = maxHeight + offset
-        
-        return topHeight >= (59 + topEdge) ? topHeight : (59 + topEdge)
+        isDraged ? (59 + topEdge) : maxHeight + offset
     }
-    func topTitleOpacity() -> CGFloat {
-        let progress = -offset*2 / (maxHeight - (59 + topEdge))
-        return progress
-    }
-    func getOpacity() -> CGFloat {
-        let progress = -offset*2 / 40
-        let opacity = 1 - progress
-        return offset < 0 ? opacity : 1
-    }
-}
-
-struct TopBar: View {
-    
-    let topEdge: CGFloat
-    @Binding var offset: CGFloat
-    
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            Image("storageTop")
-                .resizable()
-            HStack {
-                Text("보관함")
-                    .font(Font.Halmap.CustomLargeTitle)
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
-        }
-        .opacity(getOpacity())
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-        .background(Color.systemBackground)
-    }
-    func getOpacity() -> CGFloat {
-        let progress = -offset / 40
-        let opacity = 1 - progress
-        return offset < 0 ? opacity : 1
+    func checkScrollRequirement(listCount: Int) -> Bool{
+        UIScreen.screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 ? true : false
     }
 }
 

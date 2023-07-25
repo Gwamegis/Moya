@@ -18,37 +18,15 @@ struct SongPlayerView: View {
     
     
     // Audio Properties
-    let timer = Timer
-        .publish(every: 0.3, on: .main, in: .common)
-        .autoconnect()
-    @State var value: Double = 0.0
-    @State var isEditing: Bool = false
     @EnvironmentObject var audioManager: AudioManager
-    @State var endTime: CMTime = CMTime(seconds: 6000, preferredTimescale: 1000000)
-    
-    
+
     // View Property
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             
-            VStack(spacing: 5){
-                
-                // TODO: - Progress bar
-                // Slider(value: $value)
-//                Slider(value: $value, in: 0...CMTimeGetSeconds(endTime)) { editing in
-//                    print("editing", editing)
-//                    isEditing = editing
-//                    if !editing {
-//                        player.status = value
-//                    }
-//                }
-//                .accentColor(.white)
-                
-                // TODO: - Time
-                
-            }
+            Progressbar(team: $team, isThumbActive: true)
             
             // Buttons
             HStack(spacing: 52) {
@@ -83,6 +61,7 @@ struct SongPlayerView: View {
             .padding(.bottom, 54)
             
         }
+        .padding(.horizontal, 45)
         .frame(maxWidth: .infinity)
         .background(Color("\(team)Sub"))
         .onDisappear(){
@@ -90,14 +69,6 @@ struct SongPlayerView: View {
         }
         .onAppear(){
             audioManager.AMset(song: song, selectedTeam: team)
-        }
-        .onReceive(timer) { _ in
-            guard let player = AudioManager.instance.player else { return }
-            guard let item = AudioManager.instance.player?.currentItem else { return }
-            if CMTimeGetSeconds(player.currentTime()) == item.duration.seconds {
-//                isPlaying = false
-            }
-            //              value = CMTimeGetSeconds(player.currentTime())
         }
     }
 }
