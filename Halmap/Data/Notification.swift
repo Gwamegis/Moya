@@ -8,13 +8,29 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct Notification: Identifiable, Codable {
-    @DocumentID var id: String?
-//    var id: String
+struct Notification: Codable, Equatable {
     var icon: String
-    var isNews: Bool
+    var isRequired: Bool
     var title: String
     var detail: String
     var list: [String]
     var version: String
+    
+    init() {
+        self.icon = ""
+        self.title = ""
+        self.detail = ""
+        self.list = []
+        self.isRequired = false
+        self.version = ""
+    }
+    
+    init(title: String, detail: String) {
+        self.icon = "alert"
+        self.title = title
+        self.detail = detail
+        self.list = []
+        self.isRequired = false
+        self.version = ""
+    }
 }

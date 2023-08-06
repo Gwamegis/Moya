@@ -8,30 +8,46 @@
 import SwiftUI
 import FirebaseFirestoreSwift
 
+enum NotificationType {
+    case traffic
+    case version
+    case event
+}
 struct NotificationView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var dataManager: DataManager
+    
     @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
-    @FirestoreQuery(collectionPath: "IOSVersion") var item: [Notification]
+    @AppStorage("isShouldShowTraffic") var isShouldShowTraffic = false
+    @AppStorage("latestVersion") var latestVersion = ""
+    @AppStorage("latestTrafficDate") var latestTrafficDate = ""
+    
+    @State var item: Notification = Notification.init()
+    @State var remoteDate = ""
+    
+    let type: NotificationType
     
     var body: some View {
-        
-        if item.count > 0 {
-            let _ = print(item)
+        ZStack {
             VStack(alignment: .leading, spacing: 20) {
-                Image(item[0].icon)
+                //icon
+                Image(item.icon)
                     .resizable()
                     .foregroundColor(.mainGreen)
                     .frame(width: 60, height: 60)
-                Text(item[0].title)
+                //title
+                Text(item.title)
                     .font(.Halmap.CustomTitleBold)
                     .padding(.bottom, 10)
-                Text(item[0].detail.replacingOccurrences(of: "\\n", with: "\n"))
+                //detail (description)
+                Text(item.detail.replacingOccurrences(of: "\\n", with: "\n"))
                     .padding(.bottom, 2)
                     .font(.Halmap.CustomBodyMedium)
                     .lineSpacing(10)
                     .foregroundColor(.customDarkGray)
+                //feature list
                 VStack(alignment: .leading, spacing: 4) {
-                    ForEach(Array(item[0].list.enumerated()), id: \.offset) { index, list in
+                    ForEach(Array(item.list.enumerated()), id: \.offset) { index, list in
                         HStack(spacing: 10) {
                             Image("number\(index+1)")
                                 .resizable()
@@ -44,22 +60,23 @@ struct NotificationView: View {
                     }
                 }
                 Spacer()
-                if item[0].isNews {
+                //button
+                if type == .version {
                     HStack(spacing: 10) {
                         Button {
-                            print("next")
                             self.presentationMode.wrappedValue.dismiss()
                             self.isShouldShowNotification = false
+                            self.latestVersion = item.version
                         } label: {
                             Text("다음에 할래요")
                                 .foregroundColor(.customDarkGray)
                                 .modifier(notificationButtonBackground(color: .customGray))
                         }
                         Button {
-                            print("now")
                             guard let url = URL(string: "itms-apps://itunes.apple.com/app/6444238142") else { return }
                             UIApplication.shared.open(url)
                             self.isShouldShowNotification = false
+                            self.latestVersion = item.version
                             
                         } label: {
                             Text("업데이트하러 가기")
@@ -67,11 +84,12 @@ struct NotificationView: View {
                                 .modifier(notificationButtonBackground(color: .mainGreen))
                         }
                     }
-                } else {
+                } else if type == .traffic {
                     Button {
-                        print("ok")
                         self.presentationMode.wrappedValue.dismiss()
-                        self.isShouldShowNotification = false
+                        self.isShouldShowTraffic = false
+                        
+                        latestTrafficDate = remoteDate
                     } label: {
                         Text("확인")
                             .foregroundColor(.mainGreen)
@@ -83,6 +101,28 @@ struct NotificationView: View {
             .padding(.top, 30)
             .padding(.horizontal, 20)
             .padding(.bottom, 26)
+        }
+        .onAppear() {
+            switch type {
+            case .version:
+                let notifications = dataManager.versionNotification
+                if !notifications.isEmpty {
+                    self.item = notifications[0]
+                }
+                break
+            case .traffic:
+                let notifications = dataManager.trafficNotification
+                if !notifications.isEmpty {
+                    self.item = Notification(title: notifications[0].title, detail: notifications[0].description)
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "YYYYMMdd"
+                    self.remoteDate = dateFormatter.string(from: notifications[0].date)
+                }
+                break
+            case .event:
+                break
+            }
         }
     }
 }
@@ -98,11 +138,5 @@ private struct notificationButtonBackground: ViewModifier {
                 RoundedRectangle(cornerRadius: 10)
                     .foregroundColor(color)
             )
-    }
-}
-
-struct NotificationView_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationView()
     }
 }
