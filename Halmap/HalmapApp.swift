@@ -59,19 +59,24 @@ struct HalmapApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if #available(iOS 16.0, *) {
-                OnBoardingStartView()
-                    .scrollContentBackground(.hidden)
-                    .scrollIndicators(.hidden)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(dataManager)
-                    .environmentObject(audioManager)
+            if !dataManager.versionNotification.isEmpty && !dataManager.trafficNotification.isEmpty {
+                if #available(iOS 16.0, *) {
+                    OnBoardingStartView()
+                        .scrollContentBackground(.hidden)
+                        .scrollIndicators(.hidden)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .environmentObject(dataManager)
+                        .environmentObject(audioManager)
+                } else {
+                    OnBoardingStartView()
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .environmentObject(dataManager)
+                        .environmentObject(audioManager)
+                }
             } else {
-                OnBoardingStartView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                    .environmentObject(dataManager)
-                    .environmentObject(audioManager)
+                LaunchScreenView()
             }
+            
         }
     }
 }
