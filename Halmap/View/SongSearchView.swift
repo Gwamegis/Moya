@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct SongSearchView: View {
     
