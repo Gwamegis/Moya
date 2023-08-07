@@ -11,7 +11,11 @@ struct OnBoardingStartView: View {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
-    @AppStorage("fetchLatestVersion") var fetchLatestVersion = "1.0.0"
+    @AppStorage("isShouldShowTraffic") var isShouldShowTraffic = false
+    @AppStorage("latestVersion") var latestVersion = "1.0.0"
+    
+    @EnvironmentObject var dataManager: DataManager
+    @State var versionNotification: [Notification] = []
     
     @State var startButton: Bool = false
     
@@ -20,6 +24,16 @@ struct OnBoardingStartView: View {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
                 if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
                     MainTabView()
+                        .sheet(isPresented: $isShouldShowTraffic) {
+                            HalfSheet {
+                                NotificationView(type: .traffic)
+                            }
+                        }
+                        .sheet(isPresented: $isShouldShowNotification) {
+                            HalfSheet {
+                                NotificationView(type: .version)
+                            }
+                        }
                 }
             }
         } else {

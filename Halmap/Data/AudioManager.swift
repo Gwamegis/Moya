@@ -223,11 +223,7 @@ final class AudioManager: NSObject, ObservableObject {
         player.seek(to: time)
     }
     func removePlayer() {
-        player = nil
         AMstop()
-        self.item?.removeObserver(self as NSObject,
-                                  forKeyPath: #keyPath(AVPlayerItem.status),
-                                  context: &playerItemContext)
     }
     
     //MARK: - progressbar
@@ -266,5 +262,13 @@ final class AudioManager: NSObject, ObservableObject {
             
             updateNowPlayingPlaybackRate()
         }
+    }
+    
+    deinit {
+        player = nil
+        
+        self.item?.removeObserver(self as NSObject,
+                                  forKeyPath: #keyPath(AVPlayerItem.status),
+                                  context: &playerItemContext)
     }
 }

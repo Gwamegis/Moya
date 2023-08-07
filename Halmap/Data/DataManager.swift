@@ -14,12 +14,14 @@ class DataManager: ObservableObject {
     
     private let db = Firestore.firestore()
     
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
-    @AppStorage("fetchLatestVersion") var fetchLatestVersion = "1.0.0" {
+    @AppStorage("isShouldShowTraffic") var isShouldShowTraffic = false
+    @AppStorage("latestVersion") var latestVersion = "1.0.0"
+    @AppStorage("latestTrafficDate") var latestTrafficDate = "20230706" {
         didSet {
-            print("fetchLatestVersion", fetchLatestVersion)
-            isShouldShowNotification = true
+            isShouldShowTraffic = true
         }
     }
     
@@ -35,9 +37,17 @@ class DataManager: ObservableObject {
     
     @Published var seasonSongs = [[String]](repeating: [], count: 10)
     
+    @Published var trafficNotification: [Traffic] = []
+    @Published var versionNotification: [Notification] = []
+    
     var teamLists = TeamName.allCases
     
     init() {
+        Task {
+            try await fetchRemoteLatestVersion()
+        }
+        fetchTrafficNotification()
+        
         loadData()
         teamLists.forEach { teamName in
             fetchSong(team: teamName.rawValue, type: true) { songs in
@@ -52,11 +62,6 @@ class DataManager: ObservableObject {
         fetchSeasonData { data in
             self.seasonSongs = data
         }
-        
-        Task {
-            try await fetchRemoteLatestVersion()
-        }
-
     }
     
     func loadData(){
@@ -65,11 +70,11 @@ class DataManager: ObservableObject {
         
         guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
         guard let jsonData = try? Data(contentsOf: fileLocation) else { return }
-
+        
         do {
             let teamArray = try JSONDecoder().decode(TeamList.self, from: jsonData)
             teams = teamArray.teamLists
-
+            
             // TODO: 데이터 불러오는 위치 다시 생각해보기
             setList(teamName: selectedTeam)
         }
@@ -180,8 +185,72 @@ class DataManager: ObservableObject {
         self.seasonSongs[TeamName(rawValue: data.team)?.fetchTeamIndex() ?? 0].contains(data.title)
     }
     
-    private func fetchNotificationData() {
+    func fetchTrafficNotification() {
+        db.collection("Traffic")
+            .order(by: "date", descending: false)
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    if documents.isEmpty {
+                        self.trafficNotification.append(Traffic())
+                    } else {
+                        for document in documents {
+                            let data = document.data()
+                            if let date = data["date"] as? Timestamp {
+                                self.trafficNotification.append(
+                                    Traffic(
+                                        date: date.dateValue(),
+                                        title: data["title"] as! String,
+                                        description: data["description"] as! String
+                                    )
+                                )
+                                self.isShouldShowTraffic = self.isNewTrafficNotification(remoteData: date.dateValue())
+                            }
+                        }
+                    }
+                }
+            }
+    }
+    private func isNewTrafficNotification(remoteData: Date) -> Bool {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYYMMdd"
         
+        let remoteDate = dateFormatter.string(from: remoteData)
+        let currentDate = dateFormatter.string(from: Date())
+        
+        if latestTrafficDate < remoteDate && remoteDate == currentDate {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    //새로운 버전 알림과 관련된 함수들
+    func fetchVersionNotification(completionHandler: @escaping ([Notification]) -> ()) {
+        var notifications: [Notification] = []
+        db.collection("IOSVersion")
+            .getDocuments() { (querySnapshot, error) in
+                if let error {
+                    print("Error getting documents: \(error)")
+                } else {
+                    guard let documents = querySnapshot?.documents else { return }
+                    let decoder = JSONDecoder()
+                    
+                    for document in documents {
+                        do {
+                            let data = document.data()
+                            let jsonData = try JSONSerialization.data(withJSONObject: data)
+                            let notification = try decoder.decode(Notification.self, from: jsonData)
+                            notifications.append(notification)
+                        } catch let error {
+                            print("error: \(error)")
+                        }
+                    }
+                    completionHandler(notifications)
+                }
+            }
     }
     
     private func fetchRemoteLatestVersion() async throws {
@@ -196,13 +265,21 @@ class DataManager: ObservableObject {
             case .successFetchedFromRemote:
                 
                 let remoteVersion = remoteConfig.configValue(forKey: "latest_version").stringValue ?? ""
+                let appVersion = fetchAppVersion()
                 
-                if remoteVersion > fetchLatestVersion {
-                    if compareVersion(fetchVersion: remoteVersion, appVersion: fetchAppVersion()) == ComparisonResult.orderedAscending {
-                        await MainActor.run {
-                            self.fetchLatestVersion = remoteVersion
+                if compareVersion(fetchVersion: remoteVersion, appVersion: appVersion) == ComparisonResult.orderedAscending && remoteVersion > latestVersion {
+                    Task {
+                        fetchVersionNotification{ notifications in
+                            if notifications.isEmpty {
+                                self.versionNotification.append(Notification())
+                            } else {
+                                self.versionNotification = notifications
+                                self.isShouldShowNotification = true
+                            }
                         }
                     }
+                } else {
+                    self.versionNotification.append(Notification())
                 }
                 return
             case .successUsingPreFetchedData:
@@ -215,6 +292,7 @@ class DataManager: ObservableObject {
             print("Error fetching: \(error.localizedDescription)")
         }
     }
+    
     private func fetchAppVersion() -> String {
         guard let info = Bundle.main.infoDictionary,
               let appVersion = info["CFBundleShortVersionString"] as? String else { return ""}
