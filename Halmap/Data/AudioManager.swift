@@ -223,9 +223,8 @@ final class AudioManager: NSObject, ObservableObject {
         player.seek(to: time)
     }
     func removePlayer() {
-        AMstop()
         player = nil
-        
+        AMstop()
         self.item?.removeObserver(self as NSObject,
                                   forKeyPath: #keyPath(AVPlayerItem.status),
                                   context: &playerItemContext)

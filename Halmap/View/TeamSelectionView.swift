@@ -20,11 +20,6 @@ struct OnBoardingStartView: View {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
                 if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
                     MainTabView()
-                        .sheet(isPresented: $isShouldShowNotification) {
-                            HalfSheet {
-                                NotificationView()
-                            }
-                        }
                 }
             }
         } else {
