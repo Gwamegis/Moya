@@ -37,7 +37,7 @@ final class AudioManager: NSObject, ObservableObject {
     
     var song: Song?
     var selectedTeam = ""
-
+    
     // MARK: - Media Player Setting..
     
     private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
@@ -70,7 +70,7 @@ final class AudioManager: NSObject, ObservableObject {
             if self.player?.rate == 0.0 {
                 player?.play()
                 isPlaying = true
-                        
+                
                 updateNowPlayingPlaybackRate()
                 
                 return .success
@@ -92,7 +92,7 @@ final class AudioManager: NSObject, ObservableObject {
                 self.currentTime = seekTime.seconds
                 self.progressValue = self.calculateProgress(currentTime: seekTime.seconds)
                 self.player?.seek(to: seekTime)
-//                AMseek(to: progressValue)
+                //                AMseek(to: progressValue)
             }
             return .success
         }
@@ -103,7 +103,7 @@ final class AudioManager: NSObject, ObservableObject {
                                of object: Any?,
                                change: [NSKeyValueChangeKey : Any]?,
                                context: UnsafeMutableRawPointer?) {
-
+        
         // Only handle observations for the playerItemContext
         guard context == &playerItemContext else {
             super.observeValue(forKeyPath: keyPath,
@@ -112,7 +112,7 @@ final class AudioManager: NSObject, ObservableObject {
                                context: context)
             return
         }
-
+        
         if keyPath == #keyPath(AVPlayerItem.status) {
             let status: AVPlayerItem.Status
             if let statusNumber = change?[.newKey] as? NSNumber {
@@ -120,27 +120,27 @@ final class AudioManager: NSObject, ObservableObject {
             } else {
                 status = .unknown
             }
-
+            
             // Switch over status value
             switch status {
-            case .readyToPlay:
-                // Player item is ready to play.
-                let title = song?.title ?? "unknown title"
-                let albumArt = UIImage(named: "\(selectedTeam)Album")
-                self.setupNowPlayingInfo(title: title, albumArt: albumArt)
-                
-                break
-            case .failed:
-                // Player item failed. See error.
-                print("failed")
-                break
-            case .unknown:
-                // Player item is not yet ready.
-                print("unknown")
-                break
-            @unknown default:
-                print("default")
-                break
+                case .readyToPlay:
+                    // Player item is ready to play.
+                    let title = song?.title ?? "unknown title"
+                    let albumArt = UIImage(named: "\(selectedTeam)Album")
+                    self.setupNowPlayingInfo(title: title, albumArt: albumArt)
+                    
+                    break
+                case .failed:
+                    // Player item failed. See error.
+                    print("failed")
+                    break
+                case .unknown:
+                    // Player item is not yet ready.
+                    print("unknown")
+                    break
+                @unknown default:
+                    print("default")
+                    break
             }
         }
     }
@@ -152,17 +152,68 @@ final class AudioManager: NSObject, ObservableObject {
     }
     
     func AMset(song: Song, selectedTeam: String) {
-        
         self.song = song
         self.selectedTeam = selectedTeam
+        self.progressValue = 0
+        self.currentTime = 0
         
-        guard let url = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
-        self.item = AVPlayerItem(url: url)
+        if let localURL = getLocalFileURL(for: song.title) {
+            print("이미 저장되었습니다.")
+            self.item = AVPlayerItem(url: localURL)
+            setupPlayer()
+        } else {
+            print("다운로드를 시작합니다.")
+            guard let remoteURL = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
+            downloadAndPlaySong(from: remoteURL, named: song.title)
+        }
         
         self.item?.addObserver(self as NSObject,
-                                   forKeyPath: #keyPath(AVPlayerItem.status),
-                                   options: [.old, .new],
-                                   context: &playerItemContext)
+                               forKeyPath: #keyPath(AVPlayerItem.status),
+                               options: [.old, .new],
+                               context: &playerItemContext)
+    }
+    
+    // 로컬 파일 경로 불러오기
+    private func getLocalFileURL(for title: String) -> URL? {
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+        if let applicationSupportURL = urls.first {
+            let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension("mp3")
+            if fileManager.fileExists(atPath: fileURL.path) {
+                return fileURL
+            }
+        }
+        return nil
+    }
+    
+    // url로부터 노래 다운로드 후 노래 제목으로 저장
+    private func downloadAndPlaySong(from remoteURL: URL, named title: String) {
+        URLSession.shared.dataTask(with: remoteURL) { data, response, error in
+            if let data = data {
+                let fileManager = FileManager.default
+                let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+                if let applicationSupportURL = urls.first {
+                    let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension("mp3")
+                    do {
+                        try data.write(to: fileURL)
+                        DispatchQueue.main.async {
+                            self.item = AVPlayerItem(url: fileURL)
+                            self.setupPlayer()
+                        }
+                    } catch {
+                        print("Error saving file: \(error)")
+                    }
+                }
+            }
+        }.resume()
+    }
+    
+    // 노래 재생
+    private func setupPlayer() {
+        self.item?.addObserver(self,
+                               forKeyPath: #keyPath(AVPlayerItem.status),
+                               options: [.old, .new],
+                               context: &playerItemContext)
         
         player = AVPlayer(playerItem: item)
         
@@ -171,29 +222,25 @@ final class AudioManager: NSObject, ObservableObject {
         } catch(let error) {
             print(error.localizedDescription)
         }
-        if let player {
+        if let player = player {
             setupPeriodicObservation(for: player)
             AMplay()
         }
-        
-        self.progressValue = 0
-        self.currentTime = 0
     }
     
+    // MARK: - AM Functions
+    
     func AMplay() {
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.AMplayEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
         setupRemoteTransportControls()
         
         player?.play()
         isPlaying = true
-
-        updateNowPlayingPlaybackRate()
         
+        updateNowPlayingPlaybackRate()
     }
-    
-    // MARK: - AM Functions
+
     
     func AMstop() {
         updateNowPlayingPlaybackRate()
@@ -238,6 +285,7 @@ final class AudioManager: NSObject, ObservableObject {
     private func calculateProgress(currentTime: Double) -> Float {
         return Float(currentTime / duration)
     }
+    
     func didSliderChanged(_ didChange: Bool) {
         acceptProgressUpdates = !didChange
         if didChange {
@@ -247,6 +295,7 @@ final class AudioManager: NSObject, ObservableObject {
             self.AMplay()
         }
     }
+    
     private func setupPeriodicObservation(for player: AVPlayer) {
         let timeScale = CMTimeScale(NSEC_PER_SEC)
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
