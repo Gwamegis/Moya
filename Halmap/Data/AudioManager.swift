@@ -133,6 +133,9 @@ final class AudioManager: NSObject, ObservableObject {
                 case .failed:
                     // Player item failed. See error.
                     print("failed")
+                    if let playerItem = object as? AVPlayerItem {
+                                        print("Player item error: \(String(describing: playerItem.error?.localizedDescription))")
+                                    }
                     break
                 case .unknown:
                     // Player item is not yet ready.
@@ -157,7 +160,8 @@ final class AudioManager: NSObject, ObservableObject {
         self.progressValue = 0
         self.currentTime = 0
         
-        if let localURL = getLocalFileURL(for: song.title) {
+        // 로컬에 해당 노래가 이미 저장되어 있는지 확인
+        if let localURL = getLocalFileURL(for: song.title, extension: URL(string: song.url)?.pathExtension ?? "mp3") {
             print("이미 저장되었습니다.")
             self.item = AVPlayerItem(url: localURL)
             setupPlayer()
@@ -166,34 +170,30 @@ final class AudioManager: NSObject, ObservableObject {
             guard let remoteURL = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
             downloadAndPlaySong(from: remoteURL, named: song.title)
         }
-        
-        self.item?.addObserver(self as NSObject,
-                               forKeyPath: #keyPath(AVPlayerItem.status),
-                               options: [.old, .new],
-                               context: &playerItemContext)
     }
     
     // 로컬 파일 경로 불러오기
-    private func getLocalFileURL(for title: String) -> URL? {
+    private func getLocalFileURL(for title: String, extension ext: String) -> URL? {
         let fileManager = FileManager.default
         let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         if let applicationSupportURL = urls.first {
-            let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension("mp3")
+            let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension(ext)
             if fileManager.fileExists(atPath: fileURL.path) {
                 return fileURL
             }
         }
         return nil
     }
-    
+
     // url로부터 노래 다운로드 후 노래 제목으로 저장
     private func downloadAndPlaySong(from remoteURL: URL, named title: String) {
+        let fileExtension = remoteURL.pathExtension
         URLSession.shared.dataTask(with: remoteURL) { data, response, error in
             if let data = data {
                 let fileManager = FileManager.default
                 let urls = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)
                 if let applicationSupportURL = urls.first {
-                    let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension("mp3")
+                    let fileURL = applicationSupportURL.appendingPathComponent(title).appendingPathExtension(fileExtension)
                     do {
                         try data.write(to: fileURL)
                         DispatchQueue.main.async {
@@ -207,6 +207,7 @@ final class AudioManager: NSObject, ObservableObject {
             }
         }.resume()
     }
+
     
     // 노래 재생
     private func setupPlayer() {
