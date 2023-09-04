@@ -45,15 +45,11 @@ struct MainTabView: View {
                     }
                 }
                 .font(.Halmap.CustomCaptionMedium)
-                .padding(.top, 10)
+                .padding(.vertical, 10)
                 .padding(.horizontal, 47)
-                .padding(.bottom, 32)
-                .frame(height: 90)
-                .frame(alignment: .top)
                 .background(Color.tabBarGray)
                 .shadow(color: Color.customGray, radius: 1)
             }
-            .edgesIgnoringSafeArea(.bottom)
         }
         .navigationViewStyle(.stack)
     }
