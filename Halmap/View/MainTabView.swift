@@ -10,6 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @StateObject var viewModel = MainTabViewModel()
     
     init() {
         Color.setColor(selectedTeam)
@@ -17,24 +18,42 @@ struct MainTabView: View {
     
     var body: some View {
         NavigationView {
-            TabView {
-                MainSongListTabView()
-                    .tabItem {
-                        Image("home")
-                        Text("응원곡")
-                      }
-                SongSearchView()
-                    .tabItem {
-                        Image("search")
-                        Text("곡 검색")
-                      }
-                StorageContentView()
-                    .tabItem {
-                        Image("storage")
-                        Text("보관함")
+            VStack(spacing: 0) {
+                switch viewModel.state {
+                case .home:
+                    MainSongListTabView()
+                case .search:
+                    SongSearchView()
+                case .storage:
+                    StorageContentView()
+                }
+
+                HStack {
+                    ForEach(Array(MainTabViewModel.State.allCases.enumerated()), id: \.1.rawValue) { index, state in
+                        Button {
+                            viewModel.state = state
+                        } label: {
+                            VStack(spacing: 4) {
+                                Image(state.rawValue)
+                                Text(state.title)
+                            }
+                            .foregroundColor(viewModel.state == state ? Color.HalmacPoint : Color.customDarkGray)
+                        }
+                        if index < MainTabViewModel.State.allCases.count - 1 {
+                            Spacer()
+                        }
                     }
+                }
+                .font(.Halmap.CustomCaptionMedium)
+                .padding(.top, 10)
+                .padding(.horizontal, 47)
+                .padding(.bottom, 32)
+                .frame(height: 90)
+                .frame(alignment: .top)
+                .background(Color.tabBarGray)
+                .shadow(color: Color.customGray, radius: 1)
             }
-            .accentColor(Color.HalmacPoint)
+            .edgesIgnoringSafeArea(.bottom)
         }
         .navigationViewStyle(.stack)
     }
