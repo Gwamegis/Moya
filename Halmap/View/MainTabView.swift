@@ -50,6 +50,7 @@ struct MainTabView: View {
                 .background(Color.tabBarGray)
                 .shadow(color: Color.customGray, radius: 1)
             }
+            .ignoresSafeArea(.keyboard)
         }
         .navigationViewStyle(.stack)
     }
