@@ -27,8 +27,6 @@
 		A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC8228F15D9C00B0FC7C /* Persistence.swift */; };
 		A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC8428F15D9C00B0FC7C /* Halmap.xcdatamodeld */; };
 		A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9028F1775000B0FC7C /* SongSearchView.swift */; };
-		A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9228F1775C00B0FC7C /* StadiumListSheetView.swift */; };
-		A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */; };
 		A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */; };
 		A81FFC9D28F180A000B0FC7C /* SongPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */; };
 		A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A81FFC9E28F180B200B0FC7C /* SongContentView.swift */; };
@@ -84,8 +82,6 @@
 		A81FFC8228F15D9C00B0FC7C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A81FFC8528F15D9C00B0FC7C /* Halmap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Halmap.xcdatamodel; sourceTree = "<group>"; };
 		A81FFC9028F1775000B0FC7C /* SongSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongSearchView.swift; sourceTree = "<group>"; };
-		A81FFC9228F1775C00B0FC7C /* StadiumListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumListSheetView.swift; sourceTree = "<group>"; };
-		A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StadiumMapView.swift; sourceTree = "<group>"; };
 		A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionView.swift; sourceTree = "<group>"; };
 		A81FFC9C28F180A000B0FC7C /* SongPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPlayerView.swift; sourceTree = "<group>"; };
 		A81FFC9E28F180B200B0FC7C /* SongContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongContentView.swift; sourceTree = "<group>"; };
@@ -149,6 +145,61 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		877403852AB71FD900C94D35 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				877403862AB71FEB00C94D35 /* TeamSelection */,
+				877403872AB7203F00C94D35 /* SongList */,
+				8774038A2AB720CB00C94D35 /* SongDetail */,
+				877403882AB7207A00C94D35 /* SongSearch */,
+				877403892AB7208C00C94D35 /* SongStorage */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		877403862AB71FEB00C94D35 /* TeamSelection */ = {
+			isa = PBXGroup;
+			children = (
+				20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */,
+				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
+			);
+			path = TeamSelection;
+			sourceTree = "<group>";
+		};
+		877403872AB7203F00C94D35 /* SongList */ = {
+			isa = PBXGroup;
+			children = (
+				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
+				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
+			);
+			path = SongList;
+			sourceTree = "<group>";
+		};
+		877403882AB7207A00C94D35 /* SongSearch */ = {
+			isa = PBXGroup;
+			children = (
+				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
+			);
+			path = SongSearch;
+			sourceTree = "<group>";
+		};
+		877403892AB7208C00C94D35 /* SongStorage */ = {
+			isa = PBXGroup;
+			children = (
+				F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */,
+				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
+			);
+			path = SongStorage;
+			sourceTree = "<group>";
+		};
+		8774038A2AB720CB00C94D35 /* SongDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A81FFC9B28F1808700B0FC7C /* SongInformation */,
+			);
+			path = SongDetail;
+			sourceTree = "<group>";
+		};
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +223,7 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
+				877403852AB71FD900C94D35 /* Features */,
 				A81FFC8E28F1770500B0FC7C /* View */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
 				F98F622729B4C9A80025F50E /* Theme */,
@@ -204,33 +256,15 @@
 			isa = PBXGroup;
 			children = (
 				F95F26C12A4C9BF000B534EB /* Component */,
-				A81FFC9B28F1808700B0FC7C /* SongInformation */,
 				EEBC26A528F1CE0400BD5B3D /* CustomTabBar */,
-				A81FFC9028F1775000B0FC7C /* SongSearchView.swift */,
-				20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */,
-				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
-				A81FFC9A28F1778200B0FC7C /* Map */,
 				F91BE5FA29B18AF800F7E488 /* MainTabView.swift */,
 				F9A9259F2AA60A5100EF8BC9 /* MainTabViewModel.swift */,
-				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
-				F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */,
 				F9A178212A1BF5CB003E8E4C /* HalfSheetView.swift */,
-				F939EBB929D58FB2005ED8CA /* StorageContentView.swift */,
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
-				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
 				F9168B282A5A81AD00DCF649 /* NotificationView.swift */,
 				F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		A81FFC9A28F1778200B0FC7C /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				A81FFC9228F1775C00B0FC7C /* StadiumListSheetView.swift */,
-				A81FFC9428F1776300B0FC7C /* StadiumMapView.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		A81FFC9B28F1808700B0FC7C /* SongInformation */ = {
@@ -441,7 +475,6 @@
 				F9A925A02AA60A5100EF8BC9 /* MainTabViewModel.swift in Sources */,
 				F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */,
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
-				A81FFC9328F1775C00B0FC7C /* StadiumListSheetView.swift in Sources */,
 				EEBC26A128F1CAE900BD5B3D /* TabBarView.swift in Sources */,
 				F9DB6D1D2A763B7400B9469D /* Traffic.swift in Sources */,
 				87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */,
@@ -478,7 +511,6 @@
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
 				F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */,
-				A81FFC9528F1776300B0FC7C /* StadiumMapView.swift in Sources */,
 				F9A178262A1C8B01003E8E4C /* PlayListFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
