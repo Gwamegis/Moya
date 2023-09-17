@@ -73,9 +73,7 @@ struct SongSearchView: View {
                     .padding(3)
                     .foregroundColor(Color(.systemGray2))
                     .onTapGesture {
-                        withAnimation {
-                            self.searchText = ""
-                        }
+                        self.searchText = ""
                     }
             }
         }
