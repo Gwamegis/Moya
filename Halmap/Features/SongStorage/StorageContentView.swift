@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct StorageContentView: View {
+    @EnvironmentObject var dataManager: DataManager
+    let persistence = PersistenceController.shared
+    
     var body: some View {
         GeometryReader { proxy in
             let topEdge = proxy.safeAreaInsets.top
             
-            ScalingHeaderView(topEdge: topEdge)
+            ScalingHeaderView(viewModel: SongStorageViewModel(dataManager: dataManager, persistence: persistence, topEdge: topEdge))
                 .ignoresSafeArea(.all, edges: .top)
         }
     }

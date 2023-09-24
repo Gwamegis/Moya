@@ -8,27 +8,21 @@
 import SwiftUI
 
 struct ScalingHeaderView: View {
-    @EnvironmentObject var dataManager: DataManager
-    let maxHeight: CGFloat = 216
-    var topEdge: CGFloat
-    
-    @State var offset: CGFloat = 0
-    @State var isDraged = false
-    
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
-    let persistence = PersistenceController.shared
+    
+    @StateObject var viewModel: SongStorageViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 15) {
                 GeometryReader { proxy in
                     VStack(spacing: 0) {
-                        topBar
+                        defaultHeader
                             .frame(maxWidth: .infinity)
-                            .frame(height: getHeaderHeight(), alignment: .bottom)
+                            .frame(height: viewModel.getHeaderHeight(), alignment: .bottom)
                             .overlay(
-                                topTitle
-                                    .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 1 : 0)
+                                scrolledHeader
+                                    .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: false))
                             )
                         HStack() {
                             Text("총 \(collectedSongs.count)곡")
@@ -44,8 +38,8 @@ struct ScalingHeaderView: View {
                     }
                     .background(Color.systemBackground)
                 }
-                .frame(height: maxHeight + UIScreen.getHeight(48))
-                .offset(y: -offset)
+                .frame(height: viewModel.maxHeight + UIScreen.getHeight(48))
+                .offset(y: -viewModel.offset)
                 .zIndex(1)
                 
                 LazyVStack(spacing: 0) {
@@ -57,38 +51,22 @@ struct ScalingHeaderView: View {
                             .padding(.top, 60)
                     } else {
                         ForEach(collectedSongs) { favoriteSong in
-                            let song = Song(
-                                id: favoriteSong.id ?? "",
-                                type: favoriteSong.type ,
-                                title: favoriteSong.title ?? "" ,
-                                lyrics: favoriteSong.lyrics ?? "",
-                                info: favoriteSong.info ?? "",
-                                url: favoriteSong.url ?? ""
-                            )
-                            let songInfo = SongInfo(
-                                id: favoriteSong.id ?? "",
-                                team: favoriteSong.team ?? "",
-                                type: favoriteSong.type ,
-                                title: favoriteSong.title ?? "" ,
-                                lyrics: favoriteSong.lyrics ?? "",
-                                info: favoriteSong.info ?? "",
-                                url: favoriteSong.url ?? ""
-                            )
+                            let song = viewModel.makeSong(favoriteSong: favoriteSong)
                             
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song, team: favoriteSong.team ?? "Doosan")
+                                    SongDetailView(song: song, team: favoriteSong.safeTeam)
                                 } label: {
                                     HStack(spacing: 16) {
-                                        Image(dataManager.checkSeasonSong(data: songInfo) ? "\(favoriteSong.team ?? "")23" : "\( favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")
+                                        Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
                                             .resizable()
                                             .frame(width: 40, height: 40)
                                             .cornerRadius(8)
                                         VStack(alignment: .leading, spacing: 8) {
-                                            Text(favoriteSong.title ?? "test ")
+                                            Text(favoriteSong.safeTitle)
                                                 .font(Font.Halmap.CustomBodyMedium)
                                                 .foregroundColor(.black)
-                                            Text(TeamName(rawValue: favoriteSong.team ?? "NC")?.fetchTeamNameKr() ?? ".")
+                                            Text(TeamName(rawValue: favoriteSong.safeTeam)?.fetchTeamNameKr() ?? ".")
                                                 .font(Font.Halmap.CustomCaptionMedium)
                                                 .foregroundColor(.customDarkGray)
                                         }
@@ -96,7 +74,7 @@ struct ScalingHeaderView: View {
                                         .lineLimit(1)
                                         
                                         Button {
-                                            persistence.deleteSongs(song: favoriteSong)
+                                            viewModel.deleteSong(favoriteSong: favoriteSong)
                                         } label: {
                                             Image(systemName: "heart.fill")
                                                 .foregroundColor(.mainGreen)
@@ -111,24 +89,16 @@ struct ScalingHeaderView: View {
                     }
                 }
             }
-            .modifier(OffsetModifier(offset: $offset))
-            .onChange(of: offset) { _ in
-                if offset > -UIScreen.getHeight(90) {
-                    withAnimation {
-                        isDraged = false
-                    }
-                } else if offset < 0 {
-                    withAnimation {
-                        isDraged = true
-                    }
-                }
+            .modifier(OffsetModifier(offset: $viewModel.offset))
+            .onChange(of: viewModel.offset) { _ in
+                viewModel.handleOffsetChange()
             }
         }
         .coordinateSpace(name: "StorageScroll")
         .background(Color.systemBackground)
     }
     
-    var topBar: some View {
+    var defaultHeader: some View {
         ZStack(alignment: .bottom) {
             Image("storageTop")
                 .resizable()
@@ -139,12 +109,12 @@ struct ScalingHeaderView: View {
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
-        .opacity(checkScrollRequirement(listCount: collectedSongs.count) && isDraged ? 0 : 1)
+        .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: true))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .background(Color.systemBackground)
     }
-        
-    var topTitle: some View {
+    
+    var scrolledHeader: some View {
         VStack{
             HStack {
                 Spacer()
@@ -155,13 +125,6 @@ struct ScalingHeaderView: View {
             .padding(.top, 40)
             
         }
-    }
-    
-    func getHeaderHeight() -> CGFloat {
-        isDraged ? (59 + topEdge) : maxHeight + offset
-    }
-    func checkScrollRequirement(listCount: Int) -> Bool{
-        UIScreen.screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 ? true : false
     }
 }
 

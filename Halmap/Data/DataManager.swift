@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 class DataManager: ObservableObject {
     
     private let db = Firestore.firestore()
+    static let shared = DataManager()
     
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
