@@ -31,8 +31,8 @@ struct SongSearchView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, 10)
-
+            .padding(.top, getSafeArea().top + 10)
+            
             Divider()
                 .foregroundColor(.customGray)
                 .padding(.top, 22)
@@ -42,6 +42,7 @@ struct SongSearchView: View {
         }
         .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
+        .ignoresSafeArea()
         .onAppear {
             viewModel.setup(dataManager: dataManager)
             isFocused = true
