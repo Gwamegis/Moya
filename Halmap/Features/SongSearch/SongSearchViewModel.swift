@@ -7,54 +7,43 @@
 
 import SwiftUI
 
+
 final class SongSearchViewModel: ObservableObject {
     
-    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @Published var searchText: String = ""
-    @Published var autoComplete: [SongInfo] = []
-    var dataManager: DataManager?
+    enum SearchViewMode {
+        case initial        // 초기화면
+        case result         // 검색결과 없음
+        case request        // 검색결과 있음
+    }
     
+    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @Published var autoComplete: [SongInfo] = []
+    @Published var searchText: String = "" {
+        didSet {
+            fetchSearchResult()
+        }
+    }
+    var dataManager: DataManager?
+    private var searchViewMode: SearchViewMode = .initial
+    
+    // MARK: public function
     func setup(dataManager: DataManager) {
         self.dataManager = dataManager
         UIApplication.shared.hideKeyboard()
     }
     
-    func isEmptySearchText() -> Bool {
-        searchText.isEmpty
-    }
-    
-    func isEmptySearchResultList() -> Bool {
-        autoComplete.isEmpty
-    }
-    
-    func didChangedSearchText() {
-        guard let dataManager else { return }
-        autoComplete = []
-
-        dataManager.teamLists.forEach { teamName in
-            for data in dataManager.playerSongsAll[teamName.fetchTeamIndex()] {
-                if data.title.lowercased().contains(searchText.lowercased()) {
-                    let music = SongInfo(id: data.id,team: teamName.rawValue, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
-                    autoComplete.append(music)
-                }
-            }
-            for data in dataManager.teamSongsAll[teamName.fetchTeamIndex()] {
-                if data.title.lowercased().contains(searchText.lowercased()) {
-                    let music = SongInfo(id: data.id,team: teamName.rawValue, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
-                    autoComplete.append(music)
-                }
-            }
+    func getSearchViewMode() -> SearchViewMode {
+        if searchText.isEmpty {
+            return .initial
+        } else if autoComplete.isEmpty {
+            return .request
+        } else {
+            return .result
         }
     }
     
-    func fetchSongList() -> [SongInfo] {
-        didChangedSearchText()
-        return autoComplete
-    }
-    
-    func getAlbumImage(_ index: Int) -> String {
-        guard let dataManager else { return "" }
-        return dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album")
+    func isEmptySearchText() -> Bool {
+        searchText.isEmpty
     }
     
     func getAlbumImage(with songInfo: SongInfo) -> String {
@@ -62,16 +51,29 @@ final class SongSearchViewModel: ObservableObject {
         return dataManager.checkSeasonSong(data: songInfo) ? "\(songInfo.team)23" : (songInfo.type ? "\(songInfo.team)Player" : "\(songInfo.team)Album")
     }
     
+    func getTeamName(with songInfo: SongInfo) -> String {
+        TeamName(rawValue: songInfo.team)?.fetchTeamNameKr() ?? "두산 베어스"
+    }
+    
     func convertSongInfoToSong(with songInfo: SongInfo) -> Song {
-        return Song(id: songInfo.id, type: songInfo.type, title: songInfo.title, lyrics: songInfo.lyrics, info: songInfo.info, url: songInfo.url)
+        Song(id: songInfo.id, type: songInfo.type, title: songInfo.title, lyrics: songInfo.lyrics, info: songInfo.info, url: songInfo.url)
     }
     
-    func setSong(data: SongInfo) -> Song {
-        return Song(id: data.id, type: data.type, title: data.title, lyrics: data.lyrics, info: data.info, url: data.url)
+    // MARK: - Private functions
+    
+    private func fetchSearchResult() {
+        guard let dataManager else { return }
+        var searchResult: [SongInfo] = []
+        
+        dataManager.teamLists.forEach { team in
+            let songList = dataManager.playerSongsAll[team.fetchTeamIndex()] + dataManager.teamSongsAll[team.fetchTeamIndex()]
+            songList.forEach { song in
+                if song.title.localizedStandardContains(searchText) {
+                    let music = SongInfo(id: song.id,team: team.rawValue, type: song.type, title: song.title, lyrics: song.lyrics, info: song.info, url: song.url)
+                    searchResult.append(music)
+                }
+            }
+        }
+        autoComplete = searchResult
     }
-    
-    /*
-     Image(dataManager.checkSeasonSong(data: viewModel.autoComplete[index]) ? "\(viewModel.autoComplete[index].team)23" : (viewModel.autoComplete[index].type ? "\(viewModel.autoComplete[index].team)Player" : "\(viewModel.autoComplete[index].team)Album"))
-     */
-    
 }
