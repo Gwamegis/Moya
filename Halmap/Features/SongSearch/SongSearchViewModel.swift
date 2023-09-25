@@ -16,7 +16,6 @@ final class SongSearchViewModel: ObservableObject {
         case request        // 검색결과 있음
     }
     
-    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @Published var autoComplete: [SongInfo] = []
     @Published var searchText: String = "" {
         didSet {

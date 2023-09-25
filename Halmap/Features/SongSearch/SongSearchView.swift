@@ -11,7 +11,6 @@ struct SongSearchView: View {
     
     @StateObject var viewModel = SongSearchViewModel()
     @EnvironmentObject var dataManager: DataManager
-    @GestureState private var dragOffset = CGSize.zero
     @FocusState private var isFocused: Bool
 
     var body: some View {
