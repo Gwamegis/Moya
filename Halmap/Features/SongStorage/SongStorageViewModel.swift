@@ -10,9 +10,8 @@ import SwiftUI
 final class SongStorageViewModel: ObservableObject {
     let dataManager: DataManager
     let persistence: PersistenceController
-    
+    let topEdge: CGFloat
     let maxHeight: CGFloat = 216
-    var topEdge: CGFloat
     
     @Published var offset: CGFloat = 0
     @Published var isDraged = false
@@ -25,21 +24,6 @@ final class SongStorageViewModel: ObservableObject {
     
     func deleteSong(favoriteSong: CollectedSong) {
         persistence.deleteSongs(song: favoriteSong)
-    }
-    
-    func handleOffsetChange() {
-        let threshold = -UIScreen.getHeight(90)
-        if self.offset > threshold {
-            withAnimation {
-                self.isDraged = false
-            }
-            
-        } else if self.offset < 0 {
-            withAnimation {
-                self.isDraged = true
-            }
-            
-        }
     }
     
     func makeSong(favoriteSong: CollectedSong) -> Song {
@@ -64,21 +48,30 @@ final class SongStorageViewModel: ObservableObject {
         )
     }
     
-    
     func fetchSongImageName(favoriteSong: CollectedSong) -> String {
         dataManager.checkSeasonSong(data: makeSongInfo(favoriteSong: favoriteSong)) ? "\(favoriteSong.team ?? "")23" : "\( favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")"
     }
     
-    func calculateOpacity(listCount: Int, isDefaultHeader: Bool) -> Double {
-        if checkScrollRequirement(listCount: listCount) && isDraged {
+    func handleOffsetChange(threshold: CGFloat) {
+        if self.offset > threshold {
+            withAnimation {
+                self.isDraged = false
+            }
+        } else if self.offset < 0 {
+            withAnimation {
+                self.isDraged = true
+            }
+        }
+    }
+    
+    func calculateOpacity(listCount: Int, isDefaultHeader: Bool, screenHeight: CGFloat) -> Double {
+        if screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 && isDraged {
             return isDefaultHeader ? 0 : 1
         } else {
             return isDefaultHeader ? 1 : 0
         }
     }
-    private func checkScrollRequirement(listCount: Int) -> Bool{
-        UIScreen.screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 ? true : false
-    }
+    
     func getHeaderHeight() -> CGFloat {
         isDraged ? (59 + topEdge) : maxHeight + offset
     }

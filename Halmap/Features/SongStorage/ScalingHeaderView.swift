@@ -22,7 +22,7 @@ struct ScalingHeaderView: View {
                             .frame(height: viewModel.getHeaderHeight(), alignment: .bottom)
                             .overlay(
                                 scrolledHeader
-                                    .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: false))
+                                    .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: false, screenHeight: UIScreen.screenHeight))
                             )
                         HStack() {
                             Text("총 \(collectedSongs.count)곡")
@@ -91,7 +91,7 @@ struct ScalingHeaderView: View {
             }
             .modifier(OffsetModifier(offset: $viewModel.offset))
             .onChange(of: viewModel.offset) { _ in
-                viewModel.handleOffsetChange()
+                viewModel.handleOffsetChange(threshold: -UIScreen.getHeight(90))
             }
         }
         .coordinateSpace(name: "StorageScroll")
@@ -109,7 +109,7 @@ struct ScalingHeaderView: View {
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
-        .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: true))
+        .opacity(viewModel.calculateOpacity(listCount: collectedSongs.count, isDefaultHeader: true, screenHeight: UIScreen.screenHeight))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         .background(Color.systemBackground)
     }
