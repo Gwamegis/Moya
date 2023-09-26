@@ -24,7 +24,7 @@ struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
 
-    @StateObject var dataManager = DataManager.shared
+    @StateObject var dataManager = DataManager()
     @StateObject var audioManager = AudioManager()
 
     let persistenceController = PersistenceController.shared
