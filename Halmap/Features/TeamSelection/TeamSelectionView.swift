@@ -15,10 +15,6 @@ struct OnBoardingStartView: View {
     @AppStorage("latestVersion") var latestVersion = "1.0.0"
     
     @EnvironmentObject var dataManager: DataManager
-    @State var versionNotification: [Notification] = []
-    
-    @State var startButton: Bool = false
-    
     var body: some View {
         if !isFirstLaunching {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
@@ -37,21 +33,18 @@ struct OnBoardingStartView: View {
                 }
             }
         } else {
-            TeamSelectionView(isFirstLaunching: $isFirstLaunching)
+            TeamSelectionView(isShowing: $isFirstLaunching)
         }
     }
 }
 
 struct TeamSelectionView: View {
     @EnvironmentObject var dataManager: DataManager
-    @AppStorage("selectedTeam") var finalSelectedTeam: String = ""
-    @Binding var isFirstLaunching: Bool
+    @AppStorage("selectedTeam") var selectedTeamName: String = ""
+    @StateObject private var viewModel = TeamSelectionViewModel()
+    @Binding var isShowing: Bool
     
-    @State var buttonPressed: [Bool] = [Bool](repeating: false, count: 10)
-    @State var selectedTeam: String? = nil
-    
-    var columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
-    var teamLogo = TeamName.allCases
+    private let columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -60,18 +53,12 @@ struct TeamSelectionView: View {
                 .padding(.top, 20)
             
             LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(teamLogo.indices, id: \.self) { idx in
+                ForEach(TeamName.allCases, id: \.self) { teamName in
                     Button {
-                        withAnimation {
-                            buttonPressed = [Bool](repeating: false, count: 10)
-
-                            self.buttonPressed[idx].toggle()
-                            self.selectedTeam = teamLogo[idx].rawValue
-
-                        }
+                        viewModel.didSelectedTeam(with: teamName)
                     } label: {
                         ZStack {
-                            Image(teamLogo[idx].rawValue)
+                            Image(teamName.rawValue)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108), alignment: .top)
@@ -79,24 +66,23 @@ struct TeamSelectionView: View {
                             Image("teamSelect")
                                 .resizable()
                                 .frame(width: UIScreen.getWidth(170), height: UIScreen.getHeight(108))
-                                .opacity(buttonPressed[idx] ? 1 : 0)
+                                .opacity(viewModel.isSelectedTeam(with: teamName) ? 1 : 0)
                         }
                     }
                 }
             }
             .padding(.bottom, 24)
+            
             Button {
-                UserDefaults.standard.set(selectedTeam, forKey: "selectedTeam")
                 withAnimation {
-                    isFirstLaunching.toggle()
-                    dataManager.setSongList(team: finalSelectedTeam)
-                    finalSelectedTeam = selectedTeam ?? "error"
+                    viewModel.didTappedStartButton()
+                    selectedTeamName = viewModel.getSelectedTeamName()
+                    isShowing.toggle()
                 }
-                print("선택완료")
             } label: {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.mainGreen)
-                    .opacity(selectedTeam == nil ? 0.1 : 1)
+                    .opacity(viewModel.isExistSelectedTeam() ? 1 : 0.1)
                     .frame(width: UIScreen.getWidth(350), height: UIScreen.getHeight(62))
                     .overlay(
                         Text("응원하러 가기")
@@ -104,7 +90,10 @@ struct TeamSelectionView: View {
                             .foregroundColor(.white)
                     )
             }
-            .disabled(selectedTeam == nil)
+            .disabled(!viewModel.isExistSelectedTeam())
+        }
+        .onAppear() {
+            viewModel.setup(dataManager: dataManager, selectedTeamName: selectedTeamName)
         }
         .padding(.horizontal, 20)
     }
