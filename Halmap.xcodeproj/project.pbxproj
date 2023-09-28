@@ -17,6 +17,7 @@
 		20A687E62A711C48005F18FA /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E52A711C48005F18FA /* FirebaseRemoteConfig */; };
 		20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E72A711C48005F18FA /* FirebaseStorage */; };
 		8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */; };
+		8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */; };
@@ -71,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
+		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
 		87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIView.swift"; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F9168B282A5A81AD00DCF649 /* NotificationView.swift */,
 				F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */,
+				8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
+				8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				F9168B322A5AA1FB00DCF649 /* HalfModalPresentationController.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
