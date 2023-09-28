@@ -33,7 +33,7 @@ struct OnBoardingStartView: View {
                 }
             }
         } else {
-            TeamSelectionView(isShowing: $isFirstLaunching)
+            TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $isFirstLaunching)
         }
     }
 }

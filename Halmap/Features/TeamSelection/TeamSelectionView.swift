@@ -10,7 +10,7 @@ import SwiftUI
 struct TeamSelectionView: View {
     @EnvironmentObject var dataManager: DataManager
     @AppStorage("selectedTeam") var selectedTeamName: String = ""
-    @StateObject private var viewModel = TeamSelectionViewModel()
+    @StateObject var viewModel: TeamSelectionViewModel
     @Binding var isShowing: Bool
     
     private let columns: [GridItem] = Array(repeating: .init(.adaptive(minimum: 200, maximum: .infinity), spacing: 20), count: 2)
@@ -60,9 +60,6 @@ struct TeamSelectionView: View {
                     )
             }
             .disabled(!viewModel.isExistSelectedTeam())
-        }
-        .onAppear() {
-            viewModel.setup(dataManager: dataManager, selectedTeamName: selectedTeamName)
         }
         .padding(.horizontal, 20)
     }
