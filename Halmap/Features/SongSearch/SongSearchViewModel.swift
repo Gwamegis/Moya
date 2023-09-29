@@ -22,7 +22,7 @@ final class SongSearchViewModel: ObservableObject {
             fetchSearchResult()
         }
     }
-    var dataManager: DataManager?
+    var dataManager: DataManager
     private var searchViewMode: SearchViewMode = .initial
     
     init(dataManager: DataManager) {
@@ -44,8 +44,7 @@ final class SongSearchViewModel: ObservableObject {
     }
     
     func getAlbumImage(with songInfo: SongInfo) -> String {
-        guard let dataManager else { return "" }
-        return dataManager.checkSeasonSong(data: songInfo) ? "\(songInfo.team)23" : (songInfo.type ? "\(songInfo.team)Player" : "\(songInfo.team)Album")
+        dataManager.checkSeasonSong(data: songInfo) ? "\(songInfo.team)23" : (songInfo.type ? "\(songInfo.team)Player" : "\(songInfo.team)Album")
     }
     
     func getTeamName(with songInfo: SongInfo) -> String {
@@ -59,7 +58,6 @@ final class SongSearchViewModel: ObservableObject {
     // MARK: - Private functions
     
     private func fetchSearchResult() {
-        guard let dataManager else { return }
         var searchResult: [SongInfo] = []
         
         dataManager.teamLists.forEach { team in
