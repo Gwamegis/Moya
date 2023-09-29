@@ -28,7 +28,6 @@ final class SongSearchViewModel: ObservableObject {
     // MARK: public function
     func setup(dataManager: DataManager) {
         self.dataManager = dataManager
-        UIApplication.shared.hideKeyboard()
     }
     
     func getSearchViewMode() -> SearchViewMode {

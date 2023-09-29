@@ -43,6 +43,7 @@ struct SongSearchView: View {
         .navigationBarBackButtonHidden(true)
         .ignoresSafeArea()
         .onAppear {
+            UIApplication.shared.hideKeyboard()
             viewModel.setup(dataManager: dataManager)
             isFocused = true
         }
