@@ -25,8 +25,7 @@ final class SongSearchViewModel: ObservableObject {
     var dataManager: DataManager?
     private var searchViewMode: SearchViewMode = .initial
     
-    // MARK: public function
-    func setup(dataManager: DataManager) {
+    init(dataManager: DataManager) {
         self.dataManager = dataManager
     }
     

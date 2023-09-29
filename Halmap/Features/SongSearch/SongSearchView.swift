@@ -9,8 +9,7 @@ import SwiftUI
 
 struct SongSearchView: View {
     
-    @StateObject var viewModel = SongSearchViewModel()
-    @EnvironmentObject var dataManager: DataManager
+    @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
 
     var body: some View {
@@ -44,7 +43,6 @@ struct SongSearchView: View {
         .ignoresSafeArea()
         .onAppear {
             UIApplication.shared.hideKeyboard()
-            viewModel.setup(dataManager: dataManager)
             isFocused = true
         }
     }
@@ -139,6 +137,6 @@ struct SongSearchView: View {
 // MARK: Previews
 struct SongSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        SongSearchView()
+        SongSearchView(viewModel: SongSearchViewModel(dataManager: DataManager()))
     }
 }
