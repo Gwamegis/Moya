@@ -29,7 +29,7 @@ struct SongSearchView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, getSafeArea().top + 10)
+            .padding(.top)
             
             Divider()
                 .foregroundColor(.customGray)
@@ -40,7 +40,7 @@ struct SongSearchView: View {
         }
         .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
-        .ignoresSafeArea()
+        .navigationBarHidden(true)
         .onAppear {
             UIApplication.shared.hideKeyboard()
             isFocused = true
