@@ -16,20 +16,7 @@ struct SongSearchView: View {
 
         VStack(spacing: 0) {
 
-            HStack(spacing: 17) {
-                searchBar
-                
-                if isFocused {
-                    Button {
-                        isFocused = false
-                    } label: {
-                        Text("취소")
-                    }
-                    .foregroundColor(Color.customDarkGray)
-                }
-            }
-            .padding(.horizontal, 20)
-            .padding(.top)
+            searchBar
             
             Divider()
                 .foregroundColor(.customGray)
@@ -49,27 +36,40 @@ struct SongSearchView: View {
 
     // MARK: Search Bar
     var searchBar: some View {
-        HStack {
-            TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $viewModel.searchText)
-                .accentColor(.black)
-                .disableAutocorrection(true)
-                .focused($isFocused)
-                .background(Color.customGray)
+        HStack(spacing: 17) {
+            HStack {
+                TextField("\(Image(systemName: "magnifyingglass")) 검색", text: $viewModel.searchText)
+                    .accentColor(.black)
+                    .disableAutocorrection(true)
+                    .focused($isFocused)
+                    .background(Color.customGray)
+                
+                if !viewModel.isEmptySearchText() {
+                    Image(systemName: "xmark.circle.fill")
+                        .imageScale(.medium)
+                        .padding(3)
+                        .foregroundColor(Color(.systemGray2))
+                        .onTapGesture {
+                            viewModel.didTappedClearButton()
+                        }
+                }
+            }
+            .frame(height: 40)
+            .padding(.horizontal, 20)
+            .background(Color.customGray)
+            .cornerRadius(30)
             
-            if !viewModel.isEmptySearchText() {
-                Image(systemName: "xmark.circle.fill")
-                    .imageScale(.medium)
-                    .padding(3)
-                    .foregroundColor(Color(.systemGray2))
-                    .onTapGesture {
-                        self.viewModel.searchText = ""
-                    }
+            if isFocused {
+                Button {
+                    isFocused = false
+                } label: {
+                    Text("취소")
+                }
+                .foregroundColor(Color.customDarkGray)
             }
         }
-        .frame(height: 40)
+        .padding(.top)
         .padding(.horizontal, 20)
-        .background(Color.customGray)
-        .cornerRadius(30)
     }
     
     // MARK: Result View

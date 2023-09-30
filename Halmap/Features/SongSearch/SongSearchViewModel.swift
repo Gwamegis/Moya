@@ -39,6 +39,10 @@ final class SongSearchViewModel: ObservableObject {
         }
     }
     
+    func didTappedClearButton() {
+        searchText = ""
+    }
+    
     func isEmptySearchText() -> Bool {
         searchText.isEmpty
     }
