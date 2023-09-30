@@ -8,9 +8,9 @@
 import SwiftUI
 
 final class SongStorageViewModel: ObservableObject {
-    let dataManager: DataManager
-    let persistence: PersistenceController
-    let topEdge: CGFloat
+    private let dataManager: DataManager
+    private let persistence: PersistenceController
+    private let topEdge: CGFloat
     let maxHeight: CGFloat = 216
     
     @Published var offset: CGFloat = 0
