@@ -44,14 +44,13 @@ struct TeamSelectionView: View {
             
             Button {
                 withAnimation {
-                    viewModel.didTappedStartButton()
+                    isShowing = viewModel.didTappedStartButton()
                     selectedTeamName = viewModel.getSelectedTeamName()
-                    isShowing.toggle()
                 }
             } label: {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.mainGreen)
-                    .opacity(viewModel.isExistSelectedTeam() ? 1 : 0.1)
+                    .opacity(viewModel.isChangedSelectedTeam() ? 1 : 0.1)
                     .frame(width: UIScreen.getWidth(350), height: UIScreen.getHeight(62))
                     .overlay(
                         Text("응원하러 가기")
@@ -59,7 +58,7 @@ struct TeamSelectionView: View {
                             .foregroundColor(.white)
                     )
             }
-            .disabled(!viewModel.isExistSelectedTeam())
+            .disabled(!viewModel.isChangedSelectedTeam())
         }
         .padding(.horizontal, 20)
     }

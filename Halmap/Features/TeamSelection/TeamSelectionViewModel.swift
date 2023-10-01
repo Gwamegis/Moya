@@ -13,11 +13,12 @@ final class TeamSelectionViewModel: ObservableObject {
     
     private var dataManager: DataManager
     private var teamLogo = TeamName.allCases
+    private var initialSelectedTeam: TeamName? = nil
     
     init(dataManager: DataManager, selectedTeamName: String? = nil) {
         self.dataManager = dataManager
         if let selectedTeamName {
-            setSelectedTeam(teamName: selectedTeamName)
+            initialSelectedTeam = converStringToTeamName(selectedTeamName)
         }
     }
     
@@ -26,26 +27,32 @@ final class TeamSelectionViewModel: ObservableObject {
     }
     
     func isSelectedTeam(with team: TeamName) -> Bool {
-        guard let selectedTeam else { return false }
+        guard let selectedTeam else {
+            return initialSelectedTeam == team
+        }
         return selectedTeam == team
     }
     
-    func isExistSelectedTeam() -> Bool {
-        selectedTeam != nil
+    func isChangedSelectedTeam() -> Bool {
+        if let initialSelectedTeam, let selectedTeam {
+            return initialSelectedTeam != selectedTeam
+        }
+        return selectedTeam != nil
     }
     
-    func didTappedStartButton() {
-        guard let selectedTeam else { return }
+    func didTappedStartButton() -> Bool {
+        guard let selectedTeam else { return true }
         let teamName = selectedTeam.rawValue
         UserDefaults.standard.set(teamName, forKey: "selectedTeam")
         dataManager.setSongList(team: teamName)
+        return false
     }
     
     func getSelectedTeamName() -> String {
         selectedTeam?.rawValue ?? "error"
     }
     
-    private func setSelectedTeam(teamName: String) {
-        selectedTeam = TeamName.allCases.first(where: { $0.rawValue == teamName })
+    private func converStringToTeamName(_ teamName: String) -> TeamName? {
+        TeamName.allCases.first(where: { $0.rawValue == teamName })
     }
 }
