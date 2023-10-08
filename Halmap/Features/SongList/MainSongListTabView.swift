@@ -9,11 +9,7 @@ import SwiftUI
 
 struct MainSongListTabView: View {
     
-    @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha" {
-        didSet {
-            viewModel.setSongList(for: selectedTeam)
-        }
-    }
+    @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
     @StateObject var viewModel = MainSongListTabViewModel()
 
