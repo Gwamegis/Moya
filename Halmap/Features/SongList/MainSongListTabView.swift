@@ -9,16 +9,15 @@ import SwiftUI
 
 struct MainSongListTabView: View {
     
-    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha" {
+        didSet {
+            viewModel.setSongList(for: selectedTeam)
+        }
+    }
     @EnvironmentObject var dataManager: DataManager
     @StateObject var viewModel = MainSongListTabViewModel()
-    
-    @State private var showingTeamChaingView: Bool = false
+
     @State var index = 0
-    
-    init() {
-        Color.setColor(selectedTeam)
-    }
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -135,9 +134,7 @@ struct MainSongListTabView: View {
                 .padding(.top, 15)
             
             //팀 배너 이미지
-            Button {
-                showingTeamChaingView.toggle()
-            } label: {
+            Button(action: viewModel.toggleTeamChangingView) {
                 ZStack(alignment: .bottomLeading) {
                     Image("\(selectedTeam)MainBanner")
                         .resizable()
@@ -159,7 +156,7 @@ struct MainSongListTabView: View {
             .padding(.top, 70)
         }
         .background(Color.systemBackground)
-        .sheet(isPresented: $showingTeamChaingView) {
+        .sheet(isPresented: $viewModel.showingTeamChangingView) {
             TeamChangingView(changedTeam: $selectedTeam)
                 .onDisappear{
                     dataManager.setSongList(team: selectedTeam)

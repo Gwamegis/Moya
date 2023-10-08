@@ -33,5 +33,9 @@ class MainSongListTabViewModel: ObservableObject {
             return "\(songInfo.team)Player"
         }
     }
+    
+    func toggleTeamChangingView() {
+        showingTeamChangingView.toggle()
+    }
 }
 

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct TabBarView: View {
-    
     @Binding var currentTab: Int
     @Namespace var namespace
     
