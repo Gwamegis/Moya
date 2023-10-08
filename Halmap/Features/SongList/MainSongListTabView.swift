@@ -11,6 +11,9 @@ struct MainSongListTabView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
+    
+    let persistence = PersistenceController.shared
     
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
@@ -59,7 +62,7 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: music, team: selectedTeam))) {
                                 HStack(spacing: 16) {
                                     Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
                                         .resizable()
@@ -109,7 +112,7 @@ struct MainSongListTabView: View {
                                                  url: song.url)
                             
                             
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: music, team: selectedTeam))) {
                                 HStack(spacing: 16) {
                                     Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
                                         .resizable()

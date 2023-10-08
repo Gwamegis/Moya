@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ScalingHeaderView: View {
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
+    
     let maxHeight: CGFloat = 216
     var topEdge: CGFloat
     
@@ -77,7 +79,14 @@ struct ScalingHeaderView: View {
                             
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song, team: favoriteSong.team ?? "Doosan")
+                                    SongDetailView(
+                                        viewModel: SongDetailViewModel(
+                                            audioManager: audioManager,
+                                            dataManager: dataManager,
+                                            persistence: persistence,
+                                            song: song,
+                                            team: favoriteSong.team ?? "Doosan"
+                                        ))
                                 } label: {
                                     HStack(spacing: 16) {
                                         Image(dataManager.checkSeasonSong(data: songInfo) ? "\(favoriteSong.team ?? "")23" : "\( favoriteSong.team ?? "NC")\(favoriteSong.type ? "Player" : "Album")")

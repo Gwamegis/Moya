@@ -14,6 +14,9 @@ struct SongSearchView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
+    
+    let persistence = PersistenceController.shared
     
     @GestureState private var dragOffset = CGSize.zero
     @FocusState private var isFocused: Bool
@@ -120,7 +123,15 @@ struct SongSearchView: View {
                 } else {
                     List {
                         ForEach(autoComplete.indices, id: \.self) { index in
-                            NavigationLink(destination: SongDetailView(song: setSong(data: autoComplete[index]), team: autoComplete[index].team)) {
+                            NavigationLink(destination:
+                                           SongDetailView(
+                                            viewModel: SongDetailViewModel(
+                                                audioManager: audioManager,
+                                                dataManager: dataManager,
+                                                persistence: persistence,
+                                                song: setSong(data: autoComplete[index]),
+                                                team: autoComplete[index].team))
+                            ) {
                                 HStack {
                                     Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))
                                         .resizable()
