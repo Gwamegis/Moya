@@ -48,12 +48,7 @@ struct MainSongListTabView: View {
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
+                            
                             let songInfo = SongInfo(id: song.id,
                                                     team: selectedTeam,
                                                     type: song.type,
@@ -62,7 +57,7 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: music, team: selectedTeam))) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
                                         .resizable()
@@ -96,12 +91,6 @@ struct MainSongListTabView: View {
                     
                     List {
                         ForEach(dataManager.playerSongs) { song in
-                            let music = Song(id: song.id,
-                                            type: song.type,
-                                            title: song.title,
-                                            lyrics: song.lyrics,
-                                            info: song.info,
-                                            url: song.url)
                             
                             let songInfo = SongInfo(id: song.id,
                                                  team: selectedTeam,
@@ -112,7 +101,7 @@ struct MainSongListTabView: View {
                                                  url: song.url)
                             
                             
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: music, team: selectedTeam))) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
                                         .resizable()

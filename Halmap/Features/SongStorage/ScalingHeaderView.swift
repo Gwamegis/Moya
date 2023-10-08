@@ -59,14 +59,7 @@ struct ScalingHeaderView: View {
                             .padding(.top, 60)
                     } else {
                         ForEach(collectedSongs) { favoriteSong in
-                            let song = Song(
-                                id: favoriteSong.id ?? "",
-                                type: favoriteSong.type ,
-                                title: favoriteSong.title ?? "" ,
-                                lyrics: favoriteSong.lyrics ?? "",
-                                info: favoriteSong.info ?? "",
-                                url: favoriteSong.url ?? ""
-                            )
+                            
                             let songInfo = SongInfo(
                                 id: favoriteSong.id ?? "",
                                 team: favoriteSong.team ?? "",
@@ -84,8 +77,7 @@ struct ScalingHeaderView: View {
                                             audioManager: audioManager,
                                             dataManager: dataManager,
                                             persistence: persistence,
-                                            song: song,
-                                            team: favoriteSong.team ?? "Doosan"
+                                            song: songInfo
                                         ))
                                 } label: {
                                     HStack(spacing: 16) {

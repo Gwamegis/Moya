@@ -129,8 +129,7 @@ struct SongSearchView: View {
                                                 audioManager: audioManager,
                                                 dataManager: dataManager,
                                                 persistence: persistence,
-                                                song: setSong(data: autoComplete[index]),
-                                                team: autoComplete[index].team))
+                                                song: autoComplete[index]))
                             ) {
                                 HStack {
                                     Image(dataManager.checkSeasonSong(data: autoComplete[index]) ? "\(autoComplete[index].team)23" : (autoComplete[index].type ? "\(autoComplete[index].team)Player" : "\(autoComplete[index].team)Album"))

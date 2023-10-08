@@ -13,7 +13,7 @@ struct SongDetailView: View {
     
     var body: some View {
         ZStack {
-            Color("\(viewModel.team)Sub")
+            Color("\(viewModel.song.team)Sub")
                 .ignoresSafeArea()
             
             Lyric(viewModel: viewModel)
@@ -21,7 +21,7 @@ struct SongDetailView: View {
             VStack(spacing: 0) {
                 Rectangle()
                     .frame(height: UIScreen.getHeight(108))
-                    .foregroundColor(Color("\(viewModel.team)Sub"))
+                    .foregroundColor(Color("\(viewModel.song.team)Sub"))
                 gradientRectangle(isTop: true)
                 Spacer()
                 gradientRectangle(isTop: false)
@@ -43,7 +43,7 @@ struct SongDetailView: View {
         Rectangle()
             .frame(height: 120)
             .foregroundColor(Color(UIColor.clear))
-            .background(isTop ? (viewModel.isScrolled ? Color.fetchTopGradient(color: Color("\(viewModel.team)Sub")) : nil ) : Color.fetchBottomGradient(color: Color("\(viewModel.team)Sub")))
+            .background(isTop ? (viewModel.isScrolled ? Color.fetchTopGradient(color: Color("\(viewModel.song.team)Sub")) : nil ) : Color.fetchBottomGradient(color: Color("\(viewModel.song.team)Sub")))
             .allowsHitTesting(false)
     }
 }
@@ -95,13 +95,13 @@ private struct PlayBar: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Progressbar(team: $viewModel.team, isThumbActive: true)
+            Progressbar(team: $viewModel.song.team, isThumbActive: true)
             
             HStack(spacing: 52) {
                 Button {
                     viewModel.handlePlayButtonTap()
                 } label: {
-                    Image(systemName: viewModel.getAudioIsPlaying() ? "pause.circle.fill" : "play.circle.fill")
+                    Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                         .font(.system(size: 60, weight: .medium))
                         .foregroundStyle(Color.customGray)
                 }
@@ -110,7 +110,7 @@ private struct PlayBar: View {
         }
         .padding(.horizontal, 45)
         .frame(maxWidth: .infinity)
-        .background(Color("\(viewModel.team)Sub"))
+        .background(Color("\(viewModel.song.team)Sub"))
         .onDisappear(){
             viewModel.removePlayer()
         }
@@ -131,7 +131,7 @@ private struct FavoriteButton: View {
             viewModel.handleLikeButtonTap(deleteSong: findFavoriteSong())
         } label: {
             Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
-                .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.team)Point") : Color.white)
+                .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
         }
         .onAppear() {
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {

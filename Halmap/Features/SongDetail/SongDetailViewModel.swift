@@ -5,34 +5,37 @@
 //  Created by JeonJimin on 10/8/23.
 //
 
-import Foundation
 import SwiftUI
+import Combine
 
 final class SongDetailViewModel: ObservableObject {
-    private let audioManager: AudioManager
+    @ObservedObject private var audioManager: AudioManager
     private let dataManager: DataManager
     private let persistence: PersistenceController
     
-    @Published var song: Song
-    @Published var team: String
-    
+    @Published var song: SongInfo
     @Published var isScrolled = false
     @Published var isFavorite = false
+    @Published var isPlaying = false
     
-    init(audioManager: AudioManager, dataManager: DataManager, persistence: PersistenceController, song: Song, team: String) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(audioManager: AudioManager, dataManager: DataManager, persistence: PersistenceController, song: SongInfo) {
         self.audioManager = audioManager
         self.dataManager = dataManager
         self.persistence = persistence
         self.song = song
-        self.team = team
+        
+        audioManager.$isPlaying
+                    .sink { [weak self] in self?.isPlaying = $0 }
+                    .store(in: &cancellables)
     }
     
     func handleLikeButtonTap(deleteSong: CollectedSong) {
         if isFavorite {
             persistence.deleteSongs(song: deleteSong)
         } else {
-            let songInfo = SongInfo(id: song.id, team: team, type: song.type, title: song.title, lyrics: song.lyrics, info: song.info, url: song.url)
-            persistence.saveSongs(song: songInfo, playListTitle: "favorite")
+            persistence.saveSongs(song: song, playListTitle: "favorite")
         }
         isFavorite.toggle()
     }
@@ -43,7 +46,7 @@ final class SongDetailViewModel: ObservableObject {
     }
     
     func setPlayer() {
-        self.audioManager.AMset(song: song, selectedTeam: team)
+        self.audioManager.AMset(song: song)
     }
     
     func handlePlayButtonTap() {
