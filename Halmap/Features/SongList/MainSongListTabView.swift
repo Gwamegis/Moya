@@ -13,7 +13,7 @@ struct MainSongListTabView: View {
     @EnvironmentObject var dataManager: DataManager
     @StateObject var viewModel = MainSongListTabViewModel()
 
-    @State var index = 0
+    // @State var index = 0
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -23,7 +23,7 @@ struct MainSongListTabView: View {
                     .foregroundColor(Color.HalmacSub)
                 
                 HStack() {
-                    Text("총 \(index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
+                    Text("총 \(viewModel.index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
                         .font(Font.Halmap.CustomCaptionBold)
                         .foregroundColor(.customDarkGray)
                     Spacer()
@@ -35,7 +35,7 @@ struct MainSongListTabView: View {
                     .overlay(Color.customGray.opacity(0.6))
                     .padding(.horizontal, 20)
                 
-                TabView(selection: $index) {
+                TabView(selection: $viewModel.index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
                             let songInfo = SongInfo(id: song.id,
@@ -126,7 +126,7 @@ struct MainSongListTabView: View {
             .edgesIgnoringSafeArea(.top)
             
             //상단 탭바
-            TabBarView(currentTab: $index)
+            TabBarView(currentTab: $viewModel.index)
                 .padding(.top, 15)
             
             //팀 배너 이미지

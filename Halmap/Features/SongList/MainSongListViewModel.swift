@@ -12,11 +12,6 @@ class MainSongListTabViewModel: ObservableObject {
     @Published var index: Int = 0
 
     let dataManager: DataManager = DataManager()
-
-    func setSongList(for team: String) {
-        dataManager.setSongList(team: team)
-        Color.setColor(team)
-    }
     
     func getSongImage(for songInfo: SongInfo) -> String {
         if dataManager.checkSeasonSong(data: songInfo) {
