@@ -11,12 +11,10 @@ struct MainSongListTabView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
+    @StateObject var viewModel = MainSongListTabViewModel()
     
     @State private var showingTeamChaingView: Bool = false
     @State var index = 0
-    
-    // SongInformationView
-    @State private var showingFullScreenCover = false
     
     init() {
         Color.setColor(selectedTeam)
@@ -45,12 +43,6 @@ struct MainSongListTabView: View {
                 TabView(selection: $index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
                             let songInfo = SongInfo(id: song.id,
                                                     team: selectedTeam,
                                                     type: song.type,
@@ -59,9 +51,9 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
+                                    Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
@@ -93,25 +85,17 @@ struct MainSongListTabView: View {
                     
                     List {
                         ForEach(dataManager.playerSongs) { song in
-                            let music = Song(id: song.id,
-                                            type: song.type,
-                                            title: song.title,
-                                            lyrics: song.lyrics,
-                                            info: song.info,
-                                            url: song.url)
-                            
                             let songInfo = SongInfo(id: song.id,
-                                                 team: selectedTeam,
-                                                 type: song.type,
-                                                 title: song.title,
-                                                 lyrics: song.lyrics,
-                                                 info: song.info,
-                                                 url: song.url)
+                                                    team: selectedTeam,
+                                                    type: song.type,
+                                                    title: song.title,
+                                                    lyrics: song.lyrics,
+                                                    info: song.info,
+                                                    url: song.url)
                             
-                            
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
+                                    Image(viewModel.getPlayerImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
