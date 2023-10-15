@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
 		20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D72A711C48005F18FA /* FirebaseAnalytics */; };
 		20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D92A711C48005F18FA /* FirebaseAnalyticsSwift */; };
 		20A687DC2A711C48005F18FA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687DB2A711C48005F18FA /* FirebaseCrashlytics */; };
@@ -17,6 +16,8 @@
 		20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E32A711C48005F18FA /* FirebaseFirestoreSwift */; };
 		20A687E62A711C48005F18FA /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E52A711C48005F18FA /* FirebaseRemoteConfig */; };
 		20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E72A711C48005F18FA /* FirebaseStorage */; };
+		8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */; };
+		8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */; };
 		8744D07F2AC06BC1002F1D3A /* Halmap+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D07E2AC06BC1002F1D3A /* Halmap+View.swift */; };
 		8764EEEC2ABFEF6A0006F438 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */; };
 		8774038C2ABD2B7700C94D35 /* SongSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8774038B2ABD2B7700C94D35 /* SongSearchViewModel.swift */; };
@@ -72,6 +73,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
+		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
 		8744D07E2AC06BC1002F1D3A /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
 		8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -164,8 +167,8 @@
 		877403862AB71FEB00C94D35 /* TeamSelection */ = {
 			isa = PBXGroup;
 			children = (
-				20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */,
 				A81FFC9828F1777B00B0FC7C /* TeamSelectionView.swift */,
+				8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */,
 			);
 			path = TeamSelection;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */,
 				F9168B282A5A81AD00DCF649 /* NotificationView.swift */,
 				F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */,
+				8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -509,12 +513,13 @@
 				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
-				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
+				8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				F9168B322A5AA1FB00DCF649 /* HalfModalPresentationController.swift in Sources */,
 				A81FFC9F28F180B200B0FC7C /* SongContentView.swift in Sources */,
+				8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */,
 				A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */,
 				F9B95BBB28F271B800728048 /* Model.swift in Sources */,
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
