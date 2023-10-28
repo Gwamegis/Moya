@@ -60,4 +60,10 @@ final class SongDetailViewModel: ObservableObject {
     func getAudioIsPlaying() -> Bool {
         audioManager.isPlaying
     }
+    
+    func addDefaultPlaylist() {
+        let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
+        persistence.resetBufferList(song: collectedSong)
+        persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
+    }
 }

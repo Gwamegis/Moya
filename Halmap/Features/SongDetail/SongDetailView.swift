@@ -11,12 +11,22 @@ struct SongDetailView: View {
     
     @StateObject var viewModel: SongDetailViewModel
     
+    @State var isPlayListView = false
+    
     var body: some View {
         ZStack {
             Color("\(viewModel.song.team)Sub")
                 .ignoresSafeArea()
             
-            Lyric(viewModel: viewModel)
+            if isPlayListView {
+                VStack {
+                    PlaylistView(song: $viewModel.song, isScrolled: $viewModel.isScrolled)
+                        .padding(.top, 10)
+                        .padding(.bottom, 150)
+                }
+            } else {
+                Lyric(viewModel: viewModel)
+            }
             
             VStack(spacing: 0) {
                 Rectangle()
@@ -24,7 +34,11 @@ struct SongDetailView: View {
                     .foregroundColor(Color("\(viewModel.song.team)Sub"))
                 gradientRectangle(isTop: true)
                 Spacer()
-                gradientRectangle(isTop: false)
+                ZStack(alignment: .bottom) {
+                    gradientRectangle(isTop: false)
+                    playlistButton
+                }
+                
                 PlayBar(viewModel: viewModel)
             }
             .ignoresSafeArea()
@@ -36,8 +50,14 @@ struct SongDetailView: View {
                 FavoriteButton(viewModel: viewModel)
             }
         }
+        .onAppear() {
+            viewModel.addDefaultPlaylist()
+        }
     }
     
+    private func playSong() {
+        
+    }
     @ViewBuilder
     private func gradientRectangle(isTop: Bool) -> some View {
         Rectangle()
@@ -45,6 +65,22 @@ struct SongDetailView: View {
             .foregroundColor(Color(UIColor.clear))
             .background(isTop ? (viewModel.isScrolled ? Color.fetchTopGradient(color: Color("\(viewModel.song.team)Sub")) : nil ) : Color.fetchBottomGradient(color: Color("\(viewModel.song.team)Sub")))
             .allowsHitTesting(false)
+    }
+    
+    var playlistButton: some View {
+        // PlayListButton
+        HStack(){
+            Spacer()
+            Button(action: {
+                isPlayListView.toggle()
+            }, label: {
+                ZStack {
+                    Circle().foregroundColor(Color("\(viewModel.song.team)Background")).frame(width: 43, height: 43)
+                    Image(systemName: isPlayListView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
+                    
+                }
+            })
+        }.padding(20)
     }
 }
 

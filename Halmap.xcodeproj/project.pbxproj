@@ -66,6 +66,7 @@
 		F9DB6D1F2A76744A00B9469D /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */; };
 		F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */; };
 		F9EB19C129168E45002DFE46 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9EB19BD29168336002DFE46 /* Song.swift */; };
+		F9F0B61C2AED39EF00B23455 /* PlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F0B61B2AED39EF00B23455 /* PlaylistView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -121,6 +122,7 @@
 		F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenView.swift; sourceTree = "<group>"; };
 		F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalingHeaderView.swift; sourceTree = "<group>"; };
 		F9EB19BD29168336002DFE46 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		F9F0B61B2AED39EF00B23455 /* PlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				F9CF1FF22AD2B56300A48D5C /* SongDetailView.swift */,
+				F9F0B61B2AED39EF00B23455 /* PlaylistView.swift */,
 				F9CF1FF42AD2B9B000A48D5C /* SongDetailViewModel.swift */,
 			);
 			path = SongDetail;
@@ -487,6 +490,7 @@
 				F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,
+				F9F0B61C2AED39EF00B23455 /* PlaylistView.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
 				20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */,
