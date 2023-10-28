@@ -176,9 +176,9 @@ struct MainSongListTabView: View {
         }
         .background(Color.systemBackground)
         .sheet(isPresented: $showingTeamChaingView) {
-            TeamChangingView(changedTeam: $selectedTeam)
+            TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager, selectedTeamName: selectedTeam),
+                              isShowing: $showingTeamChaingView)
                 .onDisappear{
-                    dataManager.setSongList(team: selectedTeam)
                     Color.setColor(selectedTeam)
                 }
         }

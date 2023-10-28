@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     
+    @EnvironmentObject var dataManager: DataManager
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
     
@@ -23,7 +24,7 @@ struct MainTabView: View {
                 case .home:
                     MainSongListTabView()
                 case .search:
-                    SongSearchView()
+                    SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
                 case .storage:
                     StorageContentView()
                 }
