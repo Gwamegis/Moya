@@ -11,19 +11,12 @@ final class PlaylistViewModel: ObservableObject {
     
     private let audioManager: AudioManager
     private let dataManager: DataManager
-    
     private var song: SongInfo
     
-    init(audioManager: AudioManager, dataManager: DataManager, song: SongInfo) {
-        self.audioManager = audioManager
-        self.dataManager = dataManager
-        self.song = song
-    }
-    
     init(viewModel: SongDetailViewModel) {
-        self.audioManager = viewModel.audioManager
-        self.dataManager = viewModel.dataManager
-        self.song = viewModel.song
+        audioManager = viewModel.getAudioManager()
+        dataManager = viewModel.getdataManager()
+        song = viewModel.getSongInfo()
     }
     
     func getAlbumImage(with song: CollectedSong) -> String {
@@ -54,11 +47,11 @@ final class PlaylistViewModel: ObservableObject {
     }
     
     private func convertSongToSongInfo(song: CollectedSong) -> SongInfo {
-        return SongInfo(
+        SongInfo(
             id: song.id ?? "",
             team: song.team ?? "",
             type: song.type,
-            title: song.title ?? "" ,
+            title: song.title ?? "",
             lyrics: song.lyrics ?? "",
             info: song.info ?? "",
             url: song.url ?? ""

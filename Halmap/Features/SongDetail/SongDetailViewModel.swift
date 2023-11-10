@@ -9,9 +9,9 @@ import SwiftUI
 import Combine
 
 final class SongDetailViewModel: ObservableObject {
-    @ObservedObject var audioManager: AudioManager
-    let dataManager: DataManager
-    let persistence: PersistenceController
+    @ObservedObject private var audioManager: AudioManager
+    private let dataManager: DataManager
+    private let persistence: PersistenceController
     
     @Published var song: SongInfo
     @Published var isScrolled = false
@@ -65,5 +65,18 @@ final class SongDetailViewModel: ObservableObject {
         let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
         persistence.resetBufferList(song: collectedSong)
         persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
+    }
+    
+    // MARK: - initailize playlist view model
+    func getAudioManager() -> AudioManager {
+        self.audioManager
+    }
+    
+    func getdataManager() -> DataManager {
+        self.dataManager
+    }
+    
+    func getSongInfo() -> SongInfo {
+        self.song
     }
 }
