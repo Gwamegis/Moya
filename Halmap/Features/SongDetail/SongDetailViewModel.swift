@@ -9,9 +9,9 @@ import SwiftUI
 import Combine
 
 final class SongDetailViewModel: ObservableObject {
-    @ObservedObject private var audioManager: AudioManager
-    private let dataManager: DataManager
-    private let persistence: PersistenceController
+    @ObservedObject var audioManager: AudioManager
+    let dataManager: DataManager
+    let persistence: PersistenceController
     
     @Published var song: SongInfo
     @Published var isScrolled = false

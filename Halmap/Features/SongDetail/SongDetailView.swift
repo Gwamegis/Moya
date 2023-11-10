@@ -20,7 +20,7 @@ struct SongDetailView: View {
             
             if isPlayListView {
                 VStack {
-                    PlaylistView(song: $viewModel.song, isScrolled: $viewModel.isScrolled)
+                    PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
                 }
