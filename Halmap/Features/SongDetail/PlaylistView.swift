@@ -11,9 +11,7 @@ struct PlaylistView: View {
     
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel: PlaylistViewModel
-    @Binding var song: SongInfo {
-        didSet { print(song.title) }
-    }
+    @Binding var song: SongInfo
     @Binding var isScrolled: Bool
     
     let persistence = PersistenceController.shared
