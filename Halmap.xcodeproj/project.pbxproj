@@ -17,6 +17,7 @@
 		20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E32A711C48005F18FA /* FirebaseFirestoreSwift */; };
 		20A687E62A711C48005F18FA /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E52A711C48005F18FA /* FirebaseRemoteConfig */; };
 		20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E72A711C48005F18FA /* FirebaseStorage */; };
+		8700972B2AF3CA4400B8B003 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8700972A2AF3CA4400B8B003 /* PlaylistViewModel.swift */; };
 		87F6ECF1291677AC004533C4 /* Halmap+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */; };
 		87F6ECF52916B331004533C4 /* Halmap+UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */; };
 		87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */; };
@@ -71,6 +72,7 @@
 
 /* Begin PBXFileReference section */
 		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
+		8700972A2AF3CA4400B8B003 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		87F6ECF0291677AC004533C4 /* Halmap+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIApplication.swift"; sourceTree = "<group>"; };
 		87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UINavigationController.swift"; sourceTree = "<group>"; };
 		87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+UIView.swift"; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				F9CF1FF22AD2B56300A48D5C /* SongDetailView.swift */,
 				F9F0B61B2AED39EF00B23455 /* PlaylistView.swift */,
 				F9CF1FF42AD2B9B000A48D5C /* SongDetailViewModel.swift */,
+				8700972A2AF3CA4400B8B003 /* PlaylistViewModel.swift */,
 			);
 			path = SongDetail;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				F9168B2B2A5A81BC00DCF649 /* Notification.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
 				F9DB6D1F2A76744A00B9469D /* LaunchScreenView.swift in Sources */,
+				8700972B2AF3CA4400B8B003 /* PlaylistViewModel.swift in Sources */,
 				F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,

@@ -66,4 +66,17 @@ final class SongDetailViewModel: ObservableObject {
         persistence.resetBufferList(song: collectedSong)
         persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
     }
+    
+    // MARK: - initailize playlist view model
+    func getAudioManager() -> AudioManager {
+        self.audioManager
+    }
+    
+    func getdataManager() -> DataManager {
+        self.dataManager
+    }
+    
+    func getSongInfo() -> SongInfo {
+        self.song
+    }
 }
