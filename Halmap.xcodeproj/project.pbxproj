@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		20317FB228F2CCBB00A30E09 /* TeamChangingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */; };
+		206F9F6D2AD29611004DAD73 /* MainSongListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */; };
 		20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D72A711C48005F18FA /* FirebaseAnalytics */; };
 		20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D92A711C48005F18FA /* FirebaseAnalyticsSwift */; };
 		20A687DC2A711C48005F18FA /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687DB2A711C48005F18FA /* FirebaseCrashlytics */; };
@@ -75,6 +77,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		20317FB128F2CCBB00A30E09 /* TeamChangingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamChangingView.swift; sourceTree = "<group>"; };
+		206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListViewModel.swift; sourceTree = "<group>"; };
 		8744D07E2AC06BC1002F1D3A /* Halmap+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+View.swift"; sourceTree = "<group>"; };
 		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
 		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 			children = (
 				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
 				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
+				206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */,
 			);
 			path = SongList;
 			sourceTree = "<group>";
@@ -531,6 +536,7 @@
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
 				F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */,
 				F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */,
+				206F9F6D2AD29611004DAD73 /* MainSongListViewModel.swift in Sources */,
 				F9A178262A1C8B01003E8E4C /* PlayListFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

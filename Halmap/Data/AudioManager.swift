@@ -162,6 +162,7 @@ final class AudioManager: NSObject, ObservableObject {
         let changedTitle = "\(self.selectedTeam) \(song.title)"
         
         // 로컬에 해당 노래가 이미 저장되어 있는지 확인
+
         if let localURL = getLocalFileURL(for: changedTitle, extension: URL(string: song.url)?.pathExtension ?? "mp3") {
             print("이미 저장되었습니다.")
             self.item = AVPlayerItem(url: localURL)
@@ -172,6 +173,8 @@ final class AudioManager: NSObject, ObservableObject {
             downloadAndPlaySong(from: remoteURL, named: changedTitle)
         }
     }
+
+
     
     // 로컬 파일 경로 불러오기
     private func getLocalFileURL(for changedTitle: String, extension ext: String) -> URL? {
@@ -196,9 +199,9 @@ final class AudioManager: NSObject, ObservableObject {
                 if let applicationSupportURL = urls.first {
                     let fileURL = applicationSupportURL.appendingPathComponent(changedTitle).appendingPathExtension(fileExtension)
                     do {
-                        try data.write(to: fileURL)
+                        try data.write(to: newFileURL)
                         DispatchQueue.main.async {
-                            self.item = AVPlayerItem(url: fileURL)
+                            self.item = AVPlayerItem(url: newFileURL)
                             self.setupPlayer()
                         }
                     } catch {

@@ -9,18 +9,11 @@ import SwiftUI
 
 struct MainSongListTabView: View {
     
-    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
+    @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
-    
-    @State private var showingTeamChaingView: Bool = false
-    @State var index = 0
-    
-    // SongInformationView
-    @State private var showingFullScreenCover = false
-    
-    init() {
-        Color.setColor(selectedTeam)
-    }
+    @StateObject var viewModel = MainSongListTabViewModel()
+
+    // @State var index = 0
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -30,7 +23,7 @@ struct MainSongListTabView: View {
                     .foregroundColor(Color.HalmacSub)
                 
                 HStack() {
-                    Text("총 \(index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
+                    Text("총 \(viewModel.index == 0 ? dataManager.teamSongs.count : dataManager.playerSongs.count)곡")
                         .font(Font.Halmap.CustomCaptionBold)
                         .foregroundColor(.customDarkGray)
                     Spacer()
@@ -42,15 +35,9 @@ struct MainSongListTabView: View {
                     .overlay(Color.customGray.opacity(0.6))
                     .padding(.horizontal, 20)
                 
-                TabView(selection: $index) {
+                TabView(selection: $viewModel.index) {
                     List {
                         ForEach(dataManager.teamSongs) { song in
-                            let music = Song(id: song.id,
-                                             type: song.type,
-                                             title: song.title,
-                                             lyrics: song.lyrics,
-                                             info: song.info,
-                                             url: song.url)
                             let songInfo = SongInfo(id: song.id,
                                                     team: selectedTeam,
                                                     type: song.type,
@@ -59,9 +46,9 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Album")
+                                    Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
@@ -93,25 +80,17 @@ struct MainSongListTabView: View {
                     
                     List {
                         ForEach(dataManager.playerSongs) { song in
-                            let music = Song(id: song.id,
-                                            type: song.type,
-                                            title: song.title,
-                                            lyrics: song.lyrics,
-                                            info: song.info,
-                                            url: song.url)
-                            
                             let songInfo = SongInfo(id: song.id,
-                                                 team: selectedTeam,
-                                                 type: song.type,
-                                                 title: song.title,
-                                                 lyrics: song.lyrics,
-                                                 info: song.info,
-                                                 url: song.url)
+                                                    team: selectedTeam,
+                                                    type: song.type,
+                                                    title: song.title,
+                                                    lyrics: song.lyrics,
+                                                    info: song.info,
+                                                    url: song.url)
                             
-                            
-                            NavigationLink(destination: SongDetailView(song: music, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
                                 HStack(spacing: 16) {
-                                    Image(dataManager.checkSeasonSong(data: songInfo) ? "\(selectedTeam)23" : "\(selectedTeam)Player")
+                                    Image(viewModel.getPlayerImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
@@ -147,13 +126,11 @@ struct MainSongListTabView: View {
             .edgesIgnoringSafeArea(.top)
             
             //상단 탭바
-            TabBarView(currentTab: $index)
+            TabBarView(currentTab: $viewModel.index)
                 .padding(.top, 15)
             
             //팀 배너 이미지
-            Button {
-                showingTeamChaingView.toggle()
-            } label: {
+            Button(action: viewModel.toggleTeamChangingView) {
                 ZStack(alignment: .bottomLeading) {
                     Image("\(selectedTeam)MainBanner")
                         .resizable()
@@ -175,9 +152,9 @@ struct MainSongListTabView: View {
             .padding(.top, 70)
         }
         .background(Color.systemBackground)
-        .sheet(isPresented: $showingTeamChaingView) {
-            TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager, selectedTeamName: selectedTeam),
-                              isShowing: $showingTeamChaingView)
+        .sheet(isPresented: $viewModel.showingTeamChangingView) {
+            TeamChangingView(changedTeam: $selectedTeam)
+
                 .onDisappear{
                     Color.setColor(selectedTeam)
                 }
