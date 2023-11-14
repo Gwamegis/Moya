@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ScalingHeaderView: View {
+    @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
+    let persistence = PersistenceController.shared
+    
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     @StateObject var viewModel: SongStorageViewModel
@@ -55,7 +59,13 @@ struct ScalingHeaderView: View {
                             
                             VStack(spacing: 0) {
                                 NavigationLink {
-                                    SongDetailView(song: song, team: favoriteSong.safeTeam)
+                                    SongDetailView(
+                                        viewModel: SongDetailViewModel(
+                                            audioManager: audioManager,
+                                            dataManager: dataManager,
+                                            persistence: persistence,
+                                            song: song
+                                        ))
                                 } label: {
                                     HStack(spacing: 16) {
                                         Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))

@@ -11,10 +11,11 @@ struct MainSongListTabView: View {
     
     @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
     @StateObject var viewModel = MainSongListTabViewModel()
-
-    // @State var index = 0
     
+    let persistence = PersistenceController.shared
+
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 0) {
@@ -46,7 +47,7 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
@@ -88,7 +89,7 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(song: song, team: selectedTeam)) {
+                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getPlayerImage(for: songInfo))
                                         .resizable()

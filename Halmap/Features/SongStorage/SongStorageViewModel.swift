@@ -26,9 +26,10 @@ final class SongStorageViewModel: ObservableObject {
         persistence.deleteSongs(song: favoriteSong)
     }
     
-    func makeSong(favoriteSong: CollectedSong) -> Song {
-        Song(
+    func makeSong(favoriteSong: CollectedSong) -> SongInfo {
+        SongInfo(
             id: favoriteSong.safeId,
+            team: favoriteSong.safeTeam,
             type: favoriteSong.type ,
             title: favoriteSong.safeTitle ,
             lyrics: favoriteSong.safeLyrics,
