@@ -199,9 +199,9 @@ final class AudioManager: NSObject, ObservableObject {
                 if let applicationSupportURL = urls.first {
                     let fileURL = applicationSupportURL.appendingPathComponent(changedTitle).appendingPathExtension(fileExtension)
                     do {
-                        try data.write(to: newFileURL)
+                        try data.write(to: fileURL)
                         DispatchQueue.main.async {
-                            self.item = AVPlayerItem(url: newFileURL)
+                            self.item = AVPlayerItem(url: fileURL)
                             self.setupPlayer()
                         }
                     } catch {
