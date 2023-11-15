@@ -15,11 +15,7 @@ struct SongDetailView: View {
         predicate: PlayListFilter(filter: "favorite").predicate,
         animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
 
-    @State var isPlayListView = false {
-        didSet {
-            viewModel.isFavorite = favoriteSongs.contains(where: {$0.id == viewModel.song.id})
-        }
-    }
+    @State var isPlayListView = false
 
     var body: some View {
         ZStack {
@@ -183,6 +179,13 @@ private struct FavoriteButton: View {
         .onAppear() {
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
+            }
+        }
+        .onChange(of: viewModel.song.id) { _ in
+            if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
+                viewModel.isFavorite = true
+            } else {
+                viewModel.isFavorite = false
             }
         }
     }
