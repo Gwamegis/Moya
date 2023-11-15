@@ -35,7 +35,7 @@ final class AudioManager: NSObject, ObservableObject {
     
     private var playerItemContext = 0
     
-    var song: Song?
+    var song: SongInfo?
     var selectedTeam = ""
     
     // MARK: - Media Player Setting..
@@ -154,9 +154,8 @@ final class AudioManager: NSObject, ObservableObject {
         return player?.currentItem?.duration.seconds ?? 0
     }
     
-    func AMset(song: Song, selectedTeam: String) {
+    func AMset(song: SongInfo) {
         self.song = song
-        self.selectedTeam = selectedTeam
         self.progressValue = 0
         self.currentTime = 0
         let changedTitle = "\(self.selectedTeam) \(song.title)"

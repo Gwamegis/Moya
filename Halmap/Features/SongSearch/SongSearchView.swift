@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SongSearchView: View {
+    @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var audioManager: AudioManager
+    let persistence = PersistenceController.shared
     
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
@@ -102,7 +105,11 @@ struct SongSearchView: View {
                 List {
                     ForEach(viewModel.autoComplete, id: \.id) { song in
                         NavigationLink {
-                            SongDetailView(song: viewModel.convertSongInfoToSong(with: song), team: song.team)
+                            SongDetailView(viewModel: SongDetailViewModel(
+                                audioManager: audioManager,
+                                dataManager: dataManager,
+                                persistence: persistence,
+                                song: song))
                         } label: {
                             HStack {
                                 Image(viewModel.getAlbumImage(with: song))
