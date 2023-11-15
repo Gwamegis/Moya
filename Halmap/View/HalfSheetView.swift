@@ -42,9 +42,6 @@ struct HalfSheetView: View {
             MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
             Spacer()
         }
-        .onAppear() {
-            print("****\(songData)")
-        }
     }
 }
 

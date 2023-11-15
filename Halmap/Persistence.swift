@@ -203,7 +203,6 @@ struct PersistenceController {
         collectedSong.team = song.team
         collectedSong.date = Date()
         
-        print("collectedSong", collectedSong, song.title)
         return collectedSong
     }
     

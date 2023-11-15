@@ -12,8 +12,8 @@ struct SongDetailView: View {
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "favorite").predicate,
-        animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
+        predicate: PlayListFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
     @State var isPlayListView = false
 
@@ -55,7 +55,7 @@ struct SongDetailView: View {
             }
         }
         .onAppear() {
-            viewModel.addDefaultPlaylist()
+            viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
         }
     }
 

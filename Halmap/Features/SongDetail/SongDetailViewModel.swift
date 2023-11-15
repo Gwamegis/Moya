@@ -18,12 +18,6 @@ final class SongDetailViewModel: ObservableObject {
     @Published var isPlaying = false
 
     private var cancellables = Set<AnyCancellable>()
-    
-    @FetchRequest(
-        entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "favorite").predicate,
-        animation: .default) var favoriteSongs: FetchedResults<CollectedSong>
 
     init(audioManager: AudioManager, dataManager: DataManager, persistence: PersistenceController, song: SongInfo) {
         self.audioManager = audioManager
@@ -66,10 +60,12 @@ final class SongDetailViewModel: ObservableObject {
         audioManager.isPlaying
     }
 
-    func addDefaultPlaylist() {
-        let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
-        persistence.resetBufferList(song: collectedSong)
-        persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
+    func addDefaultPlaylist(defaultPlaylistSongs: FetchedResults<CollectedSong>) {
+        if !defaultPlaylistSongs.contains(where: {$0.id == self.song.id}) {
+            let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
+            persistence.resetBufferList(song: collectedSong)
+            persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
+        }
     }
 
     // MARK: - initailize playlist view model
