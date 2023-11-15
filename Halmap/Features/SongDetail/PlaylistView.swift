@@ -32,9 +32,8 @@ struct PlaylistView: View {
                                                             based: collectedSongs)
                     }
                     .listRowBackground(Color.clear)
-                    Rectangle()
-                        .foregroundStyle(Color("\(song.team)Sub"))
-                        .frame(height: 50)
+                    Color.clear.frame(height:50)
+                           .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
                 .modifier(ListBackgroundModifier())
