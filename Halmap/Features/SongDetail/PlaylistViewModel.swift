@@ -30,13 +30,22 @@ final class PlaylistViewModel: ObservableObject {
     func getSongTitle(song: CollectedSong) -> String {
         song.title ?? ""
     }
-
+    
+    func getTeamNameKr(song: CollectedSong) -> String {
+        TeamName(rawValue: song.safeTeam)?.fetchTeamNameKr() ?? ""
+    }
+    
+    func getSongTeamBackgroundColor(with song: CollectedSong) -> String {
+        "\(convertSongToSongInfo(song: song).team)Background"
+    }
+    
     func getSongTeamName(with song: CollectedSong) -> String {
         let song = convertSongToSongInfo(song: song)
         return TeamName(rawValue: song.team)?.fetchTeamNameKr() ?? "."
     }
 
     func didTappedSongCell(song: CollectedSong) -> SongInfo {
+        print("song: ", song.safeTitle, "order: ", song.order)
         let song = convertSongToSongInfo(song: song)
         print(#function, song.title)
         self.song = song

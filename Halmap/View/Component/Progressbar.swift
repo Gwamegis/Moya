@@ -27,6 +27,10 @@ struct Progressbar: View {
             }
             .tint(Color("\(team)Point"))
             .padding(.horizontal, isThumbActive ? 5 : 0)
+            .onChange(of: team) { _ in
+                let thumbImage = makeThumbView(isThumbActive: isThumbActive)
+                UISlider.appearance().setThumbImage(thumbImage, for: .normal)
+            }
 //            .disabled(!isThumbActive)
             if isThumbActive {
                 HStack {

@@ -62,9 +62,10 @@ final class SongDetailViewModel: ObservableObject {
 
     func addDefaultPlaylist(defaultPlaylistSongs: FetchedResults<CollectedSong>) {
         if !defaultPlaylistSongs.contains(where: {$0.id == self.song.id}) {
-            let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
-            persistence.resetBufferList(song: collectedSong)
-            persistence.saveSongs(song: song, playListTitle: "defaultPlaylist")
+            //추후 하프모달 사용 시 다시 이용
+//            let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
+//            persistence.resetBufferList(song: collectedSong)
+            persistence.saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(defaultPlaylistSongs.count))
         }
     }
 

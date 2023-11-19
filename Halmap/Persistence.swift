@@ -53,6 +53,31 @@ struct PersistenceController {
         }
     }
     
+    func saveSongs(song: SongInfo, playListTitle: String?, order: Int64) {
+        let context = container.viewContext
+        let collectedSong = CollectedSong(context: context)
+        
+        collectedSong.id = song.id
+        collectedSong.title = song.title
+        collectedSong.info = song.info
+        collectedSong.lyrics = song.lyrics
+        collectedSong.url = song.url
+        collectedSong.type = song.type
+        collectedSong.playListTitle = playListTitle
+        collectedSong.team = song.team
+        collectedSong.date = Date()
+        collectedSong.order = order
+        
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+    
     func saveSongs(song: SongInfo, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
         let context = container.viewContext
         let collectedSong = CollectedSong(context: context)

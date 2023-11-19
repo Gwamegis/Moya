@@ -168,6 +168,7 @@ private struct FavoriteButton: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
         predicate: PlayListFilter(filter: "favorite").predicate,
         animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
+    @AppStorage("currentSongId") var currentSongId: String = ""
 
     var body: some View {
         Button {
@@ -177,11 +178,13 @@ private struct FavoriteButton: View {
                 .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
         }
         .onAppear() {
+            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             }
         }
         .onChange(of: viewModel.song.id) { _ in
+            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             } else {

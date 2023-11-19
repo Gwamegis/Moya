@@ -8,6 +8,7 @@ import SwiftUI
 
 struct PlaylistView: View {
 
+    @AppStorage("currentSongId") var currentSongId: String = ""
     @StateObject var viewModel: PlaylistViewModel
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
@@ -21,6 +22,7 @@ struct PlaylistView: View {
                 List {
                     ForEach(collectedSongs, id: \.self) { playListSong in
                         getPlayListRowView(song: playListSong)
+                            .background(Color.white.opacity(0.001))
                             .onTapGesture {
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
                             }
@@ -31,8 +33,9 @@ struct PlaylistView: View {
                                                             to: destination,
                                                             based: collectedSongs)
                     }
-                    .listRowBackground(Color.clear)
-                    Color.clear.frame(height:50)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .listRowBackground(Color("\(song.team)Sub"))
+                    Color.clear.frame(height:70)
                            .listRowBackground(Color.clear)
                 }
                 .listStyle(.plain)
@@ -62,15 +65,22 @@ struct PlaylistView: View {
     @ViewBuilder
     private func getPlayListRowView(song: CollectedSong) -> some View {
         HStack{
-            Image(viewModel.getAlbumImage(with: song))
-                .resizable()
-                .frame(width: 40, height: 40)
-                .cornerRadius(8)
+            if currentSongId == song.id {
+                Image(systemName: "waveform")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Color(viewModel.getSongTeamBackgroundColor(with: song)))
+                    .frame(width: 40, height: 40)
+            } else {
+                Image(viewModel.getAlbumImage(with: song))
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .cornerRadius(8)
+            }
             VStack(alignment: .leading, spacing: 8) {
                 Text(viewModel.getSongTitle(song: song))
                     .font(Font.Halmap.CustomBodyMedium)
                     .foregroundStyle(Color.white)
-                Text(viewModel.getSongTitle(song: song))
+                Text(viewModel.getTeamNameKr(song: song))
                     .font(Font.Halmap.CustomCaptionMedium)
                     .foregroundStyle(Color.customGray)
             }.padding(.horizontal, 16)
@@ -80,8 +90,9 @@ struct PlaylistView: View {
                 .frame(width: 18, height: 18)
                 .foregroundStyle(Color.customGray)
         }
-        .padding(.horizontal, 20) // 40 -> 20 값 조정
-        .frame(height: 50) // 70 -> 50값 조정
+        .padding(.horizontal, 40)
+        .frame(height: 70)
+        .background(currentSongId == song.id ? Color.white.opacity(0.2) : Color.clear)
     }
 
     private struct ViewOffsetKey: PreferenceKey {
