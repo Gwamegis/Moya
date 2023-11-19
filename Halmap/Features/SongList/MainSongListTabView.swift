@@ -12,8 +12,8 @@ struct MainSongListTabView: View {
     @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
-    @StateObject var viewModel = MainSongListTabViewModel()
-    
+    @ObservedObject var viewModel: MainSongListTabViewModel
+    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
     let persistence = PersistenceController.shared
 
     var body: some View {
@@ -47,6 +47,14 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
+                            Button(action: {
+                                withAnimation{
+                                    miniPlayerViewModel.showPlayer = true
+                                }
+                            }, label: {
+                                Text("TestButton")
+                            })
+                            
                             NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getSongImage(for: songInfo))
@@ -66,6 +74,8 @@ struct MainSongListTabView: View {
                                     .lineLimit(1)
                                 }
                             }
+                            
+                            
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
@@ -165,6 +175,6 @@ struct MainSongListTabView: View {
 
 struct MainSongListTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainSongListTabView()
+        MainSongListTabView(viewModel: MainSongListTabViewModel(), miniPlayerViewModel: MiniPlayerViewModel())
     }
 }

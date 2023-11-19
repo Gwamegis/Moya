@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203ADDB02B09F83C0053BA58 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203ADDAF2B09F83C0053BA58 /* MiniPlayerViewModel.swift */; };
 		206F9F6D2AD29611004DAD73 /* MainSongListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */; };
 		20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D72A711C48005F18FA /* FirebaseAnalytics */; };
 		20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D92A711C48005F18FA /* FirebaseAnalyticsSwift */; };
@@ -17,6 +18,7 @@
 		20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E32A711C48005F18FA /* FirebaseFirestoreSwift */; };
 		20A687E62A711C48005F18FA /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E52A711C48005F18FA /* FirebaseRemoteConfig */; };
 		20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E72A711C48005F18FA /* FirebaseStorage */; };
+		20D647132B09F8A1008C431F /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D647122B09F8A1008C431F /* MiniPlayerView.swift */; };
 		8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */; };
 		8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */; };
 		8764EEEC2ABFEF6A0006F438 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */; };
@@ -76,7 +78,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		203ADDAF2B09F83C0053BA58 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListViewModel.swift; sourceTree = "<group>"; };
+		20D647122B09F8A1008C431F /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
 		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
 		8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -157,6 +161,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		203ADDAE2B09F8180053BA58 /* MiniPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				203ADDAF2B09F83C0053BA58 /* MiniPlayerViewModel.swift */,
+				20D647122B09F8A1008C431F /* MiniPlayerView.swift */,
+			);
+			name = MiniPlayer;
+			sourceTree = "<group>";
+		};
 		877403852AB71FD900C94D35 /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +194,7 @@
 		877403872AB7203F00C94D35 /* SongList */ = {
 			isa = PBXGroup;
 			children = (
+				203ADDAE2B09F8180053BA58 /* MiniPlayer */,
 				F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */,
 				F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */,
 				206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */,
@@ -507,6 +521,7 @@
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
 				F9DB6D1F2A76744A00B9469D /* LaunchScreenView.swift in Sources */,
 				F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */,
+				203ADDB02B09F83C0053BA58 /* MiniPlayerViewModel.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
 				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
@@ -524,6 +539,7 @@
 				F901907F2B038BC200C9BFF6 /* PlaylistView.swift in Sources */,
 				F90190852B038C1600C9BFF6 /* SongDetailViewModel.swift in Sources */,
 				F98F623129B59CE60025F50E /* TeamName.swift in Sources */,
+				20D647132B09F8A1008C431F /* MiniPlayerView.swift in Sources */,
 				F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */,
 				F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */,
 				206F9F6D2AD29611004DAD73 /* MainSongListViewModel.swift in Sources */,
