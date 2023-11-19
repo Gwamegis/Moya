@@ -50,6 +50,8 @@ struct MainSongListTabView: View {
                             Button(action: {
                                 withAnimation{
                                     miniPlayerViewModel.showPlayer = true
+                                    miniPlayerViewModel.hideTabBar = true
+                                    miniPlayerViewModel.isMiniPlayerActivate = false
                                 }
                             }, label: {
                                 Text("TestButton")

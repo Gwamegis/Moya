@@ -59,6 +59,7 @@ struct MainTabView: View {
                     .padding(.horizontal, 47)
                     .background(Color.tabBarGray)
                     .shadow(color: Color.customGray, radius: 1)
+                    .offset(y: miniPlayerViewModel.hideTabBar ? (15 + 35 + 50) : 0)
                 }
                 .ignoresSafeArea(.keyboard)
                 
@@ -71,7 +72,7 @@ struct MainTabView: View {
                             state = value.translation.height
                         })
                         .onEnded(onEnd(value:)))
-                        .padding(.bottom, 70)
+                        .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
                 }
             }
             .onChange(of: gestureOffset, perform: { value in
@@ -101,10 +102,11 @@ struct MainTabView: View {
                 
                 // Closing View...
                 if value.translation.height > UIScreen.main.bounds.height / 3{
-                    
+                    miniPlayerViewModel.hideTabBar = false
                     miniPlayerViewModel.isMiniPlayerActivate = true
                 }
                 else{
+                    miniPlayerViewModel.hideTabBar = true
                     miniPlayerViewModel.isMiniPlayerActivate = false
                 }
             }

@@ -11,8 +11,9 @@ import SwiftUI
 class MiniPlayerViewModel: ObservableObject {
     @Published var showPlayer = false
     
-    @Published var offset: CGFloat = -50
+    @Published var offset: CGFloat = 0
     @Published var width: CGFloat = UIScreen.main.bounds.width
     @Published var height : CGFloat = 0
     @Published var isMiniPlayerActivate = false
+    @Published var hideTabBar = false
 }
