@@ -22,7 +22,19 @@ final class AudioManager: NSObject, ObservableObject {
     }
     
     @Published var progressValue: Float = 0 //player.seek 에서 사용
+    {
+        didSet {
+            print("progressValue: ", progressValue)
+        }
+    }
     @Published var currentTime: Double = 0 //재생바 현재 시간 표시에서 사용
+    {
+        didSet {
+            print("currentTime: ", currentTime)
+        }
+    }
+    @Published var currentIndex: Int = 0 //현재 재생중인 곡 index
+    
     var duration: Double {
         return player?.currentItem?.duration.seconds ?? 0
     }
@@ -38,115 +50,6 @@ final class AudioManager: NSObject, ObservableObject {
     var song: SongInfo?
     var selectedTeam = ""
     
-    // MARK: - Media Player Setting..
-    
-    private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
-        var nowPlayingInfo = [String: Any]()
-        nowPlayingInfo[MPMediaItemPropertyTitle] = title
-        
-        if let albumArt = albumArt {
-            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: albumArt.size) { _ in albumArt }
-        }
-        
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
-        
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
-    
-    private func updateNowPlayingPlaybackRate() {
-        if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
-            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-        }
-    }
-    
-    private func setupRemoteTransportControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        
-        commandCenter.playCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 0.0 {
-                player?.play()
-                isPlaying = true
-                
-                updateNowPlayingPlaybackRate()
-                
-                return .success
-            }
-            return .commandFailed
-        }
-        
-        commandCenter.pauseCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 1.0 {
-                AMstop()
-                return .success
-            }
-            return .commandFailed
-        }
-        
-        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
-            if let positionTime = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime {
-                let seekTime = CMTime(value: Int64(positionTime), timescale: 1)
-                self.currentTime = seekTime.seconds
-                self.progressValue = self.calculateProgress(currentTime: seekTime.seconds)
-                self.player?.seek(to: seekTime)
-                //                AMseek(to: progressValue)
-            }
-            return .success
-        }
-    }
-    
-    //시작 상태 감지를 위한 observer -> 음원이 준비 된 경우 미디어 플레이어 셋팅
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
-        
-        // Only handle observations for the playerItemContext
-        guard context == &playerItemContext else {
-            super.observeValue(forKeyPath: keyPath,
-                               of: object,
-                               change: change,
-                               context: context)
-            return
-        }
-        
-        if keyPath == #keyPath(AVPlayerItem.status) {
-            let status: AVPlayerItem.Status
-            if let statusNumber = change?[.newKey] as? NSNumber {
-                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
-            } else {
-                status = .unknown
-            }
-            
-            // Switch over status value
-            switch status {
-                case .readyToPlay:
-                    // Player item is ready to play.
-                    let title = song?.title ?? "unknown title"
-                    let albumArt = UIImage(named: "\(selectedTeam)Album")
-                    self.setupNowPlayingInfo(title: title, albumArt: albumArt)
-                    
-                    break
-                case .failed:
-                    // Player item failed. See error.
-                    print("failed")
-                    if let playerItem = object as? AVPlayerItem {
-                                        print("Player item error: \(String(describing: playerItem.error?.localizedDescription))")
-                                    }
-                    break
-                case .unknown:
-                    // Player item is not yet ready.
-                    print("unknown")
-                    break
-                @unknown default:
-                    print("default")
-                    break
-            }
-        }
-    }
     
     // MARK: - AM Properties
     
@@ -290,6 +193,7 @@ final class AudioManager: NSObject, ObservableObject {
         return Float(currentTime / duration)
     }
     
+    //재생바 이동 시
     func didSliderChanged(_ didChange: Bool) {
         acceptProgressUpdates = !didChange
         if didChange {
@@ -299,7 +203,7 @@ final class AudioManager: NSObject, ObservableObject {
             self.AMplay()
         }
     }
-    
+    //재생바 설정
     private func setupPeriodicObservation(for player: AVPlayer) {
         let timeScale = CMTimeScale(NSEC_PER_SEC)
         let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
@@ -324,4 +228,117 @@ final class AudioManager: NSObject, ObservableObject {
                                   forKeyPath: #keyPath(AVPlayerItem.status),
                                   context: &playerItemContext)
     }
+}
+
+// MARK: - Media Player Setting..
+extension AudioManager {
+    
+    private func setupNowPlayingInfo(title: String, albumArt: UIImage?) {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        
+        if let albumArt = albumArt {
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: albumArt.size) { _ in albumArt }
+        }
+        
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func updateNowPlayingPlaybackRate() {
+        if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        }
+    }
+    
+    private func setupRemoteTransportControls() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            if self.player?.rate == 0.0 {
+                player?.play()
+                isPlaying = true
+                
+                updateNowPlayingPlaybackRate()
+                
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            if self.player?.rate == 1.0 {
+                AMstop()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
+            if let positionTime = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime {
+                let seekTime = CMTime(value: Int64(positionTime), timescale: 1)
+                self.currentTime = seekTime.seconds
+                self.progressValue = self.calculateProgress(currentTime: seekTime.seconds)
+                self.player?.seek(to: seekTime)
+                //                AMseek(to: progressValue)
+            }
+            return .success
+        }
+    }
+    
+    //시작 상태 감지를 위한 observer -> 음원이 준비 된 경우 미디어 플레이어 셋팅
+    override func observeValue(forKeyPath keyPath: String?,
+                               of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+        
+        // Only handle observations for the playerItemContext
+        guard context == &playerItemContext else {
+            super.observeValue(forKeyPath: keyPath,
+                               of: object,
+                               change: change,
+                               context: context)
+            return
+        }
+        
+        if keyPath == #keyPath(AVPlayerItem.status) {
+            let status: AVPlayerItem.Status
+            if let statusNumber = change?[.newKey] as? NSNumber {
+                status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+            } else {
+                status = .unknown
+            }
+            
+            // Switch over status value
+            switch status {
+                case .readyToPlay:
+                    // Player item is ready to play.
+                    let title = song?.title ?? "unknown title"
+                    let albumArt = UIImage(named: "\(selectedTeam)Album")
+                    self.setupNowPlayingInfo(title: title, albumArt: albumArt)
+                    
+                    break
+                case .failed:
+                    // Player item failed. See error.
+                    print("failed")
+                    if let playerItem = object as? AVPlayerItem {
+                                        print("Player item error: \(String(describing: playerItem.error?.localizedDescription))")
+                                    }
+                    break
+                case .unknown:
+                    // Player item is not yet ready.
+                    print("unknown")
+                    break
+                @unknown default:
+                    print("default")
+                    break
+            }
+        }
+    }
+    
 }

@@ -12,7 +12,7 @@ struct ScalingHeaderView: View {
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
     
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlaylistFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     @StateObject var viewModel: SongStorageViewModel
     

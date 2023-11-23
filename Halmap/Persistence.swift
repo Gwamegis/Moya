@@ -9,8 +9,7 @@ import CoreData
 import SwiftUI
 
 struct PersistenceController {
-    @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @AppStorage("selectedTeam") var selectedTeam = ""
     
     static let shared = PersistenceController()
 
@@ -124,7 +123,7 @@ struct PersistenceController {
         }
     }
     
-    /// index를 이용하여 PlayListd에서 곡을 지우는 함수.
+    /// index를 이용하여 Playlist에서 곡을 지우는 함수.
     func deleteSong(at indexs: IndexSet, from results: FetchedResults<CollectedSong>) {
         
         for index in indexs {
@@ -140,7 +139,7 @@ struct PersistenceController {
         }
     }
     
-    /// defaultPlayList 순서를 변경하는 함수
+    /// defaultPlaylist 순서를 변경하는 함수
     func moveDefaultPlaylistSong(from source: IndexSet, to destination: Int, based results: FetchedResults<CollectedSong>){
         
         guard let itemToMove = source.first else { return }
@@ -179,7 +178,7 @@ struct PersistenceController {
     }
     
     
-    func fetchFavoriteSong() -> [CollectedSong] {
+    func fetchCollectedSong() -> [CollectedSong] {
         let fetchRequest: NSFetchRequest<CollectedSong> = CollectedSong.fetchRequest()
         
         do{
@@ -189,7 +188,7 @@ struct PersistenceController {
         }
     }
     
-    func findFavoriteSong(song: Song, collectedSongs: FetchedResults<CollectedSong>) -> CollectedSong {
+    func fincCollectedSong(song: SongInfo, collectedSongs: FetchedResults<CollectedSong>) -> CollectedSong {
         if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
             return collectedSongs[index]
         } else {
@@ -197,21 +196,11 @@ struct PersistenceController {
         }
     }
     
-    func fetchPlayListSong() -> [CollectedSong] {
-        let fetchRequest: NSFetchRequest<CollectedSong> = CollectedSong.fetchRequest()
-        
-        do{
-            return try container.viewContext.fetch(fetchRequest)
-        }catch {
-            return []
-        }
-    }
-    
-    func findPlayListSong(song: Song, collectedSongs: FetchedResults<CollectedSong>) -> CollectedSong {
+    func findCollectedSongIndex(song: SongInfo, collectedSongs: FetchedResults<CollectedSong>) -> Int {
         if let index = collectedSongs.firstIndex(where: {song.id == $0.id}) {
-            return collectedSongs[index]
+            return index
         } else {
-            return CollectedSong()
+            return 0
         }
     }
     
@@ -234,7 +223,7 @@ struct PersistenceController {
     /// CollectedSong을 생성하기 위해 BufferList에 넣은 곡을 지우는 함수.
     func resetBufferList(song: CollectedSong){
         
-        if song.playListTitle == "bufferPlayList" {
+        if song.playListTitle == "bufferPlaylist" {
             container.viewContext.delete(song)
         }
         

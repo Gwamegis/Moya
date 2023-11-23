@@ -61,5 +61,8 @@ struct TeamSelectionView: View {
             .disabled(!viewModel.isChangedSelectedTeam())
         }
         .padding(.horizontal, 20)
+        .onDisappear{
+            Color.setColor(selectedTeamName)
+        }
     }
 }

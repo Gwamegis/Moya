@@ -68,6 +68,17 @@ final class SongDetailViewModel: ObservableObject {
             persistence.saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(defaultPlaylistSongs.count))
         }
     }
+    func convertSongToSongInfo(song: CollectedSong) -> SongInfo {
+        SongInfo(
+            id: song.id ?? "",
+            team: song.team ?? "",
+            type: song.type,
+            title: song.title ?? "",
+            lyrics: song.lyrics ?? "",
+            info: song.info ?? "",
+            url: song.url ?? ""
+        )
+    }
 
     // MARK: - initailize playlist view model
     func getAudioManager() -> AudioManager {

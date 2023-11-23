@@ -14,14 +14,14 @@ struct PlaylistView: View {
     @Binding var isScrolled: Bool
 
     let persistence = PersistenceController.shared
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlayListFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)], predicate: PlaylistFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
 
     var body: some View {
         ZStack{
             if !collectedSongs.isEmpty {
                 List {
                     ForEach(collectedSongs, id: \.self) { playListSong in
-                        getPlayListRowView(song: playListSong)
+                        getPlaylistRowView(song: playListSong)
                             .background(Color.white.opacity(0.001))
                             .onTapGesture {
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
@@ -63,7 +63,7 @@ struct PlaylistView: View {
     }
 
     @ViewBuilder
-    private func getPlayListRowView(song: CollectedSong) -> some View {
+    private func getPlaylistRowView(song: CollectedSong) -> some View {
         HStack{
             if currentSongId == song.id {
                 Image(systemName: "waveform")

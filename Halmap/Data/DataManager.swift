@@ -30,8 +30,8 @@ class DataManager: ObservableObject {
     @Published var playerList: [Player] = []
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
-    @Published var favoriteSongs = PersistenceController.shared.fetchFavoriteSong()
-    @Published var playListSongs = PersistenceController.shared.fetchPlayListSong()
+//    @Published var favoriteSongs = PersistenceController.shared.fetchCollectedSong()
+//    @Published var playListSongs = PersistenceController.shared.fetchPlayListSong()
     
     @Published var playerSongsAll = [[Song]](repeating: [], count: 10)
     @Published var teamSongsAll = [[Song]](repeating: [], count: 10)

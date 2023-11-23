@@ -11,18 +11,19 @@ struct SongDetailView: View {
     @StateObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "defaultPlaylist").predicate,
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
-    @State var isPlayListView = false
+    @State var isPlaylistView = false
+    @State var currentIndex = 0
 
     var body: some View {
         ZStack {
             Color("\(viewModel.song.team)Sub")
                 .ignoresSafeArea()
 
-            if isPlayListView {
+            if isPlaylistView {
                 VStack {
                     PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled)
                         .padding(.top, 10)
@@ -43,7 +44,7 @@ struct SongDetailView: View {
                     playlistButton
                 }
 
-                PlayBar(viewModel: viewModel)
+                PlayBar(viewModel: viewModel, currentIndex: $currentIndex)
             }
             .ignoresSafeArea()
         }
@@ -57,11 +58,12 @@ struct SongDetailView: View {
         .onAppear() {
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
         }
+        .onChange(of: self.currentIndex) { _ in
+            self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[currentIndex])
+            self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
+        }
     }
-
-    private func playSong() {
-
-    }
+    
     @ViewBuilder
     private func gradientRectangle(isTop: Bool) -> some View {
         Rectangle()
@@ -72,15 +74,15 @@ struct SongDetailView: View {
     }
 
     var playlistButton: some View {
-        // PlayListButton
+        // PlaylistButton
         HStack(){
             Spacer()
             Button(action: {
-                isPlayListView.toggle()
+                isPlaylistView.toggle()
             }, label: {
                 ZStack {
                     Circle().foregroundColor(Color("\(viewModel.song.team)Background")).frame(width: 43, height: 43)
-                    Image(systemName: isPlayListView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
+                    Image(systemName: isPlaylistView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
 
                 }
             })
@@ -132,18 +134,53 @@ private struct Lyric: View {
 private struct PlayBar: View {
 
     @StateObject var viewModel: SongDetailViewModel
-
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    @Binding var currentIndex: Int
     var body: some View {
         VStack(spacing: 0) {
             Progressbar(team: $viewModel.song.team, isThumbActive: true)
 
             HStack(spacing: 52) {
                 Button {
-                    viewModel.handlePlayButtonTap()
+                    //이전곡 재생 기능
+                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                        if index - 1 < 0 {
+                            currentIndex = defaultPlaylistSongs.count - 1
+                        } else {
+                            currentIndex = index - 1
+                        }
+                        print(currentIndex)
+                    }
                 } label: {
-                    Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 60, weight: .medium))
-                        .foregroundStyle(Color.customGray)
+                    Image(systemName: "backward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
+                }
+                    Button {
+                        viewModel.handlePlayButtonTap()
+                    } label: {
+                        Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                            .font(.system(size: 60, weight: .medium))
+                            .foregroundStyle(Color.customGray)
+                    }
+                Button {
+                    //다음곡 재생 기능
+                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                        if index + 1 > defaultPlaylistSongs.count - 1 {
+                            currentIndex = 0
+                        } else {
+                            currentIndex = index + 1
+                        }
+                        print(currentIndex)
+                    }
+                } label: {
+                    Image(systemName: "forward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
                 }
             }
             .padding(.bottom, 54)
@@ -165,8 +202,8 @@ private struct FavoriteButton: View {
     @StateObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "favorite").predicate,
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
+        predicate: PlaylistFilter(filter: "favorite").predicate,
         animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     @AppStorage("currentSongId") var currentSongId: String = ""
 
