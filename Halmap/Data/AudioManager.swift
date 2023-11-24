@@ -16,8 +16,6 @@ final class AudioManager: NSObject, ObservableObject {
     var item: AVPlayerItem?
     
     @Published private(set) var isPlaying: Bool = false
-//    @Published var progressValue: Float = 0 //player.seek 에서 사용
-//    @Published var currentTime: Double = 0 //재생바 현재 시간 표시에서 사용
     @Published var currentIndex: Int = 0 //현재 재생중인 곡 index
     
     var duration: Double {
@@ -33,8 +31,6 @@ final class AudioManager: NSObject, ObservableObject {
     private var playerItemContext = 0
     
     var song: SongInfo?
-    var selectedTeam = ""
-    
     
     // MARK: - AM Properties
     
@@ -44,7 +40,7 @@ final class AudioManager: NSObject, ObservableObject {
     
     func AMset(song: SongInfo) {
         self.song = song
-        let changedTitle = "\(self.selectedTeam) \(song.title)"
+        let changedTitle = "\(song.team) \(song.title)"
         
         // 로컬에 해당 노래가 이미 저장되어 있는지 확인
 
@@ -100,10 +96,11 @@ final class AudioManager: NSObject, ObservableObject {
     
     // 노래 재생
     private func setupPlayer() {
-//        self.item?.addObserver(self,
-//                               forKeyPath: #keyPath(AVPlayerItem.status),
-//                               options: [.old, .new],
-//                               context: &playerItemContext)
+        //미디어 플레이어 설정
+        self.item?.addObserver(self,
+                               forKeyPath: #keyPath(AVPlayerItem.status),
+                               options: [.old, .new],
+                               context: &playerItemContext)
         player.replaceCurrentItem(with: item)
         
         do {
@@ -238,7 +235,7 @@ extension AudioManager {
                 case .readyToPlay:
                     // Player item is ready to play.
                     let title = song?.title ?? "unknown title"
-                    let albumArt = UIImage(named: "\(selectedTeam)Album")
+                let albumArt = UIImage(named: "\(song?.team ?? "")Album")
                     self.setupNowPlayingInfo(title: title, albumArt: albumArt)
                     
                     break
