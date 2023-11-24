@@ -12,31 +12,16 @@ import MediaPlayer
 
 final class AudioManager: NSObject, ObservableObject {
     static let instance = AudioManager()
-    var player: AVPlayer?
+    var player: AVPlayer = AVPlayer()
     var item: AVPlayerItem?
     
-    @Published private(set) var isPlaying: Bool = false {
-        didSet{
-            print("isPlaying", isPlaying)
-        }
-    }
-    
-    @Published var progressValue: Float = 0 //player.seek 에서 사용
-    {
-        didSet {
-            print("progressValue: ", progressValue)
-        }
-    }
-    @Published var currentTime: Double = 0 //재생바 현재 시간 표시에서 사용
-    {
-        didSet {
-            print("currentTime: ", currentTime)
-        }
-    }
+    @Published private(set) var isPlaying: Bool = false
+//    @Published var progressValue: Float = 0 //player.seek 에서 사용
+//    @Published var currentTime: Double = 0 //재생바 현재 시간 표시에서 사용
     @Published var currentIndex: Int = 0 //현재 재생중인 곡 index
     
     var duration: Double {
-        return player?.currentItem?.duration.seconds ?? 0
+        return player.currentItem?.duration.seconds ?? 0
     }
     
     //progressbar
@@ -54,13 +39,11 @@ final class AudioManager: NSObject, ObservableObject {
     // MARK: - AM Properties
     
     private var AMduration: Double {
-        return player?.currentItem?.duration.seconds ?? 0
+        return player.currentItem?.duration.seconds ?? 0
     }
     
     func AMset(song: SongInfo) {
         self.song = song
-        self.progressValue = 0
-        self.currentTime = 0
         let changedTitle = "\(self.selectedTeam) \(song.title)"
         
         // 로컬에 해당 노래가 이미 저장되어 있는지 확인
@@ -117,22 +100,18 @@ final class AudioManager: NSObject, ObservableObject {
     
     // 노래 재생
     private func setupPlayer() {
-        self.item?.addObserver(self,
-                               forKeyPath: #keyPath(AVPlayerItem.status),
-                               options: [.old, .new],
-                               context: &playerItemContext)
-        
-        player = AVPlayer(playerItem: item)
+//        self.item?.addObserver(self,
+//                               forKeyPath: #keyPath(AVPlayerItem.status),
+//                               options: [.old, .new],
+//                               context: &playerItemContext)
+        player.replaceCurrentItem(with: item)
         
         do {
             try AVAudioSession.sharedInstance().setCategory(.playback)
         } catch(let error) {
             print(error.localizedDescription)
         }
-        if let player = player {
-            setupPeriodicObservation(for: player)
-            AMplay()
-        }
+        AMplay()
     }
     
     // MARK: - AM Functions
@@ -142,7 +121,7 @@ final class AudioManager: NSObject, ObservableObject {
         
         setupRemoteTransportControls()
         
-        player?.play()
+        player.play()
         isPlaying = true
         
         updateNowPlayingPlaybackRate()
@@ -151,79 +130,22 @@ final class AudioManager: NSObject, ObservableObject {
     
     func AMstop() {
         updateNowPlayingPlaybackRate()
-        
-        guard let player = player else {
-            print("Instance of audio player not found")
-            return
-        }
         player.pause()
         isPlaying = false
     }
     
-    @objc func AMplayEnd() {
-        AMstop()
-        player?.seek(to: .zero)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    func AMseek(to time: CMTime){
-        guard let player = player else { return }
-        player.seek(to: time)
-    }
-    
-    func AMseek(to percentage: Float) {
-        guard let player = player else { return }
-        let time = AMconvertFloatToCMTime(percentage)
-        player.seek(to: time)
-    }
     func removePlayer() {
         AMstop()
     }
     
-    //MARK: - progressbar
-    private func AMconvertFloatToCMTime(_ percentage: Float) -> CMTime {
-        return CMTime(seconds: AMduration * Double(percentage), preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-    }
-    
-    private func AMcalculateProgress(currentTime: Double) -> Float {
-        return Float(currentTime / AMduration)
-    }
-    
-    private func calculateProgress(currentTime: Double) -> Float {
-        return Float(currentTime / duration)
-    }
-    
-    //재생바 이동 시
-    func didSliderChanged(_ didChange: Bool) {
-        acceptProgressUpdates = !didChange
-        if didChange {
-            self.AMstop()
-        } else {
-            self.AMseek(to: progressValue)
-            self.AMplay()
-        }
-    }
-    //재생바 설정
-    private func setupPeriodicObservation(for player: AVPlayer) {
-        let timeScale = CMTimeScale(NSEC_PER_SEC)
-        let time = CMTime(seconds: 0.5, preferredTimescale: timeScale)
-        
-        playerPeriodicObserver = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] (time) in
-            guard let `self` = self else { return }
-            self.currentTime = time.seconds
-            let progress = self.calculateProgress(currentTime: time.seconds)
-            self.progressValue = progress
-            
-            self.currentProgressPublisher.send(progress)
-            self.currentTimePublisher.send(time.seconds)
-            
-            updateNowPlayingPlaybackRate()
-        }
+    @objc func AMplayEnd() {
+        AMstop()
+        player.replaceCurrentItem(with: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
-        player = nil
-        
+        player.replaceCurrentItem(with: nil)
         self.item?.removeObserver(self as NSObject,
                                   forKeyPath: #keyPath(AVPlayerItem.status),
                                   context: &playerItemContext)
@@ -241,17 +163,17 @@ extension AudioManager {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: albumArt.size) { _ in albumArt }
         }
         
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentItem?.currentTime().seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player.currentItem?.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
     private func updateNowPlayingPlaybackRate() {
         if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
-            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
-            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentItem?.currentTime().seconds
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
             MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         }
     }
@@ -260,8 +182,8 @@ extension AudioManager {
         let commandCenter = MPRemoteCommandCenter.shared()
         
         commandCenter.playCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 0.0 {
-                player?.play()
+            if self.player.rate == 0.0 {
+                player.play()
                 isPlaying = true
                 
                 updateNowPlayingPlaybackRate()
@@ -272,7 +194,7 @@ extension AudioManager {
         }
         
         commandCenter.pauseCommand.addTarget { [unowned self] event in
-            if self.player?.rate == 1.0 {
+            if self.player.rate == 1.0 {
                 AMstop()
                 return .success
             }
@@ -282,10 +204,7 @@ extension AudioManager {
         commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
             if let positionTime = (event as? MPChangePlaybackPositionCommandEvent)?.positionTime {
                 let seekTime = CMTime(value: Int64(positionTime), timescale: 1)
-                self.currentTime = seekTime.seconds
-                self.progressValue = self.calculateProgress(currentTime: seekTime.seconds)
-                self.player?.seek(to: seekTime)
-                //                AMseek(to: progressValue)
+                self.player.seek(to: seekTime)
             }
             return .success
         }

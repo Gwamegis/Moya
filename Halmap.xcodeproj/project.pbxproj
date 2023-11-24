@@ -50,12 +50,13 @@
 		F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9174B292A2B2F5F00B1CE87 /* SeasonSong.swift */; };
 		F91BE5FB29B18AF800F7E488 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FA29B18AF800F7E488 /* MainTabView.swift */; };
 		F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */; };
+		F9305CA22B102E0600A0F7C9 /* Progressbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9305CA12B102E0600A0F7C9 /* Progressbar.swift */; };
+		F9305CA42B1038BE00A0F7C9 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9305CA32B1038BE00A0F7C9 /* Utility.swift */; };
 		F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBB929D58FB2005ED8CA /* StorageContentView.swift */; };
 		F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */; };
 		F941FA7F2A7F78500034F72D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
-		F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95F26C22A4C9BFD00B534EB /* Progressbar.swift */; };
 		F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */; };
 		F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */; };
 		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
@@ -112,12 +113,13 @@
 		F9174B292A2B2F5F00B1CE87 /* SeasonSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonSong.swift; sourceTree = "<group>"; };
 		F91BE5FA29B18AF800F7E488 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F91BE5FC29B18D1E00F7E488 /* MainSongListTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListTabView.swift; sourceTree = "<group>"; };
+		F9305CA12B102E0600A0F7C9 /* Progressbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progressbar.swift; sourceTree = "<group>"; };
+		F9305CA32B1038BE00A0F7C9 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		F939EBB929D58FB2005ED8CA /* StorageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContentView.swift; sourceTree = "<group>"; };
 		F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		F95F26C22A4C9BFD00B534EB /* Progressbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progressbar.swift; sourceTree = "<group>"; };
 		F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStorageViewModel.swift; sourceTree = "<group>"; };
 		F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+CollectedSong.swift"; sourceTree = "<group>"; };
 		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
@@ -334,7 +336,8 @@
 		F95F26C12A4C9BF000B534EB /* Component */ = {
 			isa = PBXGroup;
 			children = (
-				F95F26C22A4C9BFD00B534EB /* Progressbar.swift */,
+				F9305CA12B102E0600A0F7C9 /* Progressbar.swift */,
+				F9305CA32B1038BE00A0F7C9 /* Utility.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				8774038C2ABD2B7700C94D35 /* SongSearchViewModel.swift in Sources */,
 				F98F8D5D29D85B0C00F9C956 /* RequestSongView.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
+				F9305CA42B1038BE00A0F7C9 /* Utility.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
 				F90190812B038BDF00C9BFF6 /* PlaylistViewModel.swift in Sources */,
 				87F6ECF72916BB44004533C4 /* Halmap+UIView.swift in Sources */,
@@ -508,9 +512,9 @@
 				F9DB6D1F2A76744A00B9469D /* LaunchScreenView.swift in Sources */,
 				F9174B2A2A2B2F5F00B1CE87 /* SeasonSong.swift in Sources */,
 				EEBC26A028F1CAE900BD5B3D /* TabBarItemView.swift in Sources */,
-				F95F26C32A4C9BFD00B534EB /* Progressbar.swift in Sources */,
 				A81FFCA728F1B84A00B0FC7C /* Halmap+Color.swift in Sources */,
 				F98F622929B4C9BD0025F50E /* Themes.swift in Sources */,
+				F9305CA22B102E0600A0F7C9 /* Progressbar.swift in Sources */,
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */,

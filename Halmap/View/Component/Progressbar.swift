@@ -7,14 +7,16 @@
 import SwiftUI
 import AVFoundation
 
-struct ProgressBar: View {
+struct Progressbar: View {
     let player: AVPlayer
     @Binding var team: String
+    @Binding var currentIndex: Int
     let isThumbActive: Bool
     
-    init(player: AVPlayer, team: Binding<String>, isThumbActive: Bool) {
+    init(player: AVPlayer, currentIndex: Binding<Int>, team: Binding<String>, isThumbActive: Bool) {
         self.player = player
         self.isThumbActive = isThumbActive
+        self._currentIndex = currentIndex
         self._team = team
         let thumbImage = makeThumbView(isThumbActive: isThumbActive)
         UISlider.appearance().setThumbImage(thumbImage, for: .normal)
@@ -26,13 +28,15 @@ struct ProgressBar: View {
             AudioPlayerControlsView(player: player,
                                     timeObserver: PlayerTimeObserver(player: player),
                                     durationObserver: PlayerDurationObserver(player: player),
-                                    itemObserver: PlayerItemObserver(player: player),
+                                    itemObserver: PlayerItemObserver(player: player), 
+                                    currentIndex: $currentIndex, 
                                     isThumbActive: isThumbActive)
             
         }
         .tint(Color("\(team)Point"))
         .padding(.horizontal, isThumbActive ? 5 : 0)
         .onChange(of: team) { _ in
+            print("Team: \(team)")
             let thumbImage = makeThumbView(isThumbActive: isThumbActive)
             UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         }
@@ -74,6 +78,14 @@ struct AudioPlayerControlsView: View {
     @State private var currentDuration: TimeInterval = 0
     @State private var state = PlaybackState.pause
     
+    @Binding var currentIndex: Int
+    
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    
     let isThumbActive: Bool
     
     var body: some View {
@@ -96,6 +108,18 @@ struct AudioPlayerControlsView: View {
                 self.state = hasItem ? .buffering : .pause
                 self.currentTime = 0
                 self.currentDuration = 0
+                
+                if self.state == .pause {
+                    if currentIndex + 1 < defaultPlaylistSongs.count {
+                        currentIndex += 1
+                    } else {
+                        print("재생목록이 처음으로 돌아갑니다.")
+                        currentIndex = 0
+                    }
+                }
+            }
+            .onChange(of: self.state) { _ in
+                print("State: \(state)")
             }
             
             if isThumbActive {

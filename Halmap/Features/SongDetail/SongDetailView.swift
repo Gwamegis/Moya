@@ -5,6 +5,7 @@
 //  Created by JeonJimin on 10/8/23.
 //
 import SwiftUI
+import AVFoundation
 
 struct SongDetailView: View {
 
@@ -142,8 +143,11 @@ private struct PlayBar: View {
     @Binding var currentIndex: Int
     var body: some View {
         VStack(spacing: 0) {
-            Progressbar(team: $viewModel.song.team, isThumbActive: true)
-
+            Progressbar(
+                player: viewModel.getAudioManager().player, 
+                currentIndex: $currentIndex ,
+                team: $viewModel.song.team,
+                isThumbActive: true)
             HStack(spacing: 52) {
                 Button {
                     //이전곡 재생 기능
@@ -171,6 +175,7 @@ private struct PlayBar: View {
                     //다음곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
+                            print("재생목록이 처음으로 돌아갑니다.")
                             currentIndex = 0
                         } else {
                             currentIndex = index + 1
