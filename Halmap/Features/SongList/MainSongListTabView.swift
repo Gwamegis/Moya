@@ -155,9 +155,6 @@ struct MainSongListTabView: View {
         .background(Color.systemBackground)
         .sheet(isPresented: $viewModel.showingTeamChangingView) {
             TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $viewModel.showingTeamChangingView)
-                .onDisappear{
-                    Color.setColor(selectedTeam)
-                }
         }
         .navigationBarHidden(true)
     }
