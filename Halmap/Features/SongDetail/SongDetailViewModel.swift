@@ -16,6 +16,8 @@ final class SongDetailViewModel: ObservableObject {
     @Published var isScrolled = false
     @Published var isFavorite = false
     @Published var isPlaying = false
+    
+    @Published var currentIndex = 0
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -59,15 +61,16 @@ final class SongDetailViewModel: ObservableObject {
     func getAudioIsPlaying() -> Bool {
         audioManager.isPlaying
     }
-
+    
     func addDefaultPlaylist(defaultPlaylistSongs: FetchedResults<CollectedSong>) {
-        if !defaultPlaylistSongs.contains(where: {$0.id == self.song.id}) {
-            //추후 하프모달 사용 시 다시 이용
-//            let collectedSong = persistence.createCollectedSong(song: song, playListTitle: "bufferPlaylist")
-//            persistence.resetBufferList(song: collectedSong)
+        if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == self.song.id}) {
+            persistence.reorderSelectedSong(index: index, results: defaultPlaylistSongs)
+            self.currentIndex = defaultPlaylistSongs.count - 1
+        } else {
             persistence.saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(defaultPlaylistSongs.count))
         }
     }
+    
     func convertSongToSongInfo(song: CollectedSong) -> SongInfo {
         SongInfo(
             id: song.id ?? "",

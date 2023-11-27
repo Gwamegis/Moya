@@ -238,4 +238,17 @@ struct PersistenceController {
             print(error.localizedDescription)
         }
     }
+    
+    func reorderSelectedSong(index: Int, results: FetchedResults<CollectedSong>) {
+        results[index].order = Int64(results.count-1)
+        for i in index+1..<results.count {
+            results[i].order -= 1
+        }
+        do{
+            try container.viewContext.save()
+        }
+        catch{
+            print(error.localizedDescription)
+        }
+    }
 }

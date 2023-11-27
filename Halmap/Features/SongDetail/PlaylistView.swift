@@ -12,6 +12,7 @@ struct PlaylistView: View {
     @StateObject var viewModel: PlaylistViewModel
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
+    @Binding var currentIndex: Int
 
     let persistence = PersistenceController.shared
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlaylistFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
@@ -25,6 +26,7 @@ struct PlaylistView: View {
                             .background(Color.white.opacity(0.001))
                             .onTapGesture {
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
+                                self.currentIndex = Int(playListSong.order)
                             }
                     }.onDelete { indexSet in
                         persistence.deleteSong(at: indexSet, from: collectedSongs)

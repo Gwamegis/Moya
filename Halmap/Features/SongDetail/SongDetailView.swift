@@ -17,7 +17,6 @@ struct SongDetailView: View {
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
     @State var isPlaylistView = false
-    @State var currentIndex = 0
 
     var body: some View {
         ZStack {
@@ -26,7 +25,7 @@ struct SongDetailView: View {
 
             if isPlaylistView {
                 VStack {
-                    PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled)
+                    PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled, currentIndex: $viewModel.currentIndex)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
                 }
@@ -45,7 +44,7 @@ struct SongDetailView: View {
                     playlistButton
                 }
 
-                PlayBar(viewModel: viewModel, currentIndex: $currentIndex)
+                PlayBar(viewModel: viewModel)
             }
             .ignoresSafeArea()
         }
@@ -59,8 +58,8 @@ struct SongDetailView: View {
         .onAppear() {
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
         }
-        .onChange(of: self.currentIndex) { _ in
-            self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[currentIndex])
+        .onChange(of: self.viewModel.currentIndex) { _ in
+            self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[self.viewModel.currentIndex])
             self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
         }
     }
@@ -140,24 +139,22 @@ private struct PlayBar: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
-    @Binding var currentIndex: Int
     var body: some View {
         VStack(spacing: 0) {
             Progressbar(
                 player: viewModel.getAudioManager().player, 
-                currentIndex: $currentIndex ,
-                team: $viewModel.song.team,
+                currentIndex: $viewModel.currentIndex, 
+                song: $viewModel.song,
                 isThumbActive: true)
             HStack(spacing: 52) {
                 Button {
                     //이전곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index - 1 < 0 {
-                            currentIndex = defaultPlaylistSongs.count - 1
+                            viewModel.currentIndex = defaultPlaylistSongs.count - 1
                         } else {
-                            currentIndex = index - 1
+                            viewModel.currentIndex = index - 1
                         }
-                        print(currentIndex)
                     }
                 } label: {
                     Image(systemName: "backward.end.fill")
@@ -176,11 +173,10 @@ private struct PlayBar: View {
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
                             print("재생목록이 처음으로 돌아갑니다.")
-                            currentIndex = 0
+                            viewModel.currentIndex = 0
                         } else {
-                            currentIndex = index + 1
+                            viewModel.currentIndex = index + 1
                         }
-                        print(currentIndex)
                     }
                 } label: {
                     Image(systemName: "forward.end.fill")

@@ -8,16 +8,17 @@ import SwiftUI
 import AVFoundation
 
 struct Progressbar: View {
+    @EnvironmentObject var audioManager: AudioManager
     let player: AVPlayer
-    @Binding var team: String
+    @Binding var song: SongInfo
     @Binding var currentIndex: Int
     let isThumbActive: Bool
     
-    init(player: AVPlayer, currentIndex: Binding<Int>, team: Binding<String>, isThumbActive: Bool) {
+    init(player: AVPlayer, currentIndex: Binding<Int>, song: Binding<SongInfo>, isThumbActive: Bool) {
         self.player = player
         self.isThumbActive = isThumbActive
         self._currentIndex = currentIndex
-        self._team = team
+        self._song = song
         let thumbImage = makeThumbView(isThumbActive: isThumbActive)
         UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         UISlider.appearance().maximumTrackTintColor = UIColor(Color.customGray.opacity(0.2))
@@ -30,16 +31,12 @@ struct Progressbar: View {
                                     durationObserver: PlayerDurationObserver(player: player),
                                     itemObserver: PlayerItemObserver(player: player), 
                                     currentIndex: $currentIndex, 
+                                    song: $song,
                                     isThumbActive: isThumbActive)
             
         }
-        .tint(Color("\(team)Point"))
+        .tint(Color("\(song.team)Point"))
         .padding(.horizontal, isThumbActive ? 5 : 0)
-        .onChange(of: team) { _ in
-            print("Team: \(team)")
-            let thumbImage = makeThumbView(isThumbActive: isThumbActive)
-            UISlider.appearance().setThumbImage(thumbImage, for: .normal)
-        }
         .onDisappear {
             self.player.replaceCurrentItem(with: nil)
         }
@@ -48,7 +45,7 @@ struct Progressbar: View {
     private func makeThumbView(isThumbActive: Bool) -> UIImage {
         lazy var thumbView: UIView = {
             let thumb = UIView()
-            thumb.backgroundColor = UIColor(isThumbActive ? Color("\(team)Point") : Color.clear)
+            thumb.backgroundColor = UIColor(isThumbActive ? Color("\(song.team)Point") : Color.clear)
             return thumb
         }()
         let radius:CGFloat = 10
@@ -79,6 +76,7 @@ struct AudioPlayerControlsView: View {
     @State private var state = PlaybackState.pause
     
     @Binding var currentIndex: Int
+    @Binding var song: SongInfo
     
     @FetchRequest(
         entity: CollectedSong.entity(),
@@ -110,11 +108,12 @@ struct AudioPlayerControlsView: View {
                 self.currentDuration = 0
                 
                 if self.state == .pause {
-                    if currentIndex + 1 < defaultPlaylistSongs.count {
-                        currentIndex += 1
-                    } else {
-                        print("재생목록이 처음으로 돌아갑니다.")
-                        currentIndex = 0
+                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == song.id}) {
+                        if index + 1 < defaultPlaylistSongs.count {
+                            currentIndex = Int(defaultPlaylistSongs[index].order + 1)
+                        } else {
+                            currentIndex = 0
+                        }
                     }
                 }
             }
