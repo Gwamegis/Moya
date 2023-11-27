@@ -150,7 +150,7 @@ struct PersistenceController {
             var startOrder = results[itemToMove].order
             while startIndex <= endIndex{
                 results[startIndex].order = startOrder
-                startOrder = startOrder - 1
+                startOrder = startOrder + 1
                 startIndex = startIndex + 1
             }
             results[itemToMove].order = startOrder
@@ -159,11 +159,11 @@ struct PersistenceController {
         else if destination < itemToMove{
             var startIndex = destination
             let endIndex = itemToMove - 1
-            var startOrder = results[destination].order - 1
+            var startOrder = results[destination].order + 1
             let newOrder = results[destination].order
             while startIndex <= endIndex{
                 results[startIndex].order = startOrder
-                startOrder = startOrder - 1
+                startOrder = startOrder + 1
                 startIndex = startIndex + 1
             }
             results[itemToMove].order = newOrder

@@ -82,7 +82,7 @@ struct AudioPlayerControlsView: View {
     
     @FetchRequest(
         entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
     
