@@ -129,6 +129,10 @@ struct PersistenceController {
         for index in indexs {
             let song = results[index]
             container.viewContext.delete(song)
+            
+            for i in index..<results.count {
+                results[i].order -= 1
+            }
         }
         
         do {
