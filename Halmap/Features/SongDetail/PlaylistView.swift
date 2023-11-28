@@ -29,6 +29,23 @@ struct PlaylistView: View {
                                 self.currentIndex = Int(playListSong.order)
                             }
                     }.onDelete { indexSet in
+                        for index in indexSet {
+                            if collectedSongs.count - 1 == 0 {
+                                // TODO: 메인화면으로 나가는 동작
+                                print("메인화면으로")
+                                viewModel.stopPlayer()
+                            } else {
+                                if let songIndex = collectedSongs.firstIndex(where: {$0.id == song.id}) {
+                                    if collectedSongs[songIndex].order == index {
+                                        if index + 1 < collectedSongs.count {
+                                            currentIndex = Int(collectedSongs[songIndex].order)
+                                        } else {
+                                            currentIndex = 0
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         persistence.deleteSong(at: indexSet, from: collectedSongs)
                     }.onMove { indexSet, destination  in
                         persistence.moveDefaultPlaylistSong(from: indexSet,

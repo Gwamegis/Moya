@@ -65,4 +65,8 @@ final class PlaylistViewModel: ObservableObject {
             url: song.url ?? ""
         )
     }
+    
+    func stopPlayer() {
+        audioManager.AMplayEnd()
+    }
 }

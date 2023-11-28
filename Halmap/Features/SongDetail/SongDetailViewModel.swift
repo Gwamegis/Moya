@@ -68,6 +68,7 @@ final class SongDetailViewModel: ObservableObject {
             self.currentIndex = defaultPlaylistSongs.count - 1
         } else {
             persistence.saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(defaultPlaylistSongs.count))
+            self.currentIndex = defaultPlaylistSongs.count
         }
     }
     
