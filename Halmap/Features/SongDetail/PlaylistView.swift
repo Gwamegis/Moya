@@ -5,6 +5,7 @@
 //  Created by JeonJimin on 11/14/23.
 //
 import SwiftUI
+import Lottie
 
 struct PlaylistView: View {
 
@@ -13,6 +14,7 @@ struct PlaylistView: View {
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
     @Binding var currentIndex: Int
+    @Binding var isPlaying: Bool
 
     let persistence = PersistenceController.shared
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlaylistFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
@@ -85,8 +87,16 @@ struct PlaylistView: View {
     private func getPlaylistRowView(song: CollectedSong) -> some View {
         HStack{
             if currentSongId == song.id {
-                Image(systemName: "waveform")
-                    .font(.system(size: 24))
+                LottieView(animation: .named("waveform"))
+                    .playing(loopMode: .loop)
+                    .configure({ lottie in
+                        if isPlaying {
+                            lottie.loopMode = .loop
+                            lottie.play()
+                        } else {
+                            lottie.stop()
+                        }
+                    })
                     .foregroundStyle(Color(viewModel.getSongTeamBackgroundColor(with: song)))
                     .frame(width: 40, height: 40)
             } else {

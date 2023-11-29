@@ -26,7 +26,12 @@ struct SongDetailView: View {
 
             if isPlaylistView {
                 VStack {
-                    PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled, currentIndex: $viewModel.currentIndex)
+                    PlaylistView(
+                        viewModel: PlaylistViewModel(viewModel: viewModel), 
+                        song: $viewModel.song,
+                        isScrolled: $viewModel.isScrolled,
+                        currentIndex: $viewModel.currentIndex,
+                        isPlaying: $viewModel.isPlaying)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
                 }
@@ -178,7 +183,7 @@ private struct PlayBar: View {
                     //다음곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
-                            toast = Toast(message: "재생목록이 처음으로 돌아갑니다.")
+                            toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
                             viewModel.currentIndex = 0
                         } else {
                             viewModel.currentIndex = index + 1

@@ -119,7 +119,7 @@ struct AudioPlayerControlsView: View {
                             currentIndex = Int(defaultPlaylistSongs[index].order + 1)
                         } else {
                             currentIndex = 0
-                            toast = Toast(message: "재생목록이 처음으로 돌아갑니다.")
+                            toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
                         }
                     }
                 }

@@ -57,6 +57,8 @@
 		F941FA7F2A7F78500034F72D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
 		F949421D2B16044F00075DE1 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949421C2B16044F00075DE1 /* ToastView.swift */; };
+		F94942202B17373C00075DE1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F949421F2B17373C00075DE1 /* Lottie */; };
+		F94942252B17398100075DE1 /* waveform.json in Resources */ = {isa = PBXBuildFile; fileRef = F94942242B17398100075DE1 /* waveform.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
 		F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */; };
 		F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */; };
@@ -121,6 +123,7 @@
 		F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
 		F949421C2B16044F00075DE1 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		F94942242B17398100075DE1 /* waveform.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waveform.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStorageViewModel.swift; sourceTree = "<group>"; };
 		F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+CollectedSong.swift"; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 				20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */,
 				20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */,
 				20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */,
+				F94942202B17373C00075DE1 /* Lottie in Frameworks */,
 				20A687DE2A711C48005F18FA /* FirebaseDatabase in Frameworks */,
 				20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */,
 				20A687E22A711C48005F18FA /* FirebaseFirestore in Frameworks */,
@@ -245,6 +249,7 @@
 		A81FFC7828F15D9900B0FC7C /* Halmap */ = {
 			isa = PBXGroup;
 			children = (
+				F94942232B17396E00075DE1 /* Resource */,
 				877403852AB71FD900C94D35 /* Features */,
 				A81FFC8E28F1770500B0FC7C /* View */,
 				B2699E0B28F1CB5100267A4F /* Info.plist */,
@@ -335,6 +340,14 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		F94942232B17396E00075DE1 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				F94942242B17398100075DE1 /* waveform.json */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		F95F26C12A4C9BF000B534EB /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +412,7 @@
 				20A687E32A711C48005F18FA /* FirebaseFirestoreSwift */,
 				20A687E52A711C48005F18FA /* FirebaseRemoteConfig */,
 				20A687E72A711C48005F18FA /* FirebaseStorage */,
+				F949421F2B17373C00075DE1 /* Lottie */,
 			);
 			productName = Halmap;
 			productReference = A81FFC7628F15D9900B0FC7C /* Halmap.app */;
@@ -430,6 +444,7 @@
 			mainGroup = A81FFC6D28F15D9900B0FC7C;
 			packageReferences = (
 				20A687D62A711C48005F18FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = A81FFC7728F15D9900B0FC7C /* Products */;
 			projectDirPath = "";
@@ -449,6 +464,7 @@
 				F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */,
 				A81FFC8128F15D9C00B0FC7C /* Preview Assets.xcassets in Resources */,
 				B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */,
+				F94942252B17398100075DE1 /* waveform.json in Resources */,
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
 				F949284F28F2AFB800901F27 /* Music.json in Resources */,
@@ -767,6 +783,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -814,6 +838,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 20A687D62A711C48005F18FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		F949421F2B17373C00075DE1 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 

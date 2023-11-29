@@ -9,6 +9,7 @@ import SwiftUI
 
 //https://ondrej-kvasnovsky.medium.com/how-to-build-a-simple-toast-message-view-in-swiftui-b2e982340bd
 struct Toast: Equatable {
+    var team: String
     var message: String
     var duration: Double = 3
     var width: Double = .infinity
@@ -36,7 +37,7 @@ struct ToastModifier: ViewModifier {
     func mainToastView() -> some View {
         if let toast {
             VStack {
-                ToastView(message: toast.message) {
+                ToastView(team: toast.team, message: toast.message) {
                     dismissToast()
                 }
             }
@@ -71,7 +72,7 @@ struct ToastModifier: ViewModifier {
 }
 
 struct ToastView: View {
-    @AppStorage("selectedTeam") var selectedTeamName: String = ""
+    let team: String
     var message = "재생 목록의 처음으로 돌아갑니다."
     var width = CGFloat.infinity
     var onCancelTapped: (() -> Void)
@@ -81,7 +82,7 @@ struct ToastView: View {
             Text(message)
                 .font(Font.Halmap.CustomBodyBold)
         }
-        .foregroundStyle(Color("\(selectedTeamName)Background"))
+        .foregroundStyle(Color("\(team)Background"))
         .padding(EdgeInsets(top: 17, leading: 28, bottom: 17, trailing: 28))
         .background(Color.customGray)
         .cornerRadius(10)
