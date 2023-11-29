@@ -17,7 +17,7 @@ final class SongDetailViewModel: ObservableObject {
     @Published var isFavorite = false
     @Published var isPlaying = false
     
-    @Published var currentIndex = 0
+    @Published var currentIndex = -1
 
     private var cancellables = Set<AnyCancellable>()
 

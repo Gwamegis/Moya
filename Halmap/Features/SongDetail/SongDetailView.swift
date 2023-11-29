@@ -65,9 +65,11 @@ struct SongDetailView: View {
         .onAppear() {
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
         }
-        .onChange(of: self.viewModel.currentIndex) { _ in
-            self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[self.viewModel.currentIndex])
-            self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
+        .onReceive(viewModel.$currentIndex) { output in
+            if output >= 0 {
+                self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[self.viewModel.currentIndex])
+                self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
+            }
         }
     }
     
