@@ -17,6 +17,7 @@ struct SongDetailView: View {
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
     @State var isPlaylistView = false
+    @State private var toast: Toast? = nil
 
     var body: some View {
         ZStack {
@@ -43,8 +44,9 @@ struct SongDetailView: View {
                     gradientRectangle(isTop: false)
                     playlistButton
                 }
+                .toastView(toast: $toast)
 
-                PlayBar(viewModel: viewModel)
+                PlayBar(viewModel: viewModel, toast: $toast)
             }
             .ignoresSafeArea()
         }
@@ -139,12 +141,16 @@ private struct PlayBar: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    
+    @Binding var toast: Toast?
+    
     var body: some View {
         VStack(spacing: 0) {
             Progressbar(
                 player: viewModel.getAudioManager().player, 
                 currentIndex: $viewModel.currentIndex, 
-                song: $viewModel.song,
+                song: $viewModel.song, 
+                toast: $toast,
                 isThumbActive: true)
             HStack(spacing: 52) {
                 Button {
@@ -172,7 +178,7 @@ private struct PlayBar: View {
                     //다음곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
-                            print("재생목록이 처음으로 돌아갑니다.")
+                            toast = Toast(message: "재생목록이 처음으로 돌아갑니다.")
                             viewModel.currentIndex = 0
                         } else {
                             viewModel.currentIndex = index + 1

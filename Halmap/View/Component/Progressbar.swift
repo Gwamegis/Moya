@@ -10,15 +10,19 @@ import AVFoundation
 struct Progressbar: View {
     @EnvironmentObject var audioManager: AudioManager
     let player: AVPlayer
+    
     @Binding var song: SongInfo
     @Binding var currentIndex: Int
+    @Binding var toast: Toast?
+    
     let isThumbActive: Bool
     
-    init(player: AVPlayer, currentIndex: Binding<Int>, song: Binding<SongInfo>, isThumbActive: Bool) {
+    init(player: AVPlayer, currentIndex: Binding<Int>, song: Binding<SongInfo>, toast: Binding<Toast?>, isThumbActive: Bool) {
         self.player = player
         self.isThumbActive = isThumbActive
         self._currentIndex = currentIndex
         self._song = song
+        self._toast = toast
         let thumbImage = makeThumbView(isThumbActive: isThumbActive)
         UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         UISlider.appearance().maximumTrackTintColor = UIColor(Color.customGray.opacity(0.2))
@@ -32,6 +36,7 @@ struct Progressbar: View {
                                     itemObserver: PlayerItemObserver(player: player), 
                                     currentIndex: $currentIndex, 
                                     song: $song,
+                                    toast: $toast,
                                     isThumbActive: isThumbActive)
             
         }
@@ -77,6 +82,7 @@ struct AudioPlayerControlsView: View {
     
     @Binding var currentIndex: Int
     @Binding var song: SongInfo
+    @Binding var toast: Toast?
     
     @FetchRequest(
         entity: CollectedSong.entity(),
@@ -113,6 +119,7 @@ struct AudioPlayerControlsView: View {
                             currentIndex = Int(defaultPlaylistSongs[index].order + 1)
                         } else {
                             currentIndex = 0
+                            toast = Toast(message: "재생목록이 처음으로 돌아갑니다.")
                         }
                     }
                 }

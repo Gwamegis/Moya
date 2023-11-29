@@ -56,6 +56,7 @@
 		F939EBBC29D5920F005ED8CA /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */; };
 		F941FA7F2A7F78500034F72D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */; };
 		F949284F28F2AFB800901F27 /* Music.json in Resources */ = {isa = PBXBuildFile; fileRef = F949284E28F2AFB800901F27 /* Music.json */; };
+		F949421D2B16044F00075DE1 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F949421C2B16044F00075DE1 /* ToastView.swift */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
 		F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */; };
 		F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */; };
@@ -119,6 +120,7 @@
 		F939EBBB29D5920F005ED8CA /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		F941FA7E2A7F78500034F72D /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F949284E28F2AFB800901F27 /* Music.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Music.json; sourceTree = "<group>"; };
+		F949421C2B16044F00075DE1 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStorageViewModel.swift; sourceTree = "<group>"; };
 		F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+CollectedSong.swift"; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 			children = (
 				F9305CA12B102E0600A0F7C9 /* Progressbar.swift */,
 				F9305CA32B1038BE00A0F7C9 /* Utility.swift */,
+				F949421C2B16044F00075DE1 /* ToastView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9EB19C129168E45002DFE46 /* Song.swift in Sources */,
+				F949421D2B16044F00075DE1 /* ToastView.swift in Sources */,
 				F9A925A02AA60A5100EF8BC9 /* MainTabViewModel.swift in Sources */,
 				F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */,
 				A81FFC8328F15D9C00B0FC7C /* Persistence.swift in Sources */,
