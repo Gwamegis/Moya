@@ -18,19 +18,13 @@ final class AudioManager: NSObject, ObservableObject {
     @Published private(set) var isPlaying: Bool = false
     @Published var currentIndex: Int = 0 //현재 재생중인 곡 index
     
-    var duration: Double {
-        return player.currentItem?.duration.seconds ?? 0
-    }
-    
-    //progressbar
-    var currentTimePublisher: PassthroughSubject<Double, Never> = .init()
-    var currentProgressPublisher: PassthroughSubject<Float, Never> = .init()
-    private var playerPeriodicObserver: Any?
-    var acceptProgressUpdates = true
-    
+    var song: SongInfo?
     private var playerItemContext = 0
     
-    var song: SongInfo?
+    override init() {
+        super.init()
+        setupRemoteTransportControls()
+    }
     
     // MARK: - AM Properties
     
@@ -115,9 +109,6 @@ final class AudioManager: NSObject, ObservableObject {
     
     func AMplay() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.AMplayEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
-        
-        setupRemoteTransportControls()
-        
         player.play()
         isPlaying = true
         
@@ -196,6 +187,16 @@ extension AudioManager {
                 return .success
             }
             return .commandFailed
+        }
+        
+        commandCenter.nextTrackCommand.addTarget { [unowned self] event in
+            print("다음 \(currentIndex+1)")
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.addTarget { [unowned self] event in
+            print("이전 \(currentIndex-1)")
+            return .success
         }
         
         commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
