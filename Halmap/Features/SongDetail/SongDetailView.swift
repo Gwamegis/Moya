@@ -154,7 +154,6 @@ private struct PlayBar: View {
     var body: some View {
         VStack(spacing: 0) {
             Progressbar(
-                player: viewModel.getAudioManager().player, 
                 currentIndex: $viewModel.currentIndex, 
                 song: $viewModel.song, 
                 toast: $toast,

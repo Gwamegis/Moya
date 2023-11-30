@@ -73,6 +73,7 @@
 		F9B3B7B529B7397600232BB8 /* MapName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B3B7B429B7397600232BB8 /* MapName.swift */; };
 		F9B95BB928F271A100728048 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BB828F271A100728048 /* DataManager.swift */; };
 		F9B95BBB28F271B800728048 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B95BBA28F271B800728048 /* Model.swift */; };
+		F9CB6A5A2B18A104005DF514 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = F9CB6A592B18A104005DF514 /* SwiftUIIntrospect */; };
 		F9DB6D1D2A763B7400B9469D /* Traffic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB6D1C2A763B7400B9469D /* Traffic.swift */; };
 		F9DB6D1F2A76744A00B9469D /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DB6D1E2A76744A00B9469D /* LaunchScreenView.swift */; };
 		F9E4642329E8089A009E12FC /* ScalingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E4642229E8089A009E12FC /* ScalingHeaderView.swift */; };
@@ -154,6 +155,7 @@
 				20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */,
 				20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */,
 				20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */,
+				F9CB6A5A2B18A104005DF514 /* SwiftUIIntrospect in Frameworks */,
 				F94942202B17373C00075DE1 /* Lottie in Frameworks */,
 				20A687DE2A711C48005F18FA /* FirebaseDatabase in Frameworks */,
 				20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */,
@@ -413,6 +415,7 @@
 				20A687E52A711C48005F18FA /* FirebaseRemoteConfig */,
 				20A687E72A711C48005F18FA /* FirebaseStorage */,
 				F949421F2B17373C00075DE1 /* Lottie */,
+				F9CB6A592B18A104005DF514 /* SwiftUIIntrospect */,
 			);
 			productName = Halmap;
 			productReference = A81FFC7628F15D9900B0FC7C /* Halmap.app */;
@@ -445,6 +448,7 @@
 			packageReferences = (
 				20A687D62A711C48005F18FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				F9CB6A582B18A104005DF514 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			productRefGroup = A81FFC7728F15D9900B0FC7C /* Products */;
 			projectDirPath = "";
@@ -791,6 +795,14 @@
 				minimumVersion = 4.3.3;
 			};
 		};
+		F9CB6A582B18A104005DF514 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -843,6 +855,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		F9CB6A592B18A104005DF514 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F9CB6A582B18A104005DF514 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,10 +6,10 @@
 //
 import SwiftUI
 import AVFoundation
+import SwiftUIIntrospect
 
 struct Progressbar: View {
     @EnvironmentObject var audioManager: AudioManager
-    let player: AVPlayer
     
     @Binding var song: SongInfo
     @Binding var currentIndex: Int
@@ -17,51 +17,31 @@ struct Progressbar: View {
     
     let isThumbActive: Bool
     
-    init(player: AVPlayer, currentIndex: Binding<Int>, song: Binding<SongInfo>, toast: Binding<Toast?>, isThumbActive: Bool) {
-        self.player = player
+    init(currentIndex: Binding<Int>, song: Binding<SongInfo>, toast: Binding<Toast?>, isThumbActive: Bool) {
         self.isThumbActive = isThumbActive
         self._currentIndex = currentIndex
         self._song = song
         self._toast = toast
-        let thumbImage = makeThumbView(isThumbActive: isThumbActive)
-        UISlider.appearance().setThumbImage(thumbImage, for: .normal)
         UISlider.appearance().maximumTrackTintColor = UIColor(Color.customGray.opacity(0.2))
     }
     
     var body: some View {
         VStack {
-            AudioPlayerControlsView(player: player,
-                                    timeObserver: PlayerTimeObserver(player: player),
-                                    durationObserver: PlayerDurationObserver(player: player),
-                                    itemObserver: PlayerItemObserver(player: player), 
-                                    currentIndex: $currentIndex, 
+            AudioPlayerControlsView(player: audioManager.player,
+                                    timeObserver: PlayerTimeObserver(player: audioManager.player),
+                                    durationObserver: PlayerDurationObserver(player: audioManager.player),
+                                    itemObserver: PlayerItemObserver(player: audioManager.player),
+                                    isThumbActive: isThumbActive, 
+                                    currentIndex: $currentIndex,
                                     song: $song,
-                                    toast: $toast,
-                                    isThumbActive: isThumbActive)
+                                    toast: $toast)
             
         }
         .tint(Color("\(song.team)Point"))
         .padding(.horizontal, isThumbActive ? 5 : 0)
         .onDisappear {
-            self.player.replaceCurrentItem(with: nil)
+            audioManager.AMstop()
         }
-    }
-    
-    private func makeThumbView(isThumbActive: Bool) -> UIImage {
-        lazy var thumbView: UIView = {
-            let thumb = UIView()
-            thumb.backgroundColor = UIColor(isThumbActive ? Color("\(song.team)Point") : Color.clear)
-            return thumb
-        }()
-        let radius:CGFloat = 10
-        thumbView.frame = CGRect(x: 0, y: radius / 2, width: radius, height: radius)
-        thumbView.layer.cornerRadius = radius / 2
-        let renderer = UIGraphicsImageRenderer(bounds: thumbView.bounds)
-        let image = renderer.image { rendererContext in
-            thumbView.layer.render(in: rendererContext.cgContext)
-        }
-        
-        return image
     }
 }
 
@@ -76,6 +56,7 @@ struct AudioPlayerControlsView: View {
     let timeObserver: PlayerTimeObserver
     let durationObserver: PlayerDurationObserver
     let itemObserver: PlayerItemObserver
+    let isThumbActive: Bool
     @State private var currentTime: TimeInterval = 0
     @State private var currentDuration: TimeInterval = 0
     @State private var state = PlaybackState.pause
@@ -90,13 +71,14 @@ struct AudioPlayerControlsView: View {
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
     
-    let isThumbActive: Bool
-    
     var body: some View {
         VStack {
             Slider(value: $currentTime,
                    in: 0...currentDuration,
                    onEditingChanged: sliderEditingChanged)
+            .introspect(.slider, on: .iOS(.v15,.v16,.v17), customize: { slider in
+                slider.setThumbImage(makeThumbView(isThumbActive: isThumbActive), for: .normal)
+            })
             .disabled(state != .playing)
             .onReceive(timeObserver.publisher) { time in
                 self.currentTime = time
@@ -154,6 +136,22 @@ struct AudioPlayerControlsView: View {
                 self.state = .playing
             }
         }
+    }
+    private func makeThumbView(isThumbActive: Bool) -> UIImage {
+        lazy var thumbView: UIView = {
+            let thumb = UIView()
+            thumb.backgroundColor = UIColor(isThumbActive ? Color("\(song.team)Point") : Color.clear)
+            return thumb
+        }()
+        let radius:CGFloat = 10
+        thumbView.frame = CGRect(x: 0, y: radius / 2, width: radius, height: radius)
+        thumbView.layer.cornerRadius = radius / 2
+        let renderer = UIGraphicsImageRenderer(bounds: thumbView.bounds)
+        let image = renderer.image { rendererContext in
+            thumbView.layer.render(in: rendererContext.cgContext)
+        }
+        
+        return image
     }
 }
 
