@@ -50,7 +50,6 @@ final class PlaylistViewModel: ObservableObject {
         print(#function, song.title)
         self.song = song
         audioManager.removePlayer()
-        audioManager.AMset(song: song)
         return song
     }
 
