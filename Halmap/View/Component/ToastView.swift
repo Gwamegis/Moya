@@ -25,8 +25,9 @@ struct ToastModifier: ViewModifier {
             .overlay(
                 ZStack {
                     mainToastView()
-                        .offset(y: 32)
-                }.animation(.spring(), value: toast)
+                        .transition(.move(edge: .bottom))
+                        .offset(y: toast != nil ? 0 : 40)
+                }.animation(.smooth(duration: 0.2), value: toast)
             )
             .onChange(of: toast) { value in
                 showToast()
@@ -86,7 +87,6 @@ struct ToastView: View {
         .padding(EdgeInsets(top: 17, leading: 28, bottom: 17, trailing: 28))
         .background(Color.customGray)
         .cornerRadius(10)
-        .padding(.bottom, 20)
         .onTapGesture {
             onCancelTapped()
         }
