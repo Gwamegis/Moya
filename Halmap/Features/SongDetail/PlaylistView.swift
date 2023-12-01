@@ -28,6 +28,12 @@ struct PlaylistView: View {
                                 print("self.song", playListSong.safeTitle, playListSong.order)
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
                             }
+                            .background(
+                                playListSong.order == 0 ? GeometryReader{
+                                Color.clear.preference(
+                                    key: ViewOffsetKey.self,
+                                    value: -$0.frame(in: .named("list")).origin.y)
+                                } : nil )
                     }.onDelete { indexSet in
                         for index in indexSet {
                             if collectedSongs.count - 1 == 0 {
@@ -54,31 +60,27 @@ struct PlaylistView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .listRowBackground(Color("\(song.team)Sub"))
+                    .onPreferenceChange(ViewOffsetKey.self) {
+                        if $0 > -112 {
+                            withAnimation {
+                                isScrolled = true
+                            }
+                        } else {
+                            withAnimation {
+                                isScrolled = false
+                            }
+                        }
+                    }
                     Color.clear.frame(height:70)
                            .listRowBackground(Color.clear)
                 }
+                .coordinateSpace(name: "list")
                 .listStyle(.plain)
                 .modifier(ListBackgroundModifier())
+                .padding(.top, 5)
             }
-
         }
         .background(Color("\(song.team)Sub"))
-        .background(GeometryReader{
-            Color.clear.preference(
-                key: ViewOffsetKey.self,
-                value: -$0.frame(in: .named("scroll")).origin.y)
-        })
-        .onPreferenceChange(ViewOffsetKey.self) {
-            if $0 > 0 {
-                withAnimation {
-                    isScrolled = true
-                }
-            } else {
-                withAnimation {
-                    isScrolled = false
-                }
-            }
-        }
     }
 
     @ViewBuilder
