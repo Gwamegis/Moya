@@ -70,6 +70,8 @@ struct SongDetailView: View {
         }
         .onChange(of: viewModel.song.id) { _ in
             self.currentSongId = viewModel.song.id
+        }
+        .onChange(of: currentSongId) { _ in
             if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
                 self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
                 self.viewModel.getAudioManager().AMset(song: self.viewModel.song)

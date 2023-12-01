@@ -19,6 +19,8 @@ struct ScalingHeaderView: View {
     @State var collectedSongData: CollectedSong?
     @State var isShowSheet = false
     
+    @AppStorage("currentSongId") var currentSongId: String = ""
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 15) {
@@ -36,18 +38,22 @@ struct ScalingHeaderView: View {
                                 .font(Font.Halmap.CustomCaptionBold)
                                 .foregroundColor(.customDarkGray)
                             Spacer()
-                            Button {
-                                print("전체 재생하기")
-                            } label: {
-                                HStack(spacing: 5) {
-                                    Image(systemName: "play.circle.fill")
-                                        .foregroundColor(.mainGreen)
-                                        .font(.system(size: 20))
-                                    Text("전체 재생하기")
-                                        .font(Font.Halmap.CustomCaptionBold)
-                                        .foregroundColor(.mainGreen)
+                            if collectedSongs.count > 0 {
+                                Button {
+                                    print("전체 재생하기")
+                                    persistence.fetchPlaylistAll()
+                                    currentSongId = collectedSongs.first!.safeId
+                                } label: {
+                                    HStack(spacing: 5) {
+                                        Image(systemName: "play.circle.fill")
+                                            .foregroundColor(.mainGreen)
+                                            .font(.system(size: 20))
+                                        Text("전체 재생하기")
+                                            .font(Font.Halmap.CustomCaptionBold)
+                                            .foregroundColor(.mainGreen)
+                                    }
+                                    .opacity(viewModel.checkScrollRequirement(listCount: collectedSongs.count))
                                 }
-                                .opacity(viewModel.checkScrollRequirement(listCount: collectedSongs.count))
                             }
                         }
                         .padding(.horizontal, 20)
@@ -141,12 +147,16 @@ struct ScalingHeaderView: View {
                 Text("보관함")
                     .font(Font.Halmap.CustomLargeTitle)
                 Spacer()
-                Button {
-                    print("전체 재생")
-                } label: {
-                    Image(systemName: "play.circle.fill")
-                        .foregroundColor(.mainGreen)
-                        .font(.system(size: 50))
+                if collectedSongs.count > 0 {
+                    Button {
+                        //TODO: 첫번째 곡 재생 -> SongDetailView song
+                        persistence.fetchPlaylistAll()
+                        self.currentSongId = collectedSongs.first!.safeId
+                    } label: {
+                        Image(systemName: "play.circle.fill")
+                            .foregroundColor(.mainGreen)
+                            .font(.system(size: 50))
+                    }
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))

@@ -77,6 +77,22 @@ struct PersistenceController {
         }
     }
     
+    private func saveSongs(song: CollectedSong, playListTitle: String, order: Int64) {
+        let context = container.viewContext
+        let collectedSong = CollectedSong(context: context)
+        
+        collectedSong.id = song.id
+        collectedSong.title = song.title
+        collectedSong.info = song.info
+        collectedSong.lyrics = song.lyrics
+        collectedSong.url = song.url
+        collectedSong.type = song.type
+        collectedSong.playListTitle = playListTitle
+        collectedSong.team = song.team
+        collectedSong.date = Date()
+        collectedSong.order = order
+    }
+    
     func saveSongs(collectedSong: CollectedSong, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
         let context = container.viewContext
         var order = Int64(collectedSongs.count)
@@ -101,10 +117,6 @@ struct PersistenceController {
                 break
             }
         }
-        
-//        collectedSong.playListTitle = playListTitle
-//        collectedSong.date = Date()
-//        collectedSong.order = order
         
         if context.hasChanges {
             do {
@@ -145,6 +157,41 @@ struct PersistenceController {
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
+    func fetchPlaylistAll() {
+        let fetchRequest = CollectedSong.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)]
+        fetchRequest.predicate = PlaylistFilter(filter: "defaultPlaylist").predicate
+        
+        do {
+            let old = try container.viewContext.fetch(fetchRequest)
+            
+            for song in old {
+                container.viewContext.delete(song)
+            }
+            
+            try container.viewContext.save()
+        } catch {
+            print("Failed to fetch and delete songs: \(error)")
+        }
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)]
+        fetchRequest.predicate = PlaylistFilter(filter: "favorite").predicate
+        
+        do {
+            let new = try container.viewContext.fetch(fetchRequest)
+            
+            var order = 0
+            for song in new {
+                print("***", song.safeTitle, order)
+                saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(order))
+                order += 1
+            }
+            try container.viewContext.save()
+        } catch {
+            print("Failed to fetch and delete songs: \(error)")
         }
     }
     

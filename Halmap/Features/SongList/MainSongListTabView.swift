@@ -86,10 +86,12 @@ struct MainSongListTabView: View {
                                 }
                                 
                                 if let selectedSong {
-                                    NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager,
-                                                                                                              dataManager: dataManager,
-                                                                                                              persistence: persistence,
-                                                                                                              song: selectedSong)),
+                                    NavigationLink(destination:
+                                                    SongDetailView(viewModel: SongDetailViewModel(
+                                                        audioManager: audioManager,
+                                                        dataManager: dataManager,
+                                                        persistence: persistence,
+                                                        song: selectedSong)),
                                                    isActive: $isActiveNavigatioinLink) {
                                         EmptyView()
                                     }
@@ -160,7 +162,6 @@ struct MainSongListTabView: View {
                                         .background(Color.white.opacity(0.001))
                                         .onTapGesture {
                                             collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
-                                            selectedSong = songInfo
                                             isShowingHalfSheet.toggle()
                                         }
                                 }
@@ -170,15 +171,20 @@ struct MainSongListTabView: View {
                                     isActiveNavigatioinLink.toggle()
                                 }
                                 
-                                NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager,
-                                                                                                          dataManager: dataManager,
-                                                                                                          persistence: persistence,
-                                                                                                          song: songInfo)),
-                                               isActive: $isActiveNavigatioinLink) {
-                                    EmptyView()
+                                if let selectedSong {
+                                    NavigationLink(destination:
+                                                    SongDetailView(viewModel: SongDetailViewModel(
+                                                        audioManager: audioManager,
+                                                        dataManager: dataManager,
+                                                        persistence: persistence,
+                                                        song: selectedSong)),
+                                                   isActive: $isActiveNavigatioinLink) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
+                                    .disabled(true)
                                 }
-                                .opacity(0)
-                                .disabled(true)
+                                
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
