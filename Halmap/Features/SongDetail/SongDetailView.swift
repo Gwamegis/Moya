@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import AVFoundation
+import MediaPlayer
 
 struct SongDetailView: View {
 
@@ -63,6 +64,7 @@ struct SongDetailView: View {
         }
         .onAppear() {
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+            setMediaPlayerNextTrack()
         }
         .onChange(of: viewModel.song.id) { _ in
             if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
@@ -95,6 +97,31 @@ struct SongDetailView: View {
                 }
             })
         }.padding(20)
+    }
+    
+    private func setMediaPlayerNextTrack() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.nextTrackCommand.addTarget { _ in
+            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                if index + 1 > defaultPlaylistSongs.count - 1 {
+                    toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
+                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                } else {
+                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
+                }
+            }
+            return .success
+        }
+        commandCenter.previousTrackCommand.addTarget { _ in
+            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                if index - 1 < 0 {
+                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.last!)
+                } else {
+                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index - 1])
+                }
+            }
+            return .success
+        }
     }
 }
 

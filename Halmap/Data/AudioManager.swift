@@ -16,9 +16,7 @@ final class AudioManager: NSObject, ObservableObject {
     var item: AVPlayerItem?
     
     @Published private(set) var isPlaying: Bool = false
-    @Published var currentIndex: Int = 0 //현재 재생중인 곡 index
-    
-    var song: SongInfo?
+    @Published var song: SongInfo?
     private var playerItemContext = 0
     
     override init() {
@@ -131,7 +129,6 @@ final class AudioManager: NSObject, ObservableObject {
         player.replaceCurrentItem(with: nil)
         NotificationCenter.default.removeObserver(self)
     }
-    
     deinit {
         player.replaceCurrentItem(with: nil)
         self.item?.removeObserver(self as NSObject,
@@ -187,16 +184,6 @@ extension AudioManager {
                 return .success
             }
             return .commandFailed
-        }
-        
-        commandCenter.nextTrackCommand.addTarget { [unowned self] event in
-            print("다음 \(currentIndex+1)")
-            return .success
-        }
-        
-        commandCenter.previousTrackCommand.addTarget { [unowned self] event in
-            print("이전 \(currentIndex-1)")
-            return .success
         }
         
         commandCenter.changePlaybackPositionCommand.addTarget { [unowned self] event in
