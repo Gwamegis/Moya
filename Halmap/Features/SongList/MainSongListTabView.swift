@@ -18,6 +18,7 @@ struct MainSongListTabView: View {
     @State private var isShowingHalfSheet: Bool = false
     @State private var isActiveNavigatioinLink: Bool = false
     @State private var selectedSong: SongInfo?
+    @State var collectedSong: CollectedSong?
     
     let persistence = PersistenceController.shared
 
@@ -75,11 +76,13 @@ struct MainSongListTabView: View {
 
                                     Image(systemName: "ellipsis")
                                         .foregroundColor(.customDarkGray)
+                                        .frame(maxWidth: 35, maxHeight: .infinity)
+                                        .background(Color.white.opacity(0.001))
                                         .onTapGesture {
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
                                             selectedSong = songInfo
                                             isShowingHalfSheet.toggle()
                                         }
-                                        .frame(width: 35, height: 35)
                                 }
                                 
                                 if let selectedSong {
@@ -112,12 +115,9 @@ struct MainSongListTabView: View {
                             .listRowSeparatorTint(Color.customGray)
                     }
                     .sheet(isPresented: $isShowingHalfSheet) {
-                        if let selectedSong {
-                            HalfSheet {
-                                HalfSheetView(collectedSong: CollectedSong(context: viewContext),
-                                              songInfo: selectedSong,
-                                              team: selectedTeam,
-                                              showSheet: $isShowingHalfSheet)
+                        if let collectedSong {
+                            HalfSheet{
+                                HalfSheetView(collectedSongData: collectedSong, showSheet: $isShowingHalfSheet)
                             }
                         }
                     }
@@ -156,11 +156,13 @@ struct MainSongListTabView: View {
 
                                     Image(systemName: "ellipsis")
                                         .foregroundColor(.customDarkGray)
+                                        .frame(maxWidth: 35, maxHeight: .infinity)
+                                        .background(Color.white.opacity(0.001))
                                         .onTapGesture {
+                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
                                             selectedSong = songInfo
                                             isShowingHalfSheet.toggle()
                                         }
-                                        .frame(width: 35, height: 35)
                                 }
                                 
                                 .onTapGesture {

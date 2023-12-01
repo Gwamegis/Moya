@@ -77,4 +77,7 @@ final class SongStorageViewModel: ObservableObject {
         isDraged ? (59 + topEdge) : maxHeight + offset
     }
     
+    func checkScrollRequirement(listCount: Int) -> Double{
+        UIScreen.screenHeight - (59 + topEdge) - CGFloat(75 * listCount) <= 0 && self.isDraged ? 1 : 0
+    }
 }

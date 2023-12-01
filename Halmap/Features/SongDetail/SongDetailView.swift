@@ -17,6 +17,7 @@ struct SongDetailView: View {
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
+    @AppStorage("currentSongId") var currentSongId: String = ""
     @State var isPlaylistView = false
     @State private var toast: Toast? = nil
 
@@ -63,10 +64,12 @@ struct SongDetailView: View {
             }
         }
         .onAppear() {
+            self.currentSongId = viewModel.song.id
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
             setMediaPlayerNextTrack()
         }
         .onChange(of: viewModel.song.id) { _ in
+            self.currentSongId = viewModel.song.id
             if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
                 self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
                 self.viewModel.getAudioManager().AMset(song: self.viewModel.song)

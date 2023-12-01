@@ -8,24 +8,29 @@
 import SwiftUI
 
 struct HalfSheetView: View {
+    @EnvironmentObject var dataManager: DataManager
     @Environment(\.managedObjectContext) var managedObjectContext
-    let persistence = PersistenceController.shared
-    @ObservedObject var collectedSong: CollectedSong
-    @State var songInfo: SongInfo
-    var team: String
+    @State var collectedSongData: CollectedSong
     @Binding var showSheet: Bool
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
+        predicate: PlaylistFilter(filter: "favorite").predicate,
+        animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
-                Image("\(songInfo.team)SongListImage")
+                Image(Utility.getAlbumImage(with: collectedSongData, seasonSongs: dataManager.seasonSongs))
+                    .resizable()
+                    .cornerRadius(10)
                     .frame(width: 52, height: 52)
                     .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(songInfo.title )
+                    Text(collectedSongData.safeTitle)
                         .font(Font.Halmap.CustomBodyBold)
                         .foregroundColor(.customBlack)
-                    Text(TeamName(rawValue: team )?.fetchTeamNameKr() ?? ".")
+                    Text(TeamName(rawValue: collectedSongData.safeTeam)?.fetchTeamNameKr() ?? ".")
                         .font(Font.Halmap.CustomCaptionMedium)
                         .foregroundColor(.customDarkGray)
                 }
@@ -36,10 +41,15 @@ struct HalfSheetView: View {
             Divider()
                 .overlay(Color.customGray.opacity(0.6))
                 .padding(EdgeInsets(top: 20, leading: 0, bottom: 29, trailing: 0))
-            MenuItem(menuType: .cancelLiked, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playNext, collectedSong: collectedSong, showSheet: $showSheet)
-            MenuItem(menuType: .playLast, collectedSong: collectedSong, showSheet: $showSheet)
+            if let index = favoriteSongs.firstIndex(where: { $0.id == collectedSongData.id}) {
+                MenuItem(menuType: .cancelLiked, collectedSong: favoriteSongs[index], showSheet: $showSheet)
+            } else {
+                MenuItem(menuType: .liked, collectedSong: collectedSongData, showSheet: $showSheet)
+            }
+            MenuItem(menuType: .playNext, collectedSong: collectedSongData, showSheet: $showSheet)
+            MenuItem(menuType: .playLast, collectedSong: collectedSongData, showSheet: $showSheet)
             Spacer()
+
         }
     }
 }
@@ -48,10 +58,11 @@ struct MenuItem: View {
     let menuType: MenuType
     @ObservedObject var collectedSong: CollectedSong
     @Binding var showSheet: Bool
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlaylistFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     var body: some View {
         Button {
-            menuType.fetchFunction(collectedSong: collectedSong)
+            menuType.fetchFunction(collectedSong: collectedSong, playlists: collectedSongs)
             showSheet.toggle()
         } label: {
             HStack(spacing: 24) {
@@ -69,12 +80,15 @@ struct MenuItem: View {
 }
 
 enum MenuType {
+    case liked
     case cancelLiked
     case playNext
     case playLast
     
     func fetchMenuTitle() -> String {
         switch self {
+        case .liked:
+            return "좋아요"
         case .cancelLiked:
             return "좋아요 취소"
         case .playNext:
@@ -85,6 +99,8 @@ enum MenuType {
     }
     func fetchImage() -> String {
         switch self {
+        case .liked:
+            return "heart"
         case .cancelLiked:
             return "heart.slash.fill"
         case .playNext:
@@ -94,9 +110,11 @@ enum MenuType {
         }
     }
     
-    func fetchFunction(collectedSong: CollectedSong) {
+    func fetchFunction(collectedSong: CollectedSong, playlists: FetchedResults<CollectedSong>) {
         let persistence = PersistenceController.shared
         switch self {
+        case .liked:
+            return persistence.saveSongs(song: Utility.convertSongToSongInfo(song: collectedSong), playListTitle: "favorite")
         case .cancelLiked:
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:

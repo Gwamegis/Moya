@@ -77,29 +77,34 @@ struct PersistenceController {
         }
     }
     
-    func saveSongs(song: SongInfo, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
+    func saveSongs(collectedSong: CollectedSong, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
         let context = container.viewContext
-        let collectedSong = CollectedSong(context: context)
+        var order = Int64(collectedSongs.count)
         
-        switch menuType {
-        case .cancelLiked:
-            break
-        case .playNext:
-            // TODO: 현재 곡 다음순서로 넣는 로직 필요
-            collectedSong.order = Int64(collectedSongs.count)
-        case .playLast:
-            collectedSong.order = Int64(collectedSongs.count)
+        if let currentIndex = collectedSongs.firstIndex(where: {$0.id == UserDefaults.standard.string(forKey: "currentSongId")}) {
+            switch menuType {
+            case .playNext:
+                if let index = collectedSongs.firstIndex(where: { $0.id == collectedSong.id }) {
+                    
+                } else {
+                    
+                }
+                
+                break
+            case .playLast:
+                if let index = collectedSongs.firstIndex(where: { $0.id == collectedSong.id }) {
+                    
+                }
+                break
+            default:
+                resetBufferList(song: collectedSong)
+                break
+            }
         }
         
-        collectedSong.id = song.id
-        collectedSong.title = song.title
-        collectedSong.info = song.info
-        collectedSong.lyrics = song.lyrics
-        collectedSong.url = song.url
-        collectedSong.type = song.type
-        collectedSong.playListTitle = playListTitle
-        collectedSong.team = song.team
-        collectedSong.date = Date()
+//        collectedSong.playListTitle = playListTitle
+//        collectedSong.date = Date()
+//        collectedSong.order = order
         
         if context.hasChanges {
             do {

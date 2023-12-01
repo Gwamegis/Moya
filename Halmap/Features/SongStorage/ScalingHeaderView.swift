@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ScalingHeaderView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
@@ -15,6 +16,8 @@ struct ScalingHeaderView: View {
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlaylistFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
     @StateObject var viewModel: SongStorageViewModel
+    @State var collectedSongData: CollectedSong?
+    @State var isShowSheet = false
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -33,6 +36,19 @@ struct ScalingHeaderView: View {
                                 .font(Font.Halmap.CustomCaptionBold)
                                 .foregroundColor(.customDarkGray)
                             Spacer()
+                            Button {
+                                print("전체 재생하기")
+                            } label: {
+                                HStack(spacing: 5) {
+                                    Image(systemName: "play.circle.fill")
+                                        .foregroundColor(.mainGreen)
+                                        .font(.system(size: 20))
+                                    Text("전체 재생하기")
+                                        .font(Font.Halmap.CustomCaptionBold)
+                                        .foregroundColor(.mainGreen)
+                                }
+                                .opacity(viewModel.checkScrollRequirement(listCount: collectedSongs.count))
+                            }
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, UIScreen.getHeight(17))
@@ -82,12 +98,14 @@ struct ScalingHeaderView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
-                                        
+                                            
                                         Button {
-                                            viewModel.deleteSong(favoriteSong: favoriteSong)
+                                            self.collectedSongData = favoriteSong
+                                            isShowSheet.toggle()
                                         } label: {
-                                            Image(systemName: "heart.fill")
-                                                .foregroundColor(.mainGreen)
+                                            Image(systemName: "ellipsis")
+                                                .foregroundColor(.customDarkGray)
+                                                .frame(maxWidth: 35, maxHeight: .infinity)
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -106,6 +124,13 @@ struct ScalingHeaderView: View {
         }
         .coordinateSpace(name: "StorageScroll")
         .background(Color.systemBackground)
+        .sheet(isPresented: $isShowSheet) {
+            if let collectedSongData {
+                HalfSheet {
+                    HalfSheetView(collectedSongData: collectedSongData, showSheet: $isShowSheet)
+                }
+            }
+        }
     }
     
     var defaultHeader: some View {
@@ -116,6 +141,13 @@ struct ScalingHeaderView: View {
                 Text("보관함")
                     .font(Font.Halmap.CustomLargeTitle)
                 Spacer()
+                Button {
+                    print("전체 재생")
+                } label: {
+                    Image(systemName: "play.circle.fill")
+                        .foregroundColor(.mainGreen)
+                        .font(.system(size: 50))
+                }
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }

@@ -14,7 +14,7 @@ class HalfSheetController<Content>: UIHostingController<Content> where Content :
         
         if let presentation = sheetPresentationController {
             presentation.detents = [.medium()]
-            presentation.prefersGrabberVisible = false
+            presentation.prefersGrabberVisible = true
             presentation.largestUndimmedDetentIdentifier = .none
         }
     }
