@@ -12,7 +12,12 @@ struct MainSongListTabView: View {
     @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject var viewModel = MainSongListTabViewModel()
+    
+    @State private var isShowingHalfSheet: Bool = false
+    @State private var isActiveNavigatioinLink: Bool = false
+    @State private var selectedSong: SongInfo?
     
     let persistence = PersistenceController.shared
 
@@ -47,15 +52,17 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
+                            ZStack {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
-                                    VStack(alignment: .leading, spacing: 6){
+                                    
+                                    VStack(alignment: .leading, spacing: 6) {
                                         Text(song.title)
                                             .font(Font.Halmap.CustomBodyMedium)
+                                        
                                         if !song.info.isEmpty {
                                             Text(song.info)
                                                 .font(Font.Halmap.CustomCaptionMedium)
@@ -64,16 +71,55 @@ struct MainSongListTabView: View {
                                     }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
+                                    Spacer()
+
+                                    Image(systemName: "ellipsis")
+                                        .foregroundColor(.customDarkGray)
+                                        .onTapGesture {
+                                            selectedSong = songInfo
+                                            isShowingHalfSheet.toggle()
+                                        }
+                                        .frame(width: 35, height: 35)
                                 }
+                                
+                                if let selectedSong {
+                                    NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager,
+                                                                                                              dataManager: dataManager,
+                                                                                                              persistence: persistence,
+                                                                                                              song: selectedSong)),
+                                                   isActive: $isActiveNavigatioinLink) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
+                                    .disabled(true)
+                                }
+
                             }
+                            .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                            
+                            .listRowBackground(Color.systemBackground)
+                            .listRowSeparatorTint(Color.customGray)
+                            .background(Color.systemBackground)
+                            .onTapGesture {
+                                selectedSong = songInfo
+                                isActiveNavigatioinLink.toggle()
+                            }
+                            
                         }
-                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                        .listRowBackground(Color.systemBackground)
-                        .listRowSeparatorTint(Color.customGray)
                         RequestSongView(buttonColor: Color.HalmacPoint)
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
+                    }
+                    .sheet(isPresented: $isShowingHalfSheet) {
+                        if let selectedSong {
+                            HalfSheet {
+                                HalfSheetView(collectedSong: CollectedSong(context: viewContext),
+                                              songInfo: selectedSong,
+                                              team: selectedTeam,
+                                              showSheet: $isShowingHalfSheet)
+                            }
+                        }
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -89,7 +135,7 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
+                            ZStack {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getPlayerImage(for: songInfo))
                                         .resizable()
@@ -106,7 +152,31 @@ struct MainSongListTabView: View {
                                     }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
+                                    Spacer()
+
+                                    Image(systemName: "ellipsis")
+                                        .foregroundColor(.customDarkGray)
+                                        .onTapGesture {
+                                            selectedSong = songInfo
+                                            isShowingHalfSheet.toggle()
+                                        }
+                                        .frame(width: 35, height: 35)
                                 }
+                                
+                                .onTapGesture {
+                                    selectedSong = songInfo
+                                    isActiveNavigatioinLink.toggle()
+                                }
+                                
+                                NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager,
+                                                                                                          dataManager: dataManager,
+                                                                                                          persistence: persistence,
+                                                                                                          song: songInfo)),
+                                               isActive: $isActiveNavigatioinLink) {
+                                    EmptyView()
+                                }
+                                .opacity(0)
+                                .disabled(true)
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
