@@ -30,7 +30,6 @@ struct SongDetailView: View {
                         viewModel: PlaylistViewModel(viewModel: viewModel), 
                         song: $viewModel.song,
                         isScrolled: $viewModel.isScrolled,
-                        currentIndex: $viewModel.currentIndex,
                         isPlaying: $viewModel.isPlaying)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
@@ -65,9 +64,9 @@ struct SongDetailView: View {
         .onAppear() {
             viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
         }
-        .onReceive(viewModel.$currentIndex) { output in
-            if output >= 0 {
-                self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[self.viewModel.currentIndex])
+        .onChange(of: viewModel.song.id) { _ in
+            if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
+                self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
                 self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
             }
         }
@@ -154,7 +153,6 @@ private struct PlayBar: View {
     var body: some View {
         VStack(spacing: 0) {
             Progressbar(
-                currentIndex: $viewModel.currentIndex, 
                 song: $viewModel.song, 
                 toast: $toast,
                 isThumbActive: true)
@@ -163,9 +161,9 @@ private struct PlayBar: View {
                     //이전곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index - 1 < 0 {
-                            viewModel.currentIndex = defaultPlaylistSongs.count - 1
+                            viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.last!)
                         } else {
-                            viewModel.currentIndex = index - 1
+                            viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index - 1])
                         }
                     }
                 } label: {
@@ -185,9 +183,9 @@ private struct PlayBar: View {
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
                             toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
-                            viewModel.currentIndex = 0
+                            viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
                         } else {
-                            viewModel.currentIndex = index + 1
+                            viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
                         }
                     }
                 } label: {
@@ -218,7 +216,6 @@ private struct FavoriteButton: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
         predicate: PlaylistFilter(filter: "favorite").predicate,
         animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
-    @AppStorage("currentSongId") var currentSongId: String = ""
 
     var body: some View {
         Button {
@@ -228,13 +225,11 @@ private struct FavoriteButton: View {
                 .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
         }
         .onAppear() {
-            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             }
         }
         .onChange(of: viewModel.song.id) { _ in
-            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             } else {

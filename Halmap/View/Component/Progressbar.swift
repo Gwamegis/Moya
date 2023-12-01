@@ -12,14 +12,12 @@ struct Progressbar: View {
     @EnvironmentObject var audioManager: AudioManager
     
     @Binding var song: SongInfo
-    @Binding var currentIndex: Int
     @Binding var toast: Toast?
     
     let isThumbActive: Bool
     
-    init(currentIndex: Binding<Int>, song: Binding<SongInfo>, toast: Binding<Toast?>, isThumbActive: Bool) {
+    init(song: Binding<SongInfo>, toast: Binding<Toast?>, isThumbActive: Bool) {
         self.isThumbActive = isThumbActive
-        self._currentIndex = currentIndex
         self._song = song
         self._toast = toast
         UISlider.appearance().maximumTrackTintColor = UIColor(Color.customGray.opacity(0.2))
@@ -31,8 +29,7 @@ struct Progressbar: View {
                                     timeObserver: PlayerTimeObserver(player: audioManager.player),
                                     durationObserver: PlayerDurationObserver(player: audioManager.player),
                                     itemObserver: PlayerItemObserver(player: audioManager.player),
-                                    isThumbActive: isThumbActive, 
-                                    currentIndex: $currentIndex,
+                                    isThumbActive: isThumbActive,
                                     song: $song,
                                     toast: $toast)
             
@@ -61,7 +58,6 @@ struct AudioPlayerControlsView: View {
     @State private var currentDuration: TimeInterval = 0
     @State private var state = PlaybackState.pause
     
-    @Binding var currentIndex: Int
     @Binding var song: SongInfo
     @Binding var toast: Toast?
     
@@ -98,9 +94,9 @@ struct AudioPlayerControlsView: View {
                 if self.state == .pause {
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == song.id}) {
                         if index + 1 < defaultPlaylistSongs.count {
-                            currentIndex = Int(defaultPlaylistSongs[index].order + 1)
+                            self.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[Int(defaultPlaylistSongs[index].order + 1)])
                         } else {
-                            currentIndex = 0
+                            self.song =  Utility.convertSongToSongInfo(song: defaultPlaylistSongs[0])
                             toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
                         }
                     }

@@ -17,7 +17,6 @@ final class SongDetailViewModel: ObservableObject {
     @Published var isFavorite = false
     @Published var isPlaying = false
     
-    @Published var currentIndex = -1
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -65,10 +64,8 @@ final class SongDetailViewModel: ObservableObject {
     func addDefaultPlaylist(defaultPlaylistSongs: FetchedResults<CollectedSong>) {
         if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == self.song.id}) {
             persistence.reorderSelectedSong(index: index, results: defaultPlaylistSongs)
-            self.currentIndex = defaultPlaylistSongs.count - 1
         } else {
             persistence.saveSongs(song: song, playListTitle: "defaultPlaylist", order: Int64(defaultPlaylistSongs.count))
-            self.currentIndex = defaultPlaylistSongs.count
         }
     }
     

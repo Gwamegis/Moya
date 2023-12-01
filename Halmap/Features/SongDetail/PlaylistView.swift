@@ -9,11 +9,9 @@ import Lottie
 
 struct PlaylistView: View {
 
-    @AppStorage("currentSongId") var currentSongId: String = ""
     @StateObject var viewModel: PlaylistViewModel
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
-    @Binding var currentIndex: Int
     @Binding var isPlaying: Bool
 
     let persistence = PersistenceController.shared
@@ -28,7 +26,6 @@ struct PlaylistView: View {
                             .background(Color.white.opacity(0.001))
                             .onTapGesture {
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
-                                self.currentIndex = Int(playListSong.order)
                             }
                     }.onDelete { indexSet in
                         for index in indexSet {
@@ -40,9 +37,9 @@ struct PlaylistView: View {
                                 if let songIndex = collectedSongs.firstIndex(where: {$0.id == song.id}) {
                                     if collectedSongs[songIndex].order == index {
                                         if index + 1 < collectedSongs.count {
-                                            currentIndex = Int(collectedSongs[songIndex].order)
+                                            self.song = Utility.convertSongToSongInfo(song: collectedSongs[Int(collectedSongs[songIndex].order + 1)])
                                         } else {
-                                            currentIndex = 0
+                                            self.song = Utility.convertSongToSongInfo(song: collectedSongs[0])
                                         }
                                     }
                                 }
@@ -86,7 +83,7 @@ struct PlaylistView: View {
     @ViewBuilder
     private func getPlaylistRowView(song: CollectedSong) -> some View {
         HStack{
-            if currentSongId == song.id {
+            if self.song.id == song.id {
                 LottieView(animation: .named("waveform"))
                     .playing(loopMode: .loop)
                     .configure({ lottie in
@@ -121,7 +118,7 @@ struct PlaylistView: View {
         }
         .padding(.horizontal, 40)
         .frame(height: 70)
-        .background(currentSongId == song.id ? Color.white.opacity(0.2) : Color.clear)
+        .background(self.song.id == song.id ? Color.white.opacity(0.2) : Color.clear)
     }
 
     private struct ViewOffsetKey: PreferenceKey {
@@ -144,7 +141,3 @@ struct ListBackgroundModifier: ViewModifier {
         }
     }
 }
-
-//#Preview {
-//    PlaylistView(song: .constant(SongInfo(id: "",team: "NC", type: false, title: "test", lyrics: "test", info: "test", url: "test")), isScrolled: .constant(false))
-//}

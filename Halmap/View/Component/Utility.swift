@@ -26,4 +26,16 @@ class Utility: NSObject {
         return text
     }
     
+    static func convertSongToSongInfo(song: CollectedSong) -> SongInfo {
+        SongInfo(
+            id: song.id ?? "",
+            team: song.team ?? "",
+            type: song.type,
+            title: song.title ?? "",
+            lyrics: song.lyrics ?? "",
+            info: song.info ?? "",
+            url: song.url ?? ""
+        )
+    }
+    
 }
