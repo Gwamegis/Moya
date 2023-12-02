@@ -12,9 +12,9 @@ struct PersistenceController {
     @AppStorage("selectedTeam") var selectedTeam = ""
     
     static let shared = PersistenceController()
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "Halmap")
         if inMemory {
@@ -120,27 +120,62 @@ struct PersistenceController {
     
     func saveSongs(collectedSong: CollectedSong, playListTitle: String?, menuType: MenuType, collectedSongs: FetchedResults<CollectedSong>) {
         let context = container.viewContext
-        var order = Int64(collectedSongs.count)
+        let count = collectedSongs.count
         
-        if let currentIndex = collectedSongs.firstIndex(where: {$0.id == UserDefaults.standard.string(forKey: "currentSongId")}) {
-            switch menuType {
-            case .playNext:
+        switch menuType {
+        case .playNext:
+            if let currentIndex = collectedSongs.firstIndex(where: {$0.id == UserDefaults.standard.string(forKey: "currentSongId")}) {
                 if let index = collectedSongs.firstIndex(where: { $0.id == collectedSong.id }) {
-                    
+                    if index < currentIndex {
+                        var startOrder = collectedSongs[index].order
+                        for i in index+1...currentIndex {
+                            print(collectedSongs[i].safeTitle, collectedSongs[i].order, startOrder)
+                            collectedSongs[i].order = startOrder
+                            startOrder += 1
+                        }
+                        collectedSongs[index].order = startOrder
+                    } else if index > currentIndex {
+                        let newOrder = collectedSongs[currentIndex+1].order
+                        var startOrder = collectedSongs[currentIndex+1].order+1
+                        for i in currentIndex+1..<index {
+                            print(collectedSongs[i].safeTitle, collectedSongs[i].order, startOrder)
+                            collectedSongs[i].order = startOrder
+                            startOrder += 1
+                        }
+                        collectedSongs[index].order = newOrder
+                    }
+                    resetBufferList(song: collectedSong)
                 } else {
+                    //새로운 곡을 바로 다음에 추가
+                    for i in currentIndex+1..<count {
+                        print(collectedSongs[i].safeTitle)
+                        collectedSongs[i].order += 1
+                    }
                     
+                    collectedSong.playListTitle = playListTitle
+                    collectedSong.date = Date()
+                    collectedSong.order = Int64(currentIndex + 1)
                 }
-                
-                break
-            case .playLast:
-                if let index = collectedSongs.firstIndex(where: { $0.id == collectedSong.id }) {
-                    
-                }
-                break
-            default:
-                resetBufferList(song: collectedSong)
-                break
             }
+            break
+        case .playLast:
+            if let index = collectedSongs.firstIndex(where: { $0.id == collectedSong.id }) {
+                var startOrder = collectedSongs[index].order
+                for i in index+1..<count {
+                    collectedSongs[i].order = startOrder
+                    startOrder += 1
+                }
+                collectedSongs[index].order = startOrder
+                resetBufferList(song: collectedSong)
+            } else {
+                collectedSong.playListTitle = playListTitle
+                collectedSong.date = Date()
+                collectedSong.order = Int64(count)
+            }
+            break
+        default:
+            resetBufferList(song: collectedSong)
+            break
         }
         
         if context.hasChanges {

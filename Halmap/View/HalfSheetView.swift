@@ -119,10 +119,10 @@ enum MenuType {
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:
             //TODO: 바로 다음에 재생 기능 추가
-            return (print("play next"))
+            return persistence.saveSongs(collectedSong: collectedSong, playListTitle: "defaultPlaylist", menuType: .playNext, collectedSongs: playlists)
         case .playLast:
             //TODO: 맨 마지막에 재생 기능 추가
-            return (print("play last"))
+            return persistence.saveSongs(collectedSong: collectedSong, playListTitle: "defaultPlaylist", menuType: .playLast, collectedSongs: playlists)
         }
     }
 }
