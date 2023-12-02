@@ -10,6 +10,7 @@ import SwiftUI
 struct MainSongListTabView: View {
     
     @AppStorage("selectedTeam") var selectedTeam: String = "Hanwha"
+    @AppStorage("currentSongId") var currentSongId: String = ""
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     @Environment(\.managedObjectContext) private var viewContext
@@ -34,9 +35,24 @@ struct MainSongListTabView: View {
                         .font(Font.Halmap.CustomCaptionBold)
                         .foregroundColor(.customDarkGray)
                     Spacer()
+                    Button {
+                        let currentSongs = viewModel.index == 0 ? dataManager.teamSongs : dataManager.playerSongs
+                        persistence.fetchPlaylistAllMain(newSongs: currentSongs)
+                        currentSongId = currentSongs.first!.id
+                        
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: "play.circle.fill")
+                                .foregroundColor(.HalmacPoint)
+                                .font(.system(size: 20))
+                            Text("전체 재생하기")
+                                .font(Font.Halmap.CustomCaptionBold)
+                                .foregroundColor(.HalmacPoint)
+                        }
+                    }
                 }
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 15, trailing: 20))
-                .padding(.top, UIScreen.getHeight(27))
+                .padding(.top, UIScreen.getHeight(48))
                 
                 Divider()
                     .overlay(Color.customGray.opacity(0.6))

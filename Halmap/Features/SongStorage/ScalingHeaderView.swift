@@ -40,7 +40,6 @@ struct ScalingHeaderView: View {
                             Spacer()
                             if collectedSongs.count > 0 {
                                 Button {
-                                    print("전체 재생하기")
                                     persistence.fetchPlaylistAll()
                                     currentSongId = collectedSongs.first!.safeId
                                 } label: {
