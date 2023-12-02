@@ -94,7 +94,7 @@ struct ScalingHeaderView: View {
                                             .resizable()
                                             .frame(width: 40, height: 40)
                                             .cornerRadius(8)
-                                        VStack(alignment: .leading, spacing: 8) {
+                                        VStack(alignment: .leading, spacing: 6) {
                                             Text(favoriteSong.safeTitle)
                                                 .font(Font.Halmap.CustomBodyMedium)
                                                 .foregroundColor(.black)
@@ -115,7 +115,7 @@ struct ScalingHeaderView: View {
                                         }
                                     }
                                     .padding(.horizontal, 20)
-                                    .padding(.vertical, 10)
+                                    .padding(.vertical, 15)
                                 }
                             }
                             .background(Color.systemBackground)
