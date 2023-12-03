@@ -16,6 +16,7 @@ struct SongSearchView: View {
     @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
     @FocusState private var isFocused: Bool
     @Binding var songInfo: SongInfo
+    @Binding var miniplayerPadding: CGFloat
 
     var body: some View {
 

@@ -20,6 +20,7 @@ struct MainTabView: View {
     @GestureState var gestureOffset: CGFloat = 0
     @State var songInfo = SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")
     let persistence = PersistenceController.shared
+    @State var miniplayerPadding: CGFloat = 0
 
     init() {
         Color.setColor(selectedTeam)
@@ -33,7 +34,7 @@ struct MainTabView: View {
                         case .home:
                             MainSongListTabView(viewModel: mainSongListTabViewModel, miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                         case .search:
-                            SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager), miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
+                            SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager), miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo, miniplayerPadding: $miniplayerPadding)
                         case .storage:
                             StorageContentView(miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                     }
@@ -73,6 +74,7 @@ struct MainTabView: View {
                         })
                         .onEnded(onEnd(value:)))
                         .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
+                        .ignoresSafeArea(.keyboard)
                 }
             }
             .onChange(of: gestureOffset, perform: { value in
