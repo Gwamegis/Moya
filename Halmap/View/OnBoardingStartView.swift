@@ -13,8 +13,9 @@ struct OnBoardingStartView: View {
     @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
     @AppStorage("isShouldShowTraffic") var isShouldShowTraffic = false
     @AppStorage("latestVersion") var latestVersion = "1.0.0"
-    
+    @Namespace var animation
     @EnvironmentObject var dataManager: DataManager
+    
     var body: some View {
         if !isFirstLaunching {
             ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in

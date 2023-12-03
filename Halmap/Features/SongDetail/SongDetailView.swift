@@ -64,7 +64,10 @@ struct SongDetailView: View {
             self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
         }
     }
-    
+//
+//    private func playSong() {
+//
+//    }
     @ViewBuilder
     private func gradientRectangle(isTop: Bool) -> some View {
         Rectangle()

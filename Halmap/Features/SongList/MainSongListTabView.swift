@@ -14,6 +14,8 @@ struct MainSongListTabView: View {
     @EnvironmentObject var audioManager: AudioManager
     @ObservedObject var viewModel: MainSongListTabViewModel
     @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
+    @Binding var songInfo: SongInfo
+    
     let persistence = PersistenceController.shared
 
     var body: some View {
@@ -46,18 +48,16 @@ struct MainSongListTabView: View {
                                                     lyrics: song.lyrics,
                                                     info: song.info,
                                                     url: song.url)
-                            
                             Button(action: {
+                                SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
+                                self.songInfo = songInfo
+                                SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
                                 withAnimation{
                                     miniPlayerViewModel.showPlayer = true
                                     miniPlayerViewModel.hideTabBar = true
                                     miniPlayerViewModel.isMiniPlayerActivate = false
                                 }
                             }, label: {
-                                Text("TestButton")
-                            })
-                            
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
@@ -75,7 +75,27 @@ struct MainSongListTabView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
                                 }
-                            }
+                            })
+                            
+//                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
+//                                HStack(spacing: 16) {
+//                                    Image(viewModel.getSongImage(for: songInfo))
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                        .cornerRadius(8)
+//                                    VStack(alignment: .leading, spacing: 6){
+//                                        Text(song.title)
+//                                            .font(Font.Halmap.CustomBodyMedium)
+//                                        if !song.info.isEmpty {
+//                                            Text(song.info)
+//                                                .font(Font.Halmap.CustomCaptionMedium)
+//                                                .foregroundColor(.customDarkGray)
+//                                        }
+//                                    }
+//                                    .frame(maxWidth: .infinity, alignment: .leading)
+//                                    .lineLimit(1)
+//                                }
+//                            }
                             
                             
                         }
@@ -174,6 +194,6 @@ struct MainSongListTabView: View {
 
 struct MainSongListTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainSongListTabView(viewModel: MainSongListTabViewModel(), miniPlayerViewModel: MiniPlayerViewModel())
+        MainSongListTabView(viewModel: MainSongListTabViewModel(), miniPlayerViewModel: MiniPlayerViewModel(), songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "",info: "", url: "")))
     }
 }

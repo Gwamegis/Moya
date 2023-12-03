@@ -18,7 +18,7 @@ struct MainTabView: View {
     
     @StateObject var miniPlayerViewModel = MiniPlayerViewModel()
     @GestureState var gestureOffset: CGFloat = 0
-    
+    @State var songInfo = SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")
     let persistence = PersistenceController.shared
 
     init() {
@@ -31,7 +31,7 @@ struct MainTabView: View {
                 VStack(spacing: 0) {
                     switch viewModel.state {
                         case .home:
-                            MainSongListTabView(viewModel: mainSongListTabViewModel, miniPlayerViewModel: miniPlayerViewModel)
+                            MainSongListTabView(viewModel: mainSongListTabViewModel, miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                         case .search:
                             SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
                         case .storage:
@@ -64,7 +64,7 @@ struct MainTabView: View {
                 .ignoresSafeArea(.keyboard)
                 
                 if miniPlayerViewModel.showPlayer{
-                    MiniPlayerView()
+                    MiniPlayerView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))
                         .transition(.move(edge: .bottom))
                         .offset(y: miniPlayerViewModel.offset)
                         .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
@@ -86,8 +86,6 @@ struct MainTabView: View {
     
     func onChanged(){
         if gestureOffset > 0 && !miniPlayerViewModel.isMiniPlayerActivate && miniPlayerViewModel.offset + 200 <= miniPlayerViewModel.height{
-            print("player offset >> \(miniPlayerViewModel.offset)")
-            print("geture offset >> \(gestureOffset)")
             miniPlayerViewModel.offset = gestureOffset
         }
     }
@@ -96,8 +94,6 @@ struct MainTabView: View {
         withAnimation(.smooth){
 
             if !miniPlayerViewModel.isMiniPlayerActivate{
-                print("Ended player offset >> \(miniPlayerViewModel.offset)")
-                print("Ended geture offset >> \(gestureOffset)")
                 miniPlayerViewModel.offset = 0
                 
                 // Closing View...
