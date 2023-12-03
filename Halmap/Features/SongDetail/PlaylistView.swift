@@ -61,7 +61,7 @@ struct PlaylistView: View {
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .listRowBackground(Color("\(song.team)Sub"))
                     .onPreferenceChange(ViewOffsetKey.self) {
-                        if $0 > -112 {
+                        if $0 > -(UIScreen.getHeight(90)) {
                             withAnimation {
                                 isScrolled = true
                             }

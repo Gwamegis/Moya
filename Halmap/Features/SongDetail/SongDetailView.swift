@@ -27,15 +27,13 @@ struct SongDetailView: View {
                 .ignoresSafeArea()
 
             if isPlaylistView {
-                VStack {
-                    PlaylistView(
-                        viewModel: PlaylistViewModel(viewModel: viewModel), 
-                        song: $viewModel.song,
-                        isScrolled: $viewModel.isScrolled,
-                        isPlaying: $viewModel.isPlaying)
-                        .padding(.top, 10)
-                        .padding(.bottom, 150)
-                }
+                PlaylistView(
+                    viewModel: PlaylistViewModel(viewModel: viewModel),
+                    song: $viewModel.song,
+                    isScrolled: $viewModel.isScrolled,
+                    isPlaying: $viewModel.isPlaying)
+                    .padding(.top, 10)
+                    .padding(.bottom, 150)
             } else {
                 Lyric(viewModel: viewModel)
             }
