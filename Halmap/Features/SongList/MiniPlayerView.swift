@@ -13,11 +13,12 @@ struct MiniPlayerView: View {
     @ObservedObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "defaultPlaylist").predicate,
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
-    @State var isPlayListView = false
+    @State var isPlaylistView = false
+    @State var currentIndex = 0
 
     var body: some View {
         
@@ -72,7 +73,7 @@ struct MiniPlayerView: View {
             
             GeometryReader{ reader in
                 ZStack{
-                    if isPlayListView {
+                    if isPlaylistView {
                         VStack {
                             PlaylistView(viewModel: PlaylistViewModel(viewModel: viewModel), song: $viewModel.song, isScrolled: $viewModel.isScrolled)
                                 .padding(.top, 10)
@@ -89,23 +90,18 @@ struct MiniPlayerView: View {
                             playlistButton
                         }
 
-                        PlayBar(viewModel: viewModel)
+                        PlayBar(viewModel: viewModel, currentIndex: $currentIndex)
                     }
                     .ignoresSafeArea()
                 }
-                .navigationTitle(viewModel.song.title)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        FavoriteButton(viewModel: viewModel)
-                    }
-                }
                 .onAppear() {
                     viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
-                }
-                .onAppear(perform: {
                     miniPlayerViewModel.height = reader.frame(in: .global).height + 250
-                })
+                }
+                .onChange(of: self.currentIndex) { _ in
+                    self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[currentIndex])
+                    self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
+                }
 
             }
             .background(Color("\(viewModel.song.team)Sub"))
@@ -154,11 +150,11 @@ struct MiniPlayerView: View {
         HStack(){
             Spacer()
             Button(action: {
-                isPlayListView.toggle()
+                isPlaylistView.toggle()
             }, label: {
                 ZStack {
                     Circle().foregroundColor(Color("\(viewModel.song.team)Background")).frame(width: 43, height: 43)
-                    Image(systemName: isPlayListView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
+                    Image(systemName: isPlaylistView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
 
                 }
             })
@@ -168,7 +164,7 @@ struct MiniPlayerView: View {
 
 private struct Lyric: View {
 
-    @StateObject var viewModel: SongDetailViewModel
+    @ObservedObject var viewModel: SongDetailViewModel
 
     var body: some View {
         ScrollView(showsIndicators: true) {
@@ -208,20 +204,59 @@ private struct Lyric: View {
 }
 
 private struct PlayBar: View {
-
-    @StateObject var viewModel: SongDetailViewModel
-
+    
+    @ObservedObject var viewModel: SongDetailViewModel
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    @Binding var currentIndex: Int
     var body: some View {
         VStack(spacing: 0) {
-            Progressbar(team: $viewModel.song.team, isThumbActive: true)
-
+            Progressbar(
+                player: viewModel.getAudioManager().player,
+                currentIndex: $currentIndex ,
+                team: $viewModel.song.team,
+                isThumbActive: true)
             HStack(spacing: 52) {
                 Button {
-                    viewModel.handlePlayButtonTap()
+                    //이전곡 재생 기능
+                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                        if index - 1 < 0 {
+                            currentIndex = defaultPlaylistSongs.count - 1
+                        } else {
+                            currentIndex = index - 1
+                        }
+                        print(currentIndex)
+                    }
                 } label: {
-                    Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 60, weight: .medium))
-                        .foregroundStyle(Color.customGray)
+                    Image(systemName: "backward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
+                }
+                    Button {
+                        viewModel.handlePlayButtonTap()
+                    } label: {
+                        Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                            .font(.system(size: 60, weight: .medium))
+                            .foregroundStyle(Color.customGray)
+                    }
+                Button {
+                    //다음곡 재생 기능
+                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+                        if index + 1 > defaultPlaylistSongs.count - 1 {
+                            print("재생목록이 처음으로 돌아갑니다.")
+                            currentIndex = 0
+                        } else {
+                            currentIndex = index + 1
+                        }
+                        print(currentIndex)
+                    }
+                } label: {
+                    Image(systemName: "forward.end.fill")
+                        .font(.system(size: 28, weight: .regular))
+                        .foregroundColor(.customGray)
                 }
             }
             .padding(.bottom, 54)
@@ -239,13 +274,14 @@ private struct PlayBar: View {
 }
 
 private struct FavoriteButton: View {
-
+    
     @StateObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
-        predicate: PlayListFilter(filter: "favorite").predicate,
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
+        predicate: PlaylistFilter(filter: "favorite").predicate,
         animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
+    @AppStorage("currentSongId") var currentSongId: String = ""
 
     var body: some View {
         Button {
@@ -255,11 +291,13 @@ private struct FavoriteButton: View {
                 .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
         }
         .onAppear() {
+            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             }
         }
         .onChange(of: viewModel.song.id) { _ in
+            currentSongId = viewModel.song.id
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
                 viewModel.isFavorite = true
             } else {

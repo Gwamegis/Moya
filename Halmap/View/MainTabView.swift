@@ -33,9 +33,9 @@ struct MainTabView: View {
                         case .home:
                             MainSongListTabView(viewModel: mainSongListTabViewModel, miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                         case .search:
-                            SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
+                            SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager), miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                         case .storage:
-                            StorageContentView()
+                            StorageContentView(miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                     }
                     
                     HStack {

@@ -121,13 +121,22 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
+                            Button(action: {
+                                SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
+                                self.songInfo = songInfo
+                                SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                                withAnimation{
+                                    miniPlayerViewModel.showPlayer = true
+                                    miniPlayerViewModel.hideTabBar = true
+                                    miniPlayerViewModel.isMiniPlayerActivate = false
+                                }
+                            }, label: {
                                 HStack(spacing: 16) {
-                                    Image(viewModel.getPlayerImage(for: songInfo))
+                                    Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
                                         .frame(width: 40, height: 40)
                                         .cornerRadius(8)
-                                    VStack(alignment: .leading, spacing: 6) {
+                                    VStack(alignment: .leading, spacing: 6){
                                         Text(song.title)
                                             .font(Font.Halmap.CustomBodyMedium)
                                         if !song.info.isEmpty {
@@ -139,7 +148,26 @@ struct MainSongListTabView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .lineLimit(1)
                                 }
-                            }
+                            })
+//                            NavigationLink(destination: SongDetailView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))) {
+//                                HStack(spacing: 16) {
+//                                    Image(viewModel.getPlayerImage(for: songInfo))
+//                                        .resizable()
+//                                        .frame(width: 40, height: 40)
+//                                        .cornerRadius(8)
+//                                    VStack(alignment: .leading, spacing: 6) {
+//                                        Text(song.title)
+//                                            .font(Font.Halmap.CustomBodyMedium)
+//                                        if !song.info.isEmpty {
+//                                            Text(song.info)
+//                                                .font(Font.Halmap.CustomCaptionMedium)
+//                                                .foregroundColor(.customDarkGray)
+//                                        }
+//                                    }
+//                                    .frame(maxWidth: .infinity, alignment: .leading)
+//                                    .lineLimit(1)
+//                                }
+//                            }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowBackground(Color.systemBackground)
