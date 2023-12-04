@@ -178,6 +178,7 @@ struct MainSongListTabView: View {
                                         .background(Color.white.opacity(0.001))
                                         .onTapGesture {
                                             collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
+                                            selectedSong = songInfo
                                             isShowingHalfSheet.toggle()
                                         }
                                 }
