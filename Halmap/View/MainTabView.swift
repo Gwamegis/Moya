@@ -12,17 +12,16 @@ struct MainTabView: View {
     @EnvironmentObject var dataManager: DataManager
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
-    
-    @EnvironmentObject var audioManager: AudioManager
     @StateObject var mainSongListTabViewModel = MainSongListTabViewModel()
     
-    @StateObject var miniPlayerViewModel = MiniPlayerViewModel()
-    @GestureState var gestureOffset: CGFloat = 0
-    @State var songInfo = SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")
+    
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+    @Binding var songInfo: SongInfo
     let persistence = PersistenceController.shared
     @State var miniplayerPadding: CGFloat = 0
 
-    init() {
+    init(songInfo: Binding<SongInfo>) {
+        self._songInfo = songInfo
         Color.setColor(selectedTeam)
     }
     
@@ -32,7 +31,7 @@ struct MainTabView: View {
                 VStack(spacing: 0) {
                     switch viewModel.state {
                         case .home:
-                            MainSongListTabView(viewModel: mainSongListTabViewModel, miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
+                            MainSongListTabView(viewModel: mainSongListTabViewModel, songInfo: $songInfo)
                         case .search:
                             SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager), miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo, miniplayerPadding: $miniplayerPadding)
                         case .storage:
@@ -64,56 +63,17 @@ struct MainTabView: View {
                 }
                 .ignoresSafeArea(.keyboard)
                 
-                if miniPlayerViewModel.showPlayer{
-                    MiniPlayerView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))
-                        .transition(.move(edge: .bottom))
-                        .offset(y: miniPlayerViewModel.offset)
-                        .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
-                            
-                            state = value.translation.height
-                        })
-                        .onEnded(onEnd(value:)))
-                        .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
-                        .ignoresSafeArea(.keyboard)
-                }
             }
-            .onChange(of: gestureOffset, perform: { value in
-                onChanged()
-            })
-            .environmentObject(miniPlayerViewModel)
+            
         }
         .navigationViewStyle(.stack)
         
     }
     
-    func onChanged(){
-        if gestureOffset > 0 && !miniPlayerViewModel.isMiniPlayerActivate && miniPlayerViewModel.offset + 200 <= miniPlayerViewModel.height{
-            miniPlayerViewModel.offset = gestureOffset
-        }
-    }
-    
-    func onEnd(value: DragGesture.Value){
-        withAnimation(.smooth){
-
-            if !miniPlayerViewModel.isMiniPlayerActivate{
-                miniPlayerViewModel.offset = 0
-                
-                // Closing View...
-                if value.translation.height > UIScreen.main.bounds.height / 3{
-                    miniPlayerViewModel.hideTabBar = false
-                    miniPlayerViewModel.isMiniPlayerActivate = true
-                }
-                else{
-                    miniPlayerViewModel.hideTabBar = true
-                    miniPlayerViewModel.isMiniPlayerActivate = false
-                }
-            }
-        }
-    }
 }
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView()
+        MainTabView(songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")))
     }
 }

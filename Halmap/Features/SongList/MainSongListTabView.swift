@@ -13,7 +13,7 @@ struct MainSongListTabView: View {
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     @ObservedObject var viewModel: MainSongListTabViewModel
-    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @Binding var songInfo: SongInfo
     
     let persistence = PersistenceController.shared
@@ -222,6 +222,6 @@ struct MainSongListTabView: View {
 
 struct MainSongListTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainSongListTabView(viewModel: MainSongListTabViewModel(), miniPlayerViewModel: MiniPlayerViewModel(), songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "",info: "", url: "")))
+        MainSongListTabView(viewModel: MainSongListTabViewModel(), songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "",info: "", url: "")))
     }
 }

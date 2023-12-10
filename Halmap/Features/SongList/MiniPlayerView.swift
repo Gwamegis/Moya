@@ -11,6 +11,7 @@ struct MiniPlayerView: View {
     
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @ObservedObject var viewModel: SongDetailViewModel
+    
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: false)],
@@ -105,13 +106,15 @@ struct MiniPlayerView: View {
 
             }
             .background(Color("\(viewModel.song.team)Sub"))
+            .ignoresSafeArea()
             .opacity(miniPlayerViewModel.isMiniPlayerActivate ? 0 : getOpacity())
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 0 : nil)
         }
+
         .background(
             Color("\(viewModel.song.team)Sub")
                 .cornerRadius(8)
-                .ignoresSafeArea(.all, edges: .all)
+                .ignoresSafeArea(.keyboard)
                 .onTapGesture {
                     withAnimation{
                         miniPlayerViewModel.width = UIScreen.main.bounds.width
