@@ -46,5 +46,11 @@ class Utility: NSObject {
             return "\(song.team)\(song.type ? "Player" : "Album")"
         }
     }
-    
+    static func getAlbumImage(with song: SongInfo, seasonSongs: [[String]]) -> String {
+        if seasonSongs[TeamName(rawValue: song.team)?.fetchTeamIndex() ?? 0].contains(song.title) {
+            return "\(song.team)23"
+        } else {
+            return "\(song.team)\(song.type ? "Player" : "Album")"
+        }
+    }
 }

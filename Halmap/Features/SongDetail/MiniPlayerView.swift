@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 11) {
+            HStack(spacing: 16) {
                 if !viewModel.isMiniPlayerActivate {
                     Button {
                         withAnimation {
@@ -36,12 +36,19 @@ struct MiniPlayerView: View {
                             .font(.system(size: 24))
                             .foregroundStyle(Color.white)
                     }
+                    .padding(5)
                 }
-                VStack(alignment: .leading) {
+                Image(viewModel.fetchImage())
+                    .resizable()
+                    .cornerRadius(10)
+                    .frame(width: 52, height: 52)
+                    .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
+                
+                VStack(alignment: .leading, spacing: 6) {
                     Text(viewModel.song.title)
                         .font(.Halmap.CustomBodyBold)
                         .foregroundStyle(Color.white)
-                    Text(viewModel.song.team)
+                    Text(viewModel.getTeamNameKr())
                         .font(.Halmap.CustomCaptionMedium)
                         .foregroundStyle(Color.customGray)
                 }
@@ -312,6 +319,7 @@ private struct FavoriteButton: View {
         } label: {
             Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
                 .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
+                .font(.system(size: 20))
         }
         .onAppear() {
             if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
