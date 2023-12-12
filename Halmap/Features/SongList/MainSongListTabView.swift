@@ -15,6 +15,7 @@ struct MainSongListTabView: View {
     @EnvironmentObject var audioManager: AudioManager
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject var viewModel = MainSongListTabViewModel()
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     @State private var isShowingHalfSheet: Bool = false
     @State private var isActiveNavigatioinLink: Bool = false

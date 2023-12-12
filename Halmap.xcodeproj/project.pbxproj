@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2051C1E32B28A1DB00842AA3 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051C1E22B28A1DB00842AA3 /* MiniPlayerView.swift */; };
+		2051C1E52B28A20F00842AA3 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2051C1E42B28A20F00842AA3 /* MiniPlayerViewModel.swift */; };
 		206F9F6D2AD29611004DAD73 /* MainSongListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */; };
 		20A687D82A711C48005F18FA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D72A711C48005F18FA /* FirebaseAnalytics */; };
 		20A687DA2A711C48005F18FA /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687D92A711C48005F18FA /* FirebaseAnalyticsSwift */; };
@@ -81,6 +83,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2051C1E22B28A1DB00842AA3 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
+		2051C1E42B28A20F00842AA3 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListViewModel.swift; sourceTree = "<group>"; };
 		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
 		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
@@ -224,6 +228,8 @@
 				F90190802B038BDF00C9BFF6 /* PlaylistViewModel.swift */,
 				F90190822B038BFF00C9BFF6 /* SongDetailView.swift */,
 				F90190842B038C1600C9BFF6 /* SongDetailViewModel.swift */,
+				2051C1E22B28A1DB00842AA3 /* MiniPlayerView.swift */,
+				2051C1E42B28A20F00842AA3 /* MiniPlayerViewModel.swift */,
 			);
 			path = SongDetail;
 			sourceTree = "<group>";
@@ -530,6 +536,7 @@
 				F9B95BB928F271A100728048 /* DataManager.swift in Sources */,
 				F9168B292A5A81AD00DCF649 /* NotificationView.swift in Sources */,
 				A81FFC9928F1777B00B0FC7C /* TeamSelectionView.swift in Sources */,
+				2051C1E52B28A20F00842AA3 /* MiniPlayerViewModel.swift in Sources */,
 				F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */,
 				F9168B2B2A5A81BC00DCF649 /* Notification.swift in Sources */,
 				A81FFC9128F1775000B0FC7C /* SongSearchView.swift in Sources */,
@@ -545,6 +552,7 @@
 				8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				F90190832B038BFF00C9BFF6 /* SongDetailView.swift in Sources */,
+				2051C1E32B28A1DB00842AA3 /* MiniPlayerView.swift in Sources */,
 				F9168B322A5AA1FB00DCF649 /* HalfModalPresentationController.swift in Sources */,
 				8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */,
 				A8F8BA9929C8CE5B00FCB229 /* AudioManager.swift in Sources */,
