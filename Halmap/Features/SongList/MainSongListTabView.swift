@@ -235,23 +235,31 @@ struct MainSongListTabView: View {
                                 }
                                 
                                 .onTapGesture {
-                                    selectedSong = songInfo
-                                    isActiveNavigatioinLink.toggle()
-                                }
-                                
-                                if let selectedSong {
-                                    NavigationLink(destination:
-                                                    SongDetailView(viewModel: SongDetailViewModel(
-                                                        audioManager: audioManager,
-                                                        dataManager: dataManager,
-                                                        persistence: persistence,
-                                                        song: selectedSong)),
-                                                   isActive: $isActiveNavigatioinLink) {
-                                        EmptyView()
+                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
+                                    self.songInfo = songInfo
+                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                                        withAnimation{
+                                            miniPlayerViewModel.showPlayer = true
+                                            miniPlayerViewModel.hideTabBar = true
+                                            miniPlayerViewModel.isMiniPlayerActivate = false
+                                            selectedSong = songInfo
+                                            isActiveNavigatioinLink.toggle()
+                                        }
                                     }
-                                    .opacity(0)
-                                    .disabled(true)
-                                }
+                                
+//                                if let selectedSong {
+//                                    NavigationLink(destination:
+//                                                    SongDetailView(viewModel: SongDetailViewModel(
+//                                                        audioManager: audioManager,
+//                                                        dataManager: dataManager,
+//                                                        persistence: persistence,
+//                                                        song: selectedSong)),
+//                                                   isActive: $isActiveNavigatioinLink) {
+//                                        EmptyView()
+//                                    }
+//                                    .opacity(0)
+//                                    .disabled(true)
+//                                }
                                 
                             }
                         }
