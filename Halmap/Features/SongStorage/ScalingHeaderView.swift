@@ -20,6 +20,8 @@ struct ScalingHeaderView: View {
     @State var isShowSheet = false
     
     @AppStorage("currentSongId") var currentSongId: String = ""
+    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
+    @Binding var songInfo: SongInfo
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -79,15 +81,16 @@ struct ScalingHeaderView: View {
                             let song = viewModel.makeSong(favoriteSong: favoriteSong)
                             
                             VStack(spacing: 0) {
-                                NavigationLink {
-                                    SongDetailView(
-                                        viewModel: SongDetailViewModel(
-                                            audioManager: audioManager,
-                                            dataManager: dataManager,
-                                            persistence: persistence,
-                                            song: song
-                                        ))
-                                } label: {
+                                Button(action: {
+                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
+                                    self.songInfo = songInfo
+                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                                    withAnimation{
+                                        miniPlayerViewModel.showPlayer = true
+                                        miniPlayerViewModel.hideTabBar = true
+                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                    }
+                                }, label: {
                                     HStack(spacing: 16) {
                                         Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
                                             .resizable()
@@ -103,7 +106,7 @@ struct ScalingHeaderView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
-                                            
+
                                         Button {
                                             self.collectedSongData = favoriteSong
                                             isShowSheet.toggle()
@@ -115,7 +118,44 @@ struct ScalingHeaderView: View {
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 15)
-                                }
+                                })
+//                                NavigationLink {
+//                                    SongDetailView(
+//                                        viewModel: SongDetailViewModel(
+//                                            audioManager: audioManager,
+//                                            dataManager: dataManager,
+//                                            persistence: persistence,
+//                                            song: song
+//                                        ))
+//                                } label: {
+//                                    HStack(spacing: 16) {
+//                                        Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
+//                                            .resizable()
+//                                            .frame(width: 40, height: 40)
+//                                            .cornerRadius(8)
+//                                        VStack(alignment: .leading, spacing: 6) {
+//                                            Text(favoriteSong.safeTitle)
+//                                                .font(Font.Halmap.CustomBodyMedium)
+//                                                .foregroundColor(.black)
+//                                            Text(TeamName(rawValue: favoriteSong.safeTeam)?.fetchTeamNameKr() ?? ".")
+//                                                .font(Font.Halmap.CustomCaptionMedium)
+//                                                .foregroundColor(.customDarkGray)
+//                                        }
+//                                        .frame(maxWidth: .infinity, alignment: .leading)
+//                                        .lineLimit(1)
+//                                            
+//                                        Button {
+//                                            self.collectedSongData = favoriteSong
+//                                            isShowSheet.toggle()
+//                                        } label: {
+//                                            Image(systemName: "ellipsis")
+//                                                .foregroundColor(.customDarkGray)
+//                                                .frame(maxWidth: 35, maxHeight: .infinity)
+//                                        }
+//                                    }
+//                                    .padding(.horizontal, 20)
+//                                    .padding(.vertical, 15)
+//                                }
                             }
                             .background(Color.systemBackground)
                         }
@@ -179,8 +219,8 @@ struct ScalingHeaderView: View {
     }
 }
 
-struct ScalingHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        StorageContentView()
-    }
-}
+//struct ScalingHeaderView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StorageContentView()
+//    }
+//}

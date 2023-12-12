@@ -11,9 +11,10 @@ struct SongSearchView: View {
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
-    
+    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
+    @Binding var songInfo: SongInfo
 
     var body: some View {
 
@@ -104,14 +105,48 @@ struct SongSearchView: View {
             case .result:
                 List {
                     ForEach(viewModel.autoComplete, id: \.id) { song in
-                        NavigationLink {
-                            SongDetailView(viewModel: SongDetailViewModel(
-                                audioManager: audioManager,
-                                dataManager: dataManager,
-                                persistence: persistence,
-                                song: song))
-                        } label: {
-                            HStack {
+                        let songInfo = SongInfo(id: song.id,
+                                                team: song.team,
+                                                type: song.type,
+                                                title: song.title,
+                                                lyrics: song.lyrics,
+                                                info: song.info,
+                                                url: song.url)
+//                        NavigationLink {
+//                            SongDetailView(viewModel: SongDetailViewModel(
+//                                audioManager: audioManager,
+//                                dataManager: dataManager,
+//                                persistence: persistence,
+//                                song: song))
+//                        } label: {
+//                            HStack {
+//                                Image(viewModel.getAlbumImage(with: song))
+//                                    .resizable()
+//                                    .frame(width: 40, height: 40)
+//                                    .cornerRadius(8)
+//                                VStack(alignment: .leading, spacing: 8) {
+//                                    Text(song.title)
+//                                        .font(Font.Halmap.CustomBodyMedium)
+//                                        .foregroundColor(.black)
+//                                    Text(viewModel.getTeamName(with: song))
+//                                        .font(Font.Halmap.CustomCaptionMedium)
+//                                        .foregroundColor(.customDarkGray)
+//                                }
+//                                .frame(height: 45)
+//                                .lineLimit(1)
+//                            }
+//                        }
+                        Button(action: {
+                            SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
+                            self.songInfo = song
+                            SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                            withAnimation{
+                                miniPlayerViewModel.showPlayer = true
+                                miniPlayerViewModel.hideTabBar = true
+                                miniPlayerViewModel.isMiniPlayerActivate = false
+                            }
+                        }, label: {
+                            HStack(spacing: 16) {
                                 Image(viewModel.getAlbumImage(with: song))
                                     .resizable()
                                     .frame(width: 40, height: 40)
@@ -127,7 +162,7 @@ struct SongSearchView: View {
                                 .frame(height: 45)
                                 .lineLimit(1)
                             }
-                        }
+                        })
                         .listRowBackground(Color(UIColor.clear))
                         .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
                         .listRowSeparatorTint(Color.customGray)
@@ -142,8 +177,8 @@ struct SongSearchView: View {
 
 
 // MARK: Previews
-struct SongSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SongSearchView(viewModel: SongSearchViewModel(dataManager: DataManager()))
-    }
-}
+//struct SongSearchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SongSearchView(viewModel: SongSearchViewModel(dataManager: DataManager()))
+//    }
+//}

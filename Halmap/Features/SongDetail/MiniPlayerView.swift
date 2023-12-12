@@ -11,7 +11,7 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
-    @StateObject var viewModel: SongDetailViewModel
+    @ObservedObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],

@@ -10,6 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
     @Binding var songInfo: SongInfo
@@ -26,9 +27,9 @@ struct MainTabView: View {
                 case .home:
                     MainSongListTabView(songInfo: $songInfo)
                 case .search:
-                    SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
+                    SongSearchView(miniPlayerViewModel: miniPlayerViewModel, viewModel: SongSearchViewModel(dataManager: dataManager), songInfo: $songInfo)
                 case .storage:
-                    StorageContentView()
+                        StorageContentView(miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
                 }
 
                 HStack {
