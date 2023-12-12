@@ -8,9 +8,9 @@ import SwiftUI
 import AVFoundation
 import MediaPlayer
 
-struct SongDetailView: View {
+struct MiniPlayerView: View {
 
-    @StateObject var viewModel: SongDetailViewModel
+    @EnvironmentObject var viewModel: MiniPlayerViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -22,59 +22,118 @@ struct SongDetailView: View {
     @State private var toast: Toast? = nil
 
     var body: some View {
-        ZStack {
-            Color("\(viewModel.song.team)Sub")
-                .ignoresSafeArea()
-
-            if isPlaylistView {
-                PlaylistView(
-                    viewModel: PlaylistViewModel(viewModel: viewModel),
-                    song: $viewModel.song,
-                    isScrolled: $viewModel.isScrolled,
-                    isPlaying: $viewModel.isPlaying)
-                    .padding(.top, 10)
-                    .padding(.bottom, 150)
-            } else {
-                Lyric(viewModel: viewModel)
-            }
-
-            VStack(spacing: 0) {
-                Rectangle()
-                    .frame(height: UIScreen.getHeight(108))
-                    .foregroundColor(Color("\(viewModel.song.team)Sub"))
-                gradientRectangle(isTop: true)
-                Spacer()
-                ZStack(alignment: .bottom) {
-                    gradientRectangle(isTop: false)
-                    playlistButton
+        VStack(spacing: 0) {
+            HStack(spacing: 11) {
+                if !viewModel.isMiniPlayerActivate {
+                    Button {
+                        withAnimation {
+                            viewModel.showPlayer.toggle()
+                            viewModel.hideTabBar.toggle()
+                            viewModel.isMiniPlayerActivate.toggle()
+                        }
+                    } label: {
+                        Image(systemName: "chevron.down")
+                            .font(.system(size: 24))
+                            .foregroundStyle(Color.white)
+                    }
                 }
-                .toastView(toast: $toast)
+                VStack(alignment: .leading) {
+                    Text(viewModel.song.title)
+                        .font(.Halmap.CustomBodyBold)
+                        .foregroundStyle(Color.white)
+                    Text(viewModel.song.team)
+                        .font(.Halmap.CustomCaptionMedium)
+                        .foregroundStyle(Color.customGray)
+                }
+                Spacer()
+                
+                if viewModel.isMiniPlayerActivate {
+                    HStack {
+                        Button{
+                            viewModel.handlePlayButtonTap()
+                        } label: {
+                            Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                                .font(.system(size: 30, weight: .medium))
+                                .foregroundStyle(Color.white)
+                        }
+                    }
+                }
+                
+                if !viewModel.isMiniPlayerActivate {
+                    FavoriteButton(viewModel: viewModel)
+                }
+            }
+            .padding(.horizontal, 20)
+            .frame(height: 60)
+            
+            GeometryReader { reader in
+                ZStack {
+                    if isPlaylistView {
+                        PlaylistView(
+                            viewModel: PlaylistViewModel(viewModel: viewModel),
+                            song: $viewModel.song,
+                            isScrolled: $viewModel.isScrolled,
+                            isPlaying: $viewModel.isPlaying)
+                            .padding(.top, 10)
+                            .padding(.bottom, 150)
+                    } else {
+                        Lyric(viewModel: viewModel)
+                    }
 
-                PlayBar(viewModel: viewModel, toast: $toast)
+                    VStack(spacing: 0) {
+                        gradientRectangle(isTop: true)
+                        Spacer()
+                        ZStack(alignment: .bottom) {
+                            gradientRectangle(isTop: false)
+                            playlistButton
+                        }
+                        .toastView(toast: $toast)
+
+                        PlayBar(viewModel: viewModel, toast: $toast)
+                    }
+                    .ignoresSafeArea()
+                }
+                .onAppear() {
+                    self.currentSongId = viewModel.song.id
+                    viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                    setMediaPlayerNextTrack()
+                }
+                .onChange(of: viewModel.song.id) { _ in
+                    self.currentSongId = viewModel.song.id
+                }
+                .onChange(of: currentSongId) { _ in
+                    if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
+                        self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
+                        self.viewModel.setPlayer()
+                    }
+                }
             }
+            .background(Color("\(viewModel.song.team)Sub"))
             .ignoresSafeArea()
+            .opacity(viewModel.isMiniPlayerActivate ? 0 : getOpacity())
+            .frame(height: viewModel.isMiniPlayerActivate ? 0 : nil)
         }
-        .navigationTitle(viewModel.song.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                FavoriteButton(viewModel: viewModel)
-            }
+        .background(
+            Color("\(viewModel.song.team)Sub")
+                .cornerRadius(8)
+                .ignoresSafeArea(.keyboard)
+                .onTapGesture {
+                    withAnimation{
+                        viewModel.width = UIScreen.main.bounds.width
+                        viewModel.isMiniPlayerActivate.toggle()
+                        viewModel.hideTabBar = true
+                    }
+                }
+        )
+    }
+    
+    func getOpacity()->Double{
+        
+        let progress = viewModel.offset / (viewModel.height)
+        if progress <= 1{
+            return Double(1 - progress)
         }
-        .onAppear() {
-            self.currentSongId = viewModel.song.id
-            viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
-            setMediaPlayerNextTrack()
-        }
-        .onChange(of: viewModel.song.id) { _ in
-            self.currentSongId = viewModel.song.id
-        }
-        .onChange(of: currentSongId) { _ in
-            if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
-                self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
-                self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
-            }
-        }
+        return 1
     }
     
     @ViewBuilder
@@ -130,7 +189,7 @@ struct SongDetailView: View {
 
 private struct Lyric: View {
 
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
 
     var body: some View {
         ScrollView(showsIndicators: true) {
@@ -140,7 +199,7 @@ private struct Lyric: View {
                     .font(.Halmap.CustomHeadline)
                     .lineSpacing(20)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(EdgeInsets(top: 40, leading: 40, bottom: 230, trailing: 40))
+                    .padding(EdgeInsets(top: 40, leading: 40, bottom: 300, trailing: 40))
             }
             .background(GeometryReader{
                 Color.clear.preference(
@@ -171,7 +230,7 @@ private struct Lyric: View {
 
 private struct PlayBar: View {
 
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -240,7 +299,7 @@ private struct PlayBar: View {
 
 private struct FavoriteButton: View {
 
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],

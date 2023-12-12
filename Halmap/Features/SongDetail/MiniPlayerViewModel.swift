@@ -7,23 +7,33 @@
 import SwiftUI
 import Combine
 
-final class SongDetailViewModel: ObservableObject {
-    @ObservedObject private var audioManager: AudioManager
-    private let dataManager: DataManager
-    private let persistence: PersistenceController
+final class MiniPlayerViewModel: ObservableObject {
+    @ObservedObject private var audioManager = AudioManager.instance
+    private let dataManager = DataManager.instance
+    private let persistence = PersistenceController.shared
+    
+    static let instance = MiniPlayerViewModel(song: SongInfo(id: "", team: "", type: false, title: "", lyrics: "", info: "", url: ""))
 
     @Published var song: SongInfo
     @Published var isScrolled = false
     @Published var isFavorite = false
     @Published var isPlaying = false
     
+    //미니 플레이어
+    @Published var showPlayer = false
+    
+    @Published var offset: CGFloat = 0
+    @Published var width: CGFloat = UIScreen.main.bounds.width
+    @Published var height : CGFloat = 0
+    @Published var isMiniPlayerActivate = false
+    @Published var hideTabBar = false
 
     private var cancellables = Set<AnyCancellable>()
 
-    init(audioManager: AudioManager, dataManager: DataManager, persistence: PersistenceController, song: SongInfo) {
-        self.audioManager = audioManager
-        self.dataManager = dataManager
-        self.persistence = persistence
+    init(/*audioManager: AudioManager, dataManager: DataManager, persistence: PersistenceController, */song: SongInfo) {
+//        self.audioManager = audioManager
+//        self.dataManager = dataManager
+//        self.persistence = persistence
         self.song = song
 
         audioManager.$isPlaying

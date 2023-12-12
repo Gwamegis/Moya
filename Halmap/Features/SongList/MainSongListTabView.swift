@@ -13,8 +13,10 @@ struct MainSongListTabView: View {
     @AppStorage("currentSongId") var currentSongId: String = ""
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
-    @Environment(\.managedObjectContext) private var viewContext
-    @StateObject var viewModel = MainSongListTabViewModel()
+    
+    @ObservedObject var viewModel: MainSongListTabViewModel
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+//    @Binding var songInfo: SongInfo
     
     @State private var isShowingHalfSheet: Bool = false
     @State private var isActiveNavigatioinLink: Bool = false
@@ -69,7 +71,18 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            ZStack {
+                            Button{
+                                miniPlayerViewModel.removePlayer()
+                                miniPlayerViewModel.song = songInfo
+//                                self.songInfo = songInfo
+                                miniPlayerViewModel.setPlayer()
+                                withAnimation{
+                                    miniPlayerViewModel.showPlayer = true
+                                    miniPlayerViewModel.hideTabBar = true
+                                    miniPlayerViewModel.isMiniPlayerActivate = false
+                                }
+                                selectedSong = songInfo
+                            } label: {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getSongImage(for: songInfo))
                                         .resizable()
@@ -100,32 +113,16 @@ struct MainSongListTabView: View {
                                             isShowingHalfSheet.toggle()
                                         }
                                 }
-                                
-                                if let selectedSong {
-                                    NavigationLink(destination:
-                                                    SongDetailView(viewModel: SongDetailViewModel(
-                                                        audioManager: audioManager,
-                                                        dataManager: dataManager,
-                                                        persistence: persistence,
-                                                        song: selectedSong)),
-                                                   isActive: $isActiveNavigatioinLink) {
-                                        EmptyView()
-                                    }
-                                    .opacity(0)
-                                    .disabled(true)
-                                }
-
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                             
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
                             .background(Color.systemBackground)
-                            .onTapGesture {
-                                selectedSong = songInfo
-                                isActiveNavigatioinLink.toggle()
-                            }
-                            
+//                            .onTapGesture {
+//                                selectedSong = songInfo
+//                                isActiveNavigatioinLink.toggle()
+//                            }
                         }
                         RequestSongView(buttonColor: Color.HalmacPoint)
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -153,7 +150,18 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            ZStack {
+                            Button {
+                                miniPlayerViewModel.removePlayer()
+//                                self.songInfo = songInfo
+                                miniPlayerViewModel.song = songInfo
+                                miniPlayerViewModel.setPlayer()
+                                withAnimation{
+                                    miniPlayerViewModel.showPlayer = true
+                                    miniPlayerViewModel.hideTabBar = true
+                                    miniPlayerViewModel.isMiniPlayerActivate = false
+                                }
+                                selectedSong = songInfo
+                            } label: {
                                 HStack(spacing: 16) {
                                     Image(viewModel.getPlayerImage(for: songInfo))
                                         .resizable()
@@ -182,26 +190,6 @@ struct MainSongListTabView: View {
                                             isShowingHalfSheet.toggle()
                                         }
                                 }
-                                
-                                .onTapGesture {
-                                    selectedSong = songInfo
-                                    isActiveNavigatioinLink.toggle()
-                                }
-                                
-                                if let selectedSong {
-                                    NavigationLink(destination:
-                                                    SongDetailView(viewModel: SongDetailViewModel(
-                                                        audioManager: audioManager,
-                                                        dataManager: dataManager,
-                                                        persistence: persistence,
-                                                        song: selectedSong)),
-                                                   isActive: $isActiveNavigatioinLink) {
-                                        EmptyView()
-                                    }
-                                    .opacity(0)
-                                    .disabled(true)
-                                }
-                                
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
@@ -252,11 +240,5 @@ struct MainSongListTabView: View {
             TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $viewModel.showingTeamChangingView)
         }
         .navigationBarHidden(true)
-    }
-}
-
-struct MainSongListTabView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainSongListTabView()
     }
 }

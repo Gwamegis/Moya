@@ -42,6 +42,7 @@ final class AudioManager: NSObject, ObservableObject {
             setupPlayer()
         } else {
             print("다운로드를 시작합니다.")
+            print("song.url\(song.url)")
             guard let remoteURL = URL(string: song.url) else { fatalError("url을 변환할 수 없습니다.") }
             downloadAndPlaySong(from: remoteURL, named: changedTitle)
         }

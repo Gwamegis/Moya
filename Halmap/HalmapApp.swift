@@ -24,8 +24,9 @@ struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
 
-    @StateObject var dataManager = DataManager()
-    @StateObject var audioManager = AudioManager()
+    @StateObject var dataManager = DataManager.instance
+    @StateObject var audioManager = AudioManager.instance
+    @StateObject var miniPlayerViewModel = MiniPlayerViewModel.instance
 
     let persistenceController = PersistenceController.shared
     
@@ -67,11 +68,13 @@ struct HalmapApp: App {
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
                         .environmentObject(dataManager)
                         .environmentObject(audioManager)
+                        .environmentObject(miniPlayerViewModel)
                 } else {
                     OnBoardingStartView()
                         .environment(\.managedObjectContext, persistenceController.container.viewContext)
                         .environmentObject(dataManager)
                         .environmentObject(audioManager)
+                        .environmentObject(miniPlayerViewModel)
                 }
             } else {
                 LaunchScreenView()

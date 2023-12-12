@@ -13,6 +13,13 @@ struct MainTabView: View {
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
     
+    @StateObject var mainSongListTabViewModel = MainSongListTabViewModel()
+    
+    
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+    let persistence = PersistenceController.shared
+    @State var miniplayerPadding: CGFloat = 0
+    
     init() {
         Color.setColor(selectedTeam)
     }
@@ -22,7 +29,7 @@ struct MainTabView: View {
             VStack(spacing: 0) {
                 switch viewModel.state {
                 case .home:
-                    MainSongListTabView()
+                    MainSongListTabView(viewModel: mainSongListTabViewModel)
                 case .search:
                     SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
                 case .storage:
@@ -50,6 +57,7 @@ struct MainTabView: View {
                 .padding(.horizontal, 47)
                 .background(Color.tabBarGray)
                 .shadow(color: Color.customGray, radius: 1)
+                .offset(y: miniPlayerViewModel.hideTabBar ? (15 + 35 + 50) : 0)
             }
             .ignoresSafeArea(.keyboard)
         }

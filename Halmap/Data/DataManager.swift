@@ -12,6 +12,8 @@ import FirebaseFirestoreSwift
 
 class DataManager: ObservableObject {
     
+    static let instance = DataManager()
+    
     private let db = Firestore.firestore()
     
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true

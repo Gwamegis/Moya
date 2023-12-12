@@ -105,11 +105,7 @@ struct SongSearchView: View {
                 List {
                     ForEach(viewModel.autoComplete, id: \.id) { song in
                         NavigationLink {
-                            SongDetailView(viewModel: SongDetailViewModel(
-                                audioManager: audioManager,
-                                dataManager: dataManager,
-                                persistence: persistence,
-                                song: song))
+                            MiniPlayerView()
                         } label: {
                             HStack {
                                 Image(viewModel.getAlbumImage(with: song))
