@@ -11,6 +11,7 @@ struct SongSearchView: View {
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
@@ -104,8 +105,15 @@ struct SongSearchView: View {
             case .result:
                 List {
                     ForEach(viewModel.autoComplete, id: \.id) { song in
-                        NavigationLink {
-                            MiniPlayerView()
+                        Button {
+                            miniPlayerViewModel.removePlayer()
+                            miniPlayerViewModel.song = song
+                            miniPlayerViewModel.setPlayer()
+                            withAnimation{
+                                miniPlayerViewModel.showPlayer = true
+                                miniPlayerViewModel.hideTabBar = true
+                                miniPlayerViewModel.isMiniPlayerActivate = false
+                            }
                         } label: {
                             HStack {
                                 Image(viewModel.getAlbumImage(with: song))
