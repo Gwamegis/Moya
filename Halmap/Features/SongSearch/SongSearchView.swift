@@ -11,10 +11,9 @@ struct SongSearchView: View {
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
-    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
-    @Binding var songInfo: SongInfo
 
     var body: some View {
 
@@ -114,9 +113,9 @@ struct SongSearchView: View {
                                                 url: song.url)
 
                         Button(action: {
-                            SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
-                            self.songInfo = song
-                            SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                            miniPlayerViewModel.removePlayer()
+                            self.miniPlayerViewModel.song = song
+                            miniPlayerViewModel.setPlayer()
                             withAnimation{
                                 miniPlayerViewModel.showPlayer = true
                                 miniPlayerViewModel.hideTabBar = true
@@ -151,11 +150,3 @@ struct SongSearchView: View {
         }
     }
 }
-
-
-// MARK: Previews
-//struct SongSearchView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SongSearchView(viewModel: SongSearchViewModel(dataManager: DataManager()))
-//    }
-//}

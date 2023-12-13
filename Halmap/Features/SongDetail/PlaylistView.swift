@@ -60,6 +60,7 @@ struct PlaylistView: View {
                     }
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .listRowBackground(Color("\(song.team)Sub"))
+                    .listRowSeparator(.hidden)
                     .onPreferenceChange(ViewOffsetKey.self) {
                         if $0 > -(UIScreen.getHeight(90)) {
                             withAnimation {
@@ -71,8 +72,9 @@ struct PlaylistView: View {
                             }
                         }
                     }
-                    Color.clear.frame(height:70)
+                    Color.clear.frame(height:100)
                            .listRowBackground(Color.clear)
+                           .listRowSeparator(.hidden)
                 }
                 .coordinateSpace(name: "list")
                 .listStyle(.plain)

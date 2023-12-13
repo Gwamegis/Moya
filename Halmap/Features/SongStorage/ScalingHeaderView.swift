@@ -15,13 +15,18 @@ struct ScalingHeaderView: View {
     
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlaylistFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
     
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    
     @StateObject var viewModel: SongStorageViewModel
     @State var collectedSongData: CollectedSong?
     @State var isShowSheet = false
     
     @AppStorage("currentSongId") var currentSongId: String = ""
-    @ObservedObject var miniPlayerViewModel: MiniPlayerViewModel
-    @Binding var songInfo: SongInfo
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -43,7 +48,14 @@ struct ScalingHeaderView: View {
                             if collectedSongs.count > 0 {
                                 Button {
                                     persistence.fetchPlaylistAll()
-                                    currentSongId = collectedSongs.first!.safeId
+                                    miniPlayerViewModel.removePlayer()
+                                    self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: collectedSongs[0])
+                                    miniPlayerViewModel.setPlayer()
+                                    withAnimation{
+                                        miniPlayerViewModel.showPlayer = true
+                                        miniPlayerViewModel.hideTabBar = true
+                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                    }
                                 } label: {
                                     HStack(spacing: 5) {
                                         Image(systemName: "play.circle.fill")
@@ -82,14 +94,15 @@ struct ScalingHeaderView: View {
                             
                             VStack(spacing: 0) {
                                 Button(action: {
-                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
-                                    self.songInfo = songInfo
-                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
+                                    miniPlayerViewModel.removePlayer()
+                                    self.miniPlayerViewModel.song = song
+                                    miniPlayerViewModel.setPlayer()
                                     withAnimation{
                                         miniPlayerViewModel.showPlayer = true
                                         miniPlayerViewModel.hideTabBar = true
                                         miniPlayerViewModel.isMiniPlayerActivate = false
                                     }
+                                    miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
                                 }, label: {
                                     HStack(spacing: 16) {
                                         Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
@@ -119,43 +132,6 @@ struct ScalingHeaderView: View {
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 15)
                                 })
-//                                NavigationLink {
-//                                    SongDetailView(
-//                                        viewModel: SongDetailViewModel(
-//                                            audioManager: audioManager,
-//                                            dataManager: dataManager,
-//                                            persistence: persistence,
-//                                            song: song
-//                                        ))
-//                                } label: {
-//                                    HStack(spacing: 16) {
-//                                        Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
-//                                            .resizable()
-//                                            .frame(width: 40, height: 40)
-//                                            .cornerRadius(8)
-//                                        VStack(alignment: .leading, spacing: 6) {
-//                                            Text(favoriteSong.safeTitle)
-//                                                .font(Font.Halmap.CustomBodyMedium)
-//                                                .foregroundColor(.black)
-//                                            Text(TeamName(rawValue: favoriteSong.safeTeam)?.fetchTeamNameKr() ?? ".")
-//                                                .font(Font.Halmap.CustomCaptionMedium)
-//                                                .foregroundColor(.customDarkGray)
-//                                        }
-//                                        .frame(maxWidth: .infinity, alignment: .leading)
-//                                        .lineLimit(1)
-//                                            
-//                                        Button {
-//                                            self.collectedSongData = favoriteSong
-//                                            isShowSheet.toggle()
-//                                        } label: {
-//                                            Image(systemName: "ellipsis")
-//                                                .foregroundColor(.customDarkGray)
-//                                                .frame(maxWidth: 35, maxHeight: .infinity)
-//                                        }
-//                                    }
-//                                    .padding(.horizontal, 20)
-//                                    .padding(.vertical, 15)
-//                                }
                             }
                             .background(Color.systemBackground)
                         }
@@ -188,9 +164,15 @@ struct ScalingHeaderView: View {
                 Spacer()
                 if collectedSongs.count > 0 {
                     Button {
-                        //TODO: 첫번째 곡 재생 -> SongDetailView song
                         persistence.fetchPlaylistAll()
-                        self.currentSongId = collectedSongs.first!.safeId
+                        miniPlayerViewModel.removePlayer()
+                        self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: collectedSongs[0])
+                        miniPlayerViewModel.setPlayer()
+                        withAnimation{
+                            miniPlayerViewModel.showPlayer = true
+                            miniPlayerViewModel.hideTabBar = true
+                            miniPlayerViewModel.isMiniPlayerActivate = false
+                        }
                     } label: {
                         Image(systemName: "play.circle.fill")
                             .foregroundColor(.mainGreen)
@@ -218,9 +200,3 @@ struct ScalingHeaderView: View {
         }
     }
 }
-
-//struct ScalingHeaderView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StorageContentView()
-//    }
-//}

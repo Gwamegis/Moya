@@ -11,7 +11,6 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
-    @StateObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -21,7 +20,6 @@ struct MiniPlayerView: View {
     @AppStorage("currentSongId") var currentSongId: String = ""
     @State var isPlaylistView = false
     @State private var toast: Toast? = nil
-    @Binding var selectedSongInfo: SongInfo
     
     var body: some View {
         VStack(spacing: 0){
@@ -45,10 +43,10 @@ struct MiniPlayerView: View {
                 }
                 
                 VStack(alignment: .leading){
-                    Text("\(viewModel.song.title)")
+                    Text("\(miniPlayerViewModel.song.title)")
                         .font(Font.Halmap.CustomBodyBold)
                         .foregroundColor(Color.white)
-                    Text("\(viewModel.song.team)")
+                    Text("\(miniPlayerViewModel.song.team)")
                         .font(Font.Halmap.CustomCaptionMedium)
                         .foregroundColor(Color.customGray)
                 }
@@ -57,9 +55,9 @@ struct MiniPlayerView: View {
                 if miniPlayerViewModel.isMiniPlayerActivate {
                     HStack{
                         Button(action: {
-                            viewModel.handlePlayButtonTap()
+                            miniPlayerViewModel.handlePlayButtonTap()
                         }, label: {
-                            Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                            Image(systemName: miniPlayerViewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                                 .font(.system(size: 30, weight: .medium))
                                 .foregroundStyle(Color.white)
                         })
@@ -67,7 +65,7 @@ struct MiniPlayerView: View {
                 }
                 
                 if !miniPlayerViewModel.isMiniPlayerActivate {
-                    FavoriteButton(viewModel: viewModel)
+                    FavoriteButton(viewModel: miniPlayerViewModel)
                 }
             }
             .padding(.horizontal, 20)
@@ -77,21 +75,17 @@ struct MiniPlayerView: View {
                 ZStack {
                     if isPlaylistView {
                         PlaylistView(
-                            viewModel: PlaylistViewModel(viewModel: viewModel),
-                            song: $viewModel.song,
-                            isScrolled: $viewModel.isScrolled,
-                            isPlaying: $viewModel.isPlaying)
+                            viewModel: PlaylistViewModel(viewModel: miniPlayerViewModel),
+                            song: $miniPlayerViewModel.song,
+                            isScrolled: $miniPlayerViewModel.isScrolled,
+                            isPlaying: $miniPlayerViewModel.isPlaying)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
                     } else {
-                        Lyric(viewModel: viewModel)
+                        Lyric(viewModel: miniPlayerViewModel)
                     }
                     
                     VStack(spacing: 0) {
-//                        Rectangle()
-//                            .frame(height: UIScreen.getHeight(108))
-//                            .foregroundColor(Color("\(viewModel.song.team)Sub"))
-//                        gradientRectangle(isTop: true)
                         Spacer()
                         ZStack(alignment: .bottom) {
                             gradientRectangle(isTop: false)
@@ -99,40 +93,32 @@ struct MiniPlayerView: View {
                         }
                         .toastView(toast: $toast)
                         
-                        PlayBar(viewModel: viewModel, toast: $toast)
+                        PlayBar(viewModel: miniPlayerViewModel, toast: $toast)
                     }
                     .ignoresSafeArea()
                 }
-                .onAppear() {
-                    self.currentSongId = viewModel.song.id
-                    viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
-                    setMediaPlayerNextTrack()
-                }
-                .onChange(of: viewModel.song.id) { _ in
-                    self.currentSongId = viewModel.song.id
+                .onChange(of: miniPlayerViewModel.song.id) { _ in
+                    self.currentSongId = miniPlayerViewModel.song.id
                 }
                 .onChange(of: currentSongId) { _ in
-                    if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == viewModel.song.id }) {
-                        self.viewModel.song = viewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
-                        self.viewModel.getAudioManager().AMset(song: self.viewModel.song)
+                    if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == miniPlayerViewModel.song.id }) {
+                        self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
+                        self.miniPlayerViewModel.setPlayer()
                     }
                 }
             }
-            .background(Color("\(viewModel.song.team)Sub"))
+            .background(Color("\(miniPlayerViewModel.song.team)Sub"))
             .ignoresSafeArea()
             .opacity(miniPlayerViewModel.isMiniPlayerActivate ? 0 : getOpacity())
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 0 : nil)
         }
         .onChange(of: miniPlayerViewModel.isMiniPlayerActivate) { isActivated in
             if !isActivated {
-                viewModel.song = selectedSongInfo
-                self.currentSongId = viewModel.song.id
-                viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
                 setMediaPlayerNextTrack()
             }
         }
         .background(
-            Color("\(viewModel.song.team)Sub")
+            Color("\(miniPlayerViewModel.song.team)Sub")
                 .cornerRadius(8)
                 .ignoresSafeArea(.keyboard)
                 .onTapGesture {
@@ -140,7 +126,7 @@ struct MiniPlayerView: View {
                         miniPlayerViewModel.width = UIScreen.main.bounds.width
                         miniPlayerViewModel.isMiniPlayerActivate.toggle()
                         miniPlayerViewModel.hideTabBar = true
-                        print("\(viewModel.song.title)")
+                        print("\(miniPlayerViewModel.song.title)")
                     }
                 }
                 
@@ -161,7 +147,7 @@ struct MiniPlayerView: View {
         Rectangle()
             .frame(height: 120)
             .foregroundColor(Color(UIColor.clear))
-            .background(isTop ? (viewModel.isScrolled ? Color.fetchTopGradient(color: Color("\(viewModel.song.team)Sub")) : nil ) : Color.fetchBottomGradient(color: Color("\(viewModel.song.team)Sub")))
+            .background(isTop ? (miniPlayerViewModel.isScrolled ? Color.fetchTopGradient(color: Color("\(miniPlayerViewModel.song.team)Sub")) : nil ) : Color.fetchBottomGradient(color: Color("\(miniPlayerViewModel.song.team)Sub")))
             .allowsHitTesting(false)
     }
     
@@ -173,7 +159,7 @@ struct MiniPlayerView: View {
                 isPlaylistView.toggle()
             }, label: {
                 ZStack {
-                    Circle().foregroundColor(Color("\(viewModel.song.team)Background")).frame(width: 43, height: 43)
+                    Circle().foregroundColor(Color("\(miniPlayerViewModel.song.team)Background")).frame(width: 43, height: 43)
                     Image(systemName: isPlaylistView ? "quote.bubble.fill" : "list.bullet").foregroundColor(.white)
                     
                 }
@@ -184,22 +170,22 @@ struct MiniPlayerView: View {
     private func setMediaPlayerNextTrack() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.nextTrackCommand.addTarget { _ in
-            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
                 if index + 1 > defaultPlaylistSongs.count - 1 {
                     toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
-                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
                 } else {
-                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
+                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
                 }
             }
             return .success
         }
         commandCenter.previousTrackCommand.addTarget { _ in
-            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
+            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
                 if index - 1 < 0 {
-                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.last!)
+                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.last!)
                 } else {
-                    viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index - 1])
+                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index - 1])
                 }
             }
             return .success
@@ -209,7 +195,7 @@ struct MiniPlayerView: View {
 
 private struct Lyric: View {
     
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
     
     var body: some View {
         ScrollView(showsIndicators: true) {
@@ -219,7 +205,7 @@ private struct Lyric: View {
                     .font(.Halmap.CustomHeadline)
                     .lineSpacing(20)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(EdgeInsets(top: 40, leading: 40, bottom: 230, trailing: 40))
+                    .padding(EdgeInsets(top: 40, leading: 40, bottom: 300, trailing: 40))
             }
             .background(GeometryReader{
                 Color.clear.preference(
@@ -250,7 +236,7 @@ private struct Lyric: View {
 
 private struct PlayBar: View {
     
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -319,7 +305,7 @@ private struct PlayBar: View {
 
 private struct FavoriteButton: View {
     
-    @StateObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: MiniPlayerViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],

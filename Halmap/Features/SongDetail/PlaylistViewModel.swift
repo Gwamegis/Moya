@@ -12,7 +12,7 @@ final class PlaylistViewModel: ObservableObject {
     private let dataManager: DataManager
     private var song: SongInfo
 
-    init(viewModel: SongDetailViewModel) {
+    init(viewModel: MiniPlayerViewModel) {
         audioManager = viewModel.getAudioManager()
         dataManager = viewModel.getdataManager()
         song = viewModel.getSongInfo()

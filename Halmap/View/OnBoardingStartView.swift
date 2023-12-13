@@ -15,8 +15,7 @@ struct OnBoardingStartView: View {
     @AppStorage("latestVersion") var latestVersion = "1.0.0"
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var dataManager: DataManager
-    @StateObject var miniPlayerViewModel = MiniPlayerViewModel()
-    @State var songInfo = SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")
+    @StateObject var miniPlayerViewModel = MiniPlayerViewModel.instance
     @GestureState var gestureOffset: CGFloat = 0
     @Namespace var animation
     let persistence = PersistenceController.shared
@@ -26,8 +25,7 @@ struct OnBoardingStartView: View {
             ZStack{
                 ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
                     if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
-                        MainTabView(songInfo: $songInfo)
-                            .environmentObject(miniPlayerViewModel)
+                        MainTabView()
                             .sheet(isPresented: $isShouldShowTraffic) {
                                 HalfSheet {
                                     NotificationView(type: .traffic)
@@ -43,7 +41,7 @@ struct OnBoardingStartView: View {
                 VStack{
                     Spacer()
                     if miniPlayerViewModel.showPlayer {
-                        MiniPlayerView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo), selectedSongInfo: $songInfo)
+                        MiniPlayerView()
                             .transition(.move(edge: .bottom))
                             .offset(y: miniPlayerViewModel.offset)
                             .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in

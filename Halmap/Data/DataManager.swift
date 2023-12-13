@@ -11,6 +11,7 @@ import FirebaseRemoteConfig
 import FirebaseFirestoreSwift
 
 class DataManager: ObservableObject {
+    static let instance = DataManager()
     
     private let db = Firestore.firestore()
     

@@ -11,12 +11,11 @@ struct MainTabView: View {
     
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+    
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
-    @Binding var songInfo: SongInfo
     
-    init(songInfo: Binding<SongInfo>) {
-        self._songInfo = songInfo
+    init() {
         Color.setColor(selectedTeam)
     }
     
@@ -25,11 +24,11 @@ struct MainTabView: View {
             VStack(spacing: 0) {
                 switch viewModel.state {
                 case .home:
-                    MainSongListTabView(songInfo: $songInfo)
+                    MainSongListTabView()
                 case .search:
-                    SongSearchView(miniPlayerViewModel: miniPlayerViewModel, viewModel: SongSearchViewModel(dataManager: dataManager), songInfo: $songInfo)
+                    SongSearchView(viewModel: SongSearchViewModel(dataManager: dataManager))
                 case .storage:
-                        StorageContentView(miniPlayerViewModel: miniPlayerViewModel, songInfo: $songInfo)
+                    StorageContentView()
                 }
 
                 HStack {
@@ -62,6 +61,6 @@ struct MainTabView: View {
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabView(songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "", info: "", url: "")))
+        MainTabView()
     }
 }

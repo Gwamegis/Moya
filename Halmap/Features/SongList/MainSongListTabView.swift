@@ -18,10 +18,15 @@ struct MainSongListTabView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     @State private var isShowingHalfSheet: Bool = false
-    @State private var isActiveNavigatioinLink: Bool = false
     @State private var selectedSong: SongInfo?
     @State var collectedSong: CollectedSong?
-    @Binding var songInfo: SongInfo
+    
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    
     let persistence = PersistenceController.shared
 
     var body: some View {
@@ -39,8 +44,14 @@ struct MainSongListTabView: View {
                     Button {
                         let currentSongs = viewModel.index == 0 ? dataManager.teamSongs : dataManager.playerSongs
                         persistence.fetchPlaylistAllMain(newSongs: currentSongs)
-                        currentSongId = currentSongs.first!.id
-                        
+                        miniPlayerViewModel.removePlayer()
+                        self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: currentSongs[0])
+                        miniPlayerViewModel.setPlayer()
+                        withAnimation{
+                            miniPlayerViewModel.showPlayer = true
+                            miniPlayerViewModel.hideTabBar = true
+                            miniPlayerViewModel.isMiniPlayerActivate = false
+                        }
                     } label: {
                         HStack(spacing: 5) {
                             Image(systemName: "play.circle.fill")
@@ -109,17 +120,16 @@ struct MainSongListTabView: View {
                             .listRowSeparatorTint(Color.customGray)
                             .background(Color.systemBackground)
                             .onTapGesture {
-                                self.songInfo = songInfo
+                                self.miniPlayerViewModel.song = songInfo
                                 print(songInfo.title)
                                 withAnimation{
                                     miniPlayerViewModel.showPlayer = true
                                     miniPlayerViewModel.hideTabBar = true
                                     miniPlayerViewModel.isMiniPlayerActivate = false
                                     selectedSong = songInfo
-                                    isActiveNavigatioinLink.toggle()
                                 }
+                                miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
                             }
-                            
                         }
                         RequestSongView(buttonColor: Color.HalmacPoint)
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -176,20 +186,18 @@ struct MainSongListTabView: View {
                                             isShowingHalfSheet.toggle()
                                         }
                                 }
-                                
                                 .onTapGesture {
-                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
-                                    self.songInfo = songInfo
-                                    SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).setPlayer()
-                                        withAnimation{
-                                            miniPlayerViewModel.showPlayer = true
-                                            miniPlayerViewModel.hideTabBar = true
-                                            miniPlayerViewModel.isMiniPlayerActivate = false
-                                            selectedSong = songInfo
-                                            isActiveNavigatioinLink.toggle()
-                                        }
+                                    miniPlayerViewModel.removePlayer()
+                                    self.miniPlayerViewModel.song = songInfo
+                                    miniPlayerViewModel.setPlayer()
+                                    withAnimation{
+                                        miniPlayerViewModel.showPlayer = true
+                                        miniPlayerViewModel.hideTabBar = true
+                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                        selectedSong = songInfo
                                     }
-                                
+                                    miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                                }
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
@@ -245,6 +253,6 @@ struct MainSongListTabView: View {
 
 struct MainSongListTabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainSongListTabView(songInfo: .constant(SongInfo(id: "", team: "Lotte", type: true, title: "", lyrics: "",info: "", url: "")))
+        MainSongListTabView()
     }
 }
