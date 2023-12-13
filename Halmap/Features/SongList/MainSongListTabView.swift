@@ -64,7 +64,7 @@ struct MainSongListTabView: View {
                     }
                 }
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 15, trailing: 20))
-                .padding(.top, UIScreen.getHeight(48))
+                .padding(.top, UIScreen.getHeight(32))
                 
                 Divider()
                     .overlay(Color.customGray.opacity(0.6))

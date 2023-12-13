@@ -46,7 +46,7 @@ struct MiniPlayerView: View {
                                         .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
                 }
                 
-                VStack(alignment: .leading){
+                VStack(alignment: .leading, spacing: 4){
                     Text("\(miniPlayerViewModel.song.title)")
                         .font(Font.Halmap.CustomBodyBold)
                         .foregroundColor(Color.white)
@@ -57,12 +57,25 @@ struct MiniPlayerView: View {
                 Spacer()
                 
                 if miniPlayerViewModel.isMiniPlayerActivate {
-                    HStack{
+                    HStack(spacing: 21) {
                         Button(action: {
                             miniPlayerViewModel.handlePlayButtonTap()
                         }, label: {
-                            Image(systemName: miniPlayerViewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                                .font(.system(size: 30, weight: .medium))
+                            Image(systemName: miniPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
+                                .font(.system(size: 20, weight: .medium))
+                                .foregroundStyle(Color.white)
+                        })
+                        Button(action: {
+                            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
+                                if index + 1 > defaultPlaylistSongs.count - 1 {
+                                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                                } else {
+                                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
+                                }
+                            }
+                        }, label: {
+                            Image(systemName: "forward.end.fill")
+                                .font(.system(size: 20, weight: .medium))
                                 .foregroundStyle(Color.white)
                         })
                     }
@@ -101,6 +114,9 @@ struct MiniPlayerView: View {
                     }
                     .ignoresSafeArea()
                 }
+                .onAppear() {
+                    setMediaPlayerNextTrack()
+                }
                 .onChange(of: miniPlayerViewModel.song.id) { _ in
                     self.currentSongId = miniPlayerViewModel.song.id
                 }
@@ -115,11 +131,6 @@ struct MiniPlayerView: View {
             .ignoresSafeArea()
             .opacity(miniPlayerViewModel.isMiniPlayerActivate ? 0 : getOpacity())
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 0 : nil)
-        }
-        .onChange(of: miniPlayerViewModel.isMiniPlayerActivate) { isActivated in
-            if !isActivated {
-                setMediaPlayerNextTrack()
-            }
         }
         .background(
             Color("\(miniPlayerViewModel.song.team)Sub")

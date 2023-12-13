@@ -21,9 +21,3 @@ struct StorageContentView: View {
         }
     }
 }
-
-//struct StorageContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        StorageContentView()
-//    }
-//}
