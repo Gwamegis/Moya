@@ -14,6 +14,12 @@ struct SongSearchView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
+    
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
     var body: some View {
 
@@ -121,6 +127,7 @@ struct SongSearchView: View {
                                 miniPlayerViewModel.hideTabBar = true
                                 miniPlayerViewModel.isMiniPlayerActivate = false
                             }
+                            miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
                         }, label: {
                             HStack(spacing: 16) {
                                 Image(viewModel.getAlbumImage(with: song))
