@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
     
     var body: some View {
         VStack(spacing: 0){
-            HStack(spacing: 11){
+            HStack(spacing: 16){
                 if !miniPlayerViewModel.isMiniPlayerActivate {
                     Button(action: {
                         withAnimation{
@@ -33,20 +33,24 @@ struct MiniPlayerView: View {
                         }
                     }, label: {
                         Image(systemName: "chevron.down")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24)
+                            .font(.system(size: 24))
                             .foregroundColor(Color.white)
                         
                     })
-                    
+                }
+                if !miniPlayerViewModel.isMiniPlayerActivate {
+                    Image(miniPlayerViewModel.fetchImage())
+                                        .resizable()
+                                        .cornerRadius(10)
+                                        .frame(width: 52, height: 52)
+                                        .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
                 }
                 
                 VStack(alignment: .leading){
                     Text("\(miniPlayerViewModel.song.title)")
                         .font(Font.Halmap.CustomBodyBold)
                         .foregroundColor(Color.white)
-                    Text("\(miniPlayerViewModel.song.team)")
+                    Text(miniPlayerViewModel.getTeamNameKr())
                         .font(Font.Halmap.CustomCaptionMedium)
                         .foregroundColor(Color.customGray)
                 }

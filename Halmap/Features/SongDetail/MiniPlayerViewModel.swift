@@ -113,5 +113,13 @@ class MiniPlayerViewModel: ObservableObject {
     func getSongInfo() -> SongInfo {
         self.song
     }
+    
+    func fetchImage() -> String {
+        Utility.getAlbumImage(with: self.song, seasonSongs: dataManager.seasonSongs)
+    }
+    
+    func getTeamNameKr() -> String {
+        TeamName(rawValue: song.team)?.fetchTeamNameKr() ?? ""
+    }
 }
 
