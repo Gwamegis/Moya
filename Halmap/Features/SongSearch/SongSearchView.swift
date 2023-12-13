@@ -112,30 +112,7 @@ struct SongSearchView: View {
                                                 lyrics: song.lyrics,
                                                 info: song.info,
                                                 url: song.url)
-//                        NavigationLink {
-//                            SongDetailView(viewModel: SongDetailViewModel(
-//                                audioManager: audioManager,
-//                                dataManager: dataManager,
-//                                persistence: persistence,
-//                                song: song))
-//                        } label: {
-//                            HStack {
-//                                Image(viewModel.getAlbumImage(with: song))
-//                                    .resizable()
-//                                    .frame(width: 40, height: 40)
-//                                    .cornerRadius(8)
-//                                VStack(alignment: .leading, spacing: 8) {
-//                                    Text(song.title)
-//                                        .font(Font.Halmap.CustomBodyMedium)
-//                                        .foregroundColor(.black)
-//                                    Text(viewModel.getTeamName(with: song))
-//                                        .font(Font.Halmap.CustomCaptionMedium)
-//                                        .foregroundColor(.customDarkGray)
-//                                }
-//                                .frame(height: 45)
-//                                .lineLimit(1)
-//                            }
-//                        }
+
                         Button(action: {
                             SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: self.songInfo).removePlayer()
                             self.songInfo = song

@@ -43,7 +43,7 @@ struct OnBoardingStartView: View {
                 VStack{
                     Spacer()
                     if miniPlayerViewModel.showPlayer {
-                        MiniPlayerView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo))
+                        MiniPlayerView(viewModel: SongDetailViewModel(audioManager: audioManager, dataManager: dataManager, persistence: persistence, song: songInfo), selectedSongInfo: $songInfo)
                             .transition(.move(edge: .bottom))
                             .offset(y: miniPlayerViewModel.offset)
                             .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in

@@ -11,7 +11,7 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
-    @ObservedObject var viewModel: SongDetailViewModel
+    @StateObject var viewModel: SongDetailViewModel
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -21,6 +21,7 @@ struct MiniPlayerView: View {
     @AppStorage("currentSongId") var currentSongId: String = ""
     @State var isPlaylistView = false
     @State private var toast: Toast? = nil
+    @Binding var selectedSongInfo: SongInfo
     
     var body: some View {
         VStack(spacing: 0){
@@ -122,6 +123,14 @@ struct MiniPlayerView: View {
             .opacity(miniPlayerViewModel.isMiniPlayerActivate ? 0 : getOpacity())
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 0 : nil)
         }
+        .onChange(of: miniPlayerViewModel.isMiniPlayerActivate) { isActivated in
+            if !isActivated {
+                viewModel.song = selectedSongInfo
+                self.currentSongId = viewModel.song.id
+                viewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                setMediaPlayerNextTrack()
+            }
+        }
         .background(
             Color("\(viewModel.song.team)Sub")
                 .cornerRadius(8)
@@ -131,13 +140,11 @@ struct MiniPlayerView: View {
                         miniPlayerViewModel.width = UIScreen.main.bounds.width
                         miniPlayerViewModel.isMiniPlayerActivate.toggle()
                         miniPlayerViewModel.hideTabBar = true
+                        print("\(viewModel.song.title)")
                     }
                 }
                 
         )
-        .onAppear {
-            print("\(viewModel.song.title)")
-        }
     }
     
     func getOpacity()->Double{
@@ -281,7 +288,7 @@ private struct PlayBar: View {
                         .foregroundStyle(Color.customGray)
                 }
                 Button {
-                    //다음곡 재생 기능
+                    // - MARK: 다음곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
                             toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
