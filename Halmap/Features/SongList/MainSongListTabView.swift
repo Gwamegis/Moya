@@ -115,7 +115,6 @@ struct MainSongListTabView: View {
 
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
-                            
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
                             .background(Color.systemBackground)
@@ -136,7 +135,10 @@ struct MainSongListTabView: View {
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
                     }
-                    .sheet(isPresented: $isShowingHalfSheet) {
+                    .sheet(isPresented: Binding(
+                        get: { isShowingHalfSheet },
+                        set: { isShowingHalfSheet = $0 }
+                    )) {
                         if let collectedSong {
                             HalfSheet{
                                 HalfSheetView(collectedSongData: collectedSong, showSheet: $isShowingHalfSheet)
