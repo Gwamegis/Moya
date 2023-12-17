@@ -352,7 +352,7 @@ private struct PlayBar: View {
             }
             .padding(.bottom, 54)
         }
-        .padding(.horizontal, 45)
+        .padding(.horizontal, 40)
         .frame(maxWidth: .infinity)
         .background(Color("\(viewModel.song.team)Sub"))
         .onDisappear(){
