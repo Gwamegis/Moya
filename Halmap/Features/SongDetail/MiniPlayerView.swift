@@ -131,6 +131,7 @@ struct MiniPlayerView: View {
                     }
                     
                     VStack(spacing: 0) {
+                        gradientRectangle(isTop: true)
                         Spacer()
                         ZStack(alignment: .bottom) {
                             gradientRectangle(isTop: false)
