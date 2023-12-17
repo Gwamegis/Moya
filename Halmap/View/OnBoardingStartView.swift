@@ -44,13 +44,13 @@ struct OnBoardingStartView: View {
                             .transition(.move(edge: .bottom))
                             .offset(y: miniPlayerViewModel.offset)
                             .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
-                            .ignoresSafeArea(.keyboard)
                             .ignoresSafeArea()
                     }
                 }
                 .ignoresSafeArea()
                 .padding(.bottom, miniPlayerViewModel.isMiniPlayerActivate ? UIScreen.getHeight(10) : 0 )
                 .background(Color.clear)
+                .padding(miniPlayerViewModel.isMiniPlayerActivate ? EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15) : EdgeInsets())
             }
             .environmentObject(miniPlayerViewModel)
             .ignoresSafeArea(.keyboard)

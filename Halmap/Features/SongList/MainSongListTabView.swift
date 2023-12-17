@@ -63,8 +63,8 @@ struct MainSongListTabView: View {
                         }
                     }
                 }
-                .padding(EdgeInsets(top: 20, leading: 20, bottom: 15, trailing: 20))
-                .padding(.top, UIScreen.getHeight(32))
+                .padding(EdgeInsets(top: 20, leading: 20, bottom: 10, trailing: 20))
+                .padding(.top, UIScreen.getHeight(24))
                 
                 Divider()
                     .overlay(Color.customGray.opacity(0.6))
@@ -81,38 +81,35 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            ZStack {
-                                HStack(spacing: 16) {
-                                    Image(viewModel.getSongImage(for: songInfo))
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .cornerRadius(8)
+                            HStack(spacing: 16) {
+                                Image(viewModel.getSongImage(for: songInfo))
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .cornerRadius(8)
+                                
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(song.title)
+                                        .font(Font.Halmap.CustomBodyMedium)
                                     
-                                    VStack(alignment: .leading, spacing: 6) {
-                                        Text(song.title)
-                                            .font(Font.Halmap.CustomBodyMedium)
-                                        
-                                        if !song.info.isEmpty {
-                                            Text(song.info)
-                                                .font(Font.Halmap.CustomCaptionMedium)
-                                                .foregroundColor(.customDarkGray)
-                                        }
+                                    if !song.info.isEmpty {
+                                        Text(song.info)
+                                            .font(Font.Halmap.CustomCaptionMedium)
+                                            .foregroundColor(.customDarkGray)
                                     }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                    Spacer()
-
-                                    Image(systemName: "ellipsis")
-                                        .foregroundColor(.customDarkGray)
-                                        .frame(maxWidth: 35, maxHeight: .infinity)
-                                        .background(Color.white.opacity(0.001))
-                                        .onTapGesture {
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
-                                            selectedSong = songInfo
-                                            isShowingHalfSheet.toggle()
-                                        }
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineLimit(1)
+                                Spacer()
 
+                                Image(systemName: "ellipsis")
+                                    .foregroundColor(.customDarkGray)
+                                    .frame(maxWidth: 35, maxHeight: .infinity)
+                                    .background(Color.white.opacity(0.001))
+                                    .onTapGesture {
+                                        collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
+                                        selectedSong = songInfo
+                                        isShowingHalfSheet.toggle()
+                                    }
                             }
                             .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                             .listRowBackground(Color.systemBackground)
@@ -133,6 +130,7 @@ struct MainSongListTabView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
+                            .padding(.bottom, 80)
                     }
                     .sheet(isPresented: Binding(
                         get: { isShowingHalfSheet },
@@ -158,47 +156,45 @@ struct MainSongListTabView: View {
                                                     info: song.info,
                                                     url: song.url)
                             
-                            ZStack {
-                                HStack(spacing: 16) {
-                                    Image(viewModel.getPlayerImage(for: songInfo))
-                                        .resizable()
-                                        .frame(width: 40, height: 40)
-                                        .cornerRadius(8)
-                                    VStack(alignment: .leading, spacing: 6) {
-                                        Text(song.title)
-                                            .font(Font.Halmap.CustomBodyMedium)
-                                        if !song.info.isEmpty {
-                                            Text(song.info)
-                                                .font(Font.Halmap.CustomCaptionMedium)
-                                                .foregroundColor(.customDarkGray)
-                                        }
+                            HStack(spacing: 16) {
+                                Image(viewModel.getPlayerImage(for: songInfo))
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .cornerRadius(8)
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text(song.title)
+                                        .font(Font.Halmap.CustomBodyMedium)
+                                    if !song.info.isEmpty {
+                                        Text(song.info)
+                                            .font(Font.Halmap.CustomCaptionMedium)
+                                            .foregroundColor(.customDarkGray)
                                     }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .lineLimit(1)
-                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .lineLimit(1)
+                                Spacer()
 
-                                    Image(systemName: "ellipsis")
-                                        .foregroundColor(.customDarkGray)
-                                        .frame(maxWidth: 35, maxHeight: .infinity)
-                                        .background(Color.white.opacity(0.001))
-                                        .onTapGesture {
-                                            collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
-                                            selectedSong = songInfo
-                                            isShowingHalfSheet.toggle()
-                                        }
-                                }
-                                .onTapGesture {
-                                    miniPlayerViewModel.removePlayer()
-                                    self.miniPlayerViewModel.song = songInfo
-                                    miniPlayerViewModel.setPlayer()
-                                    withAnimation{
-                                        miniPlayerViewModel.showPlayer = true
-                                        miniPlayerViewModel.hideTabBar = true
-                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                Image(systemName: "ellipsis")
+                                    .foregroundColor(.customDarkGray)
+                                    .frame(maxWidth: 35, maxHeight: .infinity)
+                                    .background(Color.white.opacity(0.001))
+                                    .onTapGesture {
+                                        collectedSong = persistence.createCollectedSong(song: songInfo, playListTitle: "bufferPlayList")
                                         selectedSong = songInfo
+                                        isShowingHalfSheet.toggle()
                                     }
-                                    miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                            }
+                            .onTapGesture {
+                                miniPlayerViewModel.removePlayer()
+                                self.miniPlayerViewModel.song = songInfo
+                                miniPlayerViewModel.setPlayer()
+                                withAnimation{
+                                    miniPlayerViewModel.showPlayer = true
+                                    miniPlayerViewModel.hideTabBar = true
+                                    miniPlayerViewModel.isMiniPlayerActivate = false
+                                    selectedSong = songInfo
                                 }
+                                miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
                             }
                         }
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
@@ -209,6 +205,7 @@ struct MainSongListTabView: View {
                             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             .listRowBackground(Color.systemBackground)
                             .listRowSeparatorTint(Color.customGray)
+                            .padding(.bottom, 80)
                     }
                     .padding(.horizontal, 20)
                     .listStyle(.plain)
@@ -217,7 +214,6 @@ struct MainSongListTabView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
             .edgesIgnoringSafeArea(.top)
-            .padding(.bottom, miniPlayerViewModel.showPlayer ? 50 : 0)
             
             //상단 탭바
             TabBarView(currentTab: $viewModel.index)
