@@ -97,7 +97,7 @@ struct MainSongListTabView: View {
                                             .foregroundColor(.customDarkGray)
                                     }
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                                 .lineLimit(1)
                                 Spacer()
 
@@ -170,7 +170,8 @@ struct MainSongListTabView: View {
                                             .foregroundColor(.customDarkGray)
                                     }
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                .background(Color.white.opacity(0.0001))
                                 .lineLimit(1)
                                 Spacer()
 
