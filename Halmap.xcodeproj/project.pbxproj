@@ -60,6 +60,7 @@
 		F94942202B17373C00075DE1 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = F949421F2B17373C00075DE1 /* Lottie */; };
 		F94942252B17398100075DE1 /* waveform.json in Resources */ = {isa = PBXBuildFile; fileRef = F94942242B17398100075DE1 /* waveform.json */; };
 		F95CE98B2917A8EF00FFE213 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F95CE98A2917A8EF00FFE213 /* Settings.bundle */; };
+		F97B5BBB2B2F189E007C9754 /* Halmap+SafeAreaInsetsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97B5BBA2B2F189E007C9754 /* Halmap+SafeAreaInsetsKey.swift */; };
 		F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */; };
 		F97BE1242AC011DF00B37C76 /* Halmap+CollectedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */; };
 		F98F622929B4C9BD0025F50E /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622829B4C9BD0025F50E /* Themes.swift */; };
@@ -126,6 +127,7 @@
 		F949421C2B16044F00075DE1 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		F94942242B17398100075DE1 /* waveform.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = waveform.json; sourceTree = "<group>"; };
 		F95CE98A2917A8EF00FFE213 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		F97B5BBA2B2F189E007C9754 /* Halmap+SafeAreaInsetsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+SafeAreaInsetsKey.swift"; sourceTree = "<group>"; };
 		F97BE1212AC011B100B37C76 /* SongStorageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongStorageViewModel.swift; sourceTree = "<group>"; };
 		F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Halmap+CollectedSong.swift"; sourceTree = "<group>"; };
 		F98F622829B4C9BD0025F50E /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				87F6ECF42916B331004533C4 /* Halmap+UINavigationController.swift */,
 				87F6ECF62916BB44004533C4 /* Halmap+UIView.swift */,
 				F97BE1232AC011DF00B37C76 /* Halmap+CollectedSong.swift */,
+				F97B5BBA2B2F189E007C9754 /* Halmap+SafeAreaInsetsKey.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				A81FFC7A28F15D9900B0FC7C /* HalmapApp.swift in Sources */,
 				F91BE5FD29B18D1E00F7E488 /* MainSongListTabView.swift in Sources */,
 				F97BE1222AC011B100B37C76 /* SongStorageViewModel.swift in Sources */,
+				F97B5BBB2B2F189E007C9754 /* Halmap+SafeAreaInsetsKey.swift in Sources */,
 				8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */,
 				F939EBBA29D58FB2005ED8CA /* StorageContentView.swift in Sources */,
 				2051C1E32B28A1DB00842AA3 /* MiniPlayerView.swift in Sources */,
@@ -683,11 +687,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -705,6 +711,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = moya_dev;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -720,10 +727,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -741,6 +750,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = moya_dev;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
