@@ -9,6 +9,7 @@ import Lottie
 
 struct PlaylistView: View {
 
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @StateObject var viewModel: PlaylistViewModel
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
@@ -38,8 +39,11 @@ struct PlaylistView: View {
                     .onDelete { indexSet in
                         for index in indexSet {
                             if collectedSongs.count - 1 == 0 {
-                                // TODO: 메인화면으로 나가는 동작
-                                print("메인화면으로")
+                                withAnimation{
+                                    miniPlayerViewModel.hideTabBar = false
+                                    miniPlayerViewModel.isMiniPlayerActivate = true
+                                }
+                                miniPlayerViewModel.song = SongInfo(id: "", team: song.team, type: false, title: "", lyrics: "", info: "", url: "")
                                 viewModel.stopPlayer()
                             } else {
                                 if let songIndex = collectedSongs.firstIndex(where: {$0.id == song.id}) {

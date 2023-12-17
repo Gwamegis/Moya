@@ -48,14 +48,21 @@ struct MiniPlayerView: View {
                                         .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
                 }
                 
-                VStack(alignment: .leading, spacing: 4){
-                    Text("\(miniPlayerViewModel.song.title)")
-                        .font(Font.Halmap.CustomBodyBold)
-                        .foregroundColor(Color.white)
-                    Text(miniPlayerViewModel.getTeamNameKr())
-                        .font(Font.Halmap.CustomCaptionMedium)
-                        .foregroundColor(Color.customGray)
+                if defaultPlaylistSongs.count > 0 {
+                    VStack(alignment: .leading, spacing: 4){
+                        Text("\(miniPlayerViewModel.song.title)")
+                            .font(Font.Halmap.CustomBodyBold)
+                            .foregroundColor(Color.systemBackground)
+                        Text(miniPlayerViewModel.getTeamNameKr())
+                            .font(Font.Halmap.CustomCaptionMedium)
+                            .foregroundColor(Color.customGray)
+                    }
+                } else {
+                    Text("재생 중인 곡이 없습니다.")
+                        .foregroundStyle(Color.systemBackground.opacity(0.6))
+                        .font(.Halmap.CustomBodyBold)
                 }
+                
                 Spacer()
                 
                 if miniPlayerViewModel.isMiniPlayerActivate {
@@ -65,7 +72,6 @@ struct MiniPlayerView: View {
                         }, label: {
                             Image(systemName: miniPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
                                 .font(.system(size: 20, weight: .medium))
-                                .foregroundStyle(Color.white)
                         })
                         Button(action: {
                             if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
@@ -78,9 +84,10 @@ struct MiniPlayerView: View {
                         }, label: {
                             Image(systemName: "forward.end.fill")
                                 .font(.system(size: 20, weight: .medium))
-                                .foregroundStyle(Color.white)
                         })
                     }
+                    .disabled(defaultPlaylistSongs.count == 0)
+                    .foregroundStyle(defaultPlaylistSongs.count > 0 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
                 }
                 
                 if !miniPlayerViewModel.isMiniPlayerActivate {
@@ -100,7 +107,7 @@ struct MiniPlayerView: View {
                 onChanged()
             })
             .onTapGesture {
-                if miniPlayerViewModel.isMiniPlayerActivate {
+                if miniPlayerViewModel.isMiniPlayerActivate && defaultPlaylistSongs.count > 0 {
                     withAnimation{
                         miniPlayerViewModel.width = UIScreen.main.bounds.width
                         miniPlayerViewModel.isMiniPlayerActivate.toggle()

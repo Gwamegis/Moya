@@ -120,7 +120,6 @@ struct MainSongListTabView: View {
                             .background(Color.systemBackground)
                             .onTapGesture {
                                 self.miniPlayerViewModel.song = songInfo
-                                print(songInfo.title)
                                 withAnimation{
                                     miniPlayerViewModel.showPlayer = true
                                     miniPlayerViewModel.hideTabBar = true
