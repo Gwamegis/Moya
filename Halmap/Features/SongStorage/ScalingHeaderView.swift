@@ -137,6 +137,7 @@ struct ScalingHeaderView: View {
                         }
                     }
                 }
+                .padding(.bottom, 80)
             }
             .modifier(OffsetModifier(offset: $viewModel.offset))
             .onChange(of: viewModel.offset) { _ in

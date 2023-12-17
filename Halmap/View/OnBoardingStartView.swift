@@ -16,7 +16,6 @@ struct OnBoardingStartView: View {
     @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var dataManager: DataManager
     @StateObject var miniPlayerViewModel = MiniPlayerViewModel.instance
-    @GestureState var gestureOffset: CGFloat = 0
     @Namespace var animation
     let persistence = PersistenceController.shared
     
@@ -44,48 +43,16 @@ struct OnBoardingStartView: View {
                         MiniPlayerView()
                             .transition(.move(edge: .bottom))
                             .offset(y: miniPlayerViewModel.offset)
-                            .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
-                                
-                                state = value.translation.height
-                            })
-                                .onEnded(onEnd(value:)))
                             .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
                             .ignoresSafeArea(.keyboard)
                             .ignoresSafeArea()
                     }
                 }
             }
-            .onChange(of: gestureOffset, perform: { value in
-                onChanged()
-            })
             .environmentObject(miniPlayerViewModel)
+            .ignoresSafeArea(.keyboard)
         } else {
             TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $isFirstLaunching)
-        }
-    }
-    
-    func onChanged(){
-        if gestureOffset > 0 && !miniPlayerViewModel.isMiniPlayerActivate && miniPlayerViewModel.offset + 200 <= miniPlayerViewModel.height{
-            miniPlayerViewModel.offset = gestureOffset
-        }
-    }
-    
-    func onEnd(value: DragGesture.Value){
-        withAnimation(.smooth){
-
-            if !miniPlayerViewModel.isMiniPlayerActivate{
-                miniPlayerViewModel.offset = 0
-                
-                // Closing View...
-                if value.translation.height > UIScreen.main.bounds.height / 3{
-                    miniPlayerViewModel.hideTabBar = false
-                    miniPlayerViewModel.isMiniPlayerActivate = true
-                }
-                else{
-                    miniPlayerViewModel.hideTabBar = true
-                    miniPlayerViewModel.isMiniPlayerActivate = false
-                }
-            }
         }
     }
 }

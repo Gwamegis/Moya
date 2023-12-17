@@ -216,6 +216,7 @@ struct MainSongListTabView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
             .edgesIgnoringSafeArea(.top)
+            .padding(.bottom, miniPlayerViewModel.showPlayer ? 50 : 0)
             
             //상단 탭바
             TabBarView(currentTab: $viewModel.index)

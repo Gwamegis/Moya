@@ -20,6 +20,7 @@ struct MiniPlayerView: View {
     @AppStorage("currentSongId") var currentSongId: String = ""
     @State var isPlaylistView = false
     @State private var toast: Toast? = nil
+    @GestureState var gestureOffset: CGFloat = 0
     
     var body: some View {
         VStack(spacing: 0){
@@ -27,7 +28,6 @@ struct MiniPlayerView: View {
                 if !miniPlayerViewModel.isMiniPlayerActivate {
                     Button(action: {
                         withAnimation{
-                            miniPlayerViewModel.showPlayer = false
                             miniPlayerViewModel.hideTabBar = false
                             miniPlayerViewModel.isMiniPlayerActivate = true
                         }
@@ -86,7 +86,25 @@ struct MiniPlayerView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .frame(height: 60)
+            .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 60 : 80)
+            .contentShape(Rectangle())
+            .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
+                
+                state = value.translation.height
+            })
+                .onEnded(onEnd(value:)))
+            .onChange(of: gestureOffset, perform: { value in
+                onChanged()
+            })
+            .onTapGesture {
+                if miniPlayerViewModel.isMiniPlayerActivate {
+                    withAnimation{
+                        miniPlayerViewModel.width = UIScreen.main.bounds.width
+                        miniPlayerViewModel.isMiniPlayerActivate.toggle()
+                        miniPlayerViewModel.hideTabBar = true
+                    }
+                }
+            }
             
             GeometryReader{ reader in
                 ZStack {
@@ -135,18 +153,35 @@ struct MiniPlayerView: View {
         .background(
             Color("\(miniPlayerViewModel.song.team)Sub")
                 .cornerRadius(8)
-                .ignoresSafeArea(.keyboard)
-                .onTapGesture {
-                    withAnimation{
-                        miniPlayerViewModel.width = UIScreen.main.bounds.width
-                        miniPlayerViewModel.isMiniPlayerActivate.toggle()
-                        miniPlayerViewModel.hideTabBar = true
-                        print("\(miniPlayerViewModel.song.title)")
-                    }
-                }
-                
         )
     }
+    
+    func onChanged(){
+        if gestureOffset > 0 && !miniPlayerViewModel.isMiniPlayerActivate && miniPlayerViewModel.offset + 200 <= miniPlayerViewModel.height{
+            miniPlayerViewModel.offset = gestureOffset
+        }
+    }
+    
+    
+    func onEnd(value: DragGesture.Value){
+        withAnimation(.smooth){
+
+            if !miniPlayerViewModel.isMiniPlayerActivate{
+                miniPlayerViewModel.offset = 0
+                
+                // Closing View...
+                if value.translation.height > UIScreen.main.bounds.height / 3{
+                    miniPlayerViewModel.hideTabBar = false
+                    miniPlayerViewModel.isMiniPlayerActivate = true
+                }
+                else{
+                    miniPlayerViewModel.hideTabBar = true
+                    miniPlayerViewModel.isMiniPlayerActivate = false
+                }
+            }
+        }
+    }
+    
     
     func getOpacity()->Double{
         
