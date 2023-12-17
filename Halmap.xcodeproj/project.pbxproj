@@ -438,11 +438,12 @@
 			};
 			buildConfigurationList = A81FFC7128F15D9900B0FC7C /* Build configuration list for PBXProject "Halmap" */;
 			compatibilityVersion = "Xcode 13.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = A81FFC6D28F15D9900B0FC7C;
 			packageReferences = (

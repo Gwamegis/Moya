@@ -48,6 +48,7 @@ struct OnBoardingStartView: View {
                             .ignoresSafeArea()
                     }
                 }
+                .background(Color.clear)
             }
             .environmentObject(miniPlayerViewModel)
             .ignoresSafeArea(.keyboard)

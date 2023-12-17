@@ -34,7 +34,8 @@ struct PlaylistView: View {
                                     key: ViewOffsetKey.self,
                                     value: -$0.frame(in: .named("list")).origin.y)
                                 } : nil )
-                    }.onDelete { indexSet in
+                    }
+                    .onDelete { indexSet in
                         for index in indexSet {
                             if collectedSongs.count - 1 == 0 {
                                 // TODO: 메인화면으로 나가는 동작
@@ -53,7 +54,8 @@ struct PlaylistView: View {
                             }
                         }
                         persistence.deleteSong(at: indexSet, from: collectedSongs)
-                    }.onMove { indexSet, destination  in
+                    }
+                    .onMove { indexSet, destination  in
                         persistence.moveDefaultPlaylistSong(from: indexSet,
                                                             to: destination,
                                                             based: collectedSongs)

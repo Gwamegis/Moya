@@ -32,6 +32,7 @@ struct SongSearchView: View {
                 .padding(.top, 22)
 
             resultView
+                .padding(.bottom, miniPlayerViewModel.showPlayer ? 50 : 0)
 
         }
         .background(Color.systemBackground)
