@@ -11,6 +11,8 @@ import MediaPlayer
 
 struct MiniPlayerView: View {
     @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    
     @FetchRequest(
         entity: CollectedSong.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
@@ -87,6 +89,7 @@ struct MiniPlayerView: View {
             }
             .padding(.horizontal, 20)
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 60 : 80)
+            .padding(.top, miniPlayerViewModel.isMiniPlayerActivate ? 0 : safeAreaInsets.top)
             .contentShape(Rectangle())
             .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
                 

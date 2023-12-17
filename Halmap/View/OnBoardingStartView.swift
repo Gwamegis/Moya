@@ -48,6 +48,8 @@ struct OnBoardingStartView: View {
                             .ignoresSafeArea()
                     }
                 }
+                .ignoresSafeArea()
+                .padding(.bottom, miniPlayerViewModel.isMiniPlayerActivate ? UIScreen.getHeight(10) : 0 )
                 .background(Color.clear)
             }
             .environmentObject(miniPlayerViewModel)
