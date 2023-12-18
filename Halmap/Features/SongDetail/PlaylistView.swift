@@ -14,6 +14,7 @@ struct PlaylistView: View {
     @Binding var song: SongInfo
     @Binding var isScrolled: Bool
     @Binding var isPlaying: Bool
+    @Binding var toast: Toast?
 
     let persistence = PersistenceController.shared
     @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)], predicate: PlaylistFilter(filter: "defaultPlaylist").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
@@ -52,6 +53,7 @@ struct PlaylistView: View {
                                             self.song = Utility.convertSongToSongInfo(song: collectedSongs[Int(collectedSongs[songIndex].order + 1)])
                                         } else {
                                             self.song = Utility.convertSongToSongInfo(song: collectedSongs[0])
+                                            toast = Toast(team: collectedSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
                                         }
                                     }
                                 }

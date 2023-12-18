@@ -123,7 +123,8 @@ struct MiniPlayerView: View {
                             viewModel: PlaylistViewModel(viewModel: miniPlayerViewModel),
                             song: $miniPlayerViewModel.song,
                             isScrolled: $miniPlayerViewModel.isScrolled,
-                            isPlaying: $miniPlayerViewModel.isPlaying)
+                            isPlaying: $miniPlayerViewModel.isPlaying, 
+                            toast: $toast)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
                     } else {
