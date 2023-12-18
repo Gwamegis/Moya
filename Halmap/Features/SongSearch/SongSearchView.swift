@@ -39,8 +39,10 @@ struct SongSearchView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .onAppear {
-            UIApplication.shared.hideKeyboard()
             isFocused = true
+        }
+        .onTapGesture {
+            hideKeyboard()
         }
     }
 
@@ -154,7 +156,21 @@ struct SongSearchView: View {
                 }
                 .padding(.horizontal, 20)
                 .listStyle(.plain)
+                .gesture(
+                   DragGesture().onChanged { value in
+                      if value.translation.height < 0 {
+                          hideKeyboard()
+                      }
+                   }
+                )
             }
         }
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
