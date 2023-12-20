@@ -50,6 +50,24 @@ class DataManager: ObservableObject {
         }
         fetchTrafficNotification()
         
+        initData()
+//        loadData()
+//        teamLists.forEach { teamName in
+//            fetchSong(team: teamName.rawValue, type: true) { songs in
+//                self.playerSongsAll[teamName.fetchTeamIndex()] = songs
+//                self.setSongList(team: self.selectedTeam)
+//            }
+//            fetchSong(team: teamName.rawValue, type: false) { songs in
+//                self.teamSongsAll[teamName.fetchTeamIndex()] = songs
+//            }
+//        }
+//        
+//        fetchSeasonData { data in
+//            self.seasonSongs = data
+//        }
+    }
+    
+    func initData() {
         loadData()
         teamLists.forEach { teamName in
             fetchSong(team: teamName.rawValue, type: true) { songs in

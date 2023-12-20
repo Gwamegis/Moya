@@ -91,6 +91,7 @@ struct AudioPlayerControlsView: View {
                 self.currentTime = 0
                 self.currentDuration = 0
                 
+                // MARK: 노래 끝났을때 처리 로직
                 if self.state == .pause {
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == song.id}) {
                         if index + 1 < defaultPlaylistSongs.count {

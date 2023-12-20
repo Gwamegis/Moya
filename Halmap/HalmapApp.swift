@@ -23,7 +23,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-
     @StateObject var dataManager = DataManager.instance
     @StateObject var audioManager = AudioManager.instance
 
