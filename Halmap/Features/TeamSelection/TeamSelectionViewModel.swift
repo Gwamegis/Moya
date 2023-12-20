@@ -10,6 +10,7 @@ import SwiftUI
 
 final class TeamSelectionViewModel: ObservableObject {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @AppStorage("selectedTeam") var selectedTeamName: String = ""
     @Published var buttonPressed = [Bool](repeating: false, count: 10)
     @Published var selectedTeam: TeamName? = nil
     
@@ -30,7 +31,7 @@ final class TeamSelectionViewModel: ObservableObject {
     
     func isSelectedTeam(with team: TeamName) -> Bool {
         guard let selectedTeam else {
-            return initialSelectedTeam == team
+            return team.rawValue == dataManager.selectedTeam
         }
         return selectedTeam == team
     }
