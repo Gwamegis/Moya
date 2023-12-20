@@ -84,7 +84,9 @@ struct MiniPlayerView: View {
                         }, label: {
                             Image(systemName: "forward.end.fill")
                                 .font(.system(size: 20, weight: .medium))
+                                .foregroundStyle(defaultPlaylistSongs.count > 1 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
                         })
+                        .disabled(defaultPlaylistSongs.count <= 1)
                     }
                     .disabled(defaultPlaylistSongs.count == 0)
                     .foregroundStyle(defaultPlaylistSongs.count > 0 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
@@ -143,9 +145,6 @@ struct MiniPlayerView: View {
                     }
                     .ignoresSafeArea()
                 }
-                .onAppear() {
-                    setMediaPlayerNextTrack()
-                }
                 .onChange(of: miniPlayerViewModel.song.id) { _ in
                     self.currentSongId = miniPlayerViewModel.song.id
                 }
@@ -154,6 +153,17 @@ struct MiniPlayerView: View {
                         self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: defaultPlaylistSongs[index])
                         self.miniPlayerViewModel.setPlayer()
                     }
+                }
+                .onAppear() {
+                    setMediaPlayerNextTrack()
+                }
+                .onChange(of: defaultPlaylistSongs.count) { [oldValue = defaultPlaylistSongs.count] newValue in
+                    if oldValue > newValue && newValue == 1 {
+                        removeMediaPlayerNextTrack()
+                    } else if oldValue < newValue && newValue == 2 {
+                        setMediaPlayerNextTrack()
+                    }
+                    
                 }
             }
             .background(Color("\(miniPlayerViewModel.song.team)Sub"))
@@ -252,6 +262,12 @@ struct MiniPlayerView: View {
             return .success
         }
     }
+    private func removeMediaPlayerNextTrack() {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        
+        commandCenter.nextTrackCommand.removeTarget(nil)
+        commandCenter.previousTrackCommand.removeTarget(nil)
+    }
 }
 
 private struct Lyric: View {
@@ -325,8 +341,10 @@ private struct PlayBar: View {
                 } label: {
                     Image(systemName: "backward.end.fill")
                         .font(.system(size: 28, weight: .regular))
-                        .foregroundColor(.customGray)
+                        .foregroundColor(defaultPlaylistSongs.count > 1 ? .customGray : .customGray.opacity(0.4))
                 }
+                .disabled(defaultPlaylistSongs.count <= 1)
+                
                 Button {
                     viewModel.handlePlayButtonTap()
                 } label: {
@@ -334,12 +352,15 @@ private struct PlayBar: View {
                         .font(.system(size: 60, weight: .medium))
                         .foregroundStyle(Color.customGray)
                 }
+                
                 Button {
                     // - MARK: 다음곡 재생 기능
                     if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
                         if index + 1 > defaultPlaylistSongs.count - 1 {
-                            toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
-                            viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                            if defaultPlaylistSongs.count > 1 {
+                                toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
+                                viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                            }
                         } else {
                             viewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
                         }
@@ -347,8 +368,9 @@ private struct PlayBar: View {
                 } label: {
                     Image(systemName: "forward.end.fill")
                         .font(.system(size: 28, weight: .regular))
-                        .foregroundColor(.customGray)
+                        .foregroundColor(defaultPlaylistSongs.count > 1 ? .customGray : .customGray.opacity(0.4))
                 }
+                .disabled( defaultPlaylistSongs.count <= 1)
             }
             .padding(.bottom, 54)
         }

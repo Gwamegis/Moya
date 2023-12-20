@@ -45,10 +45,8 @@ final class PlaylistViewModel: ObservableObject {
     }
 
     func didTappedSongCell(song: CollectedSong) -> SongInfo {
-        print("song: ", song.safeTitle, "order: ", song.order)
         if song.id != self.song.id {
             let song = convertSongToSongInfo(song: song)
-            print(#function, song.title)
             self.song = song
             audioManager.removePlayer()
             return song

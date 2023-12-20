@@ -27,7 +27,6 @@ struct PlaylistView: View {
                         getPlaylistRowView(song: playListSong)
                             .background(Color.white.opacity(0.001))
                             .onTapGesture {
-                                print("self.song", playListSong.safeTitle, playListSong.order)
                                 self.song = viewModel.didTappedSongCell(song: playListSong)
                             }
                             .background(

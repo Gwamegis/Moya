@@ -155,7 +155,7 @@ extension AudioManager {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
     
-    private func updateNowPlayingPlaybackRate() {
+    func updateNowPlayingPlaybackRate() {
         if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo {
             nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentItem?.currentTime().seconds
             nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player.rate
@@ -168,7 +168,14 @@ extension AudioManager {
         
         commandCenter.playCommand.addTarget { [unowned self] event in
             if self.player.rate == 0.0 {
-                player.play()
+                if self.player.currentItem == nil {
+                    if let song {
+                        AMset(song: song)
+                    }
+                    
+                } else {
+                    player.play()
+                }
                 isPlaying = true
                 
                 updateNowPlayingPlaybackRate()

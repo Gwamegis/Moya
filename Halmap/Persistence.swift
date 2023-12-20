@@ -129,7 +129,6 @@ struct PersistenceController {
                     if index < currentIndex {
                         var startOrder = collectedSongs[index].order
                         for i in index+1...currentIndex {
-                            print(collectedSongs[i].safeTitle, collectedSongs[i].order, startOrder)
                             collectedSongs[i].order = startOrder
                             startOrder += 1
                         }
@@ -138,7 +137,6 @@ struct PersistenceController {
                         let newOrder = collectedSongs[currentIndex+1].order
                         var startOrder = collectedSongs[currentIndex+1].order+1
                         for i in currentIndex+1..<index {
-                            print(collectedSongs[i].safeTitle, collectedSongs[i].order, startOrder)
                             collectedSongs[i].order = startOrder
                             startOrder += 1
                         }
@@ -148,7 +146,6 @@ struct PersistenceController {
                 } else {
                     //새로운 곡을 바로 다음에 추가
                     for i in currentIndex+1..<count {
-                        print(collectedSongs[i].safeTitle)
                         collectedSongs[i].order += 1
                     }
                     

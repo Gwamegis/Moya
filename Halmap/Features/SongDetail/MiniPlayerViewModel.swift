@@ -59,7 +59,11 @@ class MiniPlayerViewModel: ObservableObject {
 
     func handlePlayButtonTap() {
         if !audioManager.isPlaying {
-            audioManager.AMplay()
+            if audioManager.player.currentItem == nil {
+                setPlayer()
+            } else {
+                audioManager.AMplay()
+            }
         } else {
             audioManager.AMstop()
         }

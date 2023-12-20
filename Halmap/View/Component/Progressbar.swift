@@ -97,8 +97,10 @@ struct AudioPlayerControlsView: View {
                         if index + 1 < defaultPlaylistSongs.count {
                             self.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[Int(defaultPlaylistSongs[index].order + 1)])
                         } else {
-                            self.song =  Utility.convertSongToSongInfo(song: defaultPlaylistSongs[0])
-                            toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
+                            if defaultPlaylistSongs.count > 1 {
+                                toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
+                                self.song =  Utility.convertSongToSongInfo(song: defaultPlaylistSongs[0])
+                            }
                         }
                     }
                 }
@@ -131,6 +133,7 @@ struct AudioPlayerControlsView: View {
             player.seek(to: targetTime) { _ in
                 self.timeObserver.pause(false)
                 self.state = .playing
+                AudioManager.instance.updateNowPlayingPlaybackRate()
             }
         }
     }
