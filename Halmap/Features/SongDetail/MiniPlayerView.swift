@@ -99,7 +99,6 @@ struct MiniPlayerView: View {
             .padding(.top, miniPlayerViewModel.isMiniPlayerActivate ? 0 : safeAreaInsets.top)
             .contentShape(Rectangle())
             .gesture(DragGesture().updating($gestureOffset, body: { (value, state, _) in
-                
                 state = value.translation.height
             })
                 .onEnded(onEnd(value:)))

@@ -107,8 +107,20 @@ struct SongSearchView: View {
                         .scaledToFit()
                         .frame(width: UIScreen.getHeight(200))
                         .padding(.top, UIScreen.getHeight(60))
+                    Link(destination: URL(string: "https://forms.gle/KmJaL1UTYahUVGkk7")!) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "paperplane.fill")
+                            Text("응원가 신청하기")
+                                .font(Font.Halmap.CustomBodyBold)
+                        }
+                        .padding(EdgeInsets(top: 8, leading: 38, bottom: 8, trailing: 38))
+                        .foregroundColor(Color.mainGreen)
+                        .background {
+                            RoundedRectangle(cornerRadius: 18)
+                                .strokeBorder(Color.mainGreen, lineWidth: 1)
+                        }
+                    }
                     Spacer()
-                    RequestSongView(buttonColor: Color.mainGreen)
                 }
             case .result:
                 List {
