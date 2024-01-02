@@ -133,7 +133,28 @@ struct SongSearchView: View {
                                                 info: song.info,
                                                 url: song.url)
 
-                        Button(action: {
+                        HStack(spacing: 16) {
+                            Image(viewModel.getAlbumImage(with: song))
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .cornerRadius(8)
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(song.title)
+                                    .font(Font.Halmap.CustomBodyMedium)
+                                    .foregroundColor(.black)
+                                Text(viewModel.getTeamName(with: song))
+                                    .font(Font.Halmap.CustomCaptionMedium)
+                                    .foregroundColor(.customDarkGray)
+                            }
+                            .frame(height: 45)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.white.opacity(0.0001))
+                            .lineLimit(1)
+                        }
+                        .listRowBackground(Color(UIColor.clear))
+                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
+                        .listRowSeparatorTint(Color.customGray)
+                        .onTapGesture {
                             miniPlayerViewModel.removePlayer()
                             self.miniPlayerViewModel.song = song
                             miniPlayerViewModel.setPlayer()
@@ -143,27 +164,7 @@ struct SongSearchView: View {
                                 miniPlayerViewModel.isMiniPlayerActivate = false
                             }
                             miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
-                        }, label: {
-                            HStack(spacing: 16) {
-                                Image(viewModel.getAlbumImage(with: song))
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .cornerRadius(8)
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
-                                        .foregroundColor(.black)
-                                    Text(viewModel.getTeamName(with: song))
-                                        .font(Font.Halmap.CustomCaptionMedium)
-                                        .foregroundColor(.customDarkGray)
-                                }
-                                .frame(height: 45)
-                                .lineLimit(1)
-                            }
-                        })
-                        .listRowBackground(Color(UIColor.clear))
-                        .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
-                        .listRowSeparatorTint(Color.customGray)
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
