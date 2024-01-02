@@ -116,6 +116,10 @@ enum MenuType {
         case .liked:
             return persistence.saveSongs(song: Utility.convertSongToSongInfo(song: collectedSong), playListTitle: "favorite")
         case .cancelLiked:
+            let instance = MiniPlayerViewModel.instance
+            if instance.song.id == collectedSong.id {
+                instance.isFavorite = false
+            }
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:
             //TODO: 바로 다음에 재생 기능 추가
