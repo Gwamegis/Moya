@@ -19,6 +19,7 @@
 		20A687E42A711C48005F18FA /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E32A711C48005F18FA /* FirebaseFirestoreSwift */; };
 		20A687E62A711C48005F18FA /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E52A711C48005F18FA /* FirebaseRemoteConfig */; };
 		20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 20A687E72A711C48005F18FA /* FirebaseStorage */; };
+		20D18F122B5C112E003CA589 /* MiniPlayerProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D18F112B5C112E003CA589 /* MiniPlayerProgressBar.swift */; };
 		8744D0832AC5FBCC002F1D3A /* TeamSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */; };
 		8744D0852AC60D22002F1D3A /* OnBoardingStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */; };
 		8764EEEC2ABFEF6A0006F438 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */; };
@@ -84,6 +85,7 @@
 		2051C1E22B28A1DB00842AA3 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		2051C1E42B28A20F00842AA3 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		206F9F6C2AD29611004DAD73 /* MainSongListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSongListViewModel.swift; sourceTree = "<group>"; };
+		20D18F112B5C112E003CA589 /* MiniPlayerProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerProgressBar.swift; sourceTree = "<group>"; };
 		8744D0822AC5FBCC002F1D3A /* TeamSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewModel.swift; sourceTree = "<group>"; };
 		8744D0842AC60D22002F1D3A /* OnBoardingStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingStartView.swift; sourceTree = "<group>"; };
 		8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				F90190802B038BDF00C9BFF6 /* PlaylistViewModel.swift */,
 				2051C1E22B28A1DB00842AA3 /* MiniPlayerView.swift */,
 				2051C1E42B28A20F00842AA3 /* MiniPlayerViewModel.swift */,
+				20D18F112B5C112E003CA589 /* MiniPlayerProgressBar.swift */,
 			);
 			path = SongDetail;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				A81FFCA528F1B84000B0FC7C /* Halmap+Font.swift in Sources */,
 				8774038C2ABD2B7700C94D35 /* SongSearchViewModel.swift in Sources */,
 				F98F8D5D29D85B0C00F9C956 /* RequestSongView.swift in Sources */,
+				20D18F122B5C112E003CA589 /* MiniPlayerProgressBar.swift in Sources */,
 				A81FFC7C28F15D9900B0FC7C /* ContentView.swift in Sources */,
 				F9305CA42B1038BE00A0F7C9 /* Utility.swift in Sources */,
 				A81FFC8628F15D9C00B0FC7C /* Halmap.xcdatamodeld in Sources */,
@@ -683,13 +687,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -707,7 +709,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = moya_dev;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -723,12 +724,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Halmap/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y6P5ZFWBM8;
+				DEVELOPMENT_TEAM = Y6P5ZFWBM8;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Halmap/Info.plist;
@@ -746,7 +745,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Gwamegis.Halmap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = moya_dev;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

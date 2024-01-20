@@ -26,77 +26,92 @@ struct MiniPlayerView: View {
     
     var body: some View {
         VStack(spacing: 0){
-            HStack(spacing: 16){
-                if !miniPlayerViewModel.isMiniPlayerActivate {
-                    Button(action: {
-                        withAnimation{
-                            miniPlayerViewModel.hideTabBar = false
-                            miniPlayerViewModel.isMiniPlayerActivate = true
-                        }
-                    }, label: {
-                        Image(systemName: "chevron.down")
-                            .font(.system(size: 24))
-                            .foregroundColor(Color.white)
-                        
-                    })
-                }
-                if !miniPlayerViewModel.isMiniPlayerActivate {
-                    Image(miniPlayerViewModel.fetchImage())
-                                        .resizable()
-                                        .cornerRadius(10)
-                                        .frame(width: 52, height: 52)
-                                        .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
-                }
-                
-                if defaultPlaylistSongs.count > 0 {
-                    VStack(alignment: .leading, spacing: 4){
-                        Text("\(miniPlayerViewModel.song.title)")
-                            .font(Font.Halmap.CustomBodyBold)
-                            .foregroundColor(Color.systemBackground)
-                        Text(miniPlayerViewModel.getTeamNameKr())
-                            .font(Font.Halmap.CustomCaptionMedium)
-                            .foregroundColor(Color.customGray)
-                    }
-                } else {
-                    Text("재생 중인 곡이 없습니다.")
-                        .foregroundStyle(Color.systemBackground.opacity(0.6))
-                        .font(.Halmap.CustomBodyBold)
-                }
-                
-                Spacer()
-                
+            VStack(spacing:0){
                 if miniPlayerViewModel.isMiniPlayerActivate {
-                    HStack(spacing: 21) {
+                    Spacer()
+                }
+                HStack(spacing: 16){
+                    if !miniPlayerViewModel.isMiniPlayerActivate {
                         Button(action: {
-                            miniPlayerViewModel.handlePlayButtonTap()
-                        }, label: {
-                            Image(systemName: miniPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
-                                .font(.system(size: 20, weight: .medium))
-                        })
-                        Button(action: {
-                            if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
-                                if index + 1 > defaultPlaylistSongs.count - 1 {
-                                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
-                                } else {
-                                    miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
-                                }
+                            withAnimation{
+                                miniPlayerViewModel.hideTabBar = false
+                                miniPlayerViewModel.isMiniPlayerActivate = true
                             }
                         }, label: {
-                            Image(systemName: "forward.end.fill")
-                                .font(.system(size: 20, weight: .medium))
-                                .foregroundStyle(defaultPlaylistSongs.count > 1 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
+                            Image(systemName: "chevron.down")
+                                .font(.system(size: 24))
+                                .foregroundColor(Color.white)
+                            
                         })
-                        .disabled(defaultPlaylistSongs.count <= 1)
                     }
-                    .disabled(defaultPlaylistSongs.count == 0)
-                    .foregroundStyle(defaultPlaylistSongs.count > 0 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
+                    if !miniPlayerViewModel.isMiniPlayerActivate {
+                        Image(miniPlayerViewModel.fetchImage())
+                            .resizable()
+                            .cornerRadius(10)
+                            .frame(width: 52, height: 52)
+                            .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 4)
+                    }
+                    
+                    if defaultPlaylistSongs.count > 0 {
+                        VStack(alignment: .leading, spacing: 4){
+                            Text("\(miniPlayerViewModel.song.title)")
+                                .font(Font.Halmap.CustomBodyBold)
+                                .foregroundColor(Color.systemBackground)
+                            Text(miniPlayerViewModel.getTeamNameKr())
+                                .font(Font.Halmap.CustomCaptionMedium)
+                                .foregroundColor(Color.customGray)
+                        }
+                    } else {
+                        Text("재생 중인 곡이 없습니다.")
+                            .foregroundStyle(Color.systemBackground.opacity(0.6))
+                            .font(.Halmap.CustomBodyBold)
+                    }
+                    
+                    Spacer()
+                    
+                    if miniPlayerViewModel.isMiniPlayerActivate {
+                        HStack(spacing: 21) {
+                            Button(action: {
+                                miniPlayerViewModel.handlePlayButtonTap()
+                            }, label: {
+                                Image(systemName: miniPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
+                                    .font(.system(size: 20, weight: .medium))
+                            })
+                            Button(action: {
+                                if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
+                                    if index + 1 > defaultPlaylistSongs.count - 1 {
+                                        miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs.first!)
+                                    } else {
+                                        miniPlayerViewModel.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[index + 1])
+                                    }
+                                }
+                            }, label: {
+                                Image(systemName: "forward.end.fill")
+                                    .font(.system(size: 20, weight: .medium))
+                                    .foregroundStyle(defaultPlaylistSongs.count > 1 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
+                            })
+                            .disabled(defaultPlaylistSongs.count <= 1)
+                        }
+                        .disabled(defaultPlaylistSongs.count == 0)
+                        .foregroundStyle(defaultPlaylistSongs.count > 0 ? Color.systemBackground : Color.systemBackground.opacity(0.2))
+                    }
+                    
+                    if !miniPlayerViewModel.isMiniPlayerActivate {
+                        FavoriteButton(viewModel: miniPlayerViewModel)
+                    }
                 }
+                .padding(.horizontal, 20)
                 
-                if !miniPlayerViewModel.isMiniPlayerActivate {
-                    FavoriteButton(viewModel: miniPlayerViewModel)
-                }
+                    MiniPlayerProgressBar(
+                        song: $miniPlayerViewModel.song,
+                        toast: $toast,
+                        isThumbActive: true)
+                    .opacity(miniPlayerViewModel.isMiniPlayerActivate ? 1 : 0)
+                    .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 5 : 0)
+                    .padding(.vertical, miniPlayerViewModel.isMiniPlayerActivate ? 8 : 0)
+                
             }
-            .padding(.horizontal, 20)
+            // .padding(.horizontal, 20)
             .frame(height: miniPlayerViewModel.isMiniPlayerActivate ? 60 : 80)
             .padding(.top, miniPlayerViewModel.isMiniPlayerActivate ? 0 : safeAreaInsets.top)
             .contentShape(Rectangle())
@@ -124,7 +139,7 @@ struct MiniPlayerView: View {
                             viewModel: PlaylistViewModel(viewModel: miniPlayerViewModel),
                             song: $miniPlayerViewModel.song,
                             isScrolled: $miniPlayerViewModel.isScrolled,
-                            isPlaying: $miniPlayerViewModel.isPlaying, 
+                            isPlaying: $miniPlayerViewModel.isPlaying,
                             toast: $toast)
                         .padding(.top, 10)
                         .padding(.bottom, 150)
@@ -186,7 +201,7 @@ struct MiniPlayerView: View {
     
     func onEnd(value: DragGesture.Value){
         withAnimation(.smooth){
-
+            
             if !miniPlayerViewModel.isMiniPlayerActivate{
                 miniPlayerViewModel.offset = 0
                 
