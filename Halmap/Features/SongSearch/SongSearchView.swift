@@ -40,6 +40,7 @@ struct SongSearchView: View {
         .navigationBarHidden(true)
         .onAppear {
             isFocused = true
+            Utility.analyticsScreenEvent(screenName: "검색", screenClass: "SongSearchView")
         }
         .onTapGesture {
             hideKeyboard()

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAnalytics
 
 class Utility: NSObject {
     
@@ -53,5 +54,65 @@ class Utility: NSObject {
             return "\(song.team)\(song.type ? "Player" : "Album")"
         }
     }
-    
+    static func analyticsPlaySong(song: SongInfo, event: String) {
+        let event = "PlaySong"
+        let parameters = [
+            "id": song.id,
+            "team": song.team,
+            "title": song.title,
+            "event": event
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsPlayAllSong(index: Int) {
+        let event = "PlayAllSong"
+        let parameters = [
+            "위치": index == 0 ? "TeamTab" : "PlayerTab",
+            "event": "PlayAll"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsPlayNextSongMini() {
+        let event = "PlayNextSongMini"
+        let parameters = [
+            "event": "NextSong_Mini"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsPlayPauseSongMini() {
+        let event = "PlayPauseSongMini"
+        let parameters = [
+            "event": "PauseSong_Mini"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsLikeSong() {
+    }
+    static func analyticsChangeTeam() {
+        let event = "ChangeTeam"
+        let parameters = [
+            "event": "event occur"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsAddSongFirst() {
+        let event = "AddSongFirst"
+        let parameters = [
+            "event": "AddSongFirst"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+    static func analyticsAddSongLast() {
+        let event = "AddSongLast"
+        let parameters = [
+            "event": "AddSongLast"
+        ]
+        Analytics.logEvent(event, parameters: parameters)
+    }
+//Screen View Event
+    static func analyticsScreenEvent(screenName: String, screenClass: String) {
+        Analytics.logEvent(AnalyticsEventScreenView,
+                           parameters: [AnalyticsParameterScreenName: screenName,
+                                        AnalyticsParameterScreenClass: screenClass])
+    }
 }
