@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct ScalingHeaderView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
     
-    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlayListFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    @FetchRequest(entity: CollectedSong.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)], predicate: PlaylistFilter(filter: "favorite").predicate, animation: .default) private var collectedSongs: FetchedResults<CollectedSong>
+    
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
     
     @StateObject var viewModel: SongStorageViewModel
+    @State var collectedSongData: CollectedSong?
+    @State var isShowSheet = false
+    
+    @AppStorage("currentSongId") var currentSongId: String = ""
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -33,6 +45,29 @@ struct ScalingHeaderView: View {
                                 .font(Font.Halmap.CustomCaptionBold)
                                 .foregroundColor(.customDarkGray)
                             Spacer()
+                            if collectedSongs.count > 0 {
+                                Button {
+                                    persistence.fetchPlaylistAll()
+                                    miniPlayerViewModel.removePlayer()
+                                    self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: collectedSongs[0])
+                                    miniPlayerViewModel.setPlayer()
+                                    withAnimation{
+                                        miniPlayerViewModel.showPlayer = true
+                                        miniPlayerViewModel.hideTabBar = true
+                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                    }
+                                } label: {
+                                    HStack(spacing: 5) {
+                                        Image(systemName: "play.circle.fill")
+                                            .foregroundColor(.mainGreen)
+                                            .font(.system(size: 20))
+                                        Text("전체 재생하기")
+                                            .font(Font.Halmap.CustomCaptionBold)
+                                            .foregroundColor(.mainGreen)
+                                    }
+                                    .opacity(viewModel.checkScrollRequirement(listCount: collectedSongs.count))
+                                }
+                            }
                         }
                         .padding(.horizontal, 20)
                         .padding(.vertical, UIScreen.getHeight(17))
@@ -58,21 +93,23 @@ struct ScalingHeaderView: View {
                             let song = viewModel.makeSong(favoriteSong: favoriteSong)
                             
                             VStack(spacing: 0) {
-                                NavigationLink {
-                                    SongDetailView(
-                                        viewModel: SongDetailViewModel(
-                                            audioManager: audioManager,
-                                            dataManager: dataManager,
-                                            persistence: persistence,
-                                            song: song
-                                        ))
-                                } label: {
+                                Button(action: {
+                                    miniPlayerViewModel.removePlayer()
+                                    self.miniPlayerViewModel.song = song
+                                    miniPlayerViewModel.setPlayer()
+                                    withAnimation{
+                                        miniPlayerViewModel.showPlayer = true
+                                        miniPlayerViewModel.hideTabBar = true
+                                        miniPlayerViewModel.isMiniPlayerActivate = false
+                                    }
+                                    miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                                }, label: {
                                     HStack(spacing: 16) {
                                         Image(viewModel.fetchSongImageName(favoriteSong: favoriteSong))
                                             .resizable()
                                             .frame(width: 40, height: 40)
                                             .cornerRadius(8)
-                                        VStack(alignment: .leading, spacing: 8) {
+                                        VStack(alignment: .leading, spacing: 6) {
                                             Text(favoriteSong.safeTitle)
                                                 .font(Font.Halmap.CustomBodyMedium)
                                                 .foregroundColor(.black)
@@ -82,22 +119,25 @@ struct ScalingHeaderView: View {
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
-                                        
+
                                         Button {
-                                            viewModel.deleteSong(favoriteSong: favoriteSong)
+                                            self.collectedSongData = favoriteSong
+                                            isShowSheet.toggle()
                                         } label: {
-                                            Image(systemName: "heart.fill")
-                                                .foregroundColor(.mainGreen)
+                                            Image(systemName: "ellipsis")
+                                                .foregroundColor(.customDarkGray)
+                                                .frame(maxWidth: 35, maxHeight: .infinity)
                                         }
                                     }
                                     .padding(.horizontal, 20)
-                                    .padding(.vertical, 10)
-                                }
+                                    .padding(.vertical, 15)
+                                })
                             }
                             .background(Color.systemBackground)
                         }
                     }
                 }
+                .padding(.bottom, 80)
             }
             .modifier(OffsetModifier(offset: $viewModel.offset))
             .onChange(of: viewModel.offset) { _ in
@@ -106,6 +146,13 @@ struct ScalingHeaderView: View {
         }
         .coordinateSpace(name: "StorageScroll")
         .background(Color.systemBackground)
+        .sheet(isPresented: $isShowSheet) {
+            if let collectedSongData {
+                HalfSheet {
+                    HalfSheetView(collectedSongData: collectedSongData, showSheet: $isShowSheet)
+                }
+            }
+        }
     }
     
     var defaultHeader: some View {
@@ -116,6 +163,23 @@ struct ScalingHeaderView: View {
                 Text("보관함")
                     .font(Font.Halmap.CustomLargeTitle)
                 Spacer()
+                if collectedSongs.count > 0 {
+                    Button {
+                        persistence.fetchPlaylistAll()
+                        miniPlayerViewModel.removePlayer()
+                        self.miniPlayerViewModel.song = miniPlayerViewModel.convertSongToSongInfo(song: collectedSongs[0])
+                        miniPlayerViewModel.setPlayer()
+                        withAnimation{
+                            miniPlayerViewModel.showPlayer = true
+                            miniPlayerViewModel.hideTabBar = true
+                            miniPlayerViewModel.isMiniPlayerActivate = false
+                        }
+                    } label: {
+                        Image(systemName: "play.circle.fill")
+                            .foregroundColor(.mainGreen)
+                            .font(.system(size: 50))
+                    }
+                }
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 20, trailing: 20))
         }
@@ -135,11 +199,5 @@ struct ScalingHeaderView: View {
             .padding(.top, 40)
             
         }
-    }
-}
-
-struct ScalingHeaderView_Previews: PreviewProvider {
-    static var previews: some View {
-        StorageContentView()
     }
 }

@@ -12,7 +12,7 @@ final class PlaylistViewModel: ObservableObject {
     private let dataManager: DataManager
     private var song: SongInfo
 
-    init(viewModel: SongDetailViewModel) {
+    init(viewModel: MiniPlayerViewModel) {
         audioManager = viewModel.getAudioManager()
         dataManager = viewModel.getdataManager()
         song = viewModel.getSongInfo()
@@ -30,21 +30,31 @@ final class PlaylistViewModel: ObservableObject {
     func getSongTitle(song: CollectedSong) -> String {
         song.title ?? ""
     }
-
+    
+    func getTeamNameKr(song: CollectedSong) -> String {
+        TeamName(rawValue: song.safeTeam)?.fetchTeamNameKr() ?? ""
+    }
+    
+    func getSongTeamBackgroundColor(with song: CollectedSong) -> String {
+        "\(convertSongToSongInfo(song: song).team)Background"
+    }
+    
     func getSongTeamName(with song: CollectedSong) -> String {
         let song = convertSongToSongInfo(song: song)
         return TeamName(rawValue: song.team)?.fetchTeamNameKr() ?? "."
     }
 
     func didTappedSongCell(song: CollectedSong) -> SongInfo {
-        let song = convertSongToSongInfo(song: song)
-        print(#function, song.title)
-        self.song = song
-        audioManager.removePlayer()
-        audioManager.AMset(song: song)
-        return song
+        if song.id != self.song.id {
+            let song = convertSongToSongInfo(song: song)
+            self.song = song
+            audioManager.removePlayer()
+            return song
+        } else {
+            return self.song
+        }
     }
-
+    
     private func convertSongToSongInfo(song: CollectedSong) -> SongInfo {
         SongInfo(
             id: song.id ?? "",
@@ -55,5 +65,9 @@ final class PlaylistViewModel: ObservableObject {
             info: song.info ?? "",
             url: song.url ?? ""
         )
+    }
+    
+    func stopPlayer() {
+        audioManager.AMplayEnd()
     }
 }

@@ -13,25 +13,47 @@ struct OnBoardingStartView: View {
     @AppStorage("isShouldShowNotification") var isShouldShowNotification = false
     @AppStorage("isShouldShowTraffic") var isShouldShowTraffic = false
     @AppStorage("latestVersion") var latestVersion = "1.0.0"
-    
+    @EnvironmentObject var audioManager: AudioManager
     @EnvironmentObject var dataManager: DataManager
+    @StateObject var miniPlayerViewModel = MiniPlayerViewModel.instance
+    @Namespace var animation
+    let persistence = PersistenceController.shared
+    
     var body: some View {
         if !isFirstLaunching {
-            ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
-                if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
-                    MainTabView()
-                        .sheet(isPresented: $isShouldShowTraffic) {
-                            HalfSheet {
-                                NotificationView(type: .traffic)
+            ZStack{
+                ForEach(Array(TeamName.allCases.enumerated()), id: \.offset) { index, team in
+                    if Themes.themes[index] == TeamName(rawValue: selectedTeam) {
+                        MainTabView()
+                            .sheet(isPresented: $isShouldShowTraffic) {
+                                HalfSheet {
+                                    NotificationView(type: .traffic)
+                                }
                             }
-                        }
-                        .sheet(isPresented: $isShouldShowNotification) {
-                            HalfSheet {
-                                NotificationView(type: .version)
+                            .sheet(isPresented: $isShouldShowNotification) {
+                                HalfSheet {
+                                    NotificationView(type: .version)
+                                }
                             }
-                        }
+                    }
                 }
+                VStack{
+                    Spacer()
+                    if miniPlayerViewModel.showPlayer {
+                        MiniPlayerView()
+                            .transition(.move(edge: .bottom))
+                            .offset(y: miniPlayerViewModel.offset)
+                            .padding(.bottom, miniPlayerViewModel.hideTabBar ? 0 : 57)
+                            .ignoresSafeArea()
+                    }
+                }
+                .ignoresSafeArea()
+                .padding(.bottom, miniPlayerViewModel.isMiniPlayerActivate ? UIScreen.getHeight(10) : 0 )
+                .background(Color.clear)
+                .padding(miniPlayerViewModel.isMiniPlayerActivate ? EdgeInsets(top: 0, leading: 15, bottom: 10, trailing: 15) : EdgeInsets())
             }
+            .environmentObject(miniPlayerViewModel)
+            .ignoresSafeArea(.keyboard)
         } else {
             TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $isFirstLaunching)
         }

@@ -11,9 +11,15 @@ struct SongSearchView: View {
     @EnvironmentObject var dataManager: DataManager
     @EnvironmentObject var audioManager: AudioManager
     let persistence = PersistenceController.shared
-    
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     @StateObject var viewModel: SongSearchViewModel
     @FocusState private var isFocused: Bool
+    
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
+        predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
+        animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
 
     var body: some View {
 
@@ -26,14 +32,18 @@ struct SongSearchView: View {
                 .padding(.top, 22)
 
             resultView
+                .padding(.bottom, miniPlayerViewModel.showPlayer ? 50 : 0)
 
         }
         .background(Color.systemBackground)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .onAppear {
-            UIApplication.shared.hideKeyboard()
             isFocused = true
+            Utility.analyticsScreenEvent(screenName: "검색", screenClass: "SongSearchView")
+        }
+        .onTapGesture {
+            hideKeyboard()
         }
     }
 
@@ -98,52 +108,83 @@ struct SongSearchView: View {
                         .scaledToFit()
                         .frame(width: UIScreen.getHeight(200))
                         .padding(.top, UIScreen.getHeight(60))
+                    Link(destination: URL(string: "https://forms.gle/KmJaL1UTYahUVGkk7")!) {
+                        HStack(spacing: 8) {
+                            Image(systemName: "paperplane.fill")
+                            Text("응원가 신청하기")
+                                .font(Font.Halmap.CustomBodyBold)
+                        }
+                        .padding(EdgeInsets(top: 8, leading: 38, bottom: 8, trailing: 38))
+                        .foregroundColor(Color.mainGreen)
+                        .background {
+                            RoundedRectangle(cornerRadius: 18)
+                                .strokeBorder(Color.mainGreen, lineWidth: 1)
+                        }
+                    }
                     Spacer()
-                    RequestSongView(buttonColor: Color.mainGreen)
                 }
             case .result:
                 List {
                     ForEach(viewModel.autoComplete, id: \.id) { song in
-                        NavigationLink {
-                            SongDetailView(viewModel: SongDetailViewModel(
-                                audioManager: audioManager,
-                                dataManager: dataManager,
-                                persistence: persistence,
-                                song: song))
-                        } label: {
-                            HStack {
-                                Image(viewModel.getAlbumImage(with: song))
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .cornerRadius(8)
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(song.title)
-                                        .font(Font.Halmap.CustomBodyMedium)
-                                        .foregroundColor(.black)
-                                    Text(viewModel.getTeamName(with: song))
-                                        .font(Font.Halmap.CustomCaptionMedium)
-                                        .foregroundColor(.customDarkGray)
-                                }
-                                .frame(height: 45)
-                                .lineLimit(1)
+                        let songInfo = SongInfo(id: song.id,
+                                                team: song.team,
+                                                type: song.type,
+                                                title: song.title,
+                                                lyrics: song.lyrics,
+                                                info: song.info,
+                                                url: song.url)
+
+                        HStack(spacing: 16) {
+                            Image(viewModel.getAlbumImage(with: song))
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .cornerRadius(8)
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text(song.title)
+                                    .font(Font.Halmap.CustomBodyMedium)
+                                    .foregroundColor(.black)
+                                Text(viewModel.getTeamName(with: song))
+                                    .font(Font.Halmap.CustomCaptionMedium)
+                                    .foregroundColor(.customDarkGray)
                             }
+                            .frame(height: 45)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.white.opacity(0.0001))
+                            .lineLimit(1)
                         }
                         .listRowBackground(Color(UIColor.clear))
                         .listRowInsets((EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0)))
                         .listRowSeparatorTint(Color.customGray)
+                        .onTapGesture {
+                            miniPlayerViewModel.removePlayer()
+                            self.miniPlayerViewModel.song = song
+                            miniPlayerViewModel.setPlayer()
+                            withAnimation{
+                                miniPlayerViewModel.showPlayer = true
+                                miniPlayerViewModel.hideTabBar = true
+                                miniPlayerViewModel.isMiniPlayerActivate = false
+                            }
+                            miniPlayerViewModel.addDefaultPlaylist(defaultPlaylistSongs: defaultPlaylistSongs)
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
                 .listStyle(.plain)
+                .gesture(
+                   DragGesture().onChanged { value in
+                      if value.translation.height < 0 {
+                          hideKeyboard()
+                      }
+                   }
+                )
             }
         }
     }
 }
 
-
-// MARK: Previews
-struct SongSearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SongSearchView(viewModel: SongSearchViewModel(dataManager: DataManager()))
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

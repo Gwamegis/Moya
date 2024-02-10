@@ -10,6 +10,7 @@ import SwiftUI
 struct StorageContentView: View {
     @EnvironmentObject var dataManager: DataManager
     let persistence = PersistenceController.shared
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
     
     var body: some View {
         GeometryReader { proxy in
@@ -18,11 +19,8 @@ struct StorageContentView: View {
             ScalingHeaderView(viewModel: SongStorageViewModel(dataManager: dataManager, persistence: persistence, topEdge: topEdge))
                 .ignoresSafeArea(.all, edges: .top)
         }
-    }
-}
-
-struct StorageContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        StorageContentView()
+        .onAppear() {
+            Utility.analyticsScreenEvent(screenName: "보관함", screenClass: "SongStorageView")
+        }
     }
 }

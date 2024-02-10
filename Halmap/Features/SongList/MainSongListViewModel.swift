@@ -11,7 +11,7 @@ class MainSongListTabViewModel: ObservableObject {
     @Published var showingTeamChangingView: Bool = false
     @Published var index: Int = 0
 
-    let dataManager: DataManager = DataManager()
+    let dataManager: DataManager = DataManager.instance
     
     func getSongImage(for songInfo: SongInfo) -> String {
         if dataManager.checkSeasonSong(data: songInfo) {

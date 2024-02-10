@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class TeamSelectionViewModel: ObservableObject {
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @AppStorage("selectedTeam") var selectedTeamName: String = ""
     @Published var buttonPressed = [Bool](repeating: false, count: 10)
     @Published var selectedTeam: TeamName? = nil
     
@@ -28,7 +31,7 @@ final class TeamSelectionViewModel: ObservableObject {
     
     func isSelectedTeam(with team: TeamName) -> Bool {
         guard let selectedTeam else {
-            return initialSelectedTeam == team
+            return team.rawValue == dataManager.selectedTeam
         }
         return selectedTeam == team
     }
@@ -45,6 +48,9 @@ final class TeamSelectionViewModel: ObservableObject {
         let teamName = selectedTeam.rawValue
         UserDefaults.standard.set(teamName, forKey: "selectedTeam")
         dataManager.setSongList(team: teamName)
+        if isFirstLaunching {
+            dataManager.initData()
+        }
         return false
     }
     

@@ -1,5 +1,5 @@
 //
-//  PlayListFilter.swift
+//  PlaylistFilter.swift
 //  Halmap
 //
 //  Created by 전지민 on 2023/05/23.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PlayListFilter: Equatable {
+struct PlaylistFilter: Equatable {
     var filter: String?
     var predicate: NSPredicate? {
         guard let filter = filter else { return nil }

@@ -11,6 +11,7 @@ import FirebaseRemoteConfig
 import FirebaseFirestoreSwift
 
 class DataManager: ObservableObject {
+    static let instance = DataManager()
     
     private let db = Firestore.firestore()
     
@@ -25,13 +26,8 @@ class DataManager: ObservableObject {
         }
     }
     
-    var teams: [Team] = []
-    @Published var teamSongList: [TeamSong] = []
-    @Published var playerList: [Player] = []
     @Published var playerSongs: [Song] = []
     @Published var teamSongs: [Song] = []
-    @Published var favoriteSongs = PersistenceController.shared.fetchFavoriteSong()
-    @Published var playListSongs = PersistenceController.shared.fetchPlayListSong()
     
     @Published var playerSongsAll = [[Song]](repeating: [], count: 10)
     @Published var teamSongsAll = [[Song]](repeating: [], count: 10)
@@ -49,7 +45,10 @@ class DataManager: ObservableObject {
         }
         fetchTrafficNotification()
         
-        loadData()
+        initData()
+    }
+    
+    func initData() {
         teamLists.forEach { teamName in
             fetchSong(team: teamName.rawValue, type: true) { songs in
                 self.playerSongsAll[teamName.fetchTeamIndex()] = songs
@@ -65,42 +64,6 @@ class DataManager: ObservableObject {
         }
     }
     
-    func loadData(){
-        let fileNm: String = "Music"
-        let extensionType = "json"
-        
-        guard let fileLocation = Bundle.main.url(forResource: fileNm, withExtension: extensionType) else { return }
-        guard let jsonData = try? Data(contentsOf: fileLocation) else { return }
-        
-        do {
-            let teamArray = try JSONDecoder().decode(TeamList.self, from: jsonData)
-            teams = teamArray.teamLists
-            
-            // TODO: 데이터 불러오는 위치 다시 생각해보기
-            setList(teamName: selectedTeam)
-        }
-        catch let error {
-            print(error)
-        }
-    }
-    
-    func setList(teamName: String) {
-        var index = 0
-        
-        switch teamName {
-        case "Doosan" :
-            index = 0
-        case "Lotte":
-            index = 1
-        case "Hanwha":
-            index = 2
-        default:
-            index = 0
-        }
-        self.teamSongList = teams[index].teamSongs
-        self.playerList = teams[index].player
-    }
-    
     func setSongList(team: String) {
         self.playerSongs = playerSongsAll[TeamName(rawValue: selectedTeam)?.fetchTeamIndex() ?? 0]
         self.teamSongs = teamSongsAll[TeamName(rawValue: selectedTeam)?.fetchTeamIndex() ?? 0]
@@ -109,7 +72,7 @@ class DataManager: ObservableObject {
     //MARK: 파이어스토어에서 해당하는 팀의 응원가 정보를 가져오는 함수
     ///team: 팀이름을 영어로 넣어주세요
     ///[Song] 값으로 반환합니다.
-    func fetchSong(team: String, type: Bool, completionHandler: @escaping ([Song])->()) {
+    private func fetchSong(team: String, type: Bool, completionHandler: @escaping ([Song])->()) {
         var songs: [Song] = []
         
         db.collection(team)
@@ -137,7 +100,7 @@ class DataManager: ObservableObject {
             }
     }
     
-    func fetchSeasonData(completionHandler: @escaping ([[String]])->()) {
+    private func fetchSeasonData(completionHandler: @escaping ([[String]])->()) {
         db.collection("SeasonSong")
             .getDocuments { (querySnapshot, error) in
                 if let error {
@@ -161,7 +124,7 @@ class DataManager: ObservableObject {
             }
     }
     
-    func processingSeasonSongData(data: SeasonSong) -> [[String]] {
+    private func processingSeasonSongData(data: SeasonSong) -> [[String]] {
         var seasonData = [[String]](repeating: [], count: 10)
         
         seasonData[TeamName.doosan.fetchTeamIndex()] = splitData(data: data.doosan)
@@ -178,7 +141,7 @@ class DataManager: ObservableObject {
         return seasonData
     }
     
-    func splitData(data: String) -> [String] {
+    private func splitData(data: String) -> [String] {
         return data.split(separator: ",").map{ String($0) }
     }
     
@@ -186,7 +149,7 @@ class DataManager: ObservableObject {
         self.seasonSongs[TeamName(rawValue: data.team)?.fetchTeamIndex() ?? 0].contains(data.title)
     }
     
-    func fetchTrafficNotification() {
+    private func fetchTrafficNotification() {
         db.collection("Traffic")
             .order(by: "date", descending: false)
             .getDocuments() { (querySnapshot, error) in
@@ -229,7 +192,7 @@ class DataManager: ObservableObject {
     }
     
     //새로운 버전 알림과 관련된 함수들
-    func fetchVersionNotification(completionHandler: @escaping ([Notification]) -> ()) {
+    private func fetchVersionNotification(completionHandler: @escaping ([Notification]) -> ()) {
         var notifications: [Notification] = []
         db.collection("IOSVersion")
             .getDocuments() { (querySnapshot, error) in

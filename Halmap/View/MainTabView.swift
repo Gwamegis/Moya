@@ -10,6 +10,8 @@ import SwiftUI
 struct MainTabView: View {
     
     @EnvironmentObject var dataManager: DataManager
+    @EnvironmentObject var miniPlayerViewModel: MiniPlayerViewModel
+    
     @AppStorage("selectedTeam") var selectedTeam = "Hanwha"
     @StateObject var viewModel = MainTabViewModel()
     

@@ -23,9 +23,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct HalmapApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-
-    @StateObject var dataManager = DataManager()
-    @StateObject var audioManager = AudioManager()
+    @StateObject var dataManager = DataManager.instance
+    @StateObject var audioManager = AudioManager.instance
 
     let persistenceController = PersistenceController.shared
     
