@@ -247,6 +247,9 @@ struct MainSongListTabView: View {
             TeamSelectionView(viewModel: TeamSelectionViewModel(dataManager: dataManager), isShowing: $viewModel.showingTeamChangingView)
         }
         .navigationBarHidden(true)
+        .onAppear() {
+            Utility.analyticsScreenEvent(screenName: "팀 응원가 / 선수 응원가", screenClass: "MainSongListTabView")
+        }
     }
 }
 

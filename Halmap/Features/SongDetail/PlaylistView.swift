@@ -90,6 +90,9 @@ struct PlaylistView: View {
             }
         }
         .background(Color("\(song.team)Sub"))
+        .onAppear() {
+            Utility.analyticsScreenEvent(screenName: "재생목록", screenClass: "PlaylistView")
+        }
     }
 
     @ViewBuilder

@@ -37,6 +37,7 @@ struct MiniPlayerView: View {
                                 miniPlayerViewModel.hideTabBar = false
                                 miniPlayerViewModel.isMiniPlayerActivate = true
                             }
+                            Utility.analyticsPlayNextSongMini()
                         }, label: {
                             Image(systemName: "chevron.down")
                                 .font(.system(size: 24))
@@ -73,6 +74,7 @@ struct MiniPlayerView: View {
                         HStack(spacing: 21) {
                             Button(action: {
                                 miniPlayerViewModel.handlePlayButtonTap()
+                                Utility.analyticsPlayPauseSongMini()
                             }, label: {
                                 Image(systemName: miniPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
                                     .font(.system(size: 20, weight: .medium))
@@ -190,6 +192,11 @@ struct MiniPlayerView: View {
             Color("\(miniPlayerViewModel.song.team)Sub")
                 .cornerRadius(8)
         )
+        .onChange(of: miniPlayerViewModel.isMiniPlayerActivate) { newValue in
+            if !newValue {
+                Utility.analyticsScreenEvent(screenName: "응원가 재생하기", screenClass: "MiniPlayerView")
+            }
+        }
     }
     
     func onChanged(){

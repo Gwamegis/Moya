@@ -116,12 +116,16 @@ enum MenuType {
         case .liked:
             return persistence.saveSongs(song: Utility.convertSongToSongInfo(song: collectedSong), playListTitle: "favorite")
         case .cancelLiked:
+            let instance = MiniPlayerViewModel.instance
+            if instance.song.id == collectedSong.id {
+                instance.isFavorite = false
+            }
             return persistence.deleteSongs(song: collectedSong)
         case .playNext:
-            //TODO: 바로 다음에 재생 기능 추가
+            Utility.analyticsAddSongFirst()
             return persistence.saveSongs(collectedSong: collectedSong, playListTitle: "defaultPlaylist", menuType: .playNext, collectedSongs: playlists)
         case .playLast:
-            //TODO: 맨 마지막에 재생 기능 추가
+            Utility.analyticsAddSongLast()
             return persistence.saveSongs(collectedSong: collectedSong, playListTitle: "defaultPlaylist", menuType: .playLast, collectedSongs: playlists)
         }
     }

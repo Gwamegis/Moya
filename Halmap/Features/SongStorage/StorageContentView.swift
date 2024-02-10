@@ -19,5 +19,8 @@ struct StorageContentView: View {
             ScalingHeaderView(viewModel: SongStorageViewModel(dataManager: dataManager, persistence: persistence, topEdge: topEdge))
                 .ignoresSafeArea(.all, edges: .top)
         }
+        .onAppear() {
+            Utility.analyticsScreenEvent(screenName: "보관함", screenClass: "SongStorageView")
+        }
     }
 }

@@ -67,6 +67,8 @@
 		F98F622B29B4CB450025F50E /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F622A29B4CB450025F50E /* ThemeManager.swift */; };
 		F98F623129B59CE60025F50E /* TeamName.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F623029B59CE60025F50E /* TeamName.swift */; };
 		F98F8D5D29D85B0C00F9C956 /* RequestSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */; };
+		F995D0402B5197B80013E5F5 /* GoogleTagManager in Frameworks */ = {isa = PBXBuildFile; productRef = F995D03F2B5197B80013E5F5 /* GoogleTagManager */; };
+		F995D0452B5199590013E5F5 /* GTM-T8PJDH46.json in Resources */ = {isa = PBXBuildFile; fileRef = F995D0442B5199590013E5F5 /* GTM-T8PJDH46.json */; };
 		F9A178222A1BF5CB003E8E4C /* HalfSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A178212A1BF5CB003E8E4C /* HalfSheetView.swift */; };
 		F9A178262A1C8B01003E8E4C /* PlaylistFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A178252A1C8B01003E8E4C /* PlaylistFilter.swift */; };
 		F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9A2DAA52A07DE9A008B84A9 /* Preview Assets.xcassets */; };
@@ -134,6 +136,7 @@
 		F98F622A29B4CB450025F50E /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		F98F623029B59CE60025F50E /* TeamName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamName.swift; sourceTree = "<group>"; };
 		F98F8D5C29D85B0C00F9C956 /* RequestSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestSongView.swift; sourceTree = "<group>"; };
+		F995D0442B5199590013E5F5 /* GTM-T8PJDH46.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "GTM-T8PJDH46.json"; sourceTree = "<group>"; };
 		F9A178212A1BF5CB003E8E4C /* HalfSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSheetView.swift; sourceTree = "<group>"; };
 		F9A178252A1C8B01003E8E4C /* PlaylistFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistFilter.swift; sourceTree = "<group>"; };
 		F9A2DAA52A07DE9A008B84A9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -152,6 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F995D0402B5197B80013E5F5 /* GoogleTagManager in Frameworks */,
 				20A687E02A711C48005F18FA /* FirebaseDatabaseSwift in Frameworks */,
 				20A687DC2A711C48005F18FA /* FirebaseCrashlytics in Frameworks */,
 				20A687E82A711C48005F18FA /* FirebaseStorage in Frameworks */,
@@ -234,6 +238,7 @@
 		A81FFC6D28F15D9900B0FC7C = {
 			isa = PBXGroup;
 			children = (
+				F995D0432B5199510013E5F5 /* container */,
 				8764EEEB2ABFEF6A0006F438 /* GoogleService-Info.plist */,
 				B2699E0E28F1CB8800267A4F /* Font */,
 				A81FFC7828F15D9900B0FC7C /* Halmap */,
@@ -373,6 +378,14 @@
 			path = Theme;
 			sourceTree = "<group>";
 		};
+		F995D0432B5199510013E5F5 /* container */ = {
+			isa = PBXGroup;
+			children = (
+				F995D0442B5199590013E5F5 /* GTM-T8PJDH46.json */,
+			);
+			path = container;
+			sourceTree = "<group>";
+		};
 		F9B95BBC28F2733200728048 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +432,7 @@
 				20A687E72A711C48005F18FA /* FirebaseStorage */,
 				F949421F2B17373C00075DE1 /* Lottie */,
 				F9CB6A592B18A104005DF514 /* SwiftUIIntrospect */,
+				F995D03F2B5197B80013E5F5 /* GoogleTagManager */,
 			);
 			productName = Halmap;
 			productReference = A81FFC7628F15D9900B0FC7C /* Halmap.app */;
@@ -453,6 +467,7 @@
 				20A687D62A711C48005F18FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				F9CB6A582B18A104005DF514 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
+				F995D03E2B5197B70013E5F5 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */,
 			);
 			productRefGroup = A81FFC7728F15D9900B0FC7C /* Products */;
 			projectDirPath = "";
@@ -472,6 +487,7 @@
 				F9A2DAA62A07DE9A008B84A9 /* Preview Assets.xcassets in Resources */,
 				A81FFC8128F15D9C00B0FC7C /* Preview Assets.xcassets in Resources */,
 				B2699E0D28F1CB7E00267A4F /* Pretendard-Bold.otf in Resources */,
+				F995D0452B5199590013E5F5 /* GTM-T8PJDH46.json in Resources */,
 				F94942252B17398100075DE1 /* waveform.json in Resources */,
 				A81FFC7E28F15D9C00B0FC7C /* Assets.xcassets in Resources */,
 				B2699E1028F1CB9700267A4F /* Pretendard-Medium.otf in Resources */,
@@ -621,6 +637,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -674,6 +691,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -794,6 +812,14 @@
 				minimumVersion = 4.3.3;
 			};
 		};
+		F995D03E2B5197B70013E5F5 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleanalytics/google-tag-manager-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.4.3;
+			};
+		};
 		F9CB6A582B18A104005DF514 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/swiftui-introspect";
@@ -854,6 +880,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F949421E2B17373C00075DE1 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		F995D03F2B5197B80013E5F5 /* GoogleTagManager */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F995D03E2B5197B70013E5F5 /* XCRemoteSwiftPackageReference "google-tag-manager-ios-sdk" */;
+			productName = GoogleTagManager;
 		};
 		F9CB6A592B18A104005DF514 /* SwiftUIIntrospect */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -10,6 +10,7 @@ import SwiftUI
 struct TeamSelectionView: View {
     @EnvironmentObject var dataManager: DataManager
     @AppStorage("selectedTeam") var selectedTeamName: String = ""
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @StateObject var viewModel: TeamSelectionViewModel
     @Binding var isShowing: Bool
     
@@ -47,6 +48,9 @@ struct TeamSelectionView: View {
                     isShowing = viewModel.didTappedStartButton()
                     selectedTeamName = viewModel.getSelectedTeamName()
                 }
+                if !isFirstLaunching {
+                    Utility.analyticsChangeTeam()
+                }
             } label: {
                 RoundedRectangle(cornerRadius: 8)
                     .foregroundColor(Color.mainGreen)
@@ -63,6 +67,9 @@ struct TeamSelectionView: View {
         .padding(.horizontal, 20)
         .onDisappear{
             Color.setColor(selectedTeamName)
+        }
+        .onAppear() {
+            Utility.analyticsScreenEvent(screenName: "팀 선택", screenClass: "TeamSelectionView")
         }
     }
 }
