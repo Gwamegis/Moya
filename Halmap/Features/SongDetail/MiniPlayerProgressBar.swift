@@ -91,20 +91,6 @@ struct MiniPlayerAudioControlsView: View {
                 self.state = hasItem ? .buffering : .pause
                 self.currentTime = 0
                 self.currentDuration = 0
-                
-                // MARK: 노래 끝났을때 처리 로직
-                if self.state == .pause {
-                    if let index = defaultPlaylistSongs.firstIndex(where: {$0.id == song.id}) {
-                        if index + 1 < defaultPlaylistSongs.count {
-                            self.song = Utility.convertSongToSongInfo(song: defaultPlaylistSongs[Int(defaultPlaylistSongs[index].order + 1)])
-                        } else {
-                            if defaultPlaylistSongs.count > 1 {
-                                toast = Toast(team: defaultPlaylistSongs[0].safeTeam, message: "재생목록이 처음으로 돌아갑니다.")
-                                self.song =  Utility.convertSongToSongInfo(song: defaultPlaylistSongs[0])
-                            }
-                        }
-                    }
-                }
             }
             .onChange(of: self.state) { _ in
                 print("State: \(state)")

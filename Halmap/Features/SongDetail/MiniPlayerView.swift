@@ -18,6 +18,11 @@ struct MiniPlayerView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.order, ascending: true)],
         predicate: PlaylistFilter(filter: "defaultPlaylist").predicate,
         animation: .default) private var defaultPlaylistSongs: FetchedResults<CollectedSong>
+    @FetchRequest(
+        entity: CollectedSong.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
+        predicate: PlaylistFilter(filter: "favorite").predicate,
+        animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
     
     @AppStorage("currentSongId") var currentSongId: String = ""
     @State var isPlaylistView = false
@@ -99,7 +104,17 @@ struct MiniPlayerView: View {
                     }
                     
                     if !miniPlayerViewModel.isMiniPlayerActivate {
-                        FavoriteButton(viewModel: miniPlayerViewModel)
+                        Button {
+                            miniPlayerViewModel.handleLikeButtonTap(deleteSong: findFavoriteSong())
+                        } label: {
+                            Image(systemName: miniPlayerViewModel.isFavorite ? "heart.fill" : "heart")
+                                .foregroundStyle(miniPlayerViewModel.isFavorite ? Color("\(miniPlayerViewModel.song.team)Point") : Color.white)
+                        }
+                        .onAppear() {
+                            if favoriteSongs.contains(where: {$0.id == miniPlayerViewModel.song.id}) {
+                                miniPlayerViewModel.isFavorite = true
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, 20)
@@ -164,6 +179,11 @@ struct MiniPlayerView: View {
                 }
                 .onChange(of: miniPlayerViewModel.song.id) { _ in
                     self.currentSongId = miniPlayerViewModel.song.id
+                    if favoriteSongs.contains(where: {$0.id == miniPlayerViewModel.song.id}) {
+                        miniPlayerViewModel.isFavorite = true
+                    } else {
+                        miniPlayerViewModel.isFavorite = false
+                    }
                 }
                 .onChange(of: currentSongId) { _ in
                     if let index = defaultPlaylistSongs.firstIndex(where: { $0.id == miniPlayerViewModel.song.id }) {
@@ -290,6 +310,15 @@ struct MiniPlayerView: View {
         commandCenter.nextTrackCommand.removeTarget(nil)
         commandCenter.previousTrackCommand.removeTarget(nil)
     }
+    
+    //좋아요 취소할때 CollectedSong형태로 반환
+    private func findFavoriteSong() -> CollectedSong {
+        if let index = favoriteSongs.firstIndex(where: {$0.id == miniPlayerViewModel.song.id}) {
+            return favoriteSongs[index]
+        } else {
+            return CollectedSong()
+        }
+    }
 }
 
 private struct Lyric: View {
@@ -407,46 +436,3 @@ private struct PlayBar: View {
         }
     }
 }
-
-private struct FavoriteButton: View {
-    
-    @StateObject var viewModel: MiniPlayerViewModel
-    @FetchRequest(
-        entity: CollectedSong.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \CollectedSong.date, ascending: true)],
-        predicate: PlaylistFilter(filter: "favorite").predicate,
-        animation: .default) private var favoriteSongs: FetchedResults<CollectedSong>
-    
-    var body: some View {
-        Button {
-            viewModel.handleLikeButtonTap(deleteSong: findFavoriteSong())
-        } label: {
-            Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
-                .foregroundStyle(viewModel.isFavorite ? Color("\(viewModel.song.team)Point") : Color.white)
-        }
-        .onAppear() {
-            if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
-                viewModel.isFavorite = true
-            }
-        }
-        .onChange(of: viewModel.song.id) { _ in
-            if favoriteSongs.contains(where: {$0.id == viewModel.song.id}) {
-                viewModel.isFavorite = true
-            } else {
-                viewModel.isFavorite = false
-            }
-        }
-    }
-    
-    private func findFavoriteSong() -> CollectedSong {
-        if let index = favoriteSongs.firstIndex(where: {$0.id == viewModel.song.id}) {
-            return favoriteSongs[index]
-        } else {
-            return CollectedSong()
-        }
-    }
-}
-
-//#Preview {
-//    MiniPlayerView()
-//}

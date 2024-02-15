@@ -15,7 +15,11 @@ class MiniPlayerViewModel: ObservableObject {
     private let dataManager = DataManager.instance
     private let persistence = PersistenceController.shared
     
-    @Published var song: SongInfo
+    @Published var song: SongInfo {
+        didSet {
+            print("** song.id : \(song.id)")
+        }
+    }
     @Published var isScrolled = false
     @Published var isFavorite = false
     @Published var isPlaying = false
