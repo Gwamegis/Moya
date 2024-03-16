@@ -21,12 +21,12 @@
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="#techstack">Tech Stack</a> •
+  <a href="#tech-stack">Tech Stack</a> •
   <a href="#license">License</a>
 </p>
 <br>
 <h1 align="center">
-  <img src = "https://user-images.githubusercontent.com/52993882/228162861-738f92d5-38cb-4acd-8114-611f4bcc6063.png" width="600" class= "center"></h1>
+  <img src = "https://github.com/Gwamegis/Moya/assets/41153398/7959ef69-f36a-412c-ad05-4b891544ea10" width="600" class= "center"></h1>
 
 
 
@@ -40,8 +40,8 @@
 * **선수 및 응원가 검색 기능**
   - 야구장에서 흘러나오는 처음 듣는 응원가를 따라부르고 싶을 때, 검색을 해 봐요
   - 선수 이름, 응원가 제목으로 빠르게 검색할 수 있어요.
-* **야구장 지도 한 눈에 보기**
-  - 어떤 게이트로 입장해야할지 헷갈릴 때, 역전할맵이 제공하는 지도를 활용해보세요!
+* **응원가 보관함 기능**
+  - 좋아하는 응원가에 하트를 눌러보세요. 보관함에서 한번에 모아볼 수 있어요.
 
 ## Tech Stack
 
@@ -53,9 +53,14 @@
  <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white">
  
 ## Screenshots
-|팀 선택|음악 탐색|응원가 상세 뷰|응원가 검색|지도 탐색|
-|---|---|---|---|---|
-|<img src = "https://user-images.githubusercontent.com/52993882/228161517-3773ca33-de7e-4c13-94a1-c7531a393c8b.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228161915-a3ce40f4-9691-4665-b736-9e4767f6960f.png" width=250>|<img src = "https://user-images.githubusercontent.com/52993882/228162098-18b5b625-6d63-4478-ae80-9d52b5ee9a64.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162253-9dc91903-1a14-449d-845a-99c1c5f0de96.png" width = 250>|<img src = "https://user-images.githubusercontent.com/52993882/228162247-fd77a935-4d10-4425-b770-288e364a546a.png" width = 250>
+|팀 선택|음악 탐색|응원가 상세 뷰|
+|---|---|---|
+|![6 5형 -3](https://github.com/Gwamegis/Moya/assets/41153398/ddb7e721-c8a4-4750-b700-33bd3ce2a442)|![6 5형 -4](https://github.com/Gwamegis/Moya/assets/41153398/dc0be68e-59cf-4bb2-97c5-425fe85dc14e)|![6 5형 -5](https://github.com/Gwamegis/Moya/assets/41153398/ce55fa8e-5153-43b7-b1ad-bdb30c59763c)|
+
+|응원가 검색|응원가 보관함|플레이리스트|
+|---|---|---|
+|![6 5형 -6](https://github.com/Gwamegis/Moya/assets/41153398/7c47b3cf-56ee-4536-b9d2-fddae58ea9b9)|![6 5형 -7](https://github.com/Gwamegis/Moya/assets/41153398/b4c2ed63-5661-42d1-99ef-2bc35e5b7842)|![6 5형 -8](https://github.com/Gwamegis/Moya/assets/41153398/398a36d1-0e1e-4ca2-8749-2b023aeeffae)|
+
 
 ## Members
 |<img src="https://github.com/JIWON1923.png">|<img src="https://github.com/JMM00.png">|<img src="https://github.com/yeniful.png">|<img src="https://github.com/Anti9uA.png">|<img src="https://github.com/Eunbi-Cho.png">|<img src="https://github.com/junginyu.png">|
